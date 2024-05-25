@@ -9,5 +9,4 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
   styleUrl: './aside.component.scss'
 })
 export class AsideComponent {
-
 }
