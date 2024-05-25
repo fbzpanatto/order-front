@@ -1,6 +1,4 @@
 import { Routes } from '@angular/router';
-import { CustomersComponent } from './features/customers/customers.component';
-import { OrdersComponent } from './features/orders/orders.component';
 
 export const routes: Routes = [
   {
