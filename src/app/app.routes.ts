@@ -1,10 +1,40 @@
 import { Routes } from '@angular/router';
-import { HomeComponent } from './features/1_home/home.component';
-import { CustomersComponent } from './features/2_customers/customers.component';
-import { OrdersComponent } from './features/3_orders/orders.component';
+import { CustomersComponent } from './features/customers/customers.component';
+import { OrdersComponent } from './features/orders/orders.component';
 
 export const routes: Routes = [
-  { path: 'home', component: HomeComponent },
-  { path: 'orders', component: OrdersComponent },
-  { path: 'customers', component: CustomersComponent }
+  {
+    path: '',
+    redirectTo: '/home',
+    pathMatch: 'full'
+  },
+  {
+    path: 'home',
+    title: 'Home',
+    loadComponent: () => import('./features/home/home.component').then(m => m.HomeComponent)
+  },
+  {
+    path: 'customers',
+    title: 'Clientes',
+    children: [
+      {
+        path: '',
+        loadComponent: () => import('./features/customers/customers.component').then(m => m.CustomersComponent)
+      },
+    ]
+  },
+  {
+    path: 'orders',
+    title: 'Pedidos',
+    children: [
+      {
+        path: '',
+        loadComponent: () => import('./features/orders/orders.component').then(m => m.OrdersComponent)
+      },
+    ]
+  },
+  {
+    path: '**',
+    loadComponent: () => import('./features/home/home.component').then(m => m.HomeComponent)
+  }
 ];
