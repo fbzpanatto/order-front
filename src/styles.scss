@@ -1,1 +1,113 @@
-/* You can add global styles to this file, and also import other style files */
+@font-face {
+  font-family: 'Segoe UI Variable Small';
+  src:
+    local('Segoe UI Variable Small'),
+    url('assets/fonts/Segoe-UI-Variable-Static-Small.ttf') format('truetype-variations');
+}
+
+@font-face {
+  font-family: 'Segoe UI Variable Text';
+  src:
+    local('Segoe UI Variable Text'),
+    url('assets/fonts/Segoe-UI-Variable-Static-Text.ttf') format('truetype-variations');
+}
+
+@font-face {
+  font-family: 'Segoe UI Variable Display';
+  src:
+    local('Segoe UI Variable Display'),
+    url('assets/fonts/Segoe-UI-Variable-Static-Display-Bold.ttf') format('truetype-variations');
+}
+
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+ul[role='list'],
+ol[role='list'] {
+  list-style: none;
+}
+
+html:focus-within {
+  scroll-behavior: smooth;
+}
+
+a:not([class]) {
+  text-decoration-skip-ink: auto;
+}
+
+img,
+picture,
+svg,
+video,
+canvas {
+  max-width: 100%;
+  height: auto;
+}
+
+img,
+picture,
+svg,
+video,
+canvas {
+  vertical-align: middle;
+}
+
+img,
+picture,
+svg,
+video,
+canvas {
+  font-style: italic;
+}
+
+img,
+picture,
+svg,
+video,
+canvas {
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+body,
+html {
+  height: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Segoe UI Variable Text';
+  font-family: 'Segoe UI Variable Small';
+  font-family: 'Segoe UI Variable Display';
+}
+
+.small-text {
+  font-family: 'Segoe UI Variable Small';
+  font-size: 10px;
+}
+
+.medium-text {
+  font-family: 'Segoe UI Variable Text';
+  font-size: 16px;
+}
+
+.big-text {
+  font-family: 'Segoe UI Variable Display';
+  font-size: 36px;
+}
