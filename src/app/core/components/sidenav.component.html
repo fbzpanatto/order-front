@@ -1,13 +1,14 @@
-<div class="toolbar">
-  <span>minha toolbar</span>
-</div>
+<header>
+  <span>barra</span>
+</header>
 
-<div class="sidenav">
+<nav>
   <ul>
-    <li class="medium-text">Primeiro link</li>
+    <li><a routerLink="customers">Customers</a></li>
+    <li><a routerLink="orders">Orders</a></li>
   </ul>
-</div>
+</nav>
 
-<div class="content">
+<main class="content">
   <ng-content></ng-content>
-</div>
+</main>
