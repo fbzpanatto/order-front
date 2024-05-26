@@ -18,7 +18,8 @@ export class CustomersFormComponent {
       console.log('fetching data by id')
       return
     }
-    
+
+    // TODO: if 'new' does not exists on URL, redirect to parent
     console.log('creating a new resource')
   }
 
