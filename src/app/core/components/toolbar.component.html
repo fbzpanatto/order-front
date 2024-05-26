@@ -19,28 +19,29 @@
 </div>
 
 <div class="toolbar-down">
-  <div class="menu-item">
-    <div class="menu-item medium-text" routerLink="home" routerLinkActive="active">
-      <span><i class="fa-solid fa-house"></i></span>
-      <span>Home</span>
-    </div>
-    <div class="menu-item medium-text" routerLink="customers" routerLinkActive="active">
-      <span><i class="fa-solid fa-user-group"></i></span>
-      <span>Clientes</span>
-    </div>
-    <div class="menu-item medium-text" routerLink="orders" routerLinkActive="active">
-      <span><i class="fa-solid fa-list"></i></span>
-      <span>Pedidos</span>
-    </div>
-    <div class="menu-item medium-text" routerLink="products" routerLinkActive="active">
-      <span><i class="fa-solid fa-box"></i></span>
-      <span>Produtos</span>
-    </div>
-  </div>
+  <nav class="menu-item">
+    <ul>
+      <li routerLink="home" routerLinkActive="active">
+        <span><i class="fa-solid fa-house"></i></span>
+        <span>Home</span>
+      </li>
+      <li routerLink="clients" routerLinkActive="active">
+        <span><i class="fa-solid fa-user-group"></i></span>
+        <span>Clientes</span>
+      </li>
+      <li routerLink="orders" routerLinkActive="active">
+        <span><i class="fa-solid fa-list"></i></span>
+        <span>Pedidos</span>
+      </li>
+      <li routerLink="products" routerLinkActive="active">
+        <span><i class="fa-solid fa-box"></i></span>
+        <span>Produtos</span>
+      </li>
+    </ul>
+  </nav>
+
   <button>
-    <span>
-      <i class="fa-solid fa-arrow-left"></i>
-    </span>
+    <span><i class="fa-solid fa-arrow-left"></i></span>
     <span>Voltar</span>
   </button>
 </div>
