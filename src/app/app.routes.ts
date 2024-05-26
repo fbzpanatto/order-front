@@ -17,7 +17,11 @@ export const routes: Routes = [
     children: [
       {
         path: '',
-        loadComponent: () => import('./features/customers/customers.component').then(m => m.CustomersComponent)
+        loadComponent: () => import('./features/customers/components/customers-list.component').then(m => m.CustomersListComponent)
+      },
+      {
+        path: ':id',
+        loadComponent: () => import('./features/customers/components/customers-form.component').then(m => m.CustomersFormComponent)
       },
     ]
   },
@@ -27,7 +31,11 @@ export const routes: Routes = [
     children: [
       {
         path: '',
-        loadComponent: () => import('./features/orders/orders.component').then(m => m.OrdersComponent)
+        loadComponent: () => import('./features/orders/components/orders-list.component').then(m => m.OrdersListComponent)
+      },
+      {
+        path: ':id',
+        loadComponent: () => import('./features/orders/components/orders-form.component').then(m => m.OrdersFormComponent)
       },
     ]
   },
