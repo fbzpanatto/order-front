@@ -1,0 +1,35 @@
+.sidenav-container {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+
+  app-toolbar {
+    position: sticky;
+    top: 0;
+    left: 0;
+  }
+
+  .principal-container {
+    display: flex;
+    gap: 16px;
+    position: relative;
+    height: calc(100vh - 138px);
+    background-color: rgb(221, 221, 221);
+    padding: 16px;
+
+    aside {
+      background-color: #fff;
+      border-radius: 8px;
+      padding: 8px;
+    }
+
+    main {
+      position: relative;
+      height: calc(100vh - 170px);
+      background-color: rgb(255, 255, 255);
+      overflow: auto;
+      border-radius: 8px;
+      padding: 8px;
+    }
+  }
+}
