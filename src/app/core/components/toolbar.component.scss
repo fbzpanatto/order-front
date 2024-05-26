@@ -16,12 +16,13 @@
     justify-content: space-between;
     height: 64px;
 
-    div {
+    div.user-menu {
       display: flex;
       align-items: center;
       cursor: pointer;
       gap: 8px;
-      .user {
+
+      .circle {
         display: flex;
         align-items: center;
         justify-content: center;
@@ -39,13 +40,13 @@
     justify-content: space-between;
     height: 56px;
 
-    div {
+    div.menu-item {
       display: flex;
       align-items: center;
       gap: 16px;
       height: 56px;
 
-      div {
+      div.menu-item {
         position: relative;
         height: 56px;
         cursor: pointer;
@@ -59,7 +60,7 @@
           bottom: 0;
           left: 0;
           background-color: #000;
-          // visibility: hidden;
+          visibility: hidden;
           -webkit-transform: scaleX(0);
           transform: scaleX(0);
           -webkit-transition: all 0.3s ease-in-out 0s;
