@@ -20,7 +20,7 @@ export const routes: Routes = [
         loadComponent: () => import('./features/customers/components/customers-list.component').then(m => m.CustomersListComponent)
       },
       {
-        path: ':id',
+        path: ':command',
         loadComponent: () => import('./features/customers/components/customers-form.component').then(m => m.CustomersFormComponent)
       },
     ]
@@ -34,7 +34,7 @@ export const routes: Routes = [
         loadComponent: () => import('./features/orders/components/orders-list.component').then(m => m.OrdersListComponent)
       },
       {
-        path: ':id',
+        path: ':command',
         loadComponent: () => import('./features/orders/components/orders-form.component').then(m => m.OrdersFormComponent)
       },
     ]
