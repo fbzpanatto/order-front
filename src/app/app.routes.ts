@@ -40,6 +40,20 @@ export const routes: Routes = [
     ]
   },
   {
+    path: 'products',
+    title: 'Produtos',
+    children: [
+      {
+        path: '',
+        loadComponent: () => import('./features/products/components/products-list.component').then(m => m.ProductsListComponent)
+      },
+      {
+        path: ':command',
+        loadComponent: () => import('./features/products/components/products-list.component').then(m => m.ProductsListComponent)
+      },
+    ]
+  },
+  {
     path: '**',
     loadComponent: () => import('./features/home/home.component').then(m => m.HomeComponent)
   }
