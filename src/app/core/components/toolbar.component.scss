@@ -15,6 +15,17 @@
     justify-content: space-between;
     padding: 20px 32px;
 
+    div.toolbar-top-menu {
+      display: flex;
+      gap: 16px;
+      button {
+        border-radius: 20px;
+        border: none;
+        padding: 10px 20px;
+        cursor: pointer;
+      }
+    }
+
     div.user-menu {
       width: 60px;
       display: flex;
