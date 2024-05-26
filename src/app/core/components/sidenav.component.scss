@@ -24,7 +24,25 @@
       border-radius: 8px;
       padding: 8px;
       height: 100%;
-      width: 365px;
+      width: 285px;
+
+      .search {
+        position: relative;
+        display: flex;
+        align-items: center;
+
+        span {
+          position: absolute;
+        }
+
+        input {
+          border: none;
+          outline: none;
+          padding: 8px 8px 8px 24px;
+          width: 100%;
+          border-bottom: 1px solid #ebebeb;
+        }
+      }
     }
 
     main {
