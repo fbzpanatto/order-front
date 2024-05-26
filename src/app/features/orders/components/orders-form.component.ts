@@ -13,9 +13,14 @@ export class OrdersFormComponent {
   readonly #route = inject(ActivatedRoute)
 
   ngOnInit(): void {
-    console.log('orderId', this.orderId)
+    if (!isNaN(Number(this.command))) {
+      console.log('fetching data by id')
+      return
+    }
+
+    console.log('creating a new resource')
   }
 
-  get orderId() { return this.#route.snapshot.paramMap.get('command') }
+  get command() { return this.#route.snapshot.paramMap.get('command') }
 
 }
