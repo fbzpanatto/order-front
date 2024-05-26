@@ -1,3 +1,5 @@
+@import '../../styles/variables.scss';
+
 .sidenav-container {
   display: flex;
   flex-direction: column;
@@ -13,7 +15,7 @@
     display: flex;
     gap: 16px;
     position: relative;
-    height: calc(100vh - 138px);
+    height: calc(100vh - $toolbarHeight);
     background-color: rgb(238, 242, 243);
     padding: 16px;
 
@@ -27,7 +29,7 @@
 
     main {
       position: relative;
-      height: calc(100vh - 170px);
+      height: calc(100vh - $toolbarHeight - 32px);
       background-color: rgb(255, 255, 255);
       overflow: auto;
       border-radius: 8px;

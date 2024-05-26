@@ -1,7 +1,9 @@
+@import '../../styles/variables.scss';
+
 :host {
   display: flex;
   flex-direction: column;
-  height: 138px;
+  height: $toolbarHeight;
   z-index: 100;
 
   .toolbar-top,
@@ -19,6 +21,7 @@
 
     h2 {
       flex: 1;
+      text-wrap: nowrap;
     }
 
     div.toolbar-top-menu {
