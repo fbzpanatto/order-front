@@ -1,6 +1,6 @@
 import { animate, state, style, transition, trigger } from "@angular/animations";
 
-export const ConditionAnimation = trigger('conditionalTrigger', [
+export const AsideConditionAnimation = trigger('conditionalTrigger', [
   state('void', style({
     transform: 'translateX(-120%)'
   })),

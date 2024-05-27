@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { AsideComponent } from "../../../core/components/aside.component";
 import { AsideService } from '../../../shared/services/aside.service';
-import { ConditionAnimation } from './animation';
+import { AsideConditionAnimation } from '../../../shared/animations/asideAnimation';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -10,11 +10,10 @@ import { CommonModule } from '@angular/common';
     templateUrl: './customers-list.component.html',
     styleUrl: './customers-list.component.scss',
     imports: [AsideComponent, CommonModule],
-    animations: [ConditionAnimation]
+    animations: [AsideConditionAnimation]
 })
 export class CustomersListComponent {
-[x: string]: any;
-
+    
     private asideService = inject(AsideService)
 
     get asideFlag() { return this.asideService.flag }
