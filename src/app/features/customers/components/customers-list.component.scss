@@ -6,18 +6,12 @@
   gap: 16px;
   background-color: rgb(238, 242, 243);
 
-  .aside-container {
-    padding: 16px;
-    border-radius: 6px;
-    background-color: #fff;
-  }
-
   .resource-container {
     position: relative;
     overflow: auto;
     height: calc(100vh - $toolbarHeight - 32px);
     padding: 16px;
-    border-radius: 6px;
+    border-radius: 8px;
     background-color: #fff;
   }
 }
