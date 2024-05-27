@@ -6,23 +6,41 @@
   position: relative;
   width: 100%;
 
-  app-toolbar {
-    position: sticky;
-    top: 0;
-    left: 0;
-  }
-
   .principal-container {
     display: flex;
-    gap: 16px;
     position: relative;
     height: calc(100vh - $toolbarHeight);
     background-color: rgb(238, 242, 243);
     padding: 16px;
     width: 100%;
 
-    main {
-      width: 100%;
+    app-aside {
+      width: 275px;
+    }
+
+    .resource-container {
+      width: calc(100% - 64px);
+      position: absolute;
+      overflow: auto;
+      height: calc(100vh - $toolbarHeight - 32px);
+      padding: 16px;
+      border-radius: 8px;
+      background-color: #fff;
+      transition: 100ms ease-in;
+      top: 16px;
+      margin: 0 16px;
+    }
+
+    .small {
+      left: 291px;
+      background-color: #fff;
+      width: calc(100% - 275px - 48px);
+    }
+
+    .large {
+      left: 0;
+      border-radius: 8px;
+      width: calc(100% - 32px);
     }
   }
 }

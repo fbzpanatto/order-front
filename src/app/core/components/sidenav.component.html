@@ -1,7 +1,8 @@
 <div class="sidenav-container">
   <app-toolbar></app-toolbar>
   <div class="principal-container">
-    <main>
+    @if(asideFlag()){ <app-aside [@conditionalTrigger]="asideFlag() ? 'shown': 'notshown'"></app-aside> }
+    <main class="resource-container" [ngClass]="asideFlag() ? 'small' : 'large'">
       <ng-content></ng-content>
     </main>
   </div>
