@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import { AsideService } from '../../shared/services/aside.service';
 
 @Component({
   selector: 'app-toolbar',
@@ -10,8 +11,9 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 })
 export class ToolbarComponent {
 
-  constructor() {
-    
-  }
+  private asideService = inject(AsideService)
 
+  changeAsideFlag() {
+    this.asideService.changeFlag()
+  }
 }
