@@ -9,7 +9,7 @@ export const routes: Routes = [
   {
     path: 'home',
     title: 'Home',
-    loadComponent: () => import('./features/home/home.component').then(m => m.HomeComponent)
+    loadComponent: () => import('./features/home/components/home.component').then(m => m.HomeComponent)
   },
   {
     path: 'customers',
@@ -55,6 +55,6 @@ export const routes: Routes = [
   },
   {
     path: '**',
-    loadComponent: () => import('./features/home/home.component').then(m => m.HomeComponent)
+    loadComponent: () => import('./features/home/components/home.component').then(m => m.HomeComponent)
   }
 ];

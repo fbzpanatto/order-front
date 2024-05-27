@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AsideComponent } from "../../core/components/aside.component";
+import { AsideComponent } from '../../../core/components/aside.component';
 
 @Component({
     selector: 'app-home',
