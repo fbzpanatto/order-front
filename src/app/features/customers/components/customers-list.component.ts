@@ -13,7 +13,5 @@ export class CustomersListComponent {
 
     private asideService = inject(AsideService)
 
-    get counter(){
-        return this.asideService.flag
-    }
+    get asideFlag() { return this.asideService.flag }
 }
