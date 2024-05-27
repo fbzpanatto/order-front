@@ -1,0 +1,17 @@
+@import '../../styles/variables.scss';
+
+:host {
+  position: relative;
+  display: flex;
+  gap: 16px;
+  background-color: rgb(238, 242, 243);
+
+  .resource-container {
+    position: relative;
+    overflow: auto;
+    height: calc(100vh - $toolbarHeight - 32px);
+    padding: 16px;
+    border-radius: 8px;
+    background-color: #fff;
+  }
+}
