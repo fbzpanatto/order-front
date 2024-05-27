@@ -1,6 +1,6 @@
 @if(asideFlag()){ <app-aside [@conditionalTrigger]="asideFlag() ? 'shown': 'notshown'"></app-aside> }
 
-<div class="resource-container">
+<div class="resource-container" [ngClass]="asideFlag() ? 'small' : 'large'">
 
   <p class="medium-text">
     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam sapien nulla, commodo id viverra ut, placerat eget

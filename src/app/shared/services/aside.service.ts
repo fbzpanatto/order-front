@@ -5,7 +5,7 @@ import { Injectable, signal } from '@angular/core';
 })
 export class AsideService {
 
-  #flag = signal(true);
+  #flag = signal(false);
 
   readonly flag = this.#flag.asReadonly();
 

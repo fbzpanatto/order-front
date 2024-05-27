@@ -5,18 +5,33 @@
   display: flex;
   gap: 16px;
   background-color: rgb(238, 242, 243);
+  width: 100%;
 
   app-aside {
     width: 275px;
   }
 
   .resource-container {
-    // flex: 5;
-    position: relative;
+    position: absolute;
     overflow: auto;
     height: calc(100vh - $toolbarHeight - 32px);
     padding: 16px;
-    border-radius: 8px;
     background-color: #fff;
+    border-radius: 8px;
+    transition: 100ms ease-in;
+  }
+
+  .small {
+    top: 0;
+    left: 291px;
+    background-color: #fff;
+    width: calc(100% - 275px - 16px);
+  }
+
+  .large {
+    top: 0;
+    left: 0;
+    border-radius: 8px;
+    width: 100%;
   }
 }
