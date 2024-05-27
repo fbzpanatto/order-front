@@ -11,36 +11,36 @@
     position: relative;
     height: calc(100vh - $toolbarHeight);
     background-color: rgb(238, 242, 243);
-    padding: 16px;
+    padding: $pad16;
     width: 100%;
 
     app-aside {
-      width: 275px;
+      width: $asideWidth;
     }
 
     .resource-container {
-      width: calc(100% - 64px);
+      width: calc(100% - ($pad16 * 4));
       position: absolute;
       overflow: auto;
-      height: calc(100vh - $toolbarHeight - 32px);
-      padding: 16px;
+      height: calc(100vh - $toolbarHeight - ($pad16 * 2));
+      padding: $pad16;
       border-radius: 8px;
       background-color: #fff;
       transition: 100ms ease-in;
-      top: 16px;
-      margin: 0 16px;
+      top: $pad16;
+      margin: 0 $pad16;
     }
 
     .small {
-      left: 291px;
+      left: calc($asideWidth + $pad16);
       background-color: #fff;
-      width: calc(100% - 275px - 48px);
+      width: calc(100% - $asideWidth - ($pad16 * 3));
     }
 
     .large {
       left: 0;
       border-radius: 8px;
-      width: calc(100% - 32px);
+      width: calc(100% - ($pad16 * 2));
     }
   }
 }
