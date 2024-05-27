@@ -13,12 +13,11 @@
   }
 
   .resource-container {
-    padding: 16px;
-    border-radius: 6px;
-    background-color: #fff;
-
     position: relative;
     overflow: auto;
     height: calc(100vh - $toolbarHeight - 32px);
+    padding: 16px;
+    border-radius: 6px;
+    background-color: #fff;
   }
 }
