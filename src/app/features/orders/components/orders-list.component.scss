@@ -6,6 +6,10 @@
   gap: 16px;
   background-color: rgb(238, 242, 243);
 
+  app-aside {
+    width: 275px;
+  }
+
   .resource-container {
     position: relative;
     overflow: auto;

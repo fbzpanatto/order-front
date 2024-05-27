@@ -1,25 +1,30 @@
-aside {
-  background-color: #fff;
-  border-radius: 8px;
-  padding: 16px;
-  height: 100%;
-  width: 285px;
+:host {
 
-  .search {
-    position: relative;
-    display: flex;
-    align-items: center;
+  width: 100%;
 
-    span {
-      position: absolute;
-    }
+  aside {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 16px;
+    height: 100%;
+    width: inherit;
 
-    input {
-      border: none;
-      outline: none;
-      padding: 8px 8px 8px 24px;
-      width: 100%;
-      border-bottom: 1px solid #ebebeb;
+    .search {
+      position: relative;
+      display: flex;
+      align-items: center;
+
+      span {
+        position: absolute;
+      }
+
+      input {
+        border: none;
+        outline: none;
+        padding: 8px 8px 8px 24px;
+        width: inherit;
+        border-bottom: 1px solid #ebebeb;
+      }
     }
   }
 }

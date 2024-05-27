@@ -6,7 +6,12 @@
   gap: 16px;
   background-color: rgb(238, 242, 243);
 
+  app-aside {
+    width: 275px;
+  }
+
   .resource-container {
+    // flex: 5;
     position: relative;
     overflow: auto;
     height: calc(100vh - $toolbarHeight - 32px);
