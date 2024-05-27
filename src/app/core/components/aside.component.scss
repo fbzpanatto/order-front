@@ -3,12 +3,12 @@
 :host {
 
   width: 100%;
-  height: calc(100vh - $toolbarHeight - 32px);
+  height: calc(100vh - $toolbarHeight - ($pad16 * 2));
 
   aside {
     background-color: #fff;
     border-radius: 8px;
-    padding: 16px;
+    padding: $pad16;
     height: 100%;
     width: inherit;
 
@@ -16,6 +16,7 @@
       position: relative;
       display: flex;
       align-items: center;
+      width: 100%;
 
       span {
         position: absolute;
