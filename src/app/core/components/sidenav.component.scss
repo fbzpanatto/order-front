@@ -19,39 +19,12 @@
     background-color: rgb(238, 242, 243);
     padding: 16px;
 
-    .aside-container {
-      background-color: #fff;
-      border-radius: 8px;
-      padding: 16px;
-      height: 100%;
-      width: 285px;
-
-      .search {
-        position: relative;
-        display: flex;
-        align-items: center;
-
-        span {
-          position: absolute;
-        }
-
-        input {
-          border: none;
-          outline: none;
-          padding: 8px 8px 8px 24px;
-          width: 100%;
-          border-bottom: 1px solid #ebebeb;
-        }
-      }
-    }
-
     main {
       position: relative;
-      height: calc(100vh - $toolbarHeight - 32px);
-      background-color: rgb(255, 255, 255);
       overflow: auto;
+      height: calc(100vh - $toolbarHeight - 32px);
+      background-color: rgb(238, 242, 243);
       border-radius: 8px;
-      padding: 16px;
     }
   }
 }
