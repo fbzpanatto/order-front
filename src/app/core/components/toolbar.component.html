@@ -9,36 +9,32 @@
     </button>
   </div>
   <div class="user-menu-container">
-    <button class="user-menu-btn">
+    <button class="user-menu-btn" (click)="changeUserMenuFlag()">
       <div class="circle">
         <span>FP</span>
       </div>
       <span>
-        <i class="fa-solid fa-chevron-down"></i>
+        <i [class]="userMenuFlag() ? 'fa-solid fa-chevron-up' : 'fa-solid fa-chevron-down' "></i>
       </span>
     </button>
+    @if(userMenuFlag()){
     <div class="menu-container">
       <ul>
         <li>
           <i class="fa-solid fa-screwdriver-wrench"></i>
-          <span>
-            Parâmetros
-          </span>
+          <span>Parâmetros</span>
         </li>
         <li>
           <i class="fa-solid fa-user-pen"></i>
-          <span>
-            Editar usuário
-          </span>
+          <span>Editar usuário</span>
         </li>
         <li>
           <i class="fa-solid fa-right-from-bracket"></i>
-          <span>
-            Sair
-          </span>
+          <span>Sair</span>
         </li>
       </ul>
     </div>
+    }
   </div>
 </div>
 
