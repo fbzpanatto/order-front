@@ -2,23 +2,24 @@ import { Component, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { AsideService } from '../../shared/services/aside.service';
 import { BackButtonDirective } from '../../shared/directives/backButton.directive';
-import { UserMenuService } from '../../shared/services/userMenu.service';
+import { ClickOutsideDirective } from '../../shared/directives/clickOutside.directive';
 
 @Component({
   selector: 'app-toolbar',
   standalone: true,
-  imports: [RouterLink, RouterLinkActive, BackButtonDirective],
+  imports: [RouterLink, RouterLinkActive, BackButtonDirective, ClickOutsideDirective],
   templateUrl: './toolbar.component.html',
   styleUrl: './toolbar.component.scss'
 })
 export class ToolbarComponent {
 
+  isOpen = false;
+
   private asideService = inject(AsideService)
-  private userMenuService = inject(UserMenuService)
 
   changeAsideFlag() { this.asideService.changeFlag() }
-  changeUserMenuFlag() { this.userMenuService.changeFlag() }
 
-  get userMenuFlag() { return this.userMenuService.flag }
+  changeMenuUserFlag() { this.isOpen = !this.isOpen }
+
   get asideFlag() { return this.asideService.flag }
 }

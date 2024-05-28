@@ -9,16 +9,16 @@
     </button>
   </div>
   <div class="user-menu-container">
-    <button class="user-menu-btn" (click)="changeUserMenuFlag()">
+    <button class="user-menu-btn" (click)="changeMenuUserFlag()">
       <div class="circle">
         <span>FP</span>
       </div>
       <span>
-        <i [class]="userMenuFlag() ? 'fa-solid fa-chevron-up' : 'fa-solid fa-chevron-down' "></i>
+        <i [class]="isOpen ? 'fa-solid fa-chevron-up' : 'fa-solid fa-chevron-down' "></i>
       </span>
     </button>
-    @if(userMenuFlag()){
-    <div class="menu-container">
+    @if(isOpen){
+    <div #dropdownElement class="menu-container" [appOutSideClick]="isOpen" (outSideClick)="isOpen = false">
       <ul>
         <li>
           <i class="fa-solid fa-screwdriver-wrench"></i>
