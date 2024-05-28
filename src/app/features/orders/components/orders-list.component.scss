@@ -12,15 +12,16 @@
     top: 0;
     display: flex;
     align-items: center;
+    justify-content: space-between;
     gap: 8px;
     z-index: 100;
     padding-top: 16px;
     background-color: #fff;
+    padding-bottom: 32px;
 
     h1 {
       color: #000;
       font-size: 28px;
-      padding-bottom: 32px;
     }
   }
 
