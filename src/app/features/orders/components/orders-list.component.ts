@@ -8,7 +8,7 @@ import { AsideConditionAnimation } from '../../../shared/animations/asideAnimati
     selector: 'app-orders-list',
     standalone: true,
     templateUrl: './orders-list.component.html',
-    styleUrl: './orders-list.component.scss',
+    styleUrls: ['./orders-list.component.scss', '../../../styles/resource.scss'],
     imports: [AsideComponent, CommonModule],
     animations: [AsideConditionAnimation]
 })

@@ -1,0 +1,80 @@
+@import './variables.scss';
+
+.container {
+  position: relative;
+  top: 0;
+  background-color: #fff;
+  overflow: hidden;
+
+  .title-bar {
+    position: sticky;
+    top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    z-index: 100;
+    background-color: #fff;
+    padding-bottom: 32px;
+
+    h1 {
+      color: #333;
+      font-size: 28px;
+    }
+
+    button {
+      width: 110px;
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      border-radius: 20px;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+      background-color: #ebebeb;
+    }
+  }
+
+  .table-container {
+    height: calc(100vh - $toolbarHeight - 149px);
+    overflow: auto;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+
+    thead {
+      tr {
+        th {
+          position: sticky;
+          top: 0;
+          background-color: #444;
+          padding: 8px 8px;
+          text-align: left;
+          color: #fff;
+
+          &:first-of-type {
+            border-top-left-radius: 8px;
+            border-bottom-left-radius: 8px;
+          }
+
+          &:last-of-type {
+            border-top-right-radius: 8px;
+            border-bottom-right-radius: 8px;
+          }
+        }
+      }
+    }
+
+    tbody {
+      tr {
+        td {
+          padding: 8px 8px 0;
+          border-bottom: 1px solid #ebebeb;
+        }
+      }
+    }
+  }
+}

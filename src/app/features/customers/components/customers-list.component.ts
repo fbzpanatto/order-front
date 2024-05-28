@@ -8,7 +8,7 @@ import { CommonModule } from '@angular/common';
     selector: 'app-customers-list',
     standalone: true,
     templateUrl: './customers-list.component.html',
-    styleUrl: './customers-list.component.scss',
+    styleUrls: ['./customers-list.component.scss', '../../../styles/resource.scss'],
     imports: [AsideComponent, CommonModule],
     animations: [AsideConditionAnimation]
 })

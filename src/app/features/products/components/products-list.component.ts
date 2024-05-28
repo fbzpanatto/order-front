@@ -8,7 +8,7 @@ import { AsideService } from '../../../shared/services/aside.service';
     selector: 'app-products-list',
     standalone: true,
     templateUrl: './products-list.component.html',
-    styleUrl: './products-list.component.scss',
+    styleUrls: ['./products-list.component.scss', '../../../styles/resource.scss'],
     imports: [AsideComponent, CommonModule],
     animations: [AsideConditionAnimation]
 })
