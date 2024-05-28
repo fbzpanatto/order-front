@@ -3,7 +3,6 @@
 .container {
   position: relative;
   top: 0;
-  padding: 0 16px;
   background-color: #fff;
   overflow: hidden;
 
@@ -26,11 +25,10 @@
   }
 
   .table-container {
-    height:calc(100vh - $toolbarHeight - 149px);
+    height: calc(100vh - $toolbarHeight - 149px);
     overflow: auto;
-    padding: 0 32px;
   }
-  
+
   table {
     width: 100%;
     border-collapse: separate;
@@ -42,18 +40,18 @@
           position: sticky;
           top: 0;
           background-color: black;
-          padding: 16px 8px;
+          padding: 8px 8px;
           text-align: left;
           color: #fff;
 
           &:first-of-type {
             border-top-left-radius: 8px;
-            // border-bottom-left-radius: 32px;
+            border-bottom-left-radius: 8px;
           }
 
           &:last-of-type {
             border-top-right-radius: 8px;
-            // border-bottom-right-radius: 32px;
+            border-bottom-right-radius: 8px;
           }
         }
       }
