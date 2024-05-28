@@ -27,11 +27,11 @@
       transition: 100ms ease-in;
       top: $pad16;
       margin: 0 $pad16;
+      z-index: 100;
     }
 
     .small {
       left: calc($asideWidth + $pad16);
-      background-color: #fff;
       width: calc(100% - $asideWidth - ($pad16 * 3));
     }
 
