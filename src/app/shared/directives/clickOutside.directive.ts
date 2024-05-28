@@ -22,7 +22,7 @@ export class ClickOutsideDirective implements OnInit, OnDestroy {
 
 // Execute this function when click outside of the dropdown-container
   onDocumentClick = (event: Event) => {
-    if (!this.element.nativeElement.parentElement.contains(event.target)) {
+    if (!this.element.nativeElement.contains(event.target)) {
       this.outSideClick.emit();
     }
   };
