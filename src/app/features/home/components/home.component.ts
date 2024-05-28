@@ -8,7 +8,7 @@ import { AsideConditionAnimation } from '../../../shared/animations/asideAnimati
     selector: 'app-home',
     standalone: true,
     templateUrl: './home.component.html',
-    styleUrl: './home.component.scss',
+    styleUrls: ['./home.component.scss', '../../../styles/resource.scss'],
     imports: [AsideComponent, CommonModule],
     animations: [AsideConditionAnimation]
 })
