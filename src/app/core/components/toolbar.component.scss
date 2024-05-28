@@ -90,6 +90,12 @@
           color: #5f5f5f;
           height: inherit;
 
+          &.active::before {
+            visibility: visible;
+            -webkit-transform: scaleX(1);
+            transform: scaleX(1);
+          }
+
           &::before {
             content: "";
             position: absolute;
