@@ -31,9 +31,10 @@
       gap: 16px;
 
       button {
+        width: 110px;
         display: flex;
+        justify-content: space-between;
         align-items: center;
-        gap: 8px;
         border-radius: 20px;
         border: none;
         padding: 10px 20px;

@@ -13,7 +13,7 @@ export class ToolbarComponent {
 
   private asideService = inject(AsideService)
 
-  changeAsideFlag() {
-    this.asideService.changeFlag()
-  }
+  changeAsideFlag() { this.asideService.changeFlag() }
+
+  get asideFlag() { return this.asideService.flag }
 }

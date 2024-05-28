@@ -3,7 +3,7 @@
   <div class="toolbar-top-menu">
     <button class="menu-item medium-text" (click)="changeAsideFlag()">
       <span>
-        <i class="fa-solid fa-filter"></i>
+        <i [class]="asideFlag() ?  'fa-solid fa-filter-circle-xmark' : 'fa-solid fa-filter' "></i>
       </span>
       <span>Filtros</span>
     </button>
