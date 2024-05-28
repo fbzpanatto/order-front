@@ -50,23 +50,49 @@
       }
     }
 
-    div.user-menu {
+    div.user-menu-container {
+      flex: 1;
+      position: relative;
       display: flex;
       justify-content: flex-end;
-      flex: 1;
       width: 60px;
       align-items: center;
-      cursor: pointer;
       gap: 8px;
 
-      .circle {
+      .user-menu-btn {
         display: flex;
+        gap: 8px;
         align-items: center;
-        justify-content: center;
-        background: lightblue;
-        border-radius: 50%;
-        min-width: 41px;
-        min-height: 41px;
+        border: none;
+        background-color: transparent;
+        cursor: pointer;
+
+        .circle {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: lightblue;
+          border-radius: 50%;
+          min-width: 41px;
+          min-height: 41px;
+        }
+      }
+
+      .menu-container {
+        position: absolute;
+        top: 48px;
+        width: 200px;
+        height: 150px;
+        background-color: rgb(248, 248, 248);
+        border-radius: 8px;
+        z-index: 200;
+        box-shadow: 0 4px 5px rgba(0, 0, 0, 0.15);
+
+        ul {
+          list-style: none;
+
+          li {}
+        }
       }
     }
   }
