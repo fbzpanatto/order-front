@@ -32,6 +32,11 @@
       padding: 10px 20px;
       cursor: pointer;
       background-color: #ebebeb;
+      transition: 100ms;
+
+      &:hover {
+        background-color: rgb(224, 224, 224);
+      }
     }
   }
 
