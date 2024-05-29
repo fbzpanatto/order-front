@@ -34,6 +34,12 @@ export class ToolbarMenuService {
         iClass: 'fa-solid fa-screwdriver-wrench',
         title: 'Parâmetros'
       },
+      {
+        id: 3,
+        routerLink: 'login',
+        iClass: 'fa-solid fa-right-from-bracket',
+        title: 'Sair'
+      },
     ]
   }
 

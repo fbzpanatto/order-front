@@ -92,6 +92,16 @@ export const routes: Routes = [
     ]
   },
   {
+    path: 'login',
+    title: 'Login',
+    children: [
+      {
+        path: '',
+        loadComponent: () => import('./features/login/components/login.component').then(m => m.LoginComponent),
+      }
+    ]
+  },
+  {
     path: '**',
     loadComponent: () => import('./features/home/components/home.component').then(m => m.HomeComponent),
     data: {
