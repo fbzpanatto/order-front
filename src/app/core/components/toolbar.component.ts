@@ -1,11 +1,12 @@
 import { Component, inject } from '@angular/core';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { EventType, NavigationEnd, Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { AsideService } from '../../shared/services/aside.service';
 import { BackButtonDirective } from '../../shared/directives/backButton.directive';
 import { ClickOutsideDirective } from '../../shared/directives/clickOutside.directive';
 import { UserMenuAnimation } from '../../shared/animations/userMenuAnimation';
 import { UserMenuService } from '../../shared/services/userMenu.service';
 import { ToolbarMenuService } from '../../shared/services/toolbarMenu.service';
+import { filter } from 'rxjs';
 
 @Component({
   selector: 'app-toolbar',
@@ -17,9 +18,20 @@ import { ToolbarMenuService } from '../../shared/services/toolbarMenu.service';
 })
 export class ToolbarComponent {
 
+  private router = inject(Router)
   private asideService = inject(AsideService)
   private userMenuService = inject(UserMenuService)
   private toolbarMenuService = inject(ToolbarMenuService)
+
+  ngOnInit() {
+    this.router.events
+      .pipe(
+        filter(event => event instanceof NavigationEnd)
+      )
+      .subscribe(item => {
+        this.userMenuService.changeFlag(false)
+      })
+  }
 
   changeAsideFlag(): void { this.asideService.changeFlag() }
   changeMenuUserFlag(value?: boolean) { this.userMenuService.changeFlag(value) }
