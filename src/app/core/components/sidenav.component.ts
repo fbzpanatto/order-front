@@ -22,8 +22,5 @@ export class SidenavComponent {
 
     get asideFlag() { return this.asideService.flag }
     get menuName() { return this.toolbarMenuService.menuName }
-    get condition() {
-        console.log('this.menuName', this.menuName)
-         return this.menuName === environment.DEFAULT 
-        }
+    get condition() { return this.menuName === environment.DEFAULT }
 }
