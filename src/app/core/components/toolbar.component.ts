@@ -7,6 +7,7 @@ import { UserMenuAnimation } from '../../shared/animations/userMenuAnimation';
 import { UserMenuService } from '../../shared/services/userMenu.service';
 import { ToolbarMenuService } from '../../shared/services/toolbarMenu.service';
 import { filter } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-toolbar',
@@ -40,4 +41,8 @@ export class ToolbarComponent {
 
   get menuArray() { return this.toolbarMenuService.menuArray }
   get menuName() { return this.toolbarMenuService.menuName }
+
+  get default() {
+    return environment.DEFAULT
+  }
 }

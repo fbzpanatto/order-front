@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { environment } from '../../../environments/environment';
 
 interface Menu { id: number, routerLink: string, iClass: string, title: string, toolbar: boolean, userMenu: boolean }
 
@@ -7,10 +8,10 @@ interface Menu { id: number, routerLink: string, iClass: string, title: string, 
 })
 export class ToolbarMenuService {
 
-  #menuName = 'default'
+  #menuName = environment.DEFAULT
 
   get menuArray() {
-    return this.menuName === 'default' ?
+    return this.menuName === environment.DEFAULT ?
       this.defaultMenu :
       this.settingsMenu
   }
