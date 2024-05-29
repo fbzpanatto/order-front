@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { EventType, NavigationEnd, Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { NavigationEnd, Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { AsideService } from '../../shared/services/aside.service';
 import { BackButtonDirective } from '../../shared/directives/backButton.directive';
 import { ClickOutsideDirective } from '../../shared/directives/clickOutside.directive';
@@ -25,12 +25,8 @@ export class ToolbarComponent {
 
   ngOnInit() {
     this.router.events
-      .pipe(
-        filter(event => event instanceof NavigationEnd)
-      )
-      .subscribe(item => {
-        this.userMenuService.changeFlag(false)
-      })
+      .pipe(filter(event => event instanceof NavigationEnd))
+      .subscribe(_ => this.userMenuService.changeFlag(false))
   }
 
   changeAsideFlag(): void { this.asideService.changeFlag() }

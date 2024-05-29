@@ -23,18 +23,22 @@
       <ul>
         @if(menuName === 'default') {
         @for(item of settingsMenu; track item.id){
+        @if(item.userMenu) {
         <li [routerLink]="item.routerLink" routerLinkActive="active">
           <span><i [class]="item.iClass"></i></span>
           <span>{{ item.title }}</span>
         </li>
+        }
         }
         }
         @else {
         @for(item of defaultMenu; track item.id){
+        @if(item.userMenu) {
         <li [routerLink]="item.routerLink" routerLinkActive="active">
           <span><i [class]="item.iClass"></i></span>
           <span>{{ item.title }}</span>
         </li>
+        }
         }
         }
       </ul>

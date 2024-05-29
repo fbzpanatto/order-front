@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-interface Menu { id: number, routerLink: string, iClass: string, title: string, toolbar: boolean }
+interface Menu { id: number, routerLink: string, iClass: string, title: string, toolbar: boolean, userMenu: boolean }
 
 @Injectable({
   providedIn: 'root'
@@ -25,21 +25,32 @@ export class ToolbarMenuService {
         routerLink: 'user',
         iClass: 'fa-solid fa-user-pen',
         title: 'Editar usuário',
-        toolbar: true
+        toolbar: true,
+        userMenu: true
       },
       {
         id: 2,
         routerLink: 'parameters',
         iClass: 'fa-solid fa-screwdriver-wrench',
         title: 'Parâmetros',
-        toolbar: true
+        toolbar: true,
+        userMenu: true
       },
       {
         id: 3,
+        routerLink: 'home',
+        iClass: 'fa-solid fa-desktop',
+        title: 'Voltar ao Sistema',
+        toolbar: true,
+        userMenu: false
+      },
+      {
+        id: 4,
         routerLink: 'login',
         iClass: 'fa-solid fa-right-from-bracket',
         title: 'Sair',
-        toolbar: false
+        toolbar: false,
+        userMenu: true
       },
     ]
   }
@@ -51,35 +62,40 @@ export class ToolbarMenuService {
         routerLink: 'home',
         iClass: 'fa-solid fa-house',
         title: 'Home',
-        toolbar: true
+        toolbar: true,
+        userMenu: true
       },
       {
         id: 2,
         routerLink: 'customers',
         iClass: 'fa-solid fa-user-group',
         title: 'Clientes',
-        toolbar: true
+        toolbar: true,
+        userMenu: true
       },
       {
         id: 3,
         routerLink: 'orders',
         iClass: 'fa-solid fa-list',
         title: 'Pedidos',
-        toolbar: true
+        toolbar: true,
+        userMenu: true
       },
       {
         id: 4,
         routerLink: 'products',
         iClass: 'fa-solid fa-box',
         title: 'Produtos',
-        toolbar: true
+        toolbar: true,
+        userMenu: true
       },
       {
         id: 5,
         routerLink: 'login',
         iClass: 'fa-solid fa-right-from-bracket',
         title: 'Sair',
-        toolbar: false
+        toolbar: false,
+        userMenu: true
       },
     ]
   }
