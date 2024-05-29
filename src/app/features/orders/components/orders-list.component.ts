@@ -3,6 +3,9 @@ import { AsideComponent } from "../../../core/components/aside.component";
 import { AsideService } from '../../../shared/services/aside.service';
 import { CommonModule } from '@angular/common';
 import { AsideConditionAnimation } from '../../../shared/animations/asideAnimation';
+import { ActivatedRoute } from '@angular/router';
+import { environment } from '../../../../environments/environment';
+import { ToolbarMenuService } from '../../../shared/services/toolbarMenu.service';
 
 @Component({
     selector: 'app-orders-list',
@@ -15,6 +18,12 @@ import { AsideConditionAnimation } from '../../../shared/animations/asideAnimati
 export class OrdersListComponent {
 
     private asideService = inject(AsideService)
+    private route = inject(ActivatedRoute)
+    private toolbarMenuService = inject(ToolbarMenuService)
+
+    ngOnInit() {
+        this.toolbarMenuService.currentMenu = this.route.snapshot.data[environment.MENU]
+    }
 
     get asideFlag() { return this.asideService.flag }
 

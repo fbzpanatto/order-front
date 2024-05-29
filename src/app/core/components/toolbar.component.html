@@ -42,7 +42,7 @@
 <div class="toolbar-down">
   <nav class="menu-item">
     <ul>
-      @for(item of menuOptions; track item.id){
+      @for(item of menu; track item.id){
       <li [routerLink]="item.routerLink" routerLinkActive="active">
         <span><i [class]="item.iClass"></i></span>
         <span>{{ item.title }}</span>

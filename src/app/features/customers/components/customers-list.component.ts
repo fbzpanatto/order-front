@@ -4,6 +4,8 @@ import { AsideService } from '../../../shared/services/aside.service';
 import { AsideConditionAnimation } from '../../../shared/animations/asideAnimation';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
+import { ToolbarMenuService } from '../../../shared/services/toolbarMenu.service';
+import { environment } from '../../../../environments/environment';
 
 @Component({
     selector: 'app-customers-list',
@@ -14,12 +16,13 @@ import { ActivatedRoute } from '@angular/router';
     animations: [AsideConditionAnimation]
 })
 export class CustomersListComponent {
-    
+
     private asideService = inject(AsideService)
     private route = inject(ActivatedRoute)
+    private toolbarMenuService = inject(ToolbarMenuService)
 
     ngOnInit() {
-        console.log('this.route.data', this.route.snapshot.data['teste'])
+        this.toolbarMenuService.currentMenu = this.route.snapshot.data[environment.MENU]
     }
 
     get asideFlag() { return this.asideService.flag }

@@ -1,4 +1,5 @@
 export const environment = {
   API_URL: 'http://localhost:3000/',
-  COMMAND: 'command'
+  COMMAND: 'command',
+  MENU: 'menu'
 }
