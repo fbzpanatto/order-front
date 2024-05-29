@@ -1,7 +1,7 @@
 <div class="sidenav-container">
   <app-toolbar></app-toolbar>
   <div class="principal-container">
-    @if(asideFlag()){
+    @if(asideFlag() && condition){
     <app-aside [@conditionalTrigger]="asideFlag() ? 'shown': 'notshown'">
     </app-aside>
     }

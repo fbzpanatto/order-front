@@ -1,4 +1,5 @@
 import { Component, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { environment } from '../../../../environments/environment';
 import { ToolbarMenuService } from '../../../shared/services/toolbarMenu.service';
@@ -6,9 +7,10 @@ import { ToolbarMenuService } from '../../../shared/services/toolbarMenu.service
 @Component({
   selector: 'app-parameters',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './parameters.component.html',
-  styleUrl: './parameters.component.scss'
+  styleUrls: ['./parameters.component.scss', '../../../styles/resource.scss'],
+
 })
 export class ParametersComponent {
 
