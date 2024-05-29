@@ -15,9 +15,7 @@ export class ToolbarMenuService {
       this.settingsMenu
   }
 
-  get currentMenu() {
-    return this.#currentMenu
-  }
+  get currentMenu() { return this.#currentMenu }
   set currentMenu(param: string) { this.#currentMenu = param }
 
   get settingsMenu(): Menu[] {
