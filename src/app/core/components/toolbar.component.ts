@@ -4,6 +4,7 @@ import { AsideService } from '../../shared/services/aside.service';
 import { BackButtonDirective } from '../../shared/directives/backButton.directive';
 import { ClickOutsideDirective } from '../../shared/directives/clickOutside.directive';
 import { UserMenuAnimation } from '../../shared/animations/userMenuAnimation';
+import { UserMenuService } from '../../shared/services/userMenu.service';
 
 @Component({
   selector: 'app-toolbar',
@@ -15,13 +16,12 @@ import { UserMenuAnimation } from '../../shared/animations/userMenuAnimation';
 })
 export class ToolbarComponent {
 
-  isOpen = false;
-
   private asideService = inject(AsideService)
+  private userMenuService = inject(UserMenuService)
 
   changeAsideFlag() { this.asideService.changeFlag() }
-
-  changeMenuUserFlag() { this.isOpen = !this.isOpen }
+  changeMenuUserFlag(value?: boolean) { this.userMenuService.changeFlag(value) }
 
   get asideFlag() { return this.asideService.flag }
+  get userMenuFlag() { return this.userMenuService.flag }
 }

@@ -14,11 +14,11 @@
         <span>FP</span>
       </div>
       <span>
-        <i [class]="isOpen ? 'fa-solid fa-chevron-up' : 'fa-solid fa-chevron-down' "></i>
+        <i [class]="userMenuFlag() ? 'fa-solid fa-chevron-up' : 'fa-solid fa-chevron-down' "></i>
       </span>
     </button>
-    @if(isOpen){
-    <div #dropdownElement class="menu-container" [appOutSideClick]="isOpen" (outSideClick)="isOpen = false"
+    @if(userMenuFlag()){
+    <div class="menu-container" [appOutSideClick]="userMenuFlag()" (outSideClick)="changeMenuUserFlag(false)"
       [@conditionalTrigger]="asideFlag() ? 'shown': 'notshown'">
       <ul>
         <li>
