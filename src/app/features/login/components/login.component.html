@@ -1,1 +1,27 @@
-<p>login works!</p>
+<div class="container mat-elevation-z4">
+  <div class="header">
+    <h1>Bem-vindo</h1>
+    <span>A</span>
+  </div>
+  <div class="content">
+    <form [formGroup]="form">
+      <div>
+        <input placeholder="usuário" formControlName="username" autocomplete="false">
+        <span><i class="fa-solid fa-user"></i></span>
+      </div>
+      <div>
+        <input placeholder="senha" formControlName="password" [type]="isPasswordType ? 'password' : 'text'"
+          autocomplete="false">
+        <span><i [class]="isPasswordType ?  'fa-solid fa-eye-slash' : 'fa-solid fa-eye' "></i></span>
+      </div>
+    </form>
+  </div>
+  <div class="footer">
+    <button mat-flat-button [disabled]="!form.valid || form.pristine" color="primary" (click)="login()">
+      <span>Entrar</span>
+      <span><i class="fa-solid fa-right-to-bracket"></i></span>
+    </button>
+    <button mat-button (click)="resetPassword()" [disabled]="form.controls['username'].invalid">esqueceu a
+      senha?</button>
+  </div>
+</div>
