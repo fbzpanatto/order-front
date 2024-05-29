@@ -8,6 +8,7 @@ import { UserMenuService } from '../../shared/services/userMenu.service';
 import { ToolbarMenuService } from '../../shared/services/toolbarMenu.service';
 import { filter } from 'rxjs';
 import { environment } from '../../../environments/environment';
+import { AuthService } from '../../shared/services/auth.service';
 
 @Component({
   selector: 'app-toolbar',
@@ -20,6 +21,7 @@ import { environment } from '../../../environments/environment';
 export class ToolbarComponent {
 
   private router = inject(Router)
+  private authService = inject(AuthService)
   private asideService = inject(AsideService)
   private userMenuService = inject(UserMenuService)
   private toolbarMenuService = inject(ToolbarMenuService)
@@ -30,7 +32,10 @@ export class ToolbarComponent {
       .subscribe(_ => this.userMenuService.changeFlag(false))
   }
 
+  logout() { this.authService.logout() }
+
   changeAsideFlag(): void { this.asideService.changeFlag() }
+
   changeMenuUserFlag(value?: boolean) { this.userMenuService.changeFlag(value) }
 
   get asideFlag() { return this.asideService.flag }

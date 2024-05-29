@@ -28,21 +28,31 @@
       <ul>
         @if(menuName === default) {
           @for(item of settingsMenu; track item.id){
-            @if(item.userMenu) {
+            @if(item.userMenu && !item.isLogout) {
             <li [routerLink]="item.routerLink" routerLinkActive="active">
               <span><i [class]="item.iClass"></i></span>
               <span>{{ item.title }}</span>
             </li>
+            }@else if(item.isLogout) {
+              <li (click)="logout()">
+                <span><i [class]="item.iClass"></i></span>
+                <span>{{ item.title }}</span>
+              </li>
             }
           }
         }
         @else {
           @for(item of defaultMenu; track item.id){
-            @if(item.userMenu) {
+            @if(item.userMenu && !item.isLogout) {
             <li [routerLink]="item.routerLink" routerLinkActive="active">
               <span><i [class]="item.iClass"></i></span>
               <span>{{ item.title }}</span>
             </li>
+            }@else if(item.isLogout) {
+              <li (click)="logout()">
+                <span><i [class]="item.iClass"></i></span>
+                <span>{{ item.title }}</span>
+              </li>
             }
           }
         }

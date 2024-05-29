@@ -92,14 +92,10 @@ export const routes: Routes = [
     ]
   },
   {
-    path: 'login',
+    path: 'auth',
     title: 'Login',
-    children: [
-      {
-        path: '',
-        loadComponent: () => import('./features/login/components/login.component').then(m => m.LoginComponent),
-      }
-    ]
+    outlet: 'login',
+    loadComponent: () => import('./features/login/components/login.component').then(m => m.LoginComponent),
   },
   {
     path: '**',

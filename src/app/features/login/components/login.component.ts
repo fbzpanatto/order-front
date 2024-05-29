@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from "@angular/forms";
+import { AuthService } from '../../../shared/services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -11,8 +12,10 @@ import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from "@angu
 })
 export class LoginComponent {
 
-  isPasswordType = true;
   private fb = inject(FormBuilder)
+  private authService = inject(AuthService)
+
+  isPasswordType = true;
 
   form = this.fb.group({
     username: ['', [Validators.required, Validators.minLength(4)]],
@@ -20,7 +23,7 @@ export class LoginComponent {
   });
 
   login() {
-    
+    this.authService.login()
   }
 
   resetPassword() {
