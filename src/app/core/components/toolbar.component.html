@@ -18,7 +18,8 @@
       </span>
     </button>
     @if(isOpen){
-    <div #dropdownElement class="menu-container" [appOutSideClick]="isOpen" (outSideClick)="isOpen = false">
+    <div #dropdownElement class="menu-container" [appOutSideClick]="isOpen" (outSideClick)="isOpen = false"
+      [@conditionalTrigger]="asideFlag() ? 'shown': 'notshown'">
       <ul>
         <li>
           <i class="fa-solid fa-screwdriver-wrench"></i>
