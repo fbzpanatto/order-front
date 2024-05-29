@@ -22,7 +22,7 @@ export class HomeComponent {
     private toolbarMenuService = inject(ToolbarMenuService)
 
     ngOnInit() {
-        this.toolbarMenuService.currentMenu = this.route.snapshot.data[environment.MENU]
+        this.toolbarMenuService.menuName = this.route.snapshot.data[environment.MENU]
     }
 
     get asideFlag() { return this.asideService.flag }

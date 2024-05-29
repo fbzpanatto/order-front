@@ -7,16 +7,16 @@ interface Menu { id: number, routerLink: string, iClass: string, title: string, 
 })
 export class ToolbarMenuService {
 
-  #currentMenu = 'default'
+  #menuName = 'default'
 
-  get menu() {
-    return this.currentMenu === 'default' ?
+  get menuArray() {
+    return this.menuName === 'default' ?
       this.defaultMenu :
       this.settingsMenu
   }
 
-  get currentMenu() { return this.#currentMenu }
-  set currentMenu(param: string) { this.#currentMenu = param }
+  get menuName() { return this.#menuName }
+  set menuName(param: string) { this.#menuName = param }
 
   get settingsMenu(): Menu[] {
     return [

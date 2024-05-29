@@ -30,6 +30,6 @@ export class ToolbarComponent {
   get settingsMenu() { return this.toolbarMenuService.settingsMenu }
   get defaultMenu() { return this.toolbarMenuService.defaultMenu }
 
-  get menu() { return this.toolbarMenuService.menu }
-  get currentMenu() { return this.toolbarMenuService.currentMenu }
+  get menuArray() { return this.toolbarMenuService.menuArray }
+  get menuName() { return this.toolbarMenuService.menuName }
 }

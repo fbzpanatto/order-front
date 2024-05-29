@@ -16,6 +16,6 @@ export class ParametersComponent {
   private toolbarMenuService = inject(ToolbarMenuService)
 
   ngOnInit() {
-    this.toolbarMenuService.currentMenu = this.route.snapshot.data[environment.MENU]
+    this.toolbarMenuService.menuName = this.route.snapshot.data[environment.MENU]
   }
 }
