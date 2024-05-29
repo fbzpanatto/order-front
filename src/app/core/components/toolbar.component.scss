@@ -18,6 +18,7 @@
     display: flex;
     justify-content: space-between;
     padding: 20px 32px;
+    background-color: #fafafa;
 
     h2 {
       flex: 1;
@@ -37,10 +38,11 @@
         gap: 16px;
         align-items: center;
         border-radius: 20px;
-        border: none;
+        border: 1px solid rgb(180, 180, 180);
         padding: 10px 20px;
         cursor: pointer;
         background-color: #ebebeb;
+        height: 40px;
 
         &:hover {
           background-color: rgb(224, 224, 224);
@@ -86,7 +88,7 @@
         position: absolute;
         top: 48px;
         width: 200px;
-        background-color: rgb(248, 248, 248);
+        background-color: #f3f3f3;
         border-radius: 8px;
         z-index: 200;
         box-shadow: 0 4px 5px rgba(0, 0, 0, 0.15);
