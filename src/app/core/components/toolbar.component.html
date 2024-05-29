@@ -37,10 +37,12 @@
   <nav class="menu-item">
     <ul>
       @for(item of menu; track item.id){
+      @if(item.toolbar){
       <li [routerLink]="item.routerLink" routerLinkActive="active">
         <span><i [class]="item.iClass"></i></span>
         <span>{{ item.title }}</span>
       </li>
+      }
       }
     </ul>
   </nav>
