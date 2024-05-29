@@ -1,8 +1,8 @@
 import { inject } from '@angular/core';
-import { Router, type CanActivateFn } from '@angular/router';
+import { Router, type CanActivateChildFn } from '@angular/router';
 import { AuthService } from '../../shared/services/auth.service';
 
-export const authGuard: CanActivateFn = (route, state) => {
+export const authChildGuard: CanActivateChildFn = (childRoute, state) => {
 
   const authService = inject(AuthService)
   const router = inject(Router)

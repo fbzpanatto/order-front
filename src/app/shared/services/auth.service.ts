@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 })
 export class AuthService {
 
-  #isAuth = false
+  #isAuth = true
 
   private router = inject(Router)
 
@@ -16,8 +16,8 @@ export class AuthService {
   }
 
   login() {
-    this.isAuth = true
     this.router.navigate(['/'])
+    this.isAuth = true
   }
 
   get isAuth() { return this.#isAuth }

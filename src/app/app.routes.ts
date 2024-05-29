@@ -1,11 +1,12 @@
 import { Routes } from '@angular/router';
 import { authGuard } from './core/guards/auth.guard';
+import { authChildGuard } from './core/guards/authChild.guard';
 
 export const routes: Routes = [
   {
     path: '',
     redirectTo: '/home',
-    pathMatch: 'full'
+    pathMatch: 'full',
   },
   {
     path: 'home',
@@ -13,11 +14,13 @@ export const routes: Routes = [
     loadComponent: () => import('./features/home/components/home.component').then(m => m.HomeComponent),
     data: {
       menu: 'default'
-    }
+    },
   },
   {
     path: 'customers',
     title: 'Clientes',
+    canActivate: [authGuard],
+    canActivateChild: [authChildGuard],
     children: [
       {
         path: '',
@@ -29,13 +32,14 @@ export const routes: Routes = [
       {
         path: ':command',
         loadComponent: () => import('./features/customers/components/customers-form.component').then(m => m.CustomersFormComponent),
-        canActivate: [authGuard]
       },
     ]
   },
   {
     path: 'orders',
     title: 'Pedidos',
+    canActivate: [authGuard],
+    canActivateChild: [authChildGuard],
     children: [
       {
         path: '',
@@ -47,13 +51,14 @@ export const routes: Routes = [
       {
         path: ':command',
         loadComponent: () => import('./features/orders/components/orders-form.component').then(m => m.OrdersFormComponent),
-        canActivate: [authGuard]
       },
     ]
   },
   {
     path: 'products',
     title: 'Produtos',
+    canActivate: [authGuard],
+    canActivateChild: [authChildGuard],
     children: [
       {
         path: '',
@@ -64,8 +69,7 @@ export const routes: Routes = [
       },
       {
         path: ':command',
-        loadComponent: () => import('./features/products/components/products-list.component').then(m => m.ProductsListComponent),
-        canActivate: [authGuard]
+        loadComponent: () => import('./features/products/components/products-form.component').then(m => m.ProductsFormComponent),
       },
     ]
   },
