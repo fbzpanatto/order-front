@@ -3,6 +3,7 @@ import { AsideComponent } from "../../../core/components/aside.component";
 import { AsideService } from '../../../shared/services/aside.service';
 import { AsideConditionAnimation } from '../../../shared/animations/asideAnimation';
 import { CommonModule } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
     selector: 'app-customers-list',
@@ -15,6 +16,11 @@ import { CommonModule } from '@angular/common';
 export class CustomersListComponent {
     
     private asideService = inject(AsideService)
+    private route = inject(ActivatedRoute)
+
+    ngOnInit() {
+        console.log('this.route.data', this.route.snapshot.data['teste'])
+    }
 
     get asideFlag() { return this.asideService.flag }
 }

@@ -5,8 +5,7 @@ import { BackButtonDirective } from '../../shared/directives/backButton.directiv
 import { ClickOutsideDirective } from '../../shared/directives/clickOutside.directive';
 import { UserMenuAnimation } from '../../shared/animations/userMenuAnimation';
 import { UserMenuService } from '../../shared/services/userMenu.service';
-
-interface Menu { id: number, routerLink: string, iClass: string, title: string }
+import { ToolbarMenuService } from '../../shared/services/toolbarMenu.service';
 
 @Component({
   selector: 'app-toolbar',
@@ -20,45 +19,15 @@ export class ToolbarComponent {
 
   private asideService = inject(AsideService)
   private userMenuService = inject(UserMenuService)
+  private toolbarMenuService = inject(ToolbarMenuService)
 
-  changeAsideFlag() { this.asideService.changeFlag() }
+  changeAsideFlag(): void { this.asideService.changeFlag() }
   changeMenuUserFlag(value?: boolean) { this.userMenuService.changeFlag(value) }
 
   get asideFlag() { return this.asideService.flag }
   get userMenuFlag() { return this.userMenuService.flag }
 
-  get userMenuOptions() {
-    return [
-
-    ]
-  }
-
-  get systemOptions(): Menu[] {
-    return [
-      {
-        id: 1,
-        routerLink: 'home',
-        iClass: 'fa-solid fa-house',
-        title: 'Home'
-      },
-      {
-        id: 2,
-        routerLink: 'customers',
-        iClass: 'fa-solid fa-user-group',
-        title: 'Clientes'
-      },
-      {
-        id: 3,
-        routerLink: 'orders',
-        iClass: 'fa-solid fa-list',
-        title: 'Pedidos'
-      },
-      {
-        id: 4,
-        routerLink: 'products',
-        iClass: 'fa-solid fa-box',
-        title: 'Produtos'
-      }
-    ]
+  get menuOptions() {
+    return this.toolbarMenuService.defaultMenu
   }
 }

@@ -9,7 +9,10 @@ export const routes: Routes = [
   {
     path: 'home',
     title: 'Home',
-    loadComponent: () => import('./features/home/components/home.component').then(m => m.HomeComponent)
+    loadComponent: () => import('./features/home/components/home.component').then(m => m.HomeComponent),
+    data: {
+      menu: 'default'
+    },
   },
   {
     path: 'customers',
@@ -17,7 +20,10 @@ export const routes: Routes = [
     children: [
       {
         path: '',
-        loadComponent: () => import('./features/customers/components/customers-list.component').then(m => m.CustomersListComponent)
+        loadComponent: () => import('./features/customers/components/customers-list.component').then(m => m.CustomersListComponent),
+        data: {
+          menu: 'default'
+        },
       },
       {
         path: ':command',
@@ -31,7 +37,10 @@ export const routes: Routes = [
     children: [
       {
         path: '',
-        loadComponent: () => import('./features/orders/components/orders-list.component').then(m => m.OrdersListComponent)
+        loadComponent: () => import('./features/orders/components/orders-list.component').then(m => m.OrdersListComponent),
+        data: {
+          menu: 'default'
+        },
       },
       {
         path: ':command',
@@ -45,7 +54,10 @@ export const routes: Routes = [
     children: [
       {
         path: '',
-        loadComponent: () => import('./features/products/components/products-list.component').then(m => m.ProductsListComponent)
+        loadComponent: () => import('./features/products/components/products-list.component').then(m => m.ProductsListComponent),
+        data: {
+          menu: 'default'
+        },
       },
       {
         path: ':command',
@@ -55,6 +67,9 @@ export const routes: Routes = [
   },
   {
     path: '**',
-    loadComponent: () => import('./features/home/components/home.component').then(m => m.HomeComponent)
+    loadComponent: () => import('./features/home/components/home.component').then(m => m.HomeComponent),
+    data: {
+      menu: 'default'
+    },
   }
 ];
