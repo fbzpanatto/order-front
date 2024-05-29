@@ -2,8 +2,7 @@
   <app-toolbar></app-toolbar>
   <div class="principal-container">
     @if(asideFlag() && condition){
-    <app-aside [@conditionalTrigger]="asideFlag() ? 'shown': 'notshown'">
-    </app-aside>
+      <app-aside [@conditionalTrigger]="asideFlag() ? 'shown': 'notshown'"></app-aside>
     }
     <main class="resource-container" [ngClass]="asideFlag() ? 'small' : 'large'">
       <ng-content></ng-content>
