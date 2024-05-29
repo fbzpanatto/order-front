@@ -6,6 +6,8 @@ import { ClickOutsideDirective } from '../../shared/directives/clickOutside.dire
 import { UserMenuAnimation } from '../../shared/animations/userMenuAnimation';
 import { UserMenuService } from '../../shared/services/userMenu.service';
 
+interface Menu { id: number, routerLink: string, iClass: string, title: string }
+
 @Component({
   selector: 'app-toolbar',
   standalone: true,
@@ -24,4 +26,39 @@ export class ToolbarComponent {
 
   get asideFlag() { return this.asideService.flag }
   get userMenuFlag() { return this.userMenuService.flag }
+
+  get userMenuOptions() {
+    return [
+
+    ]
+  }
+
+  get systemOptions(): Menu[] {
+    return [
+      {
+        id: 1,
+        routerLink: 'home',
+        iClass: 'fa-solid fa-house',
+        title: 'Home'
+      },
+      {
+        id: 2,
+        routerLink: 'customers',
+        iClass: 'fa-solid fa-user-group',
+        title: 'Clientes'
+      },
+      {
+        id: 3,
+        routerLink: 'orders',
+        iClass: 'fa-solid fa-list',
+        title: 'Pedidos'
+      },
+      {
+        id: 4,
+        routerLink: 'products',
+        iClass: 'fa-solid fa-box',
+        title: 'Produtos'
+      }
+    ]
+  }
 }

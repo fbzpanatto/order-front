@@ -42,22 +42,12 @@
 <div class="toolbar-down">
   <nav class="menu-item">
     <ul>
-      <li routerLink="home" routerLinkActive="active">
-        <span><i class="fa-solid fa-house"></i></span>
-        <span>Home</span>
+      @for(item of systemOptions; track item.id){
+      <li [routerLink]="item.routerLink" routerLinkActive="active">
+        <span><i [class]="item.iClass"></i></span>
+        <span>{{ item.title }}</span>
       </li>
-      <li routerLink="customers" routerLinkActive="active">
-        <span><i class="fa-solid fa-user-group"></i></span>
-        <span>Clientes</span>
-      </li>
-      <li routerLink="orders" routerLinkActive="active">
-        <span><i class="fa-solid fa-list"></i></span>
-        <span>Pedidos</span>
-      </li>
-      <li routerLink="products" routerLinkActive="active">
-        <span><i class="fa-solid fa-box"></i></span>
-        <span>Produtos</span>
-      </li>
+      }
     </ul>
   </nav>
   <button backButton class="back-btn">
