@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 })
 export class AuthService {
 
-  #isAuth = true
+  #isAuth = false
 
   private router = inject(Router)
 
