@@ -28,5 +28,8 @@ export class ToolbarComponent {
   get userMenuFlag() { return this.userMenuService.flag }
 
   get settingsMenu() { return this.toolbarMenuService.settingsMenu }
+  get defaultMenu() { return this.toolbarMenuService.defaultMenu }
+
   get menu() { return this.toolbarMenuService.menu }
+  get currentMenu() { return this.toolbarMenuService.currentMenu }
 }

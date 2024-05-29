@@ -21,12 +21,23 @@
     <div class="menu-container" [appOutSideClick]="userMenuFlag()" (outSideClick)="changeMenuUserFlag(false)"
       [@conditionalTrigger]="asideFlag() ? 'shown': 'notshown'">
       <ul>
+        @if(currentMenu === 'default') {
         @for(item of settingsMenu; track item.id){
         <li [routerLink]="item.routerLink" routerLinkActive="active">
           <span><i [class]="item.iClass"></i></span>
           <span>{{ item.title }}</span>
         </li>
         }
+        }
+        @else {
+        @for(item of defaultMenu; track item.id){
+        <li [routerLink]="item.routerLink" routerLinkActive="active">
+          <span><i [class]="item.iClass"></i></span>
+          <span>{{ item.title }}</span>
+        </li>
+        }
+        }
+
       </ul>
     </div>
     }
