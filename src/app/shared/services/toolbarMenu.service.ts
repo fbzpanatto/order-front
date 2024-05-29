@@ -15,10 +15,12 @@ export class ToolbarMenuService {
       this.settingsMenu
   }
 
-  get currentMenu() { return this.#currentMenu }
+  get currentMenu() {
+    return this.#currentMenu
+  }
   set currentMenu(param: string) { this.#currentMenu = param }
 
-  private get settingsMenu() {
+  get settingsMenu() {
     return [
       {
         id: 1,
@@ -35,7 +37,7 @@ export class ToolbarMenuService {
     ]
   }
 
-  private get defaultMenu(): Menu[] {
+  get defaultMenu(): Menu[] {
     return [
       {
         id: 1,

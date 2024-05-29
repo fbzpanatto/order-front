@@ -1,6 +1,5 @@
 import { Component, inject } from '@angular/core';
 import { AsideComponent } from "../../../core/components/aside.component";
-import { AsideService } from '../../../shared/services/aside.service';
 import { CommonModule } from '@angular/common';
 import { AsideConditionAnimation } from '../../../shared/animations/asideAnimation';
 import { ActivatedRoute } from '@angular/router';
@@ -17,14 +16,10 @@ import { ToolbarMenuService } from '../../../shared/services/toolbarMenu.service
 })
 export class OrdersListComponent {
 
-    private asideService = inject(AsideService)
     private route = inject(ActivatedRoute)
     private toolbarMenuService = inject(ToolbarMenuService)
 
     ngOnInit() {
         this.toolbarMenuService.currentMenu = this.route.snapshot.data[environment.MENU]
     }
-
-    get asideFlag() { return this.asideService.flag }
-
 }

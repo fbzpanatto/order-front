@@ -66,6 +66,32 @@ export const routes: Routes = [
     ]
   },
   {
+    path: 'user',
+    title: 'Configurações do Usuário',
+    children: [
+      {
+        path: '',
+        loadComponent: () => import('./features/users/components/users.component').then(m => m.UsersComponent),
+        data: {
+          menu: 'settings'
+        },
+      }
+    ]
+  },
+  {
+    path: 'parameters',
+    title: 'Parâmetros do Sistema',
+    children: [
+      {
+        path: '',
+        loadComponent: () => import('./features/parameters/components/parameters.component').then(m => m.ParametersComponent),
+        data: {
+          menu: 'settings'
+        },
+      }
+    ]
+  },
+  {
     path: '**',
     loadComponent: () => import('./features/home/components/home.component').then(m => m.HomeComponent),
     data: {

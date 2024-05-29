@@ -21,18 +21,12 @@
     <div class="menu-container" [appOutSideClick]="userMenuFlag()" (outSideClick)="changeMenuUserFlag(false)"
       [@conditionalTrigger]="asideFlag() ? 'shown': 'notshown'">
       <ul>
-        <li>
-          <i class="fa-solid fa-screwdriver-wrench"></i>
-          <span>Parâmetros</span>
+        @for(item of settingsMenu; track item.id){
+        <li [routerLink]="item.routerLink" routerLinkActive="active">
+          <span><i [class]="item.iClass"></i></span>
+          <span>{{ item.title }}</span>
         </li>
-        <li>
-          <i class="fa-solid fa-user-pen"></i>
-          <span>Editar usuário</span>
-        </li>
-        <li>
-          <i class="fa-solid fa-right-from-bracket"></i>
-          <span>Sair</span>
-        </li>
+        }
       </ul>
     </div>
     }

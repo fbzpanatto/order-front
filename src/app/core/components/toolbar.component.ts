@@ -27,5 +27,6 @@ export class ToolbarComponent {
   get asideFlag() { return this.asideService.flag }
   get userMenuFlag() { return this.userMenuService.flag }
 
+  get settingsMenu() { return this.toolbarMenuService.settingsMenu }
   get menu() { return this.toolbarMenuService.menu }
 }
