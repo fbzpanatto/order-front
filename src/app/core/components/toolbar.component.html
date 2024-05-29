@@ -22,20 +22,20 @@
       [@conditionalTrigger]="asideFlag() ? 'shown': 'notshown'">
       <ul>
         @if(menuName === 'default') {
-          @for(item of settingsMenu; track item.id){
-          <li [routerLink]="item.routerLink" routerLinkActive="active">
-            <span><i [class]="item.iClass"></i></span>
-            <span>{{ item.title }}</span>
-          </li>
-          }
+        @for(item of settingsMenu; track item.id){
+        <li [routerLink]="item.routerLink" routerLinkActive="active">
+          <span><i [class]="item.iClass"></i></span>
+          <span>{{ item.title }}</span>
+        </li>
+        }
         }
         @else {
-          @for(item of defaultMenu; track item.id){
-          <li [routerLink]="item.routerLink" routerLinkActive="active">
-            <span><i [class]="item.iClass"></i></span>
-            <span>{{ item.title }}</span>
-          </li>
-          }
+        @for(item of defaultMenu; track item.id){
+        <li [routerLink]="item.routerLink" routerLinkActive="active">
+          <span><i [class]="item.iClass"></i></span>
+          <span>{{ item.title }}</span>
+        </li>
+        }
         }
       </ul>
     </div>
@@ -47,12 +47,12 @@
   <nav class="menu-item">
     <ul>
       @for(item of menuArray; track item.id){
-        @if(item.toolbar){
-        <li [routerLink]="item.routerLink" routerLinkActive="active">
-          <span><i [class]="item.iClass"></i></span>
-          <span>{{ item.title }}</span>
-        </li>
-        }
+      @if(item.toolbar){
+      <li [routerLink]="item.routerLink" routerLinkActive="active">
+        <span><i [class]="item.iClass"></i></span>
+        <span>{{ item.title }}</span>
+      </li>
+      }
       }
     </ul>
   </nav>
