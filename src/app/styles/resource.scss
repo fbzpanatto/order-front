@@ -54,15 +54,16 @@ button {
     display: flex;
     flex-direction: column;
     gap: 48px;
-
-
+    
+    
     .inputs-container {
       display: flex;
       flex-wrap: wrap;
       gap: 48px;
     }
-
+    
     .input-container {
+      position: relative;
       display: flex;
       flex-direction: column;
       flex: 1 1 0;
@@ -78,12 +79,17 @@ button {
         font-size: 14px;
       }
 
+      span {
+        top: 50%;
+        position: absolute;
+      }
+
       input {
         cursor: pointer;
         outline: none;
         border: none;
         border-bottom: 1px solid #ebebeb;
-        padding: 8px;
+        padding: 8px 8px 8px 28px;
         transition: 400ms;
 
         &:focus {
