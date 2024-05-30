@@ -9,6 +9,8 @@ export const authChildGuard: CanActivateChildFn = (childRoute, state) => {
 
   console.log('authService.isAuth', authService.isAuth)
 
+  console.log('passando por aqui.......')
+
   if (authService.isAuth) { return true }
   else {
     router.navigateByUrl('/home(login:auth)')

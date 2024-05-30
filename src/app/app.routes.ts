@@ -76,20 +76,20 @@ export const routes: Routes = [
   {
     path: 'user',
     title: 'Configurações do Usuário',
+    canActivate: [authGuard],
     loadComponent: () => import('./features/users/components/users.component').then(m => m.UsersComponent),
     data: {
       menu: 'settings'
-    },
-    canActivate: [authGuard]
+    }
   },
   {
     path: 'parameters',
     title: 'Parâmetros do Sistema',
+    canActivate: [authGuard],
     loadComponent: () => import('./features/parameters/components/parameters.component').then(m => m.ParametersComponent),
     data: {
       menu: 'settings'
-    },
-    canActivate: [authGuard]
+    }
   },
   {
     path: 'auth',

@@ -14,11 +14,10 @@ import { AuthService } from './shared/services/auth.service';
 export class AppComponent {
   title = 'front';
 
+  showDefaultOutlet = false
+  showloginOutlet = true
+
   private authService = inject(AuthService)
-
-  constructor() {
-
-  }
 
   get isAuth() { return this.authService.isAuth }
 }

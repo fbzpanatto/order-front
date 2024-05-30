@@ -1,13 +1,13 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { environment } from '../../../../environments/environment';
 import { ToolbarMenuService } from '../../../shared/services/toolbarMenu.service';
 
 @Component({
     selector: 'app-orders-list',
     standalone: true,
-    imports: [CommonModule],
+    imports: [CommonModule, RouterLink],
     templateUrl: './orders-list.component.html',
     styleUrls: ['./orders-list.component.scss', '../../../styles/resource.scss']
 })

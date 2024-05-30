@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 
-interface Menu { id: number, routerLink: string, iClass: string, title: string, toolbar: boolean, userMenu: boolean, isLogout: boolean }
+interface Menu { id: number, routerLink?: string, iClass: string, title: string, toolbar: boolean, userMenu: boolean, isLogout: boolean }
 
 @Injectable({
   providedIn: 'root'
@@ -50,7 +50,6 @@ export class ToolbarMenuService {
       },
       {
         id: 4,
-        routerLink: 'login',
         iClass: 'fa-solid fa-right-from-bracket',
         title: 'Sair',
         toolbar: false,
@@ -100,7 +99,6 @@ export class ToolbarMenuService {
       },
       {
         id: 5,
-        routerLink: 'login',
         iClass: 'fa-solid fa-right-from-bracket',
         title: 'Sair',
         toolbar: false,
