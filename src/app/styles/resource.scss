@@ -54,14 +54,14 @@ button {
     display: flex;
     flex-direction: column;
     gap: 48px;
-    
-    
+
+
     .inputs-container {
       display: flex;
       flex-wrap: wrap;
       gap: 48px;
     }
-    
+
     .input-container {
       position: relative;
       display: flex;
@@ -89,13 +89,24 @@ button {
         outline: none;
         border: none;
         border-bottom: 1px solid #ebebeb;
-        padding: 8px 28px 8px 8px ;
+        padding: 8px 28px 8px 8px;
         transition: 400ms;
         letter-spacing: 0.06em;
 
         &:focus {
           border-bottom: 1px solid #333;
         }
+      }
+
+      input[type="date"]::-webkit-calendar-picker-indicator {
+        position: relative;
+        //display: none;
+        //-webkit-appearance: none;
+        width: 16px;
+        padding: 0px;
+        margin: 0px;
+        left: 26px;
+        margin-top: 10px;
       }
     }
 
