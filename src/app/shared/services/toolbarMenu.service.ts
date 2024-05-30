@@ -1,7 +1,17 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 
-interface Menu { id: number, routerLink?: string, iClass: string, title: string, toolbar: boolean, userMenu: boolean, isLogout: boolean }
+interface Menu {
+  id: number,
+  routerLink?: string,
+  iClass: string,
+  title: string,
+  toolbar: boolean,
+  userMenu: boolean,
+  authAction?: boolean,
+  isLogin?: boolean,
+  isLogout?: boolean
+}
 
 @Injectable({
   providedIn: 'root'
@@ -27,8 +37,7 @@ export class ToolbarMenuService {
         iClass: 'fa-solid fa-user-pen',
         title: 'Editar usuário',
         toolbar: true,
-        userMenu: true,
-        isLogout: false
+        userMenu: true
       },
       {
         id: 2,
@@ -36,8 +45,7 @@ export class ToolbarMenuService {
         iClass: 'fa-solid fa-screwdriver-wrench',
         title: 'Parâmetros',
         toolbar: true,
-        userMenu: true,
-        isLogout: false
+        userMenu: true
       },
       {
         id: 3,
@@ -45,8 +53,7 @@ export class ToolbarMenuService {
         iClass: 'fa-solid fa-house',
         title: 'Voltar ao Sistema',
         toolbar: true,
-        userMenu: false,
-        isLogout: false
+        userMenu: false
       },
       {
         id: 4,
@@ -54,7 +61,17 @@ export class ToolbarMenuService {
         title: 'Sair',
         toolbar: false,
         userMenu: true,
+        authAction: true,
         isLogout: true
+      },
+      {
+        id: 5,
+        iClass: 'fa-solid fa-right-to-bracket',
+        title: 'Entrar',
+        toolbar: false,
+        userMenu: true,
+        authAction: true,
+        isLogin: true
       },
     ]
   }
@@ -67,8 +84,7 @@ export class ToolbarMenuService {
         iClass: 'fa-solid fa-house',
         title: 'Home',
         toolbar: true,
-        userMenu: true,
-        isLogout: false
+        userMenu: true
       },
       {
         id: 2,
@@ -76,8 +92,7 @@ export class ToolbarMenuService {
         iClass: 'fa-solid fa-user-group',
         title: 'Clientes',
         toolbar: true,
-        userMenu: true,
-        isLogout: false
+        userMenu: true
       },
       {
         id: 3,
@@ -85,8 +100,7 @@ export class ToolbarMenuService {
         iClass: 'fa-solid fa-list',
         title: 'Pedidos',
         toolbar: true,
-        userMenu: true,
-        isLogout: false
+        userMenu: true
       },
       {
         id: 4,
@@ -94,8 +108,7 @@ export class ToolbarMenuService {
         iClass: 'fa-solid fa-box',
         title: 'Produtos',
         toolbar: true,
-        userMenu: true,
-        isLogout: false
+        userMenu: true
       },
       {
         id: 5,
@@ -103,7 +116,17 @@ export class ToolbarMenuService {
         title: 'Sair',
         toolbar: false,
         userMenu: true,
+        authAction: true,
         isLogout: true
+      },
+      {
+        id: 6,
+        iClass: 'fa-solid fa-right-to-bracket',
+        title: 'Entrar',
+        toolbar: false,
+        userMenu: true,
+        authAction: true,
+        isLogin: true
       },
     ]
   }

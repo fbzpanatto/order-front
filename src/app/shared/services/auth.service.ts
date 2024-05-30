@@ -10,6 +10,10 @@ export class AuthService {
 
   private router = inject(Router)
 
+  redirectToLoginPage() {
+    this.router.navigateByUrl('/home(login:auth)')
+  }
+
   logout() {
     this.isAuth = false
     this.router.navigateByUrl('/home(login:auth)')

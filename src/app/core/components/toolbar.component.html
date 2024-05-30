@@ -26,30 +26,21 @@
       (outSideClick)="changeMenuUserFlag(false)"
       [@conditionalTrigger]="asideFlag() ? 'shown': 'notshown'">
       <ul>
-        @if(menuName === default) {
-          @for(item of settingsMenu; track item.id){
-            @if(item.userMenu && !item.isLogout) {
-            <li [routerLink]="item.routerLink" routerLinkActive="active">
-              <span><i [class]="item.iClass"></i></span>
-              <span>{{ item.title }}</span>
-            </li>
-            }@else if(item.isLogout) {
+        @for(item of menu; track item.id){
+          @if(item.userMenu && !item.authAction) {
+          <li [routerLink]="item.routerLink" routerLinkActive="active">
+            <span><i [class]="item.iClass"></i></span>
+            <span>{{ item.title }}</span>
+          </li>
+          }@else if(item.authAction) {
+            @if(isAuth && item.isLogout){
               <li (click)="logout()">
                 <span><i [class]="item.iClass"></i></span>
                 <span>{{ item.title }}</span>
               </li>
             }
-          }
-        }
-        @else {
-          @for(item of defaultMenu; track item.id){
-            @if(item.userMenu && !item.isLogout) {
-            <li [routerLink]="item.routerLink" routerLinkActive="active">
-              <span><i [class]="item.iClass"></i></span>
-              <span>{{ item.title }}</span>
-            </li>
-            }@else if(item.isLogout) {
-              <li (click)="logout()">
+            @if(!isAuth && item.isLogin){
+              <li (click)="login()">
                 <span><i [class]="item.iClass"></i></span>
                 <span>{{ item.title }}</span>
               </li>

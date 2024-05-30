@@ -32,22 +32,23 @@ export class ToolbarComponent {
       .subscribe(_ => this.userMenuService.changeFlag(false))
   }
 
+  login() { this.authService.redirectToLoginPage() }
   logout() { this.authService.logout() }
 
   changeAsideFlag(): void { this.asideService.changeFlag() }
-
   changeMenuUserFlag(value?: boolean) { this.userMenuService.changeFlag(value) }
+
+  get isAuth() { return this.authService.isAuth }
 
   get asideFlag() { return this.asideService.flag }
   get userMenuFlag() { return this.userMenuService.flag }
 
+  get menu() { return this.menuName === this.default ? this.settingsMenu : this.defaultMenu }
   get settingsMenu() { return this.toolbarMenuService.settingsMenu }
   get defaultMenu() { return this.toolbarMenuService.defaultMenu }
 
   get menuArray() { return this.toolbarMenuService.menuArray }
   get menuName() { return this.toolbarMenuService.menuName }
 
-  get default() {
-    return environment.DEFAULT
-  }
+  get default() { return environment.DEFAULT }
 }
