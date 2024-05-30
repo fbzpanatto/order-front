@@ -19,6 +19,13 @@
     url('assets/fonts/Segoe-UI-Variable-Static-Display-Bold.ttf') format('truetype-variations');
 }
 
+@font-face {
+  font-family: 'Segoe UI Variable Display Light';
+  src:
+    local('Segoe UI Variable Display'),
+    url('assets/fonts/Segoe-UI-Variable-Static-Display-Light.ttf') format('truetype-variations');
+}
+
 
 *,
 *::before,
@@ -101,6 +108,11 @@ body {
 .small-text {
   font-family: 'Segoe UI Variable Small';
   font-size: 10px;
+}
+
+.light-text {
+  font-family: 'Segoe UI Variable Display Light';
+  font-size: 16px;
 }
 
 .medium-text {
