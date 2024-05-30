@@ -75,6 +75,10 @@ button {
         font-weight: bolder;
       }
 
+      &:focus-within span {
+        color: rgb(0, 0, 0);
+      }
+
       label {
         font-size: 12px;
       }
@@ -83,6 +87,7 @@ button {
         top: 50%;
         position: absolute;
         right: 0;
+        color: #c7c7c7;
       }
 
       input {
@@ -100,8 +105,6 @@ button {
 
       input[type="date"]::-webkit-calendar-picker-indicator {
         position: relative;
-        //display: none;
-        //-webkit-appearance: none;
         width: 16px;
         padding: 0px;
         margin: 0px;
