@@ -1,12 +1,12 @@
 import { Component, inject } from '@angular/core';
-import { ActivatedRoute, Data } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-customers-form',
   standalone: true,
   imports: [],
   templateUrl: './customers-form.component.html',
-  styleUrl: './customers-form.component.scss'
+  styleUrls: ['./customers-form.component.scss', '../../../styles/resource.scss']
 })
 export class CustomersFormComponent {
 

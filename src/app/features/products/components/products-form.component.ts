@@ -5,7 +5,7 @@ import { Component } from '@angular/core';
   standalone: true,
   imports: [],
   templateUrl: './products-form.component.html',
-  styleUrl: './products-form.component.scss'
+  styleUrls: ['./products-form.component.scss', '../../../styles/resource.scss']
 })
 export class ProductsFormComponent {
 

@@ -44,58 +44,58 @@
   .table-container {
     height: calc(100vh - $toolbarHeight - 125px);
     overflow: auto;
-  }
 
-  table {
-    width: 100%;
-    border-collapse: separate;
-    border-spacing: 0;
+    table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
 
-    thead {
-      tr {
-        th {
-          position: sticky;
-          top: 0;
-          background-color: #444;
-          padding: 8px 8px;
-          text-align: left;
-          color: #fff;
-
-          &:first-of-type {
-            border-top-left-radius: 8px;
-          }
-
-          &:last-of-type {
-            border-top-right-radius: 8px;
-          }
-        }
-      }
-    }
-
-    tbody {
-      tr {
-        td {
-          padding: 8px 8px 0;
-          border-left: 1px solid #ebebeb;
-          border-bottom: 1px solid #ebebeb;
-
-          &:last-of-type {
-            border-right: 1px solid #ebebeb;
-          }
-        }
-      }
-
-      tr {
-        &:last-of-type {
-          td {
+      thead {
+        tr {
+          th {
+            position: sticky;
+            top: 0;
+            background-color: #444;
+            padding: 8px 8px;
+            text-align: left;
+            color: #fff;
 
             &:first-of-type {
-              border-bottom-left-radius: 8px;
-
+              border-top-left-radius: 8px;
             }
 
             &:last-of-type {
-              border-bottom-right-radius: 8px;
+              border-top-right-radius: 8px;
+            }
+          }
+        }
+      }
+
+      tbody {
+        tr {
+          td {
+            padding: 8px 8px 0;
+            border-left: 1px solid #ebebeb;
+            border-bottom: 1px solid #ebebeb;
+
+            &:last-of-type {
+              border-right: 1px solid #ebebeb;
+            }
+          }
+        }
+
+        tr {
+          &:last-of-type {
+            td {
+
+              &:first-of-type {
+                border-bottom-left-radius: 8px;
+
+              }
+
+              &:last-of-type {
+                border-bottom-right-radius: 8px;
+              }
             }
           }
         }

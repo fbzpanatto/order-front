@@ -6,7 +6,7 @@ import { ActivatedRoute } from '@angular/router';
   standalone: true,
   imports: [],
   templateUrl: './orders-form.component.html',
-  styleUrl: './orders-form.component.scss'
+  styleUrls: ['./orders-form.component.scss', '../../../styles/resource.scss']
 })
 export class OrdersFormComponent {
 
