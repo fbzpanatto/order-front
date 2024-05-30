@@ -76,21 +76,22 @@ button {
       }
 
       label {
-        font-size: 14px;
+        font-size: 12px;
       }
 
       span {
         top: 50%;
         position: absolute;
+        right: 0;
       }
 
       input {
-        cursor: pointer;
         outline: none;
         border: none;
         border-bottom: 1px solid #ebebeb;
-        padding: 8px 8px 8px 28px;
+        padding: 8px 28px 8px 8px ;
         transition: 400ms;
+        letter-spacing: 0.06em;
 
         &:focus {
           border-bottom: 1px solid #333;
