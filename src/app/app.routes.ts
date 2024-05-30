@@ -92,15 +92,15 @@ export const routes: Routes = [
     }
   },
   {
-    path: 'login',
-    redirectTo: '/home(login:auth)',
-    pathMatch: 'full',
-  },
-  {
     path: 'auth',
     title: 'Login',
     outlet: 'login',
     loadComponent: () => import('./features/login/components/login.component').then(m => m.LoginComponent),
+  },
+  {
+    path: 'login',
+    redirectTo: '/home(login:auth)',
+    pathMatch: 'full',
   },
   {
     path: '**',
