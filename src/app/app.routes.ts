@@ -29,7 +29,7 @@ export const routes: Routes = [
       },
       {
         path: ':command',
-        canActivate: [authGuard],
+        // canActivate: [authGuard],
         loadComponent: () => import('./features/customers/components/customers-form.component').then(m => m.CustomersFormComponent),
       },
     ]

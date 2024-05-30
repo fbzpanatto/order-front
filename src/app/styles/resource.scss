@@ -1,5 +1,29 @@
 @import './variables.scss';
 
+button {
+  width: 110px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 20px;
+  border: 1px solid rgb(218, 218, 218);
+  padding: 10px 20px;
+  cursor: pointer;
+  background-color: #ebebeb;
+  transition: 100ms;
+  height: 40px;
+
+  &:hover {
+    background-color: rgb(224, 224, 224);
+    border: 1px solid #444
+  }
+
+  &.clear-btn {
+    background-color: #fff;
+  }
+}
+
 .container {
   position: relative;
   top: 0;
@@ -21,23 +45,56 @@
       color: #333;
       font-size: 28px;
     }
+  }
 
-    button {
-      width: 110px;
+  form {
+    padding: 36px;
+    border: 1px solid #ebebeb;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+
+
+    .inputs-container {
       display: flex;
-      gap: 16px;
-      align-items: center;
-      border-radius: 20px;
-      border: 1px solid rgb(218, 218, 218);
-      padding: 10px 20px;
-      cursor: pointer;
-      background-color: #ebebeb;
-      transition: 100ms;
-      height: 40px;
+      flex-wrap: wrap;
+      gap: 48px;
+    }
 
-      &:hover {
-        background-color: rgb(224, 224, 224);
+    .input-container {
+      display: flex;
+      flex-direction: column;
+      flex: 1 1 0;
+      gap: 4px;
+
+      &:focus-within label {
+        font-weight: bolder;
       }
+
+      label {
+        font-size: 12px;
+      }
+
+      input {
+        cursor: pointer;
+        outline: none;
+        border: none;
+        border-bottom: 1px solid #ebebeb;
+        padding: 8px;
+        transition: 400ms;
+
+        &:focus {
+          border-bottom: 1px solid #333;
+        }
+      }
+    }
+
+    .form-actions {
+      flex-basis: 100%;
+      display: flex;
+      justify-content: flex-end;
+      gap: 32px;
     }
   }
 

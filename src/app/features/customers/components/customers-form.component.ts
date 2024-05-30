@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, ViewEncapsulation, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -13,7 +13,7 @@ export class CustomersFormComponent {
   readonly #route = inject(ActivatedRoute)
 
   ngOnInit(): void {
-    // TODO: Move this into a service
+
     if (!isNaN(Number(this.command))) {
       console.log('fetching data by id')
       return

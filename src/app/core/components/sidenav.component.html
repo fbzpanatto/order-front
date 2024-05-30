@@ -4,7 +4,7 @@
     @if(asideFlag() && condition){
       <app-aside [@conditionalTrigger]="asideFlag() ? 'shown': 'notshown'"></app-aside>
     }
-    <main class="resource-container" [ngClass]="asideFlag() && condition ? 'small' : 'large'">
+    <main [ngClass]="asideFlag() && condition ? 'resource-container small' : 'resource-container large'">
       <ng-content></ng-content>
     </main>
   </div>
