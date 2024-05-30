@@ -19,8 +19,6 @@ export const routes: Routes = [
   {
     path: 'customers',
     title: 'Clientes',
-    canActivate: [authGuard],
-    canActivateChild: [authChildGuard],
     children: [
       {
         path: '',
@@ -31,6 +29,7 @@ export const routes: Routes = [
       },
       {
         path: ':command',
+        canActivate: [authGuard],
         loadComponent: () => import('./features/customers/components/customers-form.component').then(m => m.CustomersFormComponent),
       },
     ]
@@ -38,8 +37,6 @@ export const routes: Routes = [
   {
     path: 'orders',
     title: 'Pedidos',
-    canActivate: [authGuard],
-    canActivateChild: [authChildGuard],
     children: [
       {
         path: '',
@@ -50,6 +47,7 @@ export const routes: Routes = [
       },
       {
         path: ':command',
+        canActivate: [authGuard],
         loadComponent: () => import('./features/orders/components/orders-form.component').then(m => m.OrdersFormComponent),
       },
     ]
@@ -57,8 +55,6 @@ export const routes: Routes = [
   {
     path: 'products',
     title: 'Produtos',
-    canActivate: [authGuard],
-    canActivateChild: [authChildGuard],
     children: [
       {
         path: '',
@@ -69,6 +65,7 @@ export const routes: Routes = [
       },
       {
         path: ':command',
+        canActivate: [authGuard],
         loadComponent: () => import('./features/products/components/products-form.component').then(m => m.ProductsFormComponent),
       },
     ]
