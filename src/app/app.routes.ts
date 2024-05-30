@@ -98,11 +98,6 @@ export const routes: Routes = [
     loadComponent: () => import('./features/login/components/login.component').then(m => m.LoginComponent),
   },
   {
-    path: 'login',
-    redirectTo: '/home(login:auth)',
-    pathMatch: 'full',
-  },
-  {
     path: '**',
     loadComponent: () => import('./features/home/components/home.component').then(m => m.HomeComponent),
     data: {
