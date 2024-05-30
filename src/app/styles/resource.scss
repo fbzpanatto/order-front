@@ -75,10 +75,6 @@ button {
         font-weight: bolder;
       }
 
-      &:focus-within span {
-        color: rgb(0, 0, 0);
-      }
-
       label {
         font-size: 12px;
       }
@@ -87,7 +83,6 @@ button {
         top: 50%;
         position: absolute;
         right: 0;
-        color: #c7c7c7;
       }
 
       input {
