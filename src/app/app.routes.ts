@@ -92,6 +92,11 @@ export const routes: Routes = [
     }
   },
   {
+    path: 'login',
+    redirectTo: '/home(login:auth)',
+    pathMatch: 'full',
+  },
+  {
     path: 'auth',
     title: 'Login',
     outlet: 'login',

@@ -22,7 +22,7 @@ export class LoginComponent {
     password: ['', [Validators.required, Validators.minLength(4)]]
   });
 
-  // ngOnInit(): void { history.replaceState({}, '', '/login') }
+  ngOnInit(): void { history.replaceState({}, '', '/login') }
 
   login() {
     this.authService.login()
