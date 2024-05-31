@@ -1,5 +1,7 @@
 import { Component, ViewEncapsulation, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { ToolbarMenuService } from '../../../shared/services/toolbarMenu.service';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-customers-form',
@@ -11,8 +13,11 @@ import { ActivatedRoute } from '@angular/router';
 export class CustomersFormComponent {
 
   readonly #route = inject(ActivatedRoute)
+  private toolbarMenuService = inject(ToolbarMenuService)
 
   ngOnInit(): void {
+
+    this.toolbarMenuService.menuName = this.#route.snapshot.data[environment.MENU]
 
     if (!isNaN(Number(this.command))) {
       console.log('fetching data by id')
