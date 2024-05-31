@@ -28,7 +28,7 @@ button {
   position: relative;
   top: 0;
   overflow: hidden;
-  height: calc(100vh - $toolbarHeight - ($pad16 * 4));
+  // height: calc(100vh - $toolbarHeight - ($pad16 * 4));
 
   .title-bar {
     position: sticky;
