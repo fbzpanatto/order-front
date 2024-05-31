@@ -1,7 +1,8 @@
-import { Component, ViewEncapsulation, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ToolbarMenuService } from '../../../shared/services/toolbarMenu.service';
 import { environment } from '../../../../environments/environment';
+import { AsideService } from '../../../shared/services/aside.service';
 
 @Component({
   selector: 'app-customers-form',
@@ -14,10 +15,11 @@ export class CustomersFormComponent {
 
   readonly #route = inject(ActivatedRoute)
   private toolbarMenuService = inject(ToolbarMenuService)
+  private asideService = inject(AsideService)
 
   ngOnInit(): void {
 
-    this.toolbarMenuService.menuName = this.#route.snapshot.data[environment.MENU]
+    this.menuSettings()
 
     if (!isNaN(Number(this.command))) {
       console.log('fetching data by id')
@@ -26,6 +28,14 @@ export class CustomersFormComponent {
 
     // TODO: if 'new' does not exists on URL, redirect to parent
     console.log('creating a new resource')
+  }
+
+  changeAsideFlag(toState?: boolean): void { this.asideService.changeFlag(toState) }
+
+  menuSettings() {
+    this.toolbarMenuService.menuName = this.#route.snapshot.data[environment.MENU]
+    this.toolbarMenuService.filterState = false
+    this.changeAsideFlag(false)
   }
 
   get command() { return this.#route.snapshot.paramMap.get('command') }

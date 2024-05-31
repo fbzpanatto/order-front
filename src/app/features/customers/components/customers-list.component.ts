@@ -3,7 +3,7 @@ import { AsideComponent } from "../../../core/components/aside.component";
 import { AsideService } from '../../../shared/services/aside.service';
 import { AsideConditionAnimation } from '../../../shared/animations/asideAnimation';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { ToolbarMenuService } from '../../../shared/services/toolbarMenu.service';
 import { environment } from '../../../../environments/environment';
 
@@ -17,14 +17,21 @@ import { environment } from '../../../../environments/environment';
 })
 export class CustomersListComponent {
 
-    private asideService = inject(AsideService)
-    private route = inject(ActivatedRoute)
-    private toolbarMenuService = inject(ToolbarMenuService)
-    private router = inject(Router)
+    #route = inject(ActivatedRoute)
+    #asideService = inject(AsideService)
+    #toolbarMenuService = inject(ToolbarMenuService)
 
     ngOnInit() {
-        this.toolbarMenuService.menuName = this.route.snapshot.data[environment.MENU]
+        this.menuSettings()
     }
 
-    get asideFlag() { return this.asideService.flag }
+    menuSettings() {
+        this.#toolbarMenuService.menuName = this.#route.snapshot.data[environment.MENU]
+        this.#toolbarMenuService.filterState = true
+        this.changeAsideFlag()
+    }
+
+    changeAsideFlag(): void { this.#asideService.changeFlag() }
+
+    get asideFlag() { return this.#asideService.flag }
 }

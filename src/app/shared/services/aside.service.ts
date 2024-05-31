@@ -9,5 +9,5 @@ export class AsideService {
 
   readonly flag = this.#flag.asReadonly();
 
-  changeFlag() { this.#flag.update(val => !val) }
+  changeFlag(state?: boolean) { this.#flag.update(val => state != undefined ? state : !val) }
 }

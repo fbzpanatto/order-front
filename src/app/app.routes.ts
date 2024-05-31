@@ -1,6 +1,5 @@
 import { Routes } from '@angular/router';
 import { authGuard } from './core/guards/auth.guard';
-import { authChildGuard } from './core/guards/authChild.guard';
 
 export const routes: Routes = [
   {
@@ -24,14 +23,20 @@ export const routes: Routes = [
         path: '',
         loadComponent: () => import('./features/customers/components/customers-list.component').then(m => m.CustomersListComponent),
         data: {
-          menu: 'default'
+          menu: 'default',
+          filter: true
         },
       },
       {
         path: ':command',
-        // canActivate: [authGuard],
+        canActivate: [authGuard],
         loadComponent: () => import('./features/customers/components/customers-form.component').then(m => m.CustomersFormComponent),
+        data: {
+          menu: 'default',
+          filter: false
+        },
       },
+
     ]
   },
   {
@@ -42,13 +47,18 @@ export const routes: Routes = [
         path: '',
         loadComponent: () => import('./features/orders/components/orders-list.component').then(m => m.OrdersListComponent),
         data: {
-          menu: 'default'
+          menu: 'default',
+          filter: true
         },
       },
       {
         path: ':command',
         canActivate: [authGuard],
         loadComponent: () => import('./features/orders/components/orders-form.component').then(m => m.OrdersFormComponent),
+        data: {
+          menu: 'default',
+          filter: false
+        },
       },
     ]
   },
@@ -60,13 +70,18 @@ export const routes: Routes = [
         path: '',
         loadComponent: () => import('./features/products/components/products-list.component').then(m => m.ProductsListComponent),
         data: {
-          menu: 'default'
+          menu: 'default',
+          filter: true
         },
       },
       {
         path: ':command',
         canActivate: [authGuard],
         loadComponent: () => import('./features/products/components/products-form.component').then(m => m.ProductsFormComponent),
+        data: {
+          menu: 'default',
+          filter: false
+        },
       },
     ]
   },
@@ -76,7 +91,8 @@ export const routes: Routes = [
     canActivate: [authGuard],
     loadComponent: () => import('./features/users/components/users.component').then(m => m.UsersComponent),
     data: {
-      menu: 'settings'
+      menu: 'settings',
+      filter: false
     }
   },
   {
@@ -85,7 +101,8 @@ export const routes: Routes = [
     canActivate: [authGuard],
     loadComponent: () => import('./features/parameters/components/parameters.component').then(m => m.ParametersComponent),
     data: {
-      menu: 'settings'
+      menu: 'settings',
+      filter: false
     }
   },
   {
@@ -103,7 +120,8 @@ export const routes: Routes = [
     path: '**',
     loadComponent: () => import('./features/home/components/home.component').then(m => m.HomeComponent),
     data: {
-      menu: 'default'
+      menu: 'default',
+      filter: false
     },
   }
 ];

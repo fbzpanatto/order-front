@@ -1,7 +1,7 @@
 <div class="toolbar-top">
   <h2>Nome da Empresa</h2>
   <div class="toolbar-top-menu">
-    @if(menuName === default){
+    @if(menuName === default && filterState){
       <button class="menu-item medium-text" (click)="changeAsideFlag()">
         <span>
           <i [class]="asideFlag() ?  'fa-solid fa-filter-circle-xmark' : 'fa-solid fa-filter' "></i>

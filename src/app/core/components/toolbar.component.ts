@@ -51,4 +51,6 @@ export class ToolbarComponent {
   get menuName() { return this.toolbarMenuService.menuName }
 
   get default() { return environment.DEFAULT }
+
+  get filterState() { return this.toolbarMenuService.filterState }
 }

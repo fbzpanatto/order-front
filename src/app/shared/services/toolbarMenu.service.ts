@@ -19,12 +19,16 @@ interface Menu {
 export class ToolbarMenuService {
 
   #menuName = environment.DEFAULT
+  #filter = false
 
   get menuArray() {
     return this.menuName === environment.DEFAULT ?
       this.defaultMenu :
       this.settingsMenu
   }
+
+  get filterState() { return this.#filter }
+  set filterState(state: boolean) { this.#filter = state }
 
   get menuName() { return this.#menuName }
   set menuName(param: string) { this.#menuName = param }
