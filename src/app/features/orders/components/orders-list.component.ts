@@ -1,8 +1,9 @@
 import { Component, inject } from '@angular/core';
+import { AsideService } from '../../../shared/services/aside.service';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { environment } from '../../../../environments/environment';
 import { ToolbarMenuService } from '../../../shared/services/toolbarMenu.service';
+import { environment } from '../../../../environments/environment';
 
 @Component({
     selector: 'app-orders-list',
@@ -13,10 +14,18 @@ import { ToolbarMenuService } from '../../../shared/services/toolbarMenu.service
 })
 export class OrdersListComponent {
 
-    private route = inject(ActivatedRoute)
-    private toolbarMenuService = inject(ToolbarMenuService)
+    #route = inject(ActivatedRoute)
+    #asideService = inject(AsideService)
+    #toolbarMenuService = inject(ToolbarMenuService)
 
     ngOnInit() {
-        this.toolbarMenuService.menuName = this.route.snapshot.data[environment.MENU]
+        this.menuSettings()
     }
+
+    menuSettings() {
+        this.#toolbarMenuService.menuName = this.#route.snapshot.data[environment.MENU]
+        this.#toolbarMenuService.hasFilter = true
+    }
+
+    get asideFlag() { return this.#asideService.flag }
 }
