@@ -27,8 +27,8 @@ button {
 .container {
   position: relative;
   top: 0;
-  background-color: #fff;
   overflow: hidden;
+  height: calc(100vh - $toolbarHeight - ($pad16 * 4));
 
   .title-bar {
     position: sticky;
@@ -117,7 +117,7 @@ button {
   }
 
   .table-container {
-    height: calc(100vh - $toolbarHeight - 125px);
+    height: calc(100vh - $toolbarHeight - 120px);
     overflow: auto;
 
     table {
