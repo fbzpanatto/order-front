@@ -19,19 +19,23 @@ interface Menu {
 export class ToolbarMenuService {
 
   #menuName = environment.DEFAULT
-  #filter = false
+  #hasFilter: boolean | undefined
+  #filterState: boolean | undefined = true
+
+  get filterState() { return this.#filterState }
+  set filterState(state: boolean | undefined) { this.#filterState = state }
+
+  get hasFilter() { return this.#hasFilter }
+  set hasFilter(condition: boolean | undefined) { this.#hasFilter = condition }
+
+  get menuName() { return this.#menuName }
+  set menuName(param: string) { this.#menuName = param }
 
   get menuArray() {
     return this.menuName === environment.DEFAULT ?
       this.defaultMenu :
       this.settingsMenu
   }
-
-  get filterState() { return this.#filter }
-  set filterState(state: boolean) { this.#filter = state }
-
-  get menuName() { return this.#menuName }
-  set menuName(param: string) { this.#menuName = param }
 
   get settingsMenu(): Menu[] {
     return [

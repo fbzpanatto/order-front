@@ -22,5 +22,6 @@ export class SidenavComponent {
 
     get asideFlag() { return this.asideService.flag }
     get menuName() { return this.toolbarMenuService.menuName }
-    get condition() { return this.menuName === environment.DEFAULT }
+    get condition() { return this.menuName === environment.DEFAULT && this.toolbarMenuService.hasFilter }
+    get filterState() { return this. toolbarMenuService.filterState }
 }

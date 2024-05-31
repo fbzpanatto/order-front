@@ -27,11 +27,8 @@ export class CustomersListComponent {
 
     menuSettings() {
         this.#toolbarMenuService.menuName = this.#route.snapshot.data[environment.MENU]
-        this.#toolbarMenuService.filterState = true
-        this.changeAsideFlag()
+        this.#toolbarMenuService.hasFilter = true
     }
-
-    changeAsideFlag(): void { this.#asideService.changeFlag() }
-
+    
     get asideFlag() { return this.#asideService.flag }
 }

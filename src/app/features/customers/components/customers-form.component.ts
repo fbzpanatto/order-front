@@ -30,12 +30,9 @@ export class CustomersFormComponent {
     console.log('creating a new resource')
   }
 
-  changeAsideFlag(toState?: boolean): void { this.asideService.changeFlag(toState) }
-
   menuSettings() {
     this.toolbarMenuService.menuName = this.#route.snapshot.data[environment.MENU]
-    this.toolbarMenuService.filterState = false
-    this.changeAsideFlag(false)
+    this.toolbarMenuService.hasFilter = false
   }
 
   get command() { return this.#route.snapshot.paramMap.get('command') }
