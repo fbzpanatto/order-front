@@ -2,7 +2,6 @@ import { Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ToolbarMenuService } from '../../../shared/services/toolbarMenu.service';
 import { environment } from '../../../../environments/environment';
-import { AsideService } from '../../../shared/services/aside.service';
 
 @Component({
   selector: 'app-customers-form',
@@ -14,8 +13,7 @@ import { AsideService } from '../../../shared/services/aside.service';
 export class CustomersFormComponent {
 
   readonly #route = inject(ActivatedRoute)
-  private toolbarMenuService = inject(ToolbarMenuService)
-  private asideService = inject(AsideService)
+  #toolbarMenuService = inject(ToolbarMenuService)
 
   ngOnInit(): void {
 
@@ -31,8 +29,8 @@ export class CustomersFormComponent {
   }
 
   menuSettings() {
-    this.toolbarMenuService.menuName = this.#route.snapshot.data[environment.MENU]
-    this.toolbarMenuService.hasFilter = false
+    this.#toolbarMenuService.menuName = this.#route.snapshot.data[environment.MENU]
+    this.#toolbarMenuService.hasFilter = false
   }
 
   get command() { return this.#route.snapshot.paramMap.get('command') }
