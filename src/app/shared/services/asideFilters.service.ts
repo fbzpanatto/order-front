@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Signal, signal } from '@angular/core';
 
-export type paths = 'home' | 'customers' | 'products' | 'orders'
+export type paths = 'void' | 'home' | 'customers' | 'products' | 'orders'
 
 interface FormFields {
   id: string,
@@ -18,12 +18,15 @@ interface FormFields {
 })
 export class AsideFiltersService {
 
-  #path?: paths
+  #path = signal<paths | undefined>(undefined)
+  readonly path = this.#path.asReadonly();
 
-  get formFilter() { return this.path ? this.filters[this.path] : [] }
+  changePath(path?: paths) { this.#path.update(val => val = path) }
 
-  get path() { return this.#path }
-  set path(value: paths | undefined) { this.#path = value }
+  // get formFilter() { return this.path ? this.filters[this.path] : [] }
+
+  // get path() { return this.#path }
+  // set path(value: paths | undefined) { this.#path = value }
 
   private get filters(): { [key: string]: FormFields[] } {
     return {

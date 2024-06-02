@@ -26,7 +26,7 @@ export class CustomersListComponent {
         this.menuSettings()
     }
 
-    asideFilters() { this.#asideFiltersService.path = this.path }
+    asideFilters() { this.#asideFiltersService.changePath(this.path) }
 
     menuSettings() {
         this.#toolbarMenuService.menuName = this.#route.snapshot.data[environment.MENU]

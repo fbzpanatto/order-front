@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, effect, inject } from '@angular/core';
 import { AsideFiltersService } from '../../shared/services/asideFilters.service';
 
 @Component({
@@ -12,8 +12,12 @@ export class AsideComponent {
 
   #asideFiltersService = inject(AsideFiltersService)
 
+  constructor() {
+    effect(() => {[
+      console.log('this.#asideFiltersService.path()', this.#asideFiltersService.path())
+    ]})
+  }
+
   ngOnInit(): void {
-    // TODO: Transform Into Signal
-    console.log('AsideComponent', this.#asideFiltersService.path)
   }
 }
