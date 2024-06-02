@@ -25,9 +25,6 @@ export class AsideFiltersService {
 
   // get formFilter() { return this.path ? this.filters[this.path] : [] }
 
-  // get path() { return this.#path }
-  // set path(value: paths | undefined) { this.#path = value }
-
   private get filters(): { [key: string]: FormFields[] } {
     return {
       home: this.homeFilterForm,
