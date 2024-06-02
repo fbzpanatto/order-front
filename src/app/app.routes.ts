@@ -36,7 +36,6 @@ export const routes: Routes = [
           filter: false
         },
       },
-
     ]
   },
   {
