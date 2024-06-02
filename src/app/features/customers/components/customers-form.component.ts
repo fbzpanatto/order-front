@@ -2,11 +2,12 @@ import { Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ToolbarMenuService } from '../../../shared/services/toolbarMenu.service';
 import { environment } from '../../../../environments/environment';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-customers-form',
   standalone: true,
-  imports: [],
+  imports: [ReactiveFormsModule],
   templateUrl: './customers-form.component.html',
   styleUrls: ['./customers-form.component.scss', '../../../styles/resource.scss']
 })
