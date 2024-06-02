@@ -1,6 +1,7 @@
 import { Injectable, Signal, signal } from '@angular/core';
 
 export type paths = 'void' | 'home' | 'customers' | 'products' | 'orders'
+type Filters = { [key: string]: FormFields[] }
 
 interface FormFields {
   id: string,
@@ -25,7 +26,7 @@ export class AsideFiltersService {
 
   get formFilter() { return this.path() ? this.filters[this.path() as paths] : [] }
 
-  private get filters(): { [key: string]: FormFields[] } {
+  private get filters(): Filters {
     return {
       home: this.homeFilterForm,
       customers: this.customerFilterForm
