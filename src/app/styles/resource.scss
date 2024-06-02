@@ -47,17 +47,17 @@ button {
   }
 
   form {
-    // border: 1px solid #ebebeb;
-    // border-radius: 8px;
     display: flex;
     flex-direction: column;
     gap: 48px;
-    padding-top: 16px;
 
     .inputs-container {
+      height: calc(100vh - $toolbarHeight - 220px);
+      overflow: auto;
       display: flex;
       flex-direction: column;
       gap: 48px;
+      padding: 16px;
 
       fieldset {
         position: relative;
@@ -75,6 +75,7 @@ button {
           top: -14px;
           background-color: #fff;
           font-weight: bold;
+          z-index: 999;
         }
 
         .input-container {
