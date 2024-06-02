@@ -23,7 +23,7 @@ export class AsideFiltersService {
 
   changePath(path?: paths) { this.#path.update(val => val = path) }
 
-  // get formFilter() { return this.path ? this.filters[this.path] : [] }
+  get formFilter() { return this.path() ? this.filters[this.path() as paths] : [] }
 
   private get filters(): { [key: string]: FormFields[] } {
     return {

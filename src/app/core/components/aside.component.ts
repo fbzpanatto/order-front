@@ -14,7 +14,7 @@ export class AsideComponent {
 
   constructor() {
     effect(() => {[
-      console.log('this.#asideFiltersService.path()', this.#asideFiltersService.path())
+      console.log(this.#asideFiltersService.formFilter)
     ]})
   }
 
