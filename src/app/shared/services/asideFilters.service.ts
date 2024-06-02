@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-export type paths = 'customers' | 'products' | 'orders'
+export type paths = 'home' | 'customers' | 'products' | 'orders'
 
 interface FormFields {
   id: string,
@@ -20,12 +20,30 @@ export class AsideFiltersService {
 
   #path?: paths
 
-  formFilter(path: paths) { return this.filters[path] }
+  get formFilter() {
+    console.log('formFilter', this.path)
+    return this.path ? this.filters[this.path] : []
+  }
 
   get path() { return this.#path }
   set path(value: paths | undefined) { this.#path = value }
 
-  private get filters(): { [key: string]: FormFields[] } { return { customers: this.customerFilterForm } }
+  private get filters(): { [key: string]: FormFields[] } {
+    return {
+      home: this.homeFilterForm,
+      customers: this.customerFilterForm
+    }
+  }
+  private get homeFilterForm(): FormFields[] {
+    return [
+      {
+        id: 'search',
+        name: 'search',
+        type: 'text',
+        placeholder: 'search'
+      },
+    ]
+  }
   private get customerFilterForm(): FormFields[] {
     return [
       {

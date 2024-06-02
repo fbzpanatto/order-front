@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { AsideFiltersService } from '../../shared/services/asideFilters.service';
 
 @Component({
   selector: 'app-aside',
@@ -8,4 +9,10 @@ import { Component } from '@angular/core';
   styleUrl: './aside.component.scss'
 })
 export class AsideComponent {
+
+  #asideFiltersService = inject(AsideFiltersService)
+
+  ngOnInit(): void {
+    console.log('AsideComponent', this.#asideFiltersService.path)
+  }
 }
