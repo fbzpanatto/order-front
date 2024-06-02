@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ToolbarMenuService } from '../../../shared/services/toolbarMenu.service';
 import { environment } from '../../../../environments/environment';
 import { ReactiveFormsModule } from '@angular/forms';
+import { CustomerTypeService } from '../../../shared/services/customerType.service';
 
 @Component({
   selector: 'app-customers-form',
@@ -13,16 +14,14 @@ import { ReactiveFormsModule } from '@angular/forms';
 })
 export class CustomersFormComponent {
 
-  #route = inject(ActivatedRoute)
   #router = inject(Router)
+  #route = inject(ActivatedRoute)
   #toolbarMenuService = inject(ToolbarMenuService)
+  #customerTypeService = inject(CustomerTypeService)
 
   ngOnInit(): void {
 
-    if (!((this.type && this.type === 'normal') || (this.type && this.type === 'legal'))) {
-      this.#router.navigate([''], { relativeTo: this.#route })
-    }
-
+    this.canProced()
     this.menuSettings()
 
     if (!isNaN(Number(this.command))) {
@@ -34,11 +33,19 @@ export class CustomersFormComponent {
     console.log('creating a new resource')
   }
 
+  canProced() {
+    return !((this.customerType && this.customerType === 'normal') || (this.customerType && this.customerType === 'legal')) ?
+      this.#router.navigate([''], { relativeTo: this.#route }) :
+      this.setCustomerType()
+  }
+
+  setCustomerType() { this.#customerTypeService.customerType = this.customerType as string }
+
   menuSettings() {
     this.#toolbarMenuService.menuName = this.#route.snapshot.data[environment.MENU]
     this.#toolbarMenuService.hasFilter = false
   }
 
-  get type() { return this.#route.snapshot.paramMap.get('type') }
   get command() { return this.#route.snapshot.paramMap.get('command') }
+  get customerType() { return this.#route.snapshot.paramMap.get('type') }
 }
