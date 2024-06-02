@@ -67,7 +67,7 @@ button {
         display: flex;
         gap: 16px;
         flex-direction: column;
-        height: calc(100vh - $toolbarHeight - 239px);
+        max-height: calc(100vh - $toolbarHeight - 239px);
         overflow: auto;
 
         fieldset {
