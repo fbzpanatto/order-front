@@ -4,8 +4,7 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { ToolbarMenuService } from '../../../shared/services/toolbarMenu.service';
 import { environment } from '../../../../environments/environment';
-import { AsideFiltersService } from '../../../shared/services/asideFilters.service';
-import { paths } from '../../../shared/services/asideFilters.service';
+import { paths } from '../../../shared/services/aside.service';
 
 @Component({
     selector: 'app-customers-list',
@@ -19,14 +18,13 @@ export class CustomersListComponent {
     #route = inject(ActivatedRoute)
     #asideService = inject(AsideService)
     #toolbarMenuService = inject(ToolbarMenuService)
-    #asideFiltersService = inject(AsideFiltersService)
 
     ngOnInit() {
         this.asideFilters()
         this.menuSettings()
     }
 
-    asideFilters() { this.#asideFiltersService.changePath(this.path) }
+    asideFilters() { this.#asideService.changeFilter(this.path) }
 
     menuSettings() {
         this.#toolbarMenuService.menuName = this.#route.snapshot.data[environment.MENU]

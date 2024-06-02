@@ -1,5 +1,5 @@
 import { Component, effect, inject } from '@angular/core';
-import { AsideFiltersService } from '../../shared/services/asideFilters.service';
+import { AsideService } from '../../shared/services/aside.service';
 
 @Component({
   selector: 'app-aside',
@@ -10,11 +10,11 @@ import { AsideFiltersService } from '../../shared/services/asideFilters.service'
 })
 export class AsideComponent {
 
-  #asideFiltersService = inject(AsideFiltersService)
+  #asideService = inject(AsideService)
 
   constructor() {
     effect(() => {[
-      console.log(this.#asideFiltersService.formFilter)
+      console.log(this.#asideService.formFilterSignal())
     ]})
   }
 
