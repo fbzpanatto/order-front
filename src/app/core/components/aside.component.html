@@ -4,10 +4,14 @@
       <div class="input-container">
         @switch (item.type) {
           @case ('text') {
-            <input [type]="item.type" [placeholder]="item.placeholder">
+            <input class="medium-text" [type]="item.type" [placeholder]="item.placeholder">
           }
           @case ('select') {
-            <span>select</span>
+            <select #customerType name="customerType" id="customerType" (change)="onSelect(customerType.value)">
+              @for(el of item.options; track el.id){
+                <option [disabled]="el.disabled" class="medium-text" [value]="el.value">{{ el.label }}</option>
+              }
+            </select>
           }
           @default {
             <span>não aparecer nada</span>

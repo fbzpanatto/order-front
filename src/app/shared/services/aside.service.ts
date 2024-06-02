@@ -11,7 +11,9 @@ interface FormFields {
   placeholder?: string,
   options?: {
     id: number,
-    value: number | string
+    label: string,
+    value: string | null,
+    disabled?: boolean
   }[]
 }
 
@@ -21,7 +23,7 @@ interface FormFields {
 export class AsideService {
 
   #toolbarService = inject(ToolbarMenuService)
-  
+
   #flag = signal(true);
   #filterSignal = signal<FormFields[] | undefined>(undefined)
 
@@ -62,15 +64,19 @@ export class AsideService {
         options: [
           {
             id: 1,
-            value: 'Tipo cliente'
+            label: 'Tipo de cliente',
+            value: null,
+            disabled: true
           },
           {
             id: 2,
-            value: 'Jurídico'
+            label: 'Jurídico',
+            value: 'legal'
           },
           {
             id: 3,
-            value: 'Físico'
+            label: 'Físico',
+            value: 'normal'
           }
         ]
       },

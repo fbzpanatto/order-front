@@ -13,5 +13,9 @@ export class AsideComponent {
 
   #asideService = inject(AsideService)
 
+  onSelect(value: string) {
+    console.log('onSelect', value)
+  }
+
   get formFields() { return this.#asideService.formFilterSignal() }
 }
