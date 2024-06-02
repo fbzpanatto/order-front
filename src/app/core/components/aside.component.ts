@@ -1,10 +1,11 @@
 import { Component, effect, inject } from '@angular/core';
 import { AsideService } from '../../shared/services/aside.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-aside',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './aside.component.html',
   styleUrl: './aside.component.scss'
 })
@@ -12,12 +13,5 @@ export class AsideComponent {
 
   #asideService = inject(AsideService)
 
-  constructor() {
-    effect(() => {[
-      console.log(this.#asideService.formFilterSignal())
-    ]})
-  }
-
-  ngOnInit(): void {
-  }
+  get formFields() { return this.#asideService.formFilterSignal() }
 }

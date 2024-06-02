@@ -12,22 +12,16 @@
     height: 100%;
     width: inherit;
 
-    .search {
-      position: relative;
+    form {
       display: flex;
-      align-items: center;
-      width: 100%;
+      flex-direction: column;
+      .input-container {
+        display: flex;
+        flex: 1;
+        input {
+          width: 100%;
 
-      span {
-        position: absolute;
-      }
-
-      input {
-        border: none;
-        outline: none;
-        padding: 8px 8px 8px 24px;
-        width: inherit;
-        border-bottom: 1px solid #ebebeb;
+        }
       }
     }
   }

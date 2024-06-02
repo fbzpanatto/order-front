@@ -1,6 +1,19 @@
 <aside>
-  <div class="search">
-    <span><i class="fa-solid fa-magnifying-glass"></i></span>
-    <input class="medium-text" type="text" placeholder="search">
-  </div>
+  <form>
+    @for(item of formFields; track item.id){
+      <div class="input-container">
+        @switch (item.type) {
+          @case ('text') {
+            <input [type]="item.type" [placeholder]="item.placeholder">
+          }
+          @case ('select') {
+            <span>select</span>
+          }
+          @default {
+            <span>não aparecer nada</span>
+          }
+        }
+      </div>
+    }
+  </form>
 </aside>
