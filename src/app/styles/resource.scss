@@ -52,7 +52,7 @@ button {
     gap: 48px;
 
     .inputs-container {
-      height: calc(100vh - $toolbarHeight - 220px);
+      height: calc(100vh - $toolbarHeight - 206px);
       overflow: auto;
       display: flex;
       flex-direction: column;
