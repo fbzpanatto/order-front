@@ -28,7 +28,7 @@ export const routes: Routes = [
         },
       },
       {
-        path: ':command',
+        path: ':type/:command',
         // canActivate: [authGuard],
         loadComponent: () => import('./features/customers/components/customers-form.component').then(m => m.CustomersFormComponent),
         data: {

@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ToolbarMenuService } from '../../../shared/services/toolbarMenu.service';
 import { environment } from '../../../../environments/environment';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -13,10 +13,15 @@ import { ReactiveFormsModule } from '@angular/forms';
 })
 export class CustomersFormComponent {
 
-  readonly #route = inject(ActivatedRoute)
+  #route = inject(ActivatedRoute)
+  #router = inject(Router)
   #toolbarMenuService = inject(ToolbarMenuService)
 
   ngOnInit(): void {
+
+    if (!((this.type && this.type === 'normal') || (this.type && this.type === 'legal'))) {
+      this.#router.navigate([''], { relativeTo: this.#route })
+    }
 
     this.menuSettings()
 
@@ -34,5 +39,6 @@ export class CustomersFormComponent {
     this.#toolbarMenuService.hasFilter = false
   }
 
+  get type() { return this.#route.snapshot.paramMap.get('type') }
   get command() { return this.#route.snapshot.paramMap.get('command') }
 }
