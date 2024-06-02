@@ -20,10 +20,7 @@ export class AsideFiltersService {
 
   #path?: paths
 
-  get formFilter() {
-    console.log('formFilter', this.path)
-    return this.path ? this.filters[this.path] : []
-  }
+  get formFilter() { return this.path ? this.filters[this.path] : [] }
 
   get path() { return this.#path }
   set path(value: paths | undefined) { this.#path = value }

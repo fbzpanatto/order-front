@@ -13,6 +13,7 @@ export class AsideComponent {
   #asideFiltersService = inject(AsideFiltersService)
 
   ngOnInit(): void {
+    // TODO: Transform Into Signal
     console.log('AsideComponent', this.#asideFiltersService.path)
   }
 }
