@@ -172,6 +172,11 @@
               border: 1px solid black;
               background-color: #fff;
               color: black;
+              transition: 100ms;
+
+              &:hover {
+                background-color: #d4d4d4;
+              }
             }
           }
         }
