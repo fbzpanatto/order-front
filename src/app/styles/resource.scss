@@ -140,24 +140,38 @@
                 tr {
                   td {
                     padding: 8px;
-                    border-bottom: 1px solid #ebebeb;
+
+                    input {
+                      border: none;
+                      outline: none;
+                      border-bottom: 1px solid #ebebeb;
+                    }
                   }
                 }
               }
             }
 
-            .add-btn {
+            .add-btn,
+            .del-btn {
               display: flex;
               align-items: center;
               justify-content: center;
-              background: black;
               color: #fff;
               border-radius: 50%;
-              width: 41px;
-              height: 41px;
+              width: 35px;
+              height: 35px;
               gap: 8px;
               border: none;
               cursor: pointer;
+            }
+
+            .add-btn {
+              background: black;
+            }
+            .del-btn {
+              border: 1px solid black;
+              background-color: #fff;
+              color: black;
             }
           }
         }

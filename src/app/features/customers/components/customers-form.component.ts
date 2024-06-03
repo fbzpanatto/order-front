@@ -22,7 +22,7 @@ export class CustomersFormComponent {
   #toolbarMenuService = inject(ToolbarMenuService)
   #asideService = inject(AsideService)
   #title?: string
-  #contacts?: Contact[]
+  #contacts: Contact[] = []
 
   normalForm = this.fb.group({
     first_name: ['', {
@@ -99,6 +99,16 @@ export class CustomersFormComponent {
   }
 
   redirect() { this.#router.navigate(['/customers']) }
+
+  addContact() {
+    console.log('contatos')
+    const contact = { id: 1, name: 'informar nome', phone: 'informar número' }
+    this.#contacts = [...this.#contacts, contact]
+  }
+
+  removeContact(){
+    
+  }
 
   get form() { return this.customerType === 'legal' ? this.legalForm : this.normalForm }
   get address() {
