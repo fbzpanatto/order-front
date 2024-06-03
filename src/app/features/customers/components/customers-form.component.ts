@@ -1,4 +1,4 @@
-import { Component, Inject, OnDestroy, inject } from '@angular/core';
+import { Component, Inject, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToolbarMenuService } from '../../../shared/services/toolbarMenu.service';
 import { environment } from '../../../../environments/environment';
@@ -12,7 +12,7 @@ import { AsideService } from '../../../shared/services/aside.service';
   templateUrl: './customers-form.component.html',
   styleUrls: ['./customers-form.component.scss', '../../../styles/resource.scss']
 })
-export class CustomersFormComponent implements OnDestroy {
+export class CustomersFormComponent {
 
   #router = inject(Router)
   #route = inject(ActivatedRoute)
@@ -43,10 +43,6 @@ export class CustomersFormComponent implements OnDestroy {
 
     console.log('creating a new resource')
   }
-
-  ngOnDestroy(): void {
-    //  this.#asideService.changeCustomerType('legal') 
-    }
 
   canProced() {
     return !((this.customerType && this.customerType === 'normal') || (this.customerType && this.customerType === 'legal')) ?
