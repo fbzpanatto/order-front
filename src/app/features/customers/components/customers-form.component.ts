@@ -41,7 +41,6 @@ export class CustomersFormComponent {
     cpf: ['', {
       validators: [Validators.required, Validators.minLength(3)],
     }],
-    contacts: [[], {}],
     ...this.address,
   })
 
@@ -58,7 +57,6 @@ export class CustomersFormComponent {
     state_registration: ['', {
       validators: [Validators.required, Validators.minLength(3)],
     }],
-    contacts: [[], {}],
     ...this.address,
   })
 
@@ -120,7 +118,16 @@ export class CustomersFormComponent {
     }
   }
 
-  removeContact(item: Contact) { this.contacts = [...this.contacts.filter(el => el !== item)] }
+  removeContact(item: Contact) {
+    // TODO: create popup before delete
+    this.contacts = [...this.contacts.filter(el => el !== item)]
+  }
+
+  onSubmit() {
+    const body = {...this.form.value, contacts: this.contacts}
+
+    console.log(body)
+  }
 
   get form() { return this.customerType === 'legal' ? this.legalForm : this.normalForm }
   get address() {

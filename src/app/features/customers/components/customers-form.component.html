@@ -2,88 +2,98 @@
   <div class="title-bar">
     <h1>{{ title }}</h1>
   </div>
-  <form [formGroup]="form">
+  <form [formGroup]="form" (submit)="onSubmit()">
     <div class="inputs-container">
       <div class="fieldsets-container">
         @switch (customerType) {
-          @case('legal') {
-          <fieldset>
-            <label class="medium-text fieldset-label">Identificação</label>
-            <div class="input-container">
-              <label class="light-text" for="corporate_name">Razão social</label>
-              <span><i class="fa-solid fa-pen-to-square"></i></span>
-              <input formControlName="corporate_name" class="medium-text" id="corporate_name" name="corporate_name" type="text" placeholder="razão social">
-            </div>
-            <div class="input-container">
-              <label class="light-text" for="social_name">Nome Fantasia</label>
-              <span><i class="fa-solid fa-pen-to-square"></i></span>
-              <input formControlName="social_name" class="medium-text" id="social_name" name="social_name" type="text" placeholder="nome fantasia">
-            </div>
-            <div class="input-container">
-              <label class="light-text" for="cnpj">Cnpj</label>
-              <span><i class="fa-solid fa-id-card"></i></span>
-              <input formControlName="cnpj" class="medium-text" id="cnpj" name="cnpj" type="text" placeholder="cnpj">
-            </div>
-            <div class="input-container">
-              <label class="light-text" for="state_registration">Inscrição Estadual</label>
-              <span><i class="fa-solid fa-id-card"></i></span>
-              <input formControlName="state_registration" class="medium-text" id="state_registration" name="state_registration" type="text"
-                placeholder="inscrição estadual">
-            </div>
-          </fieldset>
-          }
-          @case('normal') {
-          <fieldset>
-            <label class="medium-text fieldset-label">Identificação</label>
-            <div class="input-container">
-              <label class="light-text" for="first_name">Primeiro Nome</label>
-              <span><i class="fa-solid fa-pen-to-square"></i></span>
-              <input formControlName="first_name" class="medium-text" id="first_name" name="first_name" type="text" placeholder="primeiro nome">
-            </div>
-            <div class="input-container">
-              <label class="light-text" for="middle_name">Nome do Meio</label>
-              <span><i class="fa-solid fa-pen-to-square"></i></span>
-              <input formControlName="middle_name" class="medium-text" id="middle_name" name="middle_name" type="text" placeholder="nome do meio">
-            </div>
-            <div class="input-container">
-              <label class="light-text" for="last_name">Último Nome</label>
-              <span><i class="fa-solid fa-pen-to-square"></i></span>
-              <input formControlName="last_name" class="medium-text" id="last_name" name="last_name" type="text" placeholder="último nome">
-            </div>
-            <div class="input-container">
-              <label class="light-text" for="cpf">Cpf</label>
-              <span><i class="fa-solid fa-id-card"></i></span>
-              <input formControlName="cpf" class="medium-text" id="cpf" name="cpf" type="text" placeholder="cpf">
-            </div>
-          </fieldset>
-          }
+        @case('legal') {
+        <fieldset>
+          <label class="medium-text fieldset-label">Identificação</label>
+          <div class="input-container">
+            <label class="light-text" for="corporate_name">Razão social</label>
+            <span><i class="fa-solid fa-pen-to-square"></i></span>
+            <input formControlName="corporate_name" class="medium-text" id="corporate_name" name="corporate_name"
+              type="text" placeholder="razão social">
+          </div>
+          <div class="input-container">
+            <label class="light-text" for="social_name">Nome Fantasia</label>
+            <span><i class="fa-solid fa-pen-to-square"></i></span>
+            <input formControlName="social_name" class="medium-text" id="social_name" name="social_name" type="text"
+              placeholder="nome fantasia">
+          </div>
+          <div class="input-container">
+            <label class="light-text" for="cnpj">Cnpj</label>
+            <span><i class="fa-solid fa-id-card"></i></span>
+            <input formControlName="cnpj" class="medium-text" id="cnpj" name="cnpj" type="text" placeholder="cnpj">
+          </div>
+          <div class="input-container">
+            <label class="light-text" for="state_registration">Inscrição Estadual</label>
+            <span><i class="fa-solid fa-id-card"></i></span>
+            <input formControlName="state_registration" class="medium-text" id="state_registration"
+              name="state_registration" type="text" placeholder="inscrição estadual">
+          </div>
+        </fieldset>
+        }
+        @case('normal') {
+        <fieldset>
+          <label class="medium-text fieldset-label">Identificação</label>
+          <div class="input-container">
+            <label class="light-text" for="first_name">Primeiro Nome</label>
+            <span><i class="fa-solid fa-pen-to-square"></i></span>
+            <input formControlName="first_name" class="medium-text" id="first_name" name="first_name" type="text"
+              placeholder="primeiro nome">
+          </div>
+          <div class="input-container">
+            <label class="light-text" for="middle_name">Nome do Meio</label>
+            <span><i class="fa-solid fa-pen-to-square"></i></span>
+            <input formControlName="middle_name" class="medium-text" id="middle_name" name="middle_name" type="text"
+              placeholder="nome do meio">
+          </div>
+          <div class="input-container">
+            <label class="light-text" for="last_name">Último Nome</label>
+            <span><i class="fa-solid fa-pen-to-square"></i></span>
+            <input formControlName="last_name" class="medium-text" id="last_name" name="last_name" type="text"
+              placeholder="último nome">
+          </div>
+          <div class="input-container">
+            <label class="light-text" for="cpf">Cpf</label>
+            <span><i class="fa-solid fa-id-card"></i></span>
+            <input formControlName="cpf" class="medium-text" id="cpf" name="cpf" type="text" placeholder="cpf">
+          </div>
+        </fieldset>
+        }
         }
         <fieldset>
           <label class="medium-text fieldset-label">Endereço</label>
           <div class="input-container">
             <label class="light-text" for="add_street">Logradouro</label>
             <span><i class="fa-solid fa-pen-to-square"></i></span>
-            <input formControlName="add_street" class="medium-text" id="add_street" name="add_street" type="text" placeholder="logradouro">
+            <input formControlName="add_street" class="medium-text" id="add_street" name="add_street" type="text"
+              placeholder="logradouro">
           </div>
           <div class="input-container">
             <label class="light-text" for="add_number">Número</label>
             <span><i class="fa-solid fa-pen-to-square"></i></span>
-            <input formControlName="add_number" class="medium-text" id="add_number" name="add_number" type="text" placeholder="número">
+            <input formControlName="add_number" class="medium-text" id="add_number" name="add_number" type="text"
+              placeholder="número">
           </div>
           <div class="input-container">
             <label class="light-text" for="add_zipcode">Cep</label>
             <span><i class="fa-solid fa-pen-to-square"></i></span>
-            <input formControlName="add_zipcode" class="medium-text" id="add_zipcode" name="add_zipcode" type="text" placeholder="cep">
+            <input formControlName="add_zipcode" class="medium-text" id="add_zipcode" name="add_zipcode" type="text"
+              placeholder="cep">
           </div>
           <div class="input-container">
             <label class="light-text" for="add_city">Cidade</label>
             <span><i class="fa-solid fa-pen-to-square"></i></span>
-            <input formControlName="add_city" class="medium-text" id="add_city" name="add_city" type="text" placeholder="cidade">
+            <input formControlName="add_city" class="medium-text" id="add_city" name="add_city" type="text"
+              placeholder="cidade">
           </div>
           <div class="input-container">
             <label class="light-text" for="add_neighborhood">Bairro</label>
             <span><i class="fa-solid fa-pen-to-square"></i></span>
-            <input formControlName="add_neighborhood" class="medium-text" id="add_neighborhood" name="add_neighborhood" type="text" placeholder="bairro">
+            <input formControlName="add_neighborhood" class="medium-text" id="add_neighborhood" name="add_neighborhood"
+              type="text" placeholder="bairro">
           </div>
         </fieldset>
         <fieldset>
@@ -97,6 +107,17 @@
                 </tr>
               </thead>
               <tbody>
+                @for(item of contacts; track item.id; let idx = $index){
+                <tr>
+                  <td class="medium-text"><input type="text" [value]="item.name" placeholder="nome"></td>
+                  <td class="medium-text"><input type="text" [value]="item.phone" placeholder="número"></td>
+                  <td>
+                    <button class="del-btn" (click)="removeContact(item)" type="button">
+                      <span><i class="fa-solid fa-minus"></i></span>
+                    </button>
+                  </td>
+                </tr>
+                }
                 <tr>
                   <td>
                     <input #contactName class="medium-text" type="text" placeholder="adicionar nome">
@@ -105,22 +126,11 @@
                     <input #contactPhone class="medium-text" type="text" placeholder="adicionar número">
                   </td>
                   <td>
-                    <button class="add-btn" (click)="createRow(contactName.value, contactPhone.value)">
+                    <button type="button" class="add-btn" (click)="createRow(contactName.value, contactPhone.value)">
                       <span><i class="fa-solid fa-plus"></i></span>
                     </button>
                   </td>
                 </tr>
-                @for(item of contacts; track item.id; let idx = $index){
-                  <tr>
-                    <td #contactName class="medium-text"><input type="text" [value]="item.name" placeholder="nome"></td>
-                    <td class="medium-text"><input type="text" [value]="item.phone" placeholder="número"></td>
-                    <td>
-                      <button class="del-btn" (click)="removeContact(item)">
-                        <span><i class="fa-solid fa-minus"></i></span>
-                      </button>
-                    </td>
-                  </tr>
-                }
               </tbody>
             </table>
           </div>
@@ -128,17 +138,14 @@
       </div>
     </div>
     <div class="form-actions">
-      <button class="medium-text clear-btn">
+      <button class="medium-text clear-btn" type="button">
         <span><i class="fa-solid fa-eraser"></i></span>
         <span>Limpar</span>
       </button>
-      <button class="medium-text">
+      <button class="medium-text" type="submit">
         <span><i class="fa-solid fa-floppy-disk"></i></span>
         <span>Salvar</span>
       </button>
     </div>
   </form>
 </div>
-<!-- <pre>
-  Form Values: {{ form.value | json }}
-</pre> -->
