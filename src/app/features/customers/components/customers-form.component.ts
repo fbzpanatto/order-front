@@ -41,6 +41,7 @@ export class CustomersFormComponent {
     cpf: ['', {
       validators: [Validators.required, Validators.minLength(3)],
     }],
+    contacts: [[{}]],
     ...this.address,
   })
 
@@ -57,6 +58,7 @@ export class CustomersFormComponent {
     state_registration: ['', {
       validators: [Validators.required, Validators.minLength(3)],
     }],
+    contacts: [[{}]],
     ...this.address,
   })
 
@@ -113,6 +115,8 @@ export class CustomersFormComponent {
       this.contacts = [...this.contacts, contact]
       this.counter++
 
+      this.form.controls['contacts'].patchValue(this.contacts)
+
       contactNameInput.value = ''
       contactPhoneInput.value = ''
     }
@@ -121,12 +125,12 @@ export class CustomersFormComponent {
   removeContact(item: Contact) {
     // TODO: create popup before delete
     this.contacts = [...this.contacts.filter(el => el !== item)]
+    this.form.controls['contacts'].patchValue(this.contacts)
   }
 
   onSubmit() {
-    const body = {...this.form.value, contacts: this.contacts}
 
-    console.log(body)
+    console.log(this.form.value)
   }
 
   get form() { return this.customerType === 'legal' ? this.legalForm : this.normalForm }
