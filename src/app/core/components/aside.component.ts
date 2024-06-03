@@ -13,9 +13,7 @@ export class AsideComponent {
 
   #asideService = inject(AsideService)
 
-  onSelect(value: string) {
-    console.log('onSelect', value)
-  }
+  onSelect(value: string) { this.#asideService.changeCustomerType(value) }
 
   get formFields() { return this.#asideService.formFilterSignal() }
 }

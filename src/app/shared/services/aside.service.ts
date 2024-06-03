@@ -26,17 +26,21 @@ export class AsideService {
 
   #flag = signal(true);
   #filterSignal = signal<FormFields[] | undefined>(undefined)
+  #customerType = signal<string>('legal')
 
   readonly flag = this.#flag.asReadonly();
+  readonly customerType = this.#customerType.asReadonly();
   readonly formFilterSignal = this.#filterSignal.asReadonly();
 
   changeFlag(state?: boolean) {
+    this.changeCustomerType('legal')
     this.#flag.update(val => {
       state != undefined ? this.#toolbarService.filterState = state : this.#toolbarService.filterState = state = !val
       return state != undefined ? state : !val
     })
   }
 
+  changeCustomerType(value: string) { this.#customerType.update(val => val = value) }
   changeFilter(path: paths) { this.#filterSignal.update(val => val = this.filters[path]) }
 
   private get filters(): Filters {
