@@ -9,7 +9,7 @@
           @case ('select') {
             <select #customerType name="customerType" id="customerType" (change)="onSelect(customerType.value)">
               @for(el of item.options; track el.id){
-                <option [disabled]="el.disabled" class="medium-text" [value]="el.value">{{ el.label }}</option>
+                <option [disabled]="el.disabled" class="medium-text" [value]="el.value" [selected]="currCustomerType === el.value">{{ el.label }}</option>
               }
             </select>
           }

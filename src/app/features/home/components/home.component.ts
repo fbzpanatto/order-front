@@ -25,7 +25,7 @@ export class HomeComponent {
         this.menuSettings()
     }
 
-    asideFilters() { this.#asideService.changeFilter(this.path) }
+    asideFilters() { this.#asideService.getResourceFilters(this.path) }
 
     menuSettings() {
         this.#toolbarMenuService.menuName = this.#route.snapshot.data[environment.MENU]

@@ -44,7 +44,9 @@ export class CustomersFormComponent implements OnDestroy {
     console.log('creating a new resource')
   }
 
-  ngOnDestroy(): void { this.#asideService.changeCustomerType('legal') }
+  ngOnDestroy(): void {
+    //  this.#asideService.changeCustomerType('legal') 
+    }
 
   canProced() {
     return !((this.customerType && this.customerType === 'normal') || (this.customerType && this.customerType === 'legal')) ?

@@ -12,7 +12,7 @@ interface FormFields {
   options?: {
     id: number,
     label: string,
-    value: string | null,
+    value: string,
     disabled?: boolean
   }[]
 }
@@ -42,7 +42,7 @@ export class AsideService {
 
   changeCustomerType(value: string) { this.#customerType.update(val => val = value) }
 
-  changeFilter(path: paths) { this.#filterSignal.update(val => val = this.filters[path]) }
+  getResourceFilters(path: paths) { this.#filterSignal.update(val => val = this.filters[path]) }
 
   private get filters(): Filters {
     return {

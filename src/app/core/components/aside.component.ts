@@ -16,4 +16,5 @@ export class AsideComponent {
   onSelect(value: string) { this.#asideService.changeCustomerType(value) }
 
   get formFields() { return this.#asideService.formFilterSignal() }
+  get currCustomerType() { return this.#asideService.customerType() }
 }
