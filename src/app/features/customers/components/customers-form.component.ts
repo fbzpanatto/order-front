@@ -6,6 +6,8 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AsideService } from '../../../shared/services/aside.service';
 import { CommonModule } from '@angular/common';
 
+interface Contact { id: number, name: string, phone: string }
+
 @Component({
   selector: 'app-customers-form',
   standalone: true,
@@ -20,6 +22,41 @@ export class CustomersFormComponent {
   #toolbarMenuService = inject(ToolbarMenuService)
   #asideService = inject(AsideService)
   #title?: string
+  #contacts?: Contact[]
+
+  normalForm = this.fb.group({
+    first_name: ['', {
+      validators: [Validators.required, Validators.minLength(3)],
+    }],
+    middle_name: ['', {
+      validators: [Validators.minLength(3)],
+    }],
+    last_name: ['', {
+      validators: [Validators.required, Validators.minLength(3)],
+    }],
+    cpf: ['', {
+      validators: [Validators.required, Validators.minLength(3)],
+    }],
+    contacts: [[], {}],
+    ...this.address,
+  })
+
+  legalForm = this.fb.group({
+    corporate_name: ['', {
+      validators: [Validators.required, Validators.minLength(3)],
+    }],
+    social_name: ['', {
+      validators: [Validators.minLength(3)],
+    }],
+    cnpj: ['', {
+      validators: [Validators.required, Validators.minLength(3)],
+    }],
+    state_registration: ['', {
+      validators: [Validators.required, Validators.minLength(3)],
+    }],
+    contacts: [[], {}],
+    ...this.address,
+  })
 
   constructor(private fb: FormBuilder) { }
 
@@ -82,40 +119,6 @@ export class CustomersFormComponent {
         validators: [Validators.required, Validators.minLength(3)],
       }]
     }
-  }
-  get legalForm() {
-    return this.fb.group({
-      corporate_name: ['', {
-        validators: [Validators.required, Validators.minLength(3)],
-      }],
-      social_name: ['', {
-        validators: [Validators.minLength(3)],
-      }],
-      cnpj: ['', {
-        validators: [Validators.required, Validators.minLength(3)],
-      }],
-      state_registration: ['', {
-        validators: [Validators.required, Validators.minLength(3)],
-      }],
-      ...this.address
-    })
-  }
-  get normalForm() {
-    return this.fb.group({
-      first_name: ['', {
-        validators: [Validators.required, Validators.minLength(3)],
-      }],
-      middle_name: ['', {
-        validators: [Validators.minLength(3)],
-      }],
-      last_name: ['', {
-        validators: [Validators.required, Validators.minLength(3)],
-      }],
-      cpf: ['', {
-        validators: [Validators.required, Validators.minLength(3)],
-      }],
-      ...this.address
-    })
   }
   get title() { return this.#title }
   set title(value: string | undefined) { this.#title = value }
