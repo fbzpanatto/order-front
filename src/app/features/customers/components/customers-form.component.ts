@@ -1,15 +1,15 @@
-import { Component, Inject, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToolbarMenuService } from '../../../shared/services/toolbarMenu.service';
 import { environment } from '../../../../environments/environment';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AsideService } from '../../../shared/services/aside.service';
-import { paths } from '../../../shared/services/aside.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-customers-form',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './customers-form.component.html',
   styleUrls: ['./customers-form.component.scss', '../../../styles/resource.scss']
 })
@@ -18,20 +18,44 @@ export class CustomersFormComponent {
   #router = inject(Router)
   #route = inject(ActivatedRoute)
   #toolbarMenuService = inject(ToolbarMenuService)
-  #formBuilder = Inject(FormBuilder)
   #asideService = inject(AsideService)
-
   #title?: string
 
-  form = this.#formBuilder({
-    name: ['', {
+  normalForm = this.fb.group({
+    first_name: ['', {
       validators: [Validators.required, Validators.minLength(3)],
     }],
+    middle_name: ['', {
+      validators: [Validators.minLength(3)],
+    }],
+    last_name: ['', {
+      validators: [Validators.required, Validators.minLength(3)],
+    }],
+    cpf: ['', {
+      validators: [Validators.required, Validators.minLength(3)],
+    }]
   })
+
+  legalForm = this.fb.group({
+    corporate_name: ['', {
+      validators: [Validators.required, Validators.minLength(3)],
+    }],
+    social_name: ['', {
+      validators: [Validators.minLength(3)],
+    }],
+    cnpj: ['', {
+      validators: [Validators.required, Validators.minLength(3)],
+    }],
+    state_registration: ['', {
+      validators: [Validators.required, Validators.minLength(3)],
+    }]
+  })
+
+  constructor(private fb: FormBuilder) { }
 
   ngOnInit(): void {
 
-    this.#asideService.changeCustomerType(this.path)
+    this.#asideService.changeCustomerType(this.path as string)
 
     this.canProced()
     this.menuSettings()
@@ -69,9 +93,10 @@ export class CustomersFormComponent {
 
   redirect() { this.#router.navigate(['/customers']) }
 
+  get form() { return this.customerType === 'legal' ? this.legalForm : this.normalForm }
   get title() { return this.#title }
   set title(value: string | undefined) { this.#title = value }
+  get path() { return this.#route.snapshot.paramMap.get('type') }
   get customerType() { return this.#asideService.customerType() }
   get command() { return this.#route.snapshot.paramMap.get('command') }
-  get path() { return this.#route.snapshot.paramMap.get('type') as paths }
 }

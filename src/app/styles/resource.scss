@@ -144,11 +144,29 @@ button {
               width: auto;
             }
           }
+
+          table {
+            border-collapse: collapse;
+
+            thead {
+              tr {
+                th {
+                  padding: 8px;
+                }
+              }
+            }
+
+            tbody {
+              tr {
+                td {
+                  padding: 8px;
+                  border-bottom: 1px solid #ebebeb;
+                }
+              }
+            }
+          }
         }
-
       }
-
-
     }
 
     .form-actions {
