@@ -1,9 +1,9 @@
-import { Component, Inject, inject } from '@angular/core';
+import { Component, Inject, OnDestroy, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToolbarMenuService } from '../../../shared/services/toolbarMenu.service';
 import { environment } from '../../../../environments/environment';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { CustomerTypeService } from '../../../shared/services/customerType.service';
+import { AsideService } from '../../../shared/services/aside.service';
 
 @Component({
   selector: 'app-customers-form',
@@ -12,13 +12,13 @@ import { CustomerTypeService } from '../../../shared/services/customerType.servi
   templateUrl: './customers-form.component.html',
   styleUrls: ['./customers-form.component.scss', '../../../styles/resource.scss']
 })
-export class CustomersFormComponent {
+export class CustomersFormComponent implements OnDestroy {
 
   #router = inject(Router)
   #route = inject(ActivatedRoute)
   #toolbarMenuService = inject(ToolbarMenuService)
-  #customerTypeService = inject(CustomerTypeService)
   #formBuilder = Inject(FormBuilder)
+  #asideService = inject(AsideService)
 
   #title?: string
 
@@ -44,13 +44,11 @@ export class CustomersFormComponent {
     console.log('creating a new resource')
   }
 
+  ngOnDestroy(): void { this.#asideService.changeCustomerType('legal') }
+
   canProced() {
     return !((this.customerType && this.customerType === 'normal') || (this.customerType && this.customerType === 'legal')) ?
-      this.redirect() : this.setCustomerType()
-  }
-
-  formTitle() {
-
+      this.redirect() : null
   }
 
   menuSettings() {
@@ -68,12 +66,10 @@ export class CustomersFormComponent {
     }
   }
 
-  setCustomerType() { this.#customerTypeService.customerType = this.customerType as string }
-
   redirect() { this.#router.navigate(['/customers']) }
 
   get title() { return this.#title }
   set title(value: string | undefined) { this.#title = value }
   get command() { return this.#route.snapshot.paramMap.get('command') }
-  get customerType() { return this.#route.snapshot.paramMap.get('type') }
+  get customerType() { return this.#asideService.customerType() }
 }

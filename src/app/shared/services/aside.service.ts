@@ -40,7 +40,11 @@ export class AsideService {
     })
   }
 
-  changeCustomerType(value: string) { this.#customerType.update(val => val = value) }
+  changeCustomerType(value: string) {
+    console.log('mudando para: ', value)
+    this.#customerType.update(val => val = value)
+  }
+
   changeFilter(path: paths) { this.#filterSignal.update(val => val = this.filters[path]) }
 
   private get filters(): Filters {

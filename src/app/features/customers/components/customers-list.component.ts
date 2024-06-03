@@ -1,4 +1,4 @@
-import { Component, effect, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { AsideService } from '../../../shared/services/aside.service';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
@@ -19,14 +19,7 @@ export class CustomersListComponent {
     #asideService = inject(AsideService)
     #toolbarMenuService = inject(ToolbarMenuService)
 
-    constructor() {
-        effect(() => {
-            console.log('this.#asideService.customerType()', this.#asideService.customerType())
-        })
-    }
-
     ngOnInit() {
-
         this.asideFilters()
         this.menuSettings()
     }
@@ -38,6 +31,7 @@ export class CustomersListComponent {
         this.#toolbarMenuService.hasFilter = true
     }
 
-    get path() { return this.#route.snapshot.parent?.routeConfig?.path as paths }
     get asideFlag() { return this.#asideService.flag }
+    get customerType() { return this.#asideService.customerType }
+    get path() { return this.#route.snapshot.parent?.routeConfig?.path as paths }
 }
