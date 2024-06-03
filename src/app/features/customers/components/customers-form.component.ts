@@ -4,6 +4,7 @@ import { ToolbarMenuService } from '../../../shared/services/toolbarMenu.service
 import { environment } from '../../../../environments/environment';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AsideService } from '../../../shared/services/aside.service';
+import { paths } from '../../../shared/services/aside.service';
 
 @Component({
   selector: 'app-customers-form',
@@ -29,6 +30,8 @@ export class CustomersFormComponent {
   })
 
   ngOnInit(): void {
+
+    this.#asideService.changeCustomerType(this.path)
 
     this.canProced()
     this.menuSettings()
@@ -68,6 +71,7 @@ export class CustomersFormComponent {
 
   get title() { return this.#title }
   set title(value: string | undefined) { this.#title = value }
-  get command() { return this.#route.snapshot.paramMap.get('command') }
   get customerType() { return this.#asideService.customerType() }
+  get command() { return this.#route.snapshot.paramMap.get('command') }
+  get path() { return this.#route.snapshot.paramMap.get('type') as paths }
 }
