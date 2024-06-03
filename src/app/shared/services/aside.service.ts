@@ -63,12 +63,6 @@ export class AsideService {
         type: 'select',
         options: [
           {
-            id: 1,
-            label: 'Tipo de cliente',
-            value: null,
-            disabled: true
-          },
-          {
             id: 2,
             label: 'Jurídico',
             value: 'legal'
