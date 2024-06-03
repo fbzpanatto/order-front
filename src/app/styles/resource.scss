@@ -1,29 +1,5 @@
 @import './variables.scss';
 
-button {
-  width: 110px;
-  display: flex;
-  gap: 8px;
-  align-items: center;
-  justify-content: center;
-  border-radius: 20px;
-  border: 1px solid rgb(218, 218, 218);
-  padding: 10px 20px;
-  cursor: pointer;
-  background-color: #ebebeb;
-  transition: 100ms;
-  height: 40px;
-
-  &:hover {
-    background-color: rgb(224, 224, 224);
-    border: 1px solid #444
-  }
-
-  &.clear-btn {
-    background-color: #fff;
-  }
-}
-
 .container {
   position: relative;
   top: 0;
@@ -145,24 +121,43 @@ button {
             }
           }
 
-          table {
-            border-collapse: collapse;
-
-            thead {
-              tr {
-                th {
-                  padding: 8px;
+          .fieldset-table-container {
+            display: flex;
+            width: 100%;
+            gap: 64px;
+            table {
+              border-collapse: collapse;
+  
+              thead {
+                tr {
+                  th {
+                    padding: 8px;
+                  }
+                }
+              }
+  
+              tbody {
+                tr {
+                  td {
+                    padding: 8px;
+                    border-bottom: 1px solid #ebebeb;
+                  }
                 }
               }
             }
 
-            tbody {
-              tr {
-                td {
-                  padding: 8px;
-                  border-bottom: 1px solid #ebebeb;
-                }
-              }
+            .add-btn {
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              background: black;
+              color: #fff;
+              border-radius: 50%;
+              width: 41px;
+              height: 41px;
+              gap: 8px;
+              border: none;
+              cursor: pointer;
             }
           }
         }
@@ -174,6 +169,30 @@ button {
       display: flex;
       justify-content: flex-end;
       gap: 32px;
+
+      button {
+        width: 110px;
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        justify-content: center;
+        border-radius: 20px;
+        border: 1px solid rgb(218, 218, 218);
+        padding: 10px 20px;
+        cursor: pointer;
+        background-color: #ebebeb;
+        transition: 100ms;
+        height: 40px;
+      
+        &:hover {
+          background-color: rgb(224, 224, 224);
+          border: 1px solid #444
+        }
+      
+        &.clear-btn {
+          background-color: #fff;
+        }
+      }
     }
   }
 

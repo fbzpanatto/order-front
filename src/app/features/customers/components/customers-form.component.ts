@@ -120,6 +120,7 @@ export class CustomersFormComponent {
       }]
     }
   }
+  get contacts() { return this.#contacts }
   get title() { return this.#title }
   set title(value: string | undefined) { this.#title = value }
   get path() { return this.#route.snapshot.paramMap.get('type') }

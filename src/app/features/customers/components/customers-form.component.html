@@ -88,17 +88,29 @@
         </fieldset>
         <fieldset>
           <label class="medium-text fieldset-label">Contatos</label>
-          <table>
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>Nome</th>
-                <th>Número</th>
-              </tr>
-            </thead>
-            <tbody>
-            </tbody>
-          </table>
+          <div class="fieldset-table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Nome</th>
+                  <th>Número</th>
+                </tr>
+              </thead>
+              <tbody>
+                @for(item of contacts; track item.id){
+                  <tr>
+                    <td class="medium-text">{{ item.id }}</td>
+                    <td class="medium-text">{{ item.name }}</td>
+                    <td class="medium-text">{{ item.phone }}</td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+            <button class="add-btn">
+              <span><i class="fa-solid fa-plus"></i></span>
+            </button>
+          </div>
         </fieldset>
       </div>
     </div>
@@ -114,6 +126,6 @@
     </div>
   </form>
 </div>
-<pre>
+<!-- <pre>
   Form Values: {{ form.value | json }}
-</pre>
+</pre> -->
