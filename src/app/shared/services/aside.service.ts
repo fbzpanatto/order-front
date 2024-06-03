@@ -33,7 +33,6 @@ export class AsideService {
   readonly formFilterSignal = this.#filterSignal.asReadonly();
 
   changeFlag(state?: boolean) {
-    this.changeCustomerType('legal')
     this.#flag.update(val => {
       state != undefined ? this.#toolbarService.filterState = state : this.#toolbarService.filterState = state = !val
       return state != undefined ? state : !val
