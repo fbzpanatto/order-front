@@ -21,36 +21,6 @@ export class CustomersFormComponent {
   #asideService = inject(AsideService)
   #title?: string
 
-  normalForm = this.fb.group({
-    first_name: ['', {
-      validators: [Validators.required, Validators.minLength(3)],
-    }],
-    middle_name: ['', {
-      validators: [Validators.minLength(3)],
-    }],
-    last_name: ['', {
-      validators: [Validators.required, Validators.minLength(3)],
-    }],
-    cpf: ['', {
-      validators: [Validators.required, Validators.minLength(3)],
-    }]
-  })
-
-  legalForm = this.fb.group({
-    corporate_name: ['', {
-      validators: [Validators.required, Validators.minLength(3)],
-    }],
-    social_name: ['', {
-      validators: [Validators.minLength(3)],
-    }],
-    cnpj: ['', {
-      validators: [Validators.required, Validators.minLength(3)],
-    }],
-    state_registration: ['', {
-      validators: [Validators.required, Validators.minLength(3)],
-    }]
-  })
-
   constructor(private fb: FormBuilder) { }
 
   ngOnInit(): void {
@@ -94,6 +64,59 @@ export class CustomersFormComponent {
   redirect() { this.#router.navigate(['/customers']) }
 
   get form() { return this.customerType === 'legal' ? this.legalForm : this.normalForm }
+  get address() {
+    return {
+      add_street: ['', {
+        validators: [Validators.required, Validators.minLength(3)],
+      }],
+      add_number: ['', {
+        validators: [Validators.minLength(3)],
+      }],
+      add_zipcode: ['', {
+        validators: [Validators.required, Validators.minLength(3)],
+      }],
+      add_city: ['', {
+        validators: [Validators.required, Validators.minLength(3)],
+      }],
+      add_neighborhood: ['', {
+        validators: [Validators.required, Validators.minLength(3)],
+      }]
+    }
+  }
+  get legalForm() {
+    return this.fb.group({
+      corporate_name: ['', {
+        validators: [Validators.required, Validators.minLength(3)],
+      }],
+      social_name: ['', {
+        validators: [Validators.minLength(3)],
+      }],
+      cnpj: ['', {
+        validators: [Validators.required, Validators.minLength(3)],
+      }],
+      state_registration: ['', {
+        validators: [Validators.required, Validators.minLength(3)],
+      }],
+      ...this.address
+    })
+  }
+  get normalForm() {
+    return this.fb.group({
+      first_name: ['', {
+        validators: [Validators.required, Validators.minLength(3)],
+      }],
+      middle_name: ['', {
+        validators: [Validators.minLength(3)],
+      }],
+      last_name: ['', {
+        validators: [Validators.required, Validators.minLength(3)],
+      }],
+      cpf: ['', {
+        validators: [Validators.required, Validators.minLength(3)],
+      }],
+      ...this.address
+    })
+  }
   get title() { return this.#title }
   set title(value: string | undefined) { this.#title = value }
   get path() { return this.#route.snapshot.paramMap.get('type') }
