@@ -92,7 +92,7 @@
             <table>
               <thead>
                 <tr>
-                  <th>#</th>
+                  <th>idx</th>
                   <th>Nome</th>
                   <th>Número</th>
                   <th>
@@ -103,13 +103,13 @@
                 </tr>
               </thead>
               <tbody>
-                @for(item of contacts; track item.id){
+                @for(item of contacts; track item.id; let idx = $index){
                   <tr>
-                    <td class="medium-text">{{ item.id }}</td>
+                    <td>{{ item.id }}</td>
                     <td class="medium-text"><input type="text" [value]="item.name" placeholder="nome"></td>
                     <td class="medium-text"><input type="text" [value]="item.phone" placeholder="número"></td>
                     <td>
-                      <button class="del-btn" (click)="removeContact()">
+                      <button class="del-btn" (click)="removeContact(item)">
                         <span><i class="fa-solid fa-minus"></i></span>
                       </button>
                     </td>

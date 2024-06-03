@@ -22,7 +22,8 @@ export class CustomersFormComponent {
   #toolbarMenuService = inject(ToolbarMenuService)
   #asideService = inject(AsideService)
   #title?: string
-  #contacts: Contact[] = []
+  contacts: Contact[] = []
+  counter: number = 1
 
   normalForm = this.fb.group({
     first_name: ['', {
@@ -101,13 +102,13 @@ export class CustomersFormComponent {
   redirect() { this.#router.navigate(['/customers']) }
 
   addContact() {
-    console.log('contatos')
-    const contact = { id: 1, name: 'informar nome', phone: 'informar número' }
-    this.#contacts = [...this.#contacts, contact]
+    const contact = { id: this.counter, name: 'informar nome', phone: 'informar número' }
+    this.contacts = [...this.contacts, contact]
+    this.counter++
   }
 
-  removeContact(){
-    
+  removeContact(item: Contact) {
+    this.contacts = [...this.contacts.filter(el => el !== item)]
   }
 
   get form() { return this.customerType === 'legal' ? this.legalForm : this.normalForm }
@@ -130,7 +131,7 @@ export class CustomersFormComponent {
       }]
     }
   }
-  get contacts() { return this.#contacts }
+
   get title() { return this.#title }
   set title(value: string | undefined) { this.#title = value }
   get path() { return this.#route.snapshot.paramMap.get('type') }
