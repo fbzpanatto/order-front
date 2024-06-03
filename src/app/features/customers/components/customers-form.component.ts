@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, ElementRef, inject, viewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToolbarMenuService } from '../../../shared/services/toolbarMenu.service';
 import { environment } from '../../../../environments/environment';
@@ -16,6 +16,9 @@ interface Contact { id: number, name: string, phone: string }
   styleUrls: ['./customers-form.component.scss', '../../../styles/resource.scss']
 })
 export class CustomersFormComponent {
+
+  contactName = viewChild<ElementRef>("contactName");
+  contactPhone = viewChild<ElementRef>("contactPhone");
 
   #router = inject(Router)
   #route = inject(ActivatedRoute)
@@ -63,7 +66,7 @@ export class CustomersFormComponent {
 
   ngOnInit(): void {
 
-    this.#asideService.changeCustomerType(this.path as string)
+    this.#asideService.changeCustomerType(this.customerTypeUrlParam as string)
 
     this.canProced()
     this.menuSettings()
@@ -101,15 +104,23 @@ export class CustomersFormComponent {
 
   redirect() { this.#router.navigate(['/customers']) }
 
-  addContact() {
-    const contact = { id: this.counter, name: 'informar nome', phone: 'informar número' }
-    this.contacts = [...this.contacts, contact]
-    this.counter++
+  createRow(name: string, phone: string) {
+
+    if (name.length >= 3 && phone.length >= 10) {
+
+      const contactNameInput = this.contactName()?.nativeElement as HTMLInputElement
+      const contactPhoneInput = this.contactPhone()?.nativeElement as HTMLInputElement
+
+      const contact = { id: this.counter, name, phone }
+      this.contacts = [...this.contacts, contact]
+      this.counter++
+
+      contactNameInput.value = ''
+      contactPhoneInput.value = ''
+    }
   }
 
-  removeContact(item: Contact) {
-    this.contacts = [...this.contacts.filter(el => el !== item)]
-  }
+  removeContact(item: Contact) { this.contacts = [...this.contacts.filter(el => el !== item)] }
 
   get form() { return this.customerType === 'legal' ? this.legalForm : this.normalForm }
   get address() {
@@ -134,7 +145,7 @@ export class CustomersFormComponent {
 
   get title() { return this.#title }
   set title(value: string | undefined) { this.#title = value }
-  get path() { return this.#route.snapshot.paramMap.get('type') }
   get customerType() { return this.#asideService.customerType() }
   get command() { return this.#route.snapshot.paramMap.get('command') }
+  get customerTypeUrlParam() { return this.#route.snapshot.paramMap.get('type') }
 }

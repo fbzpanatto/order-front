@@ -94,17 +94,25 @@
                 <tr>
                   <th>Nome</th>
                   <th>Número</th>
-                  <th>
-                    <button class="add-btn" (click)="addContact()">
-                      <span><i class="fa-solid fa-plus"></i></span>
-                    </button>
-                  </th>
                 </tr>
               </thead>
               <tbody>
+                <tr>
+                  <td>
+                    <input #contactName class="medium-text" type="text" placeholder="adicionar nome">
+                  </td>
+                  <td>
+                    <input #contactPhone class="medium-text" type="text" placeholder="adicionar número">
+                  </td>
+                  <td>
+                    <button class="add-btn" (click)="createRow(contactName.value, contactPhone.value)">
+                      <span><i class="fa-solid fa-plus"></i></span>
+                    </button>
+                  </td>
+                </tr>
                 @for(item of contacts; track item.id; let idx = $index){
                   <tr>
-                    <td class="medium-text"><input type="text" [value]="item.name" placeholder="nome"></td>
+                    <td #contactName class="medium-text"><input type="text" [value]="item.name" placeholder="nome"></td>
                     <td class="medium-text"><input type="text" [value]="item.phone" placeholder="número"></td>
                     <td>
                       <button class="del-btn" (click)="removeContact(item)">
