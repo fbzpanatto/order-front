@@ -12,12 +12,12 @@ export class FetchCustomerService {
   #http = inject(HttpClient)
   #asideService = inject(AsideService)
 
-  async getAll() { return await firstValueFrom(this.#http.get(environment.API_URL + this.resource)) }
+  async getAll() { return await firstValueFrom(this.#http.get(environment.API_URL + this.fullResource)) }
 
-  async saveData(body: any) { return await firstValueFrom(this.#http.post(environment.API_URL + this.postUrl, body)) }
+  async saveData(body: any) { return await firstValueFrom(this.#http.post(environment.API_URL + this.fullResource, body)) }
 
   private get resource() { return environment.CUSTOMERS }
-  private get postUrl() { return environment.CUSTOMERS + '/' + this.customerType }
+  private get fullResource() { return environment.CUSTOMERS + '/' + this.customerType }
   private get customerType() { return this.#asideService.customerType() }
 
 }
