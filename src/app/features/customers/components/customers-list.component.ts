@@ -6,7 +6,6 @@ import { ToolbarMenuService } from '../../../shared/services/toolbarMenu.service
 import { environment } from '../../../../environments/environment';
 import { paths } from '../../../shared/services/aside.service';
 import { FetchCustomerService } from '../../../shared/services/fetchCustomer.service';
-import { SuccessGET } from '../../../shared/interfaces/response/response';
 
 @Component({
     selector: 'app-customers-list',
