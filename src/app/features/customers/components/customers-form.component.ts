@@ -32,17 +32,17 @@ export class CustomersFormComponent {
   #fetchCustomerService = inject(FetchCustomerService)
 
   normalForm = this.fb.group({
+    cpf: ['', {
+      validators: [Validators.required, Validators.minLength(11), Validators.maxLength(11)],
+    }],
     first_name: ['', {
       validators: [Validators.required, Validators.minLength(3), Validators.maxLength(60)],
     }],
     middle_name: ['', {
-      validators: [Validators.minLength(3), Validators.maxLength(60)],
+      validators: [Validators.minLength(2), Validators.maxLength(60)],
     }],
     last_name: ['', {
       validators: [Validators.required, Validators.minLength(3), Validators.maxLength(60)],
-    }],
-    cpf: ['', {
-      validators: [Validators.required, Validators.minLength(11), Validators.maxLength(11)],
     }],
     contacts: [[{}]],
     ...this.address,
@@ -132,12 +132,9 @@ export class CustomersFormComponent {
   }
 
   async onSubmit() {
-
-    console.log(this.form.value)
-
     if (this.command === 'new') {
       const response = await this.#fetchCustomerService.saveData(this.form.value)
-      console.log(response)
+      this.redirect()
     }
   }
 
