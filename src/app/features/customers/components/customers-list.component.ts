@@ -5,6 +5,7 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { ToolbarMenuService } from '../../../shared/services/toolbarMenu.service';
 import { environment } from '../../../../environments/environment';
 import { paths } from '../../../shared/services/aside.service';
+import { FetchCustomerService } from '../../../shared/services/fetchCustomer.service';
 
 @Component({
     selector: 'app-customers-list',
@@ -18,10 +19,17 @@ export class CustomersListComponent {
     #route = inject(ActivatedRoute)
     #asideService = inject(AsideService)
     #toolbarMenuService = inject(ToolbarMenuService)
+    #fetchCustomerService = inject(FetchCustomerService)
 
     ngOnInit() {
         this.asideFilters()
         this.menuSettings()
+        this.getAll()
+    }
+
+    async getAll() {
+        const response = await this.#fetchCustomerService.getAll()
+        console.log('response', response)
     }
 
     asideFilters() { this.#asideService.getResourceFilters(this.path) }
