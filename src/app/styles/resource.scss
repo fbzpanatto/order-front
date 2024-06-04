@@ -34,12 +34,12 @@
       background-color: #ebebeb;
       transition: 100ms;
       height: 40px;
-    
+
       &:hover {
         background-color: rgb(224, 224, 224);
         border: 1px solid #444
       }
-    
+
       &.clear-btn {
         background-color: #fff;
       }
@@ -149,9 +149,10 @@
             display: flex;
             width: 100%;
             gap: 64px;
+
             table {
               border-collapse: collapse;
-  
+
               thead {
                 tr {
                   th {
@@ -161,7 +162,7 @@
                   }
                 }
               }
-  
+
               tbody {
                 tr {
                   td {
@@ -194,6 +195,18 @@
             .add-btn {
               background: #333;
             }
+
+            button.add-btn:disabled,
+            button[disabled].add-btn {
+              border: 1px solid rgb(218, 218, 218);
+              background-color: #ebebeb;
+              color: rgba(16, 16, 16, 0.3);
+
+              &:hover {
+                border: 1px solid black;
+              }
+            }
+
             .del-btn {
               border: 1px solid #333;
               background-color: #fff;
@@ -228,12 +241,12 @@
         background-color: #ebebeb;
         transition: 100ms;
         height: 40px;
-      
+
         &:hover {
           background-color: rgb(224, 224, 224);
           border: 1px solid #444
         }
-      
+
         &.clear-btn {
           background-color: #fff;
         }

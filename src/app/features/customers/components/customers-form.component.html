@@ -122,13 +122,15 @@
                 }
                 <tr>
                   <td>
-                    <input maxlength="60" #contactName class="medium-text" type="text" placeholder="adicionar nome">
+                    <input maxlength="60" [formControl]="contactNameControl" class="medium-text" type="text"
+                      placeholder="adicionar nome">
                   </td>
                   <td>
-                    <input maxlength="14" #contactPhone class="medium-text" type="text" placeholder="adicionar número">
+                    <input maxlength="14" [formControl]="contactPhoneControl" class="medium-text" type="text"
+                      placeholder="adicionar número">
                   </td>
                   <td>
-                    <button type="button" class="add-btn" (click)="createRow(contactName.value, contactPhone.value)">
+                    <button [disabled]="addContactState" type="button" class="add-btn" (click)="createRow()">
                       <span><i class="fa-solid fa-plus"></i></span>
                     </button>
                   </td>

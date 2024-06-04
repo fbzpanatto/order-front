@@ -1,11 +1,12 @@
-import { Component, ElementRef, inject, viewChild } from '@angular/core';
+import { Component, ElementRef, effect, inject, viewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToolbarMenuService } from '../../../shared/services/toolbarMenu.service';
 import { environment } from '../../../../environments/environment';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AsideService } from '../../../shared/services/aside.service';
 import { CommonModule } from '@angular/common';
 import { FetchCustomerService } from '../../../shared/services/fetchCustomer.service';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 interface Contact { id: number, name: string, phone: string }
 
@@ -18,12 +19,16 @@ interface Contact { id: number, name: string, phone: string }
 })
 export class CustomersFormComponent {
 
-  contactName = viewChild<ElementRef>("contactName");
-  contactPhone = viewChild<ElementRef>("contactPhone");
+  contactNameControl = new FormControl<string>('')
+  contactPhoneControl = new FormControl<string>('')
+
+  contactNameSignal = toSignal(this.contactNameControl.valueChanges)
+  contactPhoneSignal = toSignal(this.contactPhoneControl.valueChanges)
 
   #title?: string
   counter: number = 1
   contacts: Contact[] = []
+  addContactState = true
 
   #router = inject(Router)
   #route = inject(ActivatedRoute)
@@ -65,7 +70,19 @@ export class CustomersFormComponent {
     ...this.address,
   })
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder) {
+    effect(() => {
+      const name = this.contactNameSignal()
+      const phone = this.contactPhoneSignal()
+
+      if (name && phone) {
+        const nameCondition = name.length >= 3 && name.length <= 60
+        const phoneCondition = phone.length >= 11 && phone.length <= 14
+
+        this.addContactState = !(nameCondition && phoneCondition)
+      }
+    })
+  }
 
   ngOnInit(): void {
 
@@ -107,21 +124,25 @@ export class CustomersFormComponent {
 
   redirect() { this.#router.navigate(['/customers']) }
 
-  createRow(name: string, phone: string) {
-    if ((name.length >= 3 && name.length <= 60) && (phone.length >= 11 && phone.length <= 14)) {
+  createRow() {
 
-      const contactNameInput = this.contactName()?.nativeElement as HTMLInputElement
-      const contactPhoneInput = this.contactPhone()?.nativeElement as HTMLInputElement
+    const nameInput = this.contactNameControl
+    const contactInput = this.contactPhoneControl
 
-      const contact = { id: this.counter, name, phone }
-      this.contacts = [...this.contacts, contact]
-      this.counter++
-
-      this.form.controls['contacts'].patchValue(this.contacts)
-
-      contactNameInput.value = ''
-      contactPhoneInput.value = ''
+    const contact = {
+      id: this.counter,
+      name: nameInput.value as string,
+      phone: contactInput.value as string
     }
+
+    this.contacts = [...this.contacts, contact]
+    this.counter++
+
+    this.form.controls['contacts'].patchValue(this.contacts)
+
+    this.addContactState = true
+    nameInput.reset()
+    contactInput.reset()
   }
 
   removeContact(item: Contact) {
