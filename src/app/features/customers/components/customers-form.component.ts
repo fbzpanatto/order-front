@@ -1,4 +1,4 @@
-import { Component, ElementRef, effect, inject, viewChild } from '@angular/core';
+import { Component, effect, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToolbarMenuService } from '../../../shared/services/toolbarMenu.service';
 import { environment } from '../../../../environments/environment';
@@ -71,17 +71,7 @@ export class CustomersFormComponent {
   })
 
   constructor(private fb: FormBuilder) {
-    effect(() => {
-      const name = this.contactNameSignal()
-      const phone = this.contactPhoneSignal()
-
-      if (name && phone) {
-        const nameCondition = name.length >= 3 && name.length <= 60
-        const phoneCondition = phone.length >= 11 && phone.length <= 14
-
-        this.addContactState = !(nameCondition && phoneCondition)
-      }
-    })
+    effect(() => { this.contactValidation() })
   }
 
   ngOnInit(): void {
@@ -100,6 +90,17 @@ export class CustomersFormComponent {
     if (this.command != 'new') { return this.redirect() }
 
     console.log('creating a new resource')
+  }
+
+  contactValidation() {
+
+    const name = this.contactNameSignal()
+    const phone = this.contactPhoneSignal()
+
+    const nameCondition = (name != null && name != undefined) && (name.length >= 3 && name.length <= 60)
+    const phoneCondition = (phone != null && phone != undefined) && (phone.length >= 11 && phone.length <= 14 && this.isNumeric(phone))
+
+    this.addContactState = !(nameCondition && phoneCondition)
   }
 
   canProced() {
@@ -124,7 +125,7 @@ export class CustomersFormComponent {
 
   redirect() { this.#router.navigate(['/customers']) }
 
-  createRow() {
+  createContact() {
 
     const nameInput = this.contactNameControl
     const contactInput = this.contactPhoneControl
@@ -157,6 +158,8 @@ export class CustomersFormComponent {
       this.redirect()
     }
   }
+
+  isNumeric(str: string): boolean { return str.match(/^\d+$/) !== null }
 
   get form() { return this.customerType === 'legal' ? this.legalForm : this.normalForm }
   get address() {
