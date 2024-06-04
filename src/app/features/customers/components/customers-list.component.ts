@@ -6,6 +6,7 @@ import { ToolbarMenuService } from '../../../shared/services/toolbarMenu.service
 import { environment } from '../../../../environments/environment';
 import { paths } from '../../../shared/services/aside.service';
 import { FetchCustomerService } from '../../../shared/services/fetchCustomer.service';
+import { SuccessGET } from '../../../shared/interfaces/response/response';
 
 @Component({
     selector: 'app-customers-list',
@@ -20,11 +21,10 @@ export class CustomersListComponent {
     #asideService = inject(AsideService)
     #toolbarMenuService = inject(ToolbarMenuService)
     #fetchCustomerService = inject(FetchCustomerService)
+    #customersArray?: any[]
 
     constructor() {
-        effect(() => {
-            this.getAll()
-        })
+        effect(() => { this.getAll() })
     }
 
     ngOnInit() {
@@ -34,7 +34,7 @@ export class CustomersListComponent {
 
     async getAll() {
         const response = await this.#fetchCustomerService.getAll()
-        console.log('response', response)
+        this.customersArray = response.data
     }
 
     asideFilters() { this.#asideService.getResourceFilters(this.path) }
@@ -43,6 +43,9 @@ export class CustomersListComponent {
         this.#toolbarMenuService.menuName = this.#route.snapshot.data[environment.MENU]
         this.#toolbarMenuService.hasFilter = true
     }
+
+    get customersArray() { return this.#customersArray }
+    set customersArray(value: any[] | undefined) { this.#customersArray = value }
 
     get asideFlag() { return this.#asideService.flag }
     get customerType() { return this.#asideService.customerType }

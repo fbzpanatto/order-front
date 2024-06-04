@@ -11,22 +11,24 @@
       <thead>
         <tr>
           <th>id</th>
-          <th>campo1</th>
-          <th>campo2</th>
-          <th>campo3</th>
-          <th>Data de entrada</th>
-          <th>Data de término</th>
+          <th>Razão Social</th>
+          <th>Nome Fantasia</th>
+          <th>Cnpj</th>
+          <th>Inscrição Estadual</th>
         </tr>
       </thead>
       <tbody>
-        <tr [routerLink]="customerType() + '/1'">
-          <td class="medium-text">1</td>
-          <td class="medium-text">asdasd</td>
-          <td class="medium-text">qweqweqwe</td>
-          <td class="medium-text">33ggg23</td>
-          <td class="medium-text">2021-12-12 00:00:00</td>
-          <td class="medium-text">2021-12-12 00:00:00</td>
-        </tr>
+        @for (item of customersArray; track item.id) {
+          <tr [routerLink]="customerType() + '/' + item.person_id">     
+            <td class="medium-text">{{ item.person_id }}</td>
+            <td class="medium-text">{{ item.corporate_name }}</td>
+            <td class="medium-text">{{ item.social_name }}</td>
+            <td class="medium-text">{{ item.cnpj }}</td>
+            <td class="medium-text">{{ item.state_registration }}</td>
+          </tr>
+        } @empty {
+
+        }
       </tbody>
     </table>
   </div>
