@@ -5,6 +5,7 @@ import { environment } from '../../../../environments/environment';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AsideService } from '../../../shared/services/aside.service';
 import { CommonModule } from '@angular/common';
+import { FetchCustomerService } from '../../../shared/services/fetchCustomer.service';
 
 interface Contact { id: number, name: string, phone: string }
 
@@ -20,43 +21,45 @@ export class CustomersFormComponent {
   contactName = viewChild<ElementRef>("contactName");
   contactPhone = viewChild<ElementRef>("contactPhone");
 
+  #title?: string
+  counter: number = 1
+  contacts: Contact[] = []
+
   #router = inject(Router)
   #route = inject(ActivatedRoute)
-  #toolbarMenuService = inject(ToolbarMenuService)
   #asideService = inject(AsideService)
-  #title?: string
-  contacts: Contact[] = []
-  counter: number = 1
+  #toolbarMenuService = inject(ToolbarMenuService)
+  #fetchCustomerService = inject(FetchCustomerService)
 
   normalForm = this.fb.group({
     first_name: ['', {
-      validators: [Validators.required, Validators.minLength(3)],
+      validators: [Validators.required, Validators.minLength(3), Validators.maxLength(60)],
     }],
     middle_name: ['', {
-      validators: [Validators.minLength(3)],
+      validators: [Validators.minLength(3), Validators.maxLength(60)],
     }],
     last_name: ['', {
-      validators: [Validators.required, Validators.minLength(3)],
+      validators: [Validators.required, Validators.minLength(3), Validators.maxLength(60)],
     }],
     cpf: ['', {
-      validators: [Validators.required, Validators.minLength(3)],
+      validators: [Validators.required, Validators.minLength(11), Validators.maxLength(11)],
     }],
     contacts: [[{}]],
     ...this.address,
   })
 
   legalForm = this.fb.group({
+    cnpj: ['', {
+      validators: [Validators.required, Validators.minLength(14), Validators.maxLength(14)],
+    }],
     corporate_name: ['', {
-      validators: [Validators.required, Validators.minLength(3)],
+      validators: [Validators.required, Validators.minLength(3), Validators.maxLength(100)],
     }],
     social_name: ['', {
-      validators: [Validators.minLength(3)],
-    }],
-    cnpj: ['', {
-      validators: [Validators.required, Validators.minLength(3)],
+      validators: [Validators.required, Validators.minLength(3), Validators.maxLength(100)],
     }],
     state_registration: ['', {
-      validators: [Validators.required, Validators.minLength(3)],
+      validators: [Validators.required, Validators.minLength(3), Validators.maxLength(9)],
     }],
     contacts: [[{}]],
     ...this.address,
@@ -128,28 +131,33 @@ export class CustomersFormComponent {
     this.form.controls['contacts'].patchValue(this.contacts)
   }
 
-  onSubmit() {
+  async onSubmit() {
 
     console.log(this.form.value)
+
+    if (this.command === 'new') {
+      const response = await this.#fetchCustomerService.saveData(this.form.value)
+      console.log(response)
+    }
   }
 
   get form() { return this.customerType === 'legal' ? this.legalForm : this.normalForm }
   get address() {
     return {
       add_street: ['', {
-        validators: [Validators.required, Validators.minLength(3)],
+        validators: [Validators.required, Validators.minLength(3), Validators.maxLength(100)],
       }],
       add_number: ['', {
-        validators: [Validators.minLength(3)],
+        validators: [Validators.maxLength(10)],
       }],
       add_zipcode: ['', {
-        validators: [Validators.required, Validators.minLength(3)],
+        validators: [Validators.required, Validators.minLength(8), Validators.maxLength(8)],
       }],
       add_city: ['', {
-        validators: [Validators.required, Validators.minLength(3)],
+        validators: [Validators.required, Validators.minLength(3), Validators.maxLength(60)],
       }],
       add_neighborhood: ['', {
-        validators: [Validators.required, Validators.minLength(3)],
+        validators: [Validators.required, Validators.minLength(3), Validators.maxLength(60)],
       }]
     }
   }

@@ -1,27 +1,23 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { Router } from '@angular/router';
-import { Observable, takeUntil, map, catchError, firstValueFrom } from 'rxjs';
+import { firstValueFrom } from 'rxjs';
 import { environment } from '../../../environments/environment';
+import { AsideService } from './aside.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FetchCustomerService {
 
-  private http = inject(HttpClient)
-  private router = inject(Router)
+  #http = inject(HttpClient)
+  #asideService = inject(AsideService)
 
-  async getAll() {
-    const observable = await firstValueFrom(this.http.get(environment.API_URL + this.resource))
-    return observable
-  }
+  async getAll() { return await firstValueFrom(this.#http.get(environment.API_URL + this.resource)) }
 
-  async saveData(body: any) {
-    const observable = await firstValueFrom(this.http.post(environment.API_URL + this.resource, body))
-    return observable
-  }
+  async saveData(body: any) { return await firstValueFrom(this.#http.post(environment.API_URL + this.postUrl, body)) }
 
-  get resource() { return environment.CUSTOMERS }
+  private get resource() { return environment.CUSTOMERS }
+  private get postUrl() { return environment.CUSTOMERS + '/' + this.customerType }
+  private get customerType() { return this.#asideService.customerType() }
 
 }
