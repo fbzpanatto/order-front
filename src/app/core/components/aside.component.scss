@@ -6,11 +6,23 @@
   height: calc(100vh - $toolbarHeight - ($pad16 * 2));
 
   aside {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
     background-color: #fff;
     border-radius: 8px;
     padding: $pad16;
     height: 100%;
     width: inherit;
+
+    h1 {
+      display: flex;
+      gap: 8px;
+      span {
+        color: #333;
+        font-size: 28px;
+      }
+    }
 
     form {
       display: flex;
