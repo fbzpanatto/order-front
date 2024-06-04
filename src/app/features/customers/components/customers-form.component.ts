@@ -108,8 +108,7 @@ export class CustomersFormComponent {
   redirect() { this.#router.navigate(['/customers']) }
 
   createRow(name: string, phone: string) {
-
-    if (name.length >= 3 && phone.length >= 10) {
+    if ((name.length >= 3 && name.length <= 60) && (phone.length >= 11 && phone.length <= 14)) {
 
       const contactNameInput = this.contactName()?.nativeElement as HTMLInputElement
       const contactPhoneInput = this.contactPhone()?.nativeElement as HTMLInputElement
