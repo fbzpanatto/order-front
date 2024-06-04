@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, effect, inject } from '@angular/core';
 import { AsideService } from '../../../shared/services/aside.service';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
@@ -21,10 +21,15 @@ export class CustomersListComponent {
     #toolbarMenuService = inject(ToolbarMenuService)
     #fetchCustomerService = inject(FetchCustomerService)
 
+    constructor() {
+        effect(() => {
+            this.getAll()
+        })
+    }
+
     ngOnInit() {
         this.asideFilters()
         this.menuSettings()
-        this.getAll()
     }
 
     async getAll() {

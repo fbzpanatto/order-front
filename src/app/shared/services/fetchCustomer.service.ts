@@ -16,7 +16,6 @@ export class FetchCustomerService {
 
   async saveData(body: any) { return await firstValueFrom(this.#http.post(environment.API_URL + this.fullResource, body)) }
 
-  private get resource() { return environment.CUSTOMERS }
   private get fullResource() { return environment.CUSTOMERS + '/' + this.customerType }
   private get customerType() { return this.#asideService.customerType() }
 
