@@ -4,30 +4,31 @@
     <span>Filtros</span>
   </h1> -->
   <form>
-    @for(item of formFields; track item.id){
-    @switch (item.type) {
-    @case ('text') {
     <fieldset>
-      <label for="search" class="fieldset-label">Busca</label>
-      <input id="search" class="medium-text" [type]="item.type" [placeholder]="item.placeholder">
-    </fieldset>
-    }
-    @case ('select') {
-    <fieldset>
-      <label for="typeOfCustomer" class="fieldset-label">Tipo do Cliente</label>
-      <select class="medium-text" id="typeOfCustomer" #customerType name="customerType" id="customerType"
-        (change)="onSelect(customerType.value)">
-        @for(el of item.options; track el.id){
-        <option [disabled]="el.disabled" class="medium-text" [value]="el.value"
-          [selected]="currCustomerType === el.value">{{ el.label }}</option>
+      <label class="fieldset-label">Filtros</label>
+      @for(item of formFields; track item.id){
+        @switch (item.type) {
+          @case ('text') {
+          <div class="input-container">
+            <input id="search" class="medium-text" [type]="item.type" [placeholder]="item.placeholder">
+          </div>
+          }
+          @case ('select') {
+          <div class="input-container">
+            <select class="medium-text" id="typeOfCustomer" #customerType name="customerType" id="customerType"
+              (change)="onSelect(customerType.value)">
+              @for(el of item.options; track el.id){
+              <option [disabled]="el.disabled" class="medium-text" [value]="el.value"
+                [selected]="currCustomerType === el.value">{{ el.label }}</option>
+              }
+            </select>
+          </div>
+          }
+          @default {
+          <span>não aparecer nada</span>
+          }
         }
-      </select>
+      }
     </fieldset>
-    }
-    @default {
-    <span>não aparecer nada</span>
-    }
-    }
-    }
   </form>
 </aside>
