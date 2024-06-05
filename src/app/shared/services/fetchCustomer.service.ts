@@ -33,7 +33,7 @@ export class FetchCustomerService {
 
   errorHandler(apiError: ApiError) {
     // TODO: open a dialog with error message
-    console.log(apiError.status, apiError.message)
+    console.log('errorHandler', apiError.status, apiError.message)
     return of(apiError)
   }
 

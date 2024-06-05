@@ -100,7 +100,9 @@ export class CustomersFormComponent {
     this.updateCounter()
   }
 
-  updateCounter() { this.counter = (this.contacts[this.contacts.length - 1].id) + 1 }
+  updateCounter() {
+    this.contacts.length ? this.counter = (this.contacts[this.contacts.length - 1].id) + 1 : null
+  }
 
   async getByPersonId(personId: number) { return (await this.#fetchCustomerService.getById(personId) as SuccessGETbyId).data }
 
@@ -167,7 +169,8 @@ export class CustomersFormComponent {
   async onSubmit() {
     if (this.command === 'new') {
       const response = await this.#fetchCustomerService.saveData(this.form.value)
-      this.redirect()
+      console.log(response)
+      // this.redirect()
     }
   }
 
