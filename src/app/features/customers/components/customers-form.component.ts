@@ -27,6 +27,7 @@ export class CustomersFormComponent {
   contactPhoneSignal = toSignal(this.contactPhoneControl.valueChanges)
 
   #title?: string
+  #personId?: number
   counter: number = 1
   contacts: Contact[] = []
   addContactState = true
@@ -87,7 +88,8 @@ export class CustomersFormComponent {
     this.titleSettings()
 
     if (!isNaN(Number(this.command))) {
-      this.person = await this.getByPersonId(parseInt(this.command as string))
+      this.personId = parseInt(this.command as string)
+      this.person = await this.getByPersonId(this.personId)
       return this.person != undefined ? this.updateFormValues(this.person) : null
     }
 
@@ -175,7 +177,7 @@ export class CustomersFormComponent {
     }
 
     if (!isNaN(Number(this.command))) {
-      const response = await this.#fetchCustomerService.updateData(Number(this.command), this.form.value)
+      const response = await this.#fetchCustomerService.updateData(this.personId as number, this.form.value)
       console.log(response)
       return
     }
@@ -206,6 +208,9 @@ export class CustomersFormComponent {
     }
   }
 
+
+  get personId() { return this.#personId }
+  set personId(value: number | undefined) { this.#personId = value }
   get title() { return this.#title }
   set title(value: string | undefined) { this.#title = value }
   get customerType() { return this.#asideService.customerType() }
