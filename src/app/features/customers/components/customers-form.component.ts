@@ -83,13 +83,15 @@ export class CustomersFormComponent {
     this.titleSettings()
 
     if (!isNaN(Number(this.command))) {
-      console.log('fetching data by id')
+      this.getByPersonId(parseInt(this.command as string))
       return
     }
 
     if (this.command != 'new') { return this.redirect() }
+  }
 
-    console.log('creating a new resource')
+  async getByPersonId(personId: number) {
+    const response = await this.#fetchCustomerService.getById(personId)
   }
 
   contactValidation() {
