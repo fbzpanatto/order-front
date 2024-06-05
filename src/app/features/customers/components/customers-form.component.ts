@@ -10,44 +10,6 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { SuccessGETbyId } from '../../../shared/interfaces/response/response';
 
 interface Contact { id: number, name: string, phone: string }
-interface NormalPerson {
-  person_id: any;
-  cpf: any;
-  first_name: any;
-  middle_name: any;
-  last_name: any;
-  created_at: any;
-  updated_at: any;
-  address: {
-    person_id: any;
-    id: any;
-    add_street: any;
-    add_number: any;
-    add_zipcode: any;
-    add_city: any;
-    add_neighborhood: any;
-  };
-  contacts: {}[];
-}
-interface LegalPerson {
-  person_id: any;
-  cnpj: any;
-  state_registration: any;
-  corporate_name: any;
-  social_name: any;
-  created_at: any;
-  updated_at: any;
-  address: {
-    person_id: any;
-    id: any;
-    add_street: any;
-    add_number: any;
-    add_zipcode: any;
-    add_city: any;
-    add_neighborhood: any;
-  };
-  contacts: {}[];
-}
 
 @Component({
   selector: 'app-customers-form',
@@ -124,13 +86,15 @@ export class CustomersFormComponent {
 
     if (!isNaN(Number(this.command))) {
       this.person = await this.getByPersonId(parseInt(this.command as string))
-
-      console.log('CHEGANDO AQUI DE QUALQUER JEITO: this.person', this.person)
-
-      return
+      return this.person != undefined ? this.updateFormValues(this.person) : null
     }
 
     if (this.command != 'new') { return this.redirect() }
+  }
+
+  updateFormValues(person: any) {
+    console.log('apenas se o valor existe')
+    this.form.patchValue(person)
   }
 
   async getByPersonId(personId: number) { return (await this.#fetchCustomerService.getById(personId) as SuccessGETbyId).data }

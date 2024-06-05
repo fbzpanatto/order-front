@@ -25,7 +25,11 @@ export class FetchCustomerService {
         .pipe(catchError((apiError) => this.errorHandler(apiError.error as ApiError))))
   }
 
-  async saveData(body: any) { return await firstValueFrom(this.#http.post(environment.API_URL + this.fullResource, body)) }
+  async saveData(body: any) {
+    return await firstValueFrom(
+      this.#http.post(environment.API_URL + this.fullResource, body)
+        .pipe(catchError((apiError) => this.errorHandler(apiError.error as ApiError))))
+  }
 
   errorHandler(apiError: ApiError) {
     // TODO: open a dialog with error message
