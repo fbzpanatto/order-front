@@ -95,10 +95,12 @@ export class CustomersFormComponent {
   }
 
   updateFormValues(person: any) {
-    console.log('apenas se o valor existe')
     this.form.patchValue(person)
     this.contacts = this.person.contacts
+    this.updateCounter()
   }
+
+  updateCounter() { this.counter = (this.contacts[this.contacts.length - 1].id) + 1 }
 
   async getByPersonId(personId: number) { return (await this.#fetchCustomerService.getById(personId) as SuccessGETbyId).data }
 
