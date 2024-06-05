@@ -52,7 +52,7 @@ export class CustomersFormComponent {
       validators: [Validators.required, Validators.minLength(3), Validators.maxLength(60)],
     }],
     contacts: [[{}]],
-    ...this.address,
+    address: this.fb.group({ ...this.address }),
   })
 
   legalForm = this.fb.group({
@@ -69,7 +69,7 @@ export class CustomersFormComponent {
       validators: [Validators.required, Validators.minLength(3), Validators.maxLength(9)],
     }],
     contacts: [[{}]],
-    ...this.address,
+    address: this.fb.group({ ...this.address }),
   })
 
   constructor(private fb: FormBuilder) {
