@@ -39,6 +39,7 @@ export class CustomersFormComponent {
   #person = {}
 
   normalForm = this.fb.group({
+    person_id: [''],
     cpf: ['', {
       validators: [Validators.required, Validators.minLength(11), Validators.maxLength(11)],
     }],
@@ -56,6 +57,7 @@ export class CustomersFormComponent {
   })
 
   legalForm = this.fb.group({
+    person_id: [''],
     cnpj: ['', {
       validators: [Validators.required, Validators.minLength(14), Validators.maxLength(14)],
     }],
@@ -172,6 +174,8 @@ export class CustomersFormComponent {
   get form() { return this.customerType === 'legal' ? this.legalForm : this.normalForm }
   get address() {
     return {
+      id: [''],
+      person_id: [''],
       add_street: ['', {
         validators: [Validators.required, Validators.minLength(3), Validators.maxLength(100)],
       }],
