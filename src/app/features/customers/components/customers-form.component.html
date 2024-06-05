@@ -111,8 +111,8 @@
               <tbody>
                 @for(item of contacts; track item.id; let idx = $index){
                 <tr>
-                  <td class="medium-text"><input type="text" [value]="item.name" placeholder="nome"></td>
-                  <td class="medium-text"><input type="text" [value]="item.phone" placeholder="número"></td>
+                  <td class="medium-text"><input type="text" [value]="item.contact" placeholder="nome"></td>
+                  <td class="medium-text"><input type="text" [value]="item.phone_number" placeholder="número"></td>
                   <td>
                     <button class="del-btn" (click)="removeContact(item)" type="button">
                       <span><i class="fa-solid fa-minus"></i></span>

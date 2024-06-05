@@ -9,7 +9,7 @@ import { FetchCustomerService } from '../../../shared/services/fetchCustomer.ser
 import { toSignal } from '@angular/core/rxjs-interop';
 import { SuccessGETbyId } from '../../../shared/interfaces/response/response';
 
-interface Contact { id: number, name: string, phone: string }
+interface Contact { id: number, contact: string, phone_number: string }
 
 @Component({
   selector: 'app-customers-form',
@@ -95,6 +95,7 @@ export class CustomersFormComponent {
   updateFormValues(person: any) {
     console.log('apenas se o valor existe')
     this.form.patchValue(person)
+    this.contacts = this.person.contacts
   }
 
   async getByPersonId(personId: number) { return (await this.#fetchCustomerService.getById(personId) as SuccessGETbyId).data }
@@ -139,8 +140,8 @@ export class CustomersFormComponent {
 
     const contact = {
       id: this.counter,
-      name: nameInput.value as string,
-      phone: contactInput.value as string
+      contact: nameInput.value as string,
+      phone_number: contactInput.value as string
     }
 
     this.contacts = [...this.contacts, contact]
