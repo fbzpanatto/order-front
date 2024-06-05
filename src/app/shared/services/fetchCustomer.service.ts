@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { firstValueFrom } from 'rxjs';
+import { catchError, firstValueFrom, of } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { AsideService } from './aside.service';
-import { SuccessGET } from '../interfaces/response/response';
+import { ApiError } from '../interfaces/response/response';
 
 @Injectable({
   providedIn: 'root'
@@ -14,17 +14,24 @@ export class FetchCustomerService {
   #asideService = inject(AsideService)
 
   async getAll() {
-    const response = await firstValueFrom(this.#http.get(environment.API_URL + this.fullResource))
-    // TODO: check possibility of errors on response
-    return response as SuccessGET
+    return await firstValueFrom(
+      this.#http.get(environment.API_URL + this.fullResource)
+        .pipe(catchError((apiError) => this.errorHandler(apiError.error as ApiError))))
   }
 
   async getById(personId: number | string) {
-    const response = await firstValueFrom(this.#http.get(environment.API_URL + this.fullResource + '/' + personId))
-    return response
+    return await firstValueFrom(
+      this.#http.get(environment.API_URL + this.fullResource + '/' + personId)
+        .pipe(catchError((apiError) => this.errorHandler(apiError.error as ApiError))))
   }
 
   async saveData(body: any) { return await firstValueFrom(this.#http.post(environment.API_URL + this.fullResource, body)) }
+
+  errorHandler(apiError: ApiError) {
+    // TODO: open a dialog with error message
+    console.log(apiError.status, apiError.message)
+    return of(apiError)
+  }
 
   private get fullResource() { return environment.CUSTOMERS + '/' + this.customerType }
   private get customerType() { return this.#asideService.customerType() }

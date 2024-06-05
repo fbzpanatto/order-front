@@ -7,8 +7,47 @@ import { AsideService } from '../../../shared/services/aside.service';
 import { CommonModule } from '@angular/common';
 import { FetchCustomerService } from '../../../shared/services/fetchCustomer.service';
 import { toSignal } from '@angular/core/rxjs-interop';
+import { SuccessGETbyId } from '../../../shared/interfaces/response/response';
 
 interface Contact { id: number, name: string, phone: string }
+interface NormalPerson {
+  person_id: any;
+  cpf: any;
+  first_name: any;
+  middle_name: any;
+  last_name: any;
+  created_at: any;
+  updated_at: any;
+  address: {
+    person_id: any;
+    id: any;
+    add_street: any;
+    add_number: any;
+    add_zipcode: any;
+    add_city: any;
+    add_neighborhood: any;
+  };
+  contacts: {}[];
+}
+interface LegalPerson {
+  person_id: any;
+  cnpj: any;
+  state_registration: any;
+  corporate_name: any;
+  social_name: any;
+  created_at: any;
+  updated_at: any;
+  address: {
+    person_id: any;
+    id: any;
+    add_street: any;
+    add_number: any;
+    add_zipcode: any;
+    add_city: any;
+    add_neighborhood: any;
+  };
+  contacts: {}[];
+}
 
 @Component({
   selector: 'app-customers-form',
@@ -35,6 +74,7 @@ export class CustomersFormComponent {
   #asideService = inject(AsideService)
   #toolbarMenuService = inject(ToolbarMenuService)
   #fetchCustomerService = inject(FetchCustomerService)
+  #person = {}
 
   normalForm = this.fb.group({
     cpf: ['', {
@@ -74,7 +114,7 @@ export class CustomersFormComponent {
     effect(() => { this.contactValidation() })
   }
 
-  ngOnInit(): void {
+  async ngOnInit() {
 
     this.#asideService.changeCustomerType(this.customerTypeUrlParam as string)
 
@@ -83,16 +123,17 @@ export class CustomersFormComponent {
     this.titleSettings()
 
     if (!isNaN(Number(this.command))) {
-      this.getByPersonId(parseInt(this.command as string))
+      this.person = await this.getByPersonId(parseInt(this.command as string))
+
+      console.log('CHEGANDO AQUI DE QUALQUER JEITO: this.person', this.person)
+
       return
     }
 
     if (this.command != 'new') { return this.redirect() }
   }
 
-  async getByPersonId(personId: number) {
-    const response = await this.#fetchCustomerService.getById(personId)
-  }
+  async getByPersonId(personId: number) { return (await this.#fetchCustomerService.getById(personId) as SuccessGETbyId).data }
 
   contactValidation() {
 
@@ -189,4 +230,6 @@ export class CustomersFormComponent {
   get customerType() { return this.#asideService.customerType() }
   get command() { return this.#route.snapshot.paramMap.get('command') }
   get customerTypeUrlParam() { return this.#route.snapshot.paramMap.get('type') }
+  get person() { return this.#person }
+  set person(value: any) { this.#person = value }
 }

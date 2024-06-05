@@ -6,6 +6,7 @@ import { ToolbarMenuService } from '../../../shared/services/toolbarMenu.service
 import { environment } from '../../../../environments/environment';
 import { paths } from '../../../shared/services/aside.service';
 import { FetchCustomerService } from '../../../shared/services/fetchCustomer.service';
+import { SuccessGET } from '../../../shared/interfaces/response/response';
 
 @Component({
     selector: 'app-customers-list',
@@ -31,10 +32,7 @@ export class CustomersListComponent {
         this.menuSettings()
     }
 
-    async getAll() {
-        const response = await this.#fetchCustomerService.getAll()
-        this.customersArray = response.data
-    }
+    async getAll() { this.customersArray = (await this.#fetchCustomerService.getAll() as SuccessGET).data }
 
     asideFilters() { this.#asideService.getResourceFilters(this.path) }
 

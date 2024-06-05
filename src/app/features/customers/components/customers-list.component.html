@@ -23,7 +23,7 @@
           </tr>
         </thead>
         <tbody>
-          @for (item of customersArray; track item.id) {
+          @for (item of customersArray; track item.person_id) {
             <tr [routerLink]="customerType() + '/' + item.person_id">     
               <td class="medium-text">{{ item.person_id }}</td>
               <td class="medium-text">{{ item.corporate_name }}</td>
@@ -50,7 +50,7 @@
           </tr>
         </thead>
         <tbody>
-          @for (item of customersArray; track item.id) {
+          @for (item of customersArray; track item.person_id) {
             <tr [routerLink]="customerType() + '/' + item.person_id">     
               <td class="medium-text">{{ item.person_id }}</td>
               <td class="medium-text">{{ item.first_name }}</td>
