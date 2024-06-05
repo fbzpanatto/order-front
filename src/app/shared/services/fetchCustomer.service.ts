@@ -31,6 +31,12 @@ export class FetchCustomerService {
         .pipe(catchError((apiError) => this.errorHandler(apiError.error as ApiError))))
   }
 
+  async updateData(personId: number | string, body: any) {
+    return await firstValueFrom(
+      this.#http.patch(environment.API_URL + this.fullResource + '/' + personId, body)
+        .pipe(catchError((apiError) => this.errorHandler(apiError.error as ApiError))))
+  }
+
   errorHandler(apiError: ApiError) {
     // TODO: open a dialog with error message
     console.log('errorHandler', apiError.status, apiError.message)

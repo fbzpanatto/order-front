@@ -171,6 +171,13 @@ export class CustomersFormComponent {
       const response = await this.#fetchCustomerService.saveData(this.form.value)
       console.log(response)
       // this.redirect()
+      return
+    }
+
+    if (!isNaN(Number(this.command))) {
+      const response = await this.#fetchCustomerService.updateData(Number(this.command), this.form.value)
+      console.log(response)
+      return
     }
   }
 
