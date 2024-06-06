@@ -7,7 +7,7 @@ import { AsideService } from '../../../shared/services/aside.service';
 import { CommonModule } from '@angular/common';
 import { FetchCustomerService } from '../../../shared/services/fetchCustomer.service';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { ApiError, SuccessGETbyId, SuccessPATCH, SuccessPOST } from '../../../shared/interfaces/response/response';
+import { SuccessGETbyId, SuccessPATCH, SuccessPOST } from '../../../shared/interfaces/response/response';
 
 interface Contact { id: number | null, contact: string, phone_number: string }
 
@@ -138,13 +138,10 @@ export class CustomersFormComponent {
 
   createContact() {
 
-    const nameInput = this.contactNameControl
-    const contactInput = this.contactPhoneControl
-
     const contact = {
       id: null,
-      contact: nameInput.value as string,
-      phone_number: contactInput.value as string
+      contact: this.contactNameControl.value as string,
+      phone_number: this.contactPhoneControl.value as string
     }
 
     this.contacts = [...this.contacts, contact]
@@ -152,13 +149,12 @@ export class CustomersFormComponent {
     this.form.controls['contacts'].patchValue(this.contacts)
 
     this.addContactState = true
-    nameInput.reset()
-    contactInput.reset()
+    this.contactNameControl.reset()
+    this.contactPhoneControl.reset()
   }
 
   updatingContact(idx: number, str: string, value: string) {
-    const element = this.contacts[idx]
-    str === 'contact' ? element.contact = value : element.phone_number = value
+    str === 'contact' ? this.contacts[idx].contact = value : this.contacts[idx].phone_number = value
   }
 
   removeContact(item: Contact) {
@@ -170,19 +166,12 @@ export class CustomersFormComponent {
   async onSubmit() {
     if (this.command === 'new') {
       const response = await this.#fetchCustomerService.saveData(this.form.value)
-      if (!(response as SuccessPOST).affectedRows) {
-        console.log('Falha no POST')
-        return
-      }
+      if (!(response as SuccessPOST).affectedRows) { return }
       return this.redirect()
     }
-
     if (!isNaN(Number(this.command))) {
       const response = await this.#fetchCustomerService.updateData(this.personId as number, this.form.value)
-      if (!(response as SuccessPATCH).affectedRows) {
-        console.log('Falha no PATCH')
-        return
-      }
+      if (!(response as SuccessPATCH).affectedRows) { return }
       return this.redirect()
     }
   }
