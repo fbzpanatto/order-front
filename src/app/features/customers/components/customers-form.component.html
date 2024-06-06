@@ -111,8 +111,11 @@
               <tbody>
                 @for(item of contacts; track item.id; let idx = $index){
                 <tr>
-                  <td class="medium-text"><input #contact (blur)="updatingContact(idx, 'contact', contact.value)" type="text" [value]="item.contact" placeholder="nome"></td>
-                  <td class="medium-text"><input #phone_number (blur)="updatingContact(idx, 'phone_number', phone_number.value)" type="text" [value]="item.phone_number" placeholder="número"></td>
+                  <td class="medium-text"><input #contact (blur)="updatingContact(idx, 'contact', contact.value)"
+                      type="text" [value]="item.contact" placeholder="nome"></td>
+                  <td class="medium-text"><input #phone_number
+                      (blur)="updatingContact(idx, 'phone_number', phone_number.value)" type="text"
+                      [value]="item.phone_number" placeholder="número"></td>
                   <td>
                     <button class="del-btn" (click)="removeContact(item)" type="button">
                       <span><i class="fa-solid fa-minus"></i></span>
@@ -155,4 +158,15 @@
   </form>
 </div>
 
-<!-- <pre>{{ form.value| json }}</pre> -->
+<pre>
+  <h2>current</h2>
+  {{ currentValues | json }}
+</pre>
+<pre>
+  <h2>Original</h2>
+  {{ originalValues | json }}
+</pre>
+<pre>
+  <h2>Diferença</h2>
+  {{ getDiff | json }}
+</pre>

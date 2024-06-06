@@ -83,6 +83,8 @@ export class CustomersFormComponent {
 
   async ngOnInit() {
 
+    this.#formService.currentForm = this.form;
+
     this.#asideService.changeCustomerType(this.customerTypeUrlParam as string)
 
     this.canProced()
@@ -99,7 +101,11 @@ export class CustomersFormComponent {
   }
 
   updateFormValues(person: any) {
-    this.form.patchValue(person)
+
+    this.form.patchValue(person);
+    this.#formService.originalValues = this.form.value;
+    this.#formService.currentForm = this.form
+
     this.contacts = this.person.contacts
     this.updateCounter()
   }
@@ -156,8 +162,20 @@ export class CustomersFormComponent {
   }
 
   updatingContact(idx: number, str: string, value: string) {
-    str === 'contact' ? this.contacts[idx].contact = value : this.contacts[idx].phone_number = value
+    if (str === 'contact') {
+      this.contacts[idx].contact = value;
+    } else {
+      this.contacts[idx].phone_number = value;
+    }
+  
+    // Atualizar o controle de contatos no formulário
+    this.form.controls['contacts'].patchValue([...this.contacts])
+  
+    // Recalcular a diferença
+    this.#formService.originalValues = this.form.value;
   }
+  
+  
 
   removeContact(item: Contact) {
     // TODO: create popup before delete
@@ -179,6 +197,11 @@ export class CustomersFormComponent {
   }
 
   isNumeric(str: string): boolean { return str.match(/^\d+$/) !== null }
+
+
+  get getDiff() { return this.#formService.getChangedValues(['person_id', 'id']) }
+  get originalValues() { return this.#formService.originalValues }
+  get currentValues() { return this.#formService.currentForm.value }
 
   get personId() { return this.#personId }
   set personId(value: number | undefined) { this.#personId = value }
