@@ -8,6 +8,7 @@ import { CommonModule } from '@angular/common';
 import { FetchCustomerService } from '../../../shared/services/fetchCustomer.service';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { SuccessGETbyId, SuccessPATCH, SuccessPOST } from '../../../shared/interfaces/response/response';
+import { FormService } from '../../../shared/services/form.service';
 
 interface Contact { id: number | null, contact: string, phone_number: string }
 
@@ -34,6 +35,7 @@ export class CustomersFormComponent {
 
   #router = inject(Router)
   #route = inject(ActivatedRoute)
+  #formService = inject(FormService)
   #asideService = inject(AsideService)
   #toolbarMenuService = inject(ToolbarMenuService)
   #fetchCustomerService = inject(FetchCustomerService)
