@@ -1,4 +1,4 @@
-import { Component, effect, inject } from '@angular/core';
+import { Component, OnDestroy, effect, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToolbarMenuService } from '../../../shared/services/toolbarMenu.service';
 import { environment } from '../../../../environments/environment';
@@ -19,7 +19,7 @@ interface Contact { id: number | null, contact: string, phone_number: string }
   templateUrl: './customers-form.component.html',
   styleUrls: ['./customers-form.component.scss', '../../../styles/resource.scss']
 })
-export class CustomersFormComponent {
+export class CustomersFormComponent implements OnDestroy {
 
   contactNameControl = new FormControl<string>('')
   contactPhoneControl = new FormControl<string>('')
@@ -83,13 +83,14 @@ export class CustomersFormComponent {
 
   async ngOnInit() {
 
-    this.#formService.currentForm = this.form;
 
     this.#asideService.changeCustomerType(this.customerTypeUrlParam as string)
 
     this.canProced()
     this.menuSettings()
     this.titleSettings()
+
+    this.#formService.currentForm = this.form;
 
     if (!isNaN(Number(this.command))) {
       this.personId = parseInt(this.command as string)
@@ -100,11 +101,14 @@ export class CustomersFormComponent {
     if (this.command != 'new') { return this.redirect() }
   }
 
+  ngOnDestroy(): void {
+    this.#formService.originalValues = {}
+  }
+
   updateFormValues(person: any) {
 
     this.form.patchValue(person);
     this.#formService.originalValues = this.form.value;
-    this.#formService.currentForm = this.form
 
     this.contacts = this.person.contacts
     this.updateCounter()
@@ -167,15 +171,17 @@ export class CustomersFormComponent {
     } else {
       this.contacts[idx].phone_number = value;
     }
-  
+
+    this.contacts = [...this.contacts]
+
     // Atualizar o controle de contatos no formulário
     this.form.controls['contacts'].patchValue([...this.contacts])
-  
+
     // Recalcular a diferença
     this.#formService.originalValues = this.form.value;
   }
-  
-  
+
+
 
   removeContact(item: Contact) {
     // TODO: create popup before delete
@@ -199,7 +205,7 @@ export class CustomersFormComponent {
   isNumeric(str: string): boolean { return str.match(/^\d+$/) !== null }
 
 
-  get getDiff() { return this.#formService.getChangedValues(['person_id', 'id']) }
+  get getDiff() { return this.#formService.getChangedValues() }
   get originalValues() { return this.#formService.originalValues }
   get currentValues() { return this.#formService.currentForm.value }
 

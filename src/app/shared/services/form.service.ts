@@ -15,19 +15,19 @@ export class FormService {
   get originalValues() { return this.#original; }
   set originalValues(formValues: Partial<{}>) { this.#original = formValues; }
 
-  // Método para comparar dois objetos e retornar um objeto com as diferenças, mantendo os campos especificados
-  private findDifferences(original: any, edited: any, fieldsToKeep: string[] = []): any {
-    let differences: any = {}
+  // Método para comparar dois objetos e retornar um objeto com as diferenças
+  private findDifferences(original: any, edited: any): any {
+    let differences:any = {};
 
     for (const key in original) {
       if (original.hasOwnProperty(key) && edited.hasOwnProperty(key)) {
         if (Array.isArray(original[key]) && Array.isArray(edited[key])) {
-          const arrayDiff = this.findArrayDifferences(original[key], edited[key], fieldsToKeep);
+          const arrayDiff = this.findArrayDifferences(original[key], edited[key]);
           if (arrayDiff.length > 0) {
             differences[key] = arrayDiff;
           }
         } else if (typeof original[key] === 'object' && original[key] !== null && edited[key] !== null) {
-          const nestedDiff = this.findDifferences(original[key], edited[key], fieldsToKeep);
+          const nestedDiff = this.findDifferences(original[key], edited[key]);
           if (Object.keys(nestedDiff).length > 0) {
             differences[key] = nestedDiff;
           }
@@ -43,43 +43,30 @@ export class FormService {
       }
     }
 
-    // Adicionar campos que devem ser mantidos
-    fieldsToKeep.forEach(field => {
-      if (edited.hasOwnProperty(field)) {
-        differences[field] = edited[field];
-      }
-    });
-
     return differences;
   }
 
-  // Método para comparar dois arrays e retornar as diferenças, mantendo os campos especificados
-  private findArrayDifferences(original: any[], edited: any[], fieldsToKeep: string[] = []): any[] {
-    let differences: any = []
-
+  // Método para comparar dois arrays e retornar as diferenças
+  private findArrayDifferences(original: any[], edited: any[]): any[] {
+    const differences = [];
+    
     for (let i = 0; i < edited.length; i++) {
       if (i < original.length) {
-        const diff = this.findDifferences(original[i], edited[i], fieldsToKeep);
+        const diff = this.findDifferences(original[i], edited[i]);
         if (Object.keys(diff).length > 0) {
-          differences.push(diff);
+          differences.push(edited[i]);
         }
       } else {
-        let diff: any = {}
-        for (const key of fieldsToKeep) {
-          if (edited[i].hasOwnProperty(key)) {
-            diff[key] = edited[i][key];
-          }
-        }
-        differences.push({ ...edited[i], ...diff });
+        differences.push(edited[i]);
       }
     }
-
+    
     return differences;
   }
 
-  // Método para obter os valores alterados do formulário, mantendo os campos especificados
-  getChangedValues(fieldsToKeep: string[] = []): any {
+  // Método para obter os valores alterados do formulário
+  getChangedValues(): any {
     const currentValues = this.#currentF.value;
-    return this.findDifferences(this.#original, currentValues, fieldsToKeep);
+    return this.findDifferences(this.#original, currentValues);
   }
 }
