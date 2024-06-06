@@ -11,6 +11,18 @@ export interface SuccessGETbyId {
   data: {}
 }
 
+export interface SuccessPOST {
+  status: number,
+  messagem: string,
+  affectedRows: number
+}
+
+export interface SuccessPATCH {
+  status: number,
+  messagem: string,
+  affectedRows: number
+}
+
 export interface ApiError {
   status: number,
   message: string

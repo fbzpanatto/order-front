@@ -7,7 +7,7 @@ import { AsideService } from '../../../shared/services/aside.service';
 import { CommonModule } from '@angular/common';
 import { FetchCustomerService } from '../../../shared/services/fetchCustomer.service';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { SuccessGETbyId } from '../../../shared/interfaces/response/response';
+import { ApiError, SuccessGETbyId, SuccessPATCH, SuccessPOST } from '../../../shared/interfaces/response/response';
 
 interface Contact { id: number | null, contact: string, phone_number: string }
 
@@ -170,15 +170,20 @@ export class CustomersFormComponent {
   async onSubmit() {
     if (this.command === 'new') {
       const response = await this.#fetchCustomerService.saveData(this.form.value)
-      console.log(response)
-      // this.redirect()
-      return
+      if (!(response as SuccessPOST).affectedRows) {
+        console.log('Falha no POST')
+        return
+      }
+      return this.redirect()
     }
 
     if (!isNaN(Number(this.command))) {
       const response = await this.#fetchCustomerService.updateData(this.personId as number, this.form.value)
-      console.log(response)
-      return
+      if (!(response as SuccessPATCH).affectedRows) {
+        console.log('Falha no PATCH')
+        return
+      }
+      return this.redirect()
     }
   }
 
