@@ -9,7 +9,7 @@ import { FetchCustomerService } from '../../../shared/services/fetchCustomer.ser
 import { toSignal } from '@angular/core/rxjs-interop';
 import { SuccessGETbyId } from '../../../shared/interfaces/response/response';
 
-interface Contact { id: number, contact: string, phone_number: string }
+interface Contact { id: number | null, contact: string, phone_number: string }
 
 @Component({
   selector: 'app-customers-form',
@@ -103,7 +103,7 @@ export class CustomersFormComponent {
   }
 
   updateCounter() {
-    this.contacts.length ? this.counter = (this.contacts[this.contacts.length - 1].id) + 1 : null
+    this.contacts.length ? this.counter = (this.contacts[this.contacts.length - 1].id!) + 1 : null
   }
 
   async getByPersonId(personId: number) { return (await this.#fetchCustomerService.getById(personId) as SuccessGETbyId).data }
@@ -142,13 +142,12 @@ export class CustomersFormComponent {
     const contactInput = this.contactPhoneControl
 
     const contact = {
-      id: this.counter,
+      id: null,
       contact: nameInput.value as string,
       phone_number: contactInput.value as string
     }
 
     this.contacts = [...this.contacts, contact]
-    this.counter++
 
     this.form.controls['contacts'].patchValue(this.contacts)
 
