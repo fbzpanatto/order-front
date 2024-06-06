@@ -130,13 +130,8 @@ export class CustomersFormComponent {
   }
 
   titleSettings() {
-    if (this.command !== 'new') {
-      this.title = 'Editando';
-    } else if (this.customerType === 'legal') {
-      this.title = 'Novo cliente Jurídico';
-    } else {
-      this.title = 'Novo cliente Físico';
-    }
+    if (this.command !== 'new') { this.title = 'Editando' }
+    else { this.title = this.customerType === 'legal' ? 'Novo cliente Jurídico' : 'Novo cliente Físico' }
   }
 
   redirect() { this.#router.navigate(['/customers']) }
@@ -185,6 +180,19 @@ export class CustomersFormComponent {
 
   isNumeric(str: string): boolean { return str.match(/^\d+$/) !== null }
 
+  get personId() { return this.#personId }
+  set personId(value: number | undefined) { this.#personId = value }
+
+  get title() { return this.#title }
+  set title(value: string | undefined) { this.#title = value }
+
+  get person() { return this.#person }
+  set person(value: any) { this.#person = value }
+
+  get customerType() { return this.#asideService.customerType() }
+  get command() { return this.#route.snapshot.paramMap.get('command') }
+  get customerTypeUrlParam() { return this.#route.snapshot.paramMap.get('type') }
+
   get form() { return this.customerType === 'legal' ? this.legalForm : this.normalForm }
   get address() {
     return {
@@ -207,15 +215,4 @@ export class CustomersFormComponent {
       }]
     }
   }
-
-
-  get personId() { return this.#personId }
-  set personId(value: number | undefined) { this.#personId = value }
-  get title() { return this.#title }
-  set title(value: string | undefined) { this.#title = value }
-  get customerType() { return this.#asideService.customerType() }
-  get command() { return this.#route.snapshot.paramMap.get('command') }
-  get customerTypeUrlParam() { return this.#route.snapshot.paramMap.get('type') }
-  get person() { return this.#person }
-  set person(value: any) { this.#person = value }
 }
