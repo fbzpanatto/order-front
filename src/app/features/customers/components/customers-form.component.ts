@@ -156,6 +156,11 @@ export class CustomersFormComponent {
     contactInput.reset()
   }
 
+  updatingContact(idx: number, str: string, value: string) {
+    const element = this.contacts[idx]
+    str === 'contact' ? element.contact = value : element.phone_number = value
+  }
+
   removeContact(item: Contact) {
     // TODO: create popup before delete
     this.contacts = [...this.contacts.filter(el => el !== item)]
