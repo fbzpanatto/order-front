@@ -55,15 +55,35 @@
         }
 
         .input-container {
-        
+
+          position: relative;
+
           input {
             outline: none;
-            padding: 8px;
             border: none;
             border-bottom: 1px solid black;
             width: 100%;
+            letter-spacing: 0.06em;
+            border-bottom: 1px solid #ebebeb;
+            padding: 8px 8px 8px 28px;
+            transition: 400ms;
+
+            &:focus {
+              border-bottom: 1px solid #333;
+            }
           }
-  
+
+          span {
+            position: absolute;
+            top: 25%;
+            left: 0;
+            color: rgb(180, 180, 180);
+          }
+
+          &:focus-within span {
+            color: black;
+          }
+
           select {
             outline: none;
             border: none;
@@ -71,7 +91,7 @@
             background-color: #fff;
             padding: 8px;
             width: 100%;
-  
+
             option {
               span {
                 padding: 8px;
