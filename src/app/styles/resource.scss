@@ -145,80 +145,6 @@
             }
           }
 
-          .fieldset-table-container {
-            display: flex;
-            width: 100%;
-            gap: 64px;
-
-            table {
-              border-collapse: collapse;
-
-              thead {
-                tr {
-                  th {
-                    color: #333;
-                    text-align: left;
-                    padding: 8px;
-                  }
-                }
-              }
-
-              tbody {
-                tr {
-                  td {
-                    padding: 8px;
-
-                    input {
-                      border: none;
-                      outline: none;
-                      border-bottom: 1px solid #ebebeb;
-                    }
-                  }
-                }
-              }
-            }
-
-            .add-btn,
-            .del-btn {
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              color: #fff;
-              border-radius: 50%;
-              width: 35px;
-              height: 35px;
-              gap: 8px;
-              border: none;
-              cursor: pointer;
-            }
-
-            .add-btn {
-              background: #333;
-            }
-
-            button.add-btn:disabled,
-            button[disabled].add-btn {
-              border: 1px solid rgb(218, 218, 218);
-              background-color: #ebebeb;
-              color: rgba(16, 16, 16, 0.3);
-
-              &:hover {
-                border: 1px solid black;
-              }
-            }
-
-            .del-btn {
-              border: 1px solid #333;
-              background-color: #fff;
-              color: #333;
-              transition: 100ms;
-
-              &:hover {
-                background-color: #d4d4d4;
-              }
-            }
-          }
-
           &.formArray {
             display: flex;
             flex-direction: column;
@@ -230,8 +156,8 @@
               justify-content: center;
               color: #fff;
               border-radius: 50%;
-              width: 35px;
-              height: 35px;
+              width: 40px;
+              height: 40px;
               gap: 8px;
               border: none;
               cursor: pointer;
@@ -268,6 +194,7 @@
               flex-direction: row;
               gap: 3vmin;
               align-items: center;
+              width: 50vw;
             }
 
             .add-btn-container {
@@ -275,6 +202,7 @@
               display: flex;
               flex-direction: row;
               justify-content: flex-end;
+              width: 50vw;
             }
           }
         }
