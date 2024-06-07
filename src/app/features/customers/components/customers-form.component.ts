@@ -157,12 +157,12 @@ export class CustomersFormComponent implements OnDestroy {
 
   async onSubmit() {
     if (this.command === 'new') {
-      const response = await this.#fetchCustomerService.saveData(this.form.value)
+      const response = await this.#fetchCustomerService.saveData(this.formDiff)
       if (!(response as SuccessPOST).affectedRows) { return }
       return this.redirect()
     }
     if (!isNaN(Number(this.command))) {
-      const response = await this.#fetchCustomerService.updateData(this.personId as number, this.form.value)
+      const response = await this.#fetchCustomerService.updateData(this.personId as number, this.formDiff)
       if (!(response as SuccessPATCH).affectedRows) { return }
       return this.redirect()
     }
@@ -170,7 +170,7 @@ export class CustomersFormComponent implements OnDestroy {
 
   isNumeric(str: string): boolean { return str.match(/^\d+$/) !== null }
 
-  get getDiff() { return this.#formService.getChangedValues() }
+  get formDiff() { return this.#formService.getChangedValues() }
   get originalValues() { return this.#formService.originalValues }
   get currentValues() { return this.#formService.currentForm.value }
 
