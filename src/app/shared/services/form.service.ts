@@ -15,41 +15,39 @@ export class FormService {
   get originalValues() { return this.#original; }
   set originalValues(formValues: Partial<{}>) { this.#original = formValues; }
 
-  // Método para comparar dois objetos e retornar um objeto com as diferenças
-  private findDifferences(original: any, edited: any): any {
-    let differences:any = {};
+  private findDifferences(original: any, current: any): any {
+    let differences: any = {};
 
-    for (const key in original) {
-      if (original.hasOwnProperty(key) && edited.hasOwnProperty(key)) {
-        if (Array.isArray(original[key]) && Array.isArray(edited[key])) {
-          const arrayDiff = this.findArrayDifferences(original[key], edited[key]);
+    for (const key of Object.keys(original)) {
+      if (current.hasOwnProperty(key)) {
+        if (Array.isArray(original[key]) && Array.isArray(current[key])) {
+          const arrayDiff = this.findArrayDifferences(original[key], current[key]);
           if (arrayDiff.length > 0) {
             differences[key] = arrayDiff;
           }
-        } else if (typeof original[key] === 'object' && original[key] !== null && edited[key] !== null) {
-          const nestedDiff = this.findDifferences(original[key], edited[key]);
+        } else if (typeof original[key] === 'object' && original[key] !== null && current[key] !== null) {
+          const nestedDiff = this.findDifferences(original[key], current[key]);
           if (Object.keys(nestedDiff).length > 0) {
             differences[key] = nestedDiff;
           }
-        } else if (original[key] !== edited[key]) {
-          differences[key] = edited[key];
+        } else if (original[key] !== current[key]) {
+          differences[key] = current[key];
         }
       }
     }
 
-    for (const key in edited) {
-      if (edited.hasOwnProperty(key) && !original.hasOwnProperty(key)) {
-        differences[key] = edited[key];
+    for (const key of Object.keys(current)) {
+      if (!original.hasOwnProperty(key)) {
+        differences[key] = current[key];
       }
     }
 
     return differences;
   }
 
-  // Método para comparar dois arrays e retornar as diferenças
   private findArrayDifferences(original: any[], edited: any[]): any[] {
-    const differences = [];
-    
+    const differences: any[] = [];
+
     for (let i = 0; i < edited.length; i++) {
       if (i < original.length) {
         const diff = this.findDifferences(original[i], edited[i]);
@@ -60,11 +58,10 @@ export class FormService {
         differences.push(edited[i]);
       }
     }
-    
+
     return differences;
   }
 
-  // Método para obter os valores alterados do formulário
   getChangedValues(): any {
     const currentValues = this.#currentF.value;
     return this.findDifferences(this.#original, currentValues);
