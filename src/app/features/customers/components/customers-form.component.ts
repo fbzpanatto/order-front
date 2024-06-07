@@ -144,8 +144,8 @@ export class CustomersFormComponent implements OnDestroy {
     const formArray = this.#fb.group({
       id: [null],
       person_id: [this.personId ?? ''],
-      contact: new FormControl('', { validators: [Validators.required, Validators.minLength(3), Validators.maxLength(20)] }),
-      phone_number: new FormControl('', { validators: [Validators.required, Validators.minLength(10), Validators.maxLength(14), Validators.pattern(/^\d+$/)] })
+      contact: [''],
+      phone_number: ['']
     })
 
     this.contacts.push(formArray)
