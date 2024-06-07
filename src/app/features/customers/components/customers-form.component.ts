@@ -1,12 +1,11 @@
-import { Component, OnDestroy, effect, inject } from '@angular/core';
+import { Component, OnDestroy, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToolbarMenuService } from '../../../shared/services/toolbarMenu.service';
 import { environment } from '../../../../environments/environment';
-import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AsideService } from '../../../shared/services/aside.service';
 import { CommonModule } from '@angular/common';
 import { FetchCustomerService } from '../../../shared/services/fetchCustomer.service';
-import { toSignal } from '@angular/core/rxjs-interop';
 import { SuccessGETbyId, SuccessPATCH, SuccessPOST } from '../../../shared/interfaces/response/response';
 import { FormService } from '../../../shared/services/form.service';
 
@@ -24,15 +23,12 @@ export class CustomersFormComponent implements OnDestroy {
   contactNameControl = new FormControl<string>('')
   contactPhoneControl = new FormControl<string>('')
 
-  contactNameSignal = toSignal(this.contactNameControl.valueChanges)
-  contactPhoneSignal = toSignal(this.contactPhoneControl.valueChanges)
-
   #title?: string
   #personId?: number
   counter: number = 1
-  contacts: Contact[] = []
   addContactState = true
 
+  #fb = inject(FormBuilder)
   #router = inject(Router)
   #route = inject(ActivatedRoute)
   #formService = inject(FormService)
@@ -41,7 +37,7 @@ export class CustomersFormComponent implements OnDestroy {
   #fetchCustomerService = inject(FetchCustomerService)
   #person = {}
 
-  normalForm = this.fb.group({
+  normalForm = this.#fb.group({
     person_id: [''],
     cpf: ['', {
       validators: [Validators.required, Validators.minLength(11), Validators.maxLength(11)],
@@ -55,11 +51,11 @@ export class CustomersFormComponent implements OnDestroy {
     last_name: ['', {
       validators: [Validators.required, Validators.minLength(3), Validators.maxLength(60)],
     }],
-    contacts: [[{}]],
-    address: this.fb.group({ ...this.address }),
+    contacts: this.#fb.array([]),
+    address: this.#fb.group({ ...this.address }),
   })
 
-  legalForm = this.fb.group({
+  legalForm = this.#fb.group({
     person_id: [''],
     cnpj: ['', {
       validators: [Validators.required, Validators.minLength(14), Validators.maxLength(14)],
@@ -73,16 +69,11 @@ export class CustomersFormComponent implements OnDestroy {
     state_registration: ['', {
       validators: [Validators.required, Validators.minLength(3), Validators.maxLength(9)],
     }],
-    contacts: [[{}]],
-    address: this.fb.group({ ...this.address }),
+    contacts: this.#fb.array([]),
+    address: this.#fb.group({ ...this.address }),
   })
 
-  constructor(private fb: FormBuilder) {
-    effect(() => { this.contactValidation() })
-  }
-
   async ngOnInit() {
-
 
     this.#asideService.changeCustomerType(this.customerTypeUrlParam as string)
 
@@ -101,35 +92,14 @@ export class CustomersFormComponent implements OnDestroy {
     if (this.command != 'new') { return this.redirect() }
   }
 
-  ngOnDestroy(): void {
-    this.#formService.originalValues = {}
-  }
+  ngOnDestroy(): void { this.#formService.originalValues = {} }
 
   updateFormValues(person: any) {
-
     this.form.patchValue(person);
     this.#formService.originalValues = this.form.value;
-
-    this.contacts = this.person.contacts
-    this.updateCounter()
-  }
-
-  updateCounter() {
-    this.contacts.length ? this.counter = (this.contacts[this.contacts.length - 1].id!) + 1 : null
   }
 
   async getByPersonId(personId: number) { return (await this.#fetchCustomerService.getById(personId) as SuccessGETbyId).data }
-
-  contactValidation() {
-
-    const name = this.contactNameSignal()
-    const phone = this.contactPhoneSignal()
-
-    const nameCondition = (name != null && name != undefined) && (name.length >= 3 && name.length <= 60)
-    const phoneCondition = (phone != null && phone != undefined) && (phone.length >= 11 && phone.length <= 14 && this.isNumeric(phone))
-
-    this.addContactState = !(nameCondition && phoneCondition)
-  }
 
   canProced() {
     return !((this.customerType && this.customerType === 'normal') || (this.customerType && this.customerType === 'legal')) ?
@@ -148,46 +118,21 @@ export class CustomersFormComponent implements OnDestroy {
 
   redirect() { this.#router.navigate(['/customers']) }
 
-  createContact() {
+  addQuestion() {
+    const formArray = this.#fb.group({
+      id: [null],
+      person_id: [''],
+      contact: [''],
+      phone_number: new FormControl('', { validators: [Validators.maxLength(14)] })
+    })
 
-    const contact = {
-      id: null,
-      contact: this.contactNameControl.value as string,
-      phone_number: this.contactPhoneControl.value as string
-    }
+    this.contacts.push(formArray)
+    this.contacts.updateValueAndValidity()
 
-    this.contacts = [...this.contacts, contact]
-
-    this.form.controls['contacts'].patchValue(this.contacts)
-
-    this.addContactState = true
-    this.contactNameControl.reset()
-    this.contactPhoneControl.reset()
+    return
   }
 
-  updatingContact(idx: number, str: string, value: string) {
-    if (str === 'contact') {
-      this.contacts[idx].contact = value;
-    } else {
-      this.contacts[idx].phone_number = value;
-    }
-
-    this.contacts = [...this.contacts]
-
-    // Atualizar o controle de contatos no formulário
-    this.form.controls['contacts'].patchValue([...this.contacts])
-
-    // Recalcular a diferença
-    this.#formService.originalValues = this.form.value;
-  }
-
-
-
-  removeContact(item: Contact) {
-    // TODO: create popup before delete
-    this.contacts = [...this.contacts.filter(el => el !== item)]
-    this.form.controls['contacts'].patchValue(this.contacts)
-  }
+  removeContact(idx: number) { return ((this.form as any).get('contacts') as FormArray).removeAt(idx) }
 
   async onSubmit() {
     if (this.command === 'new') {
@@ -208,6 +153,11 @@ export class CustomersFormComponent implements OnDestroy {
   get getDiff() { return this.#formService.getChangedValues() }
   get originalValues() { return this.#formService.originalValues }
   get currentValues() { return this.#formService.currentForm.value }
+
+  get contacts() {
+    if (!(this.form as any).get('contacts')) return new FormArray([]) as unknown as FormArray
+    return (this.form as any).get('contacts') as FormArray
+  }
 
   get personId() { return this.#personId }
   set personId(value: number | undefined) { this.#personId = value }

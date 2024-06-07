@@ -98,48 +98,25 @@
               name="add_neighborhood" type="text" placeholder="bairro">
           </div>
         </fieldset>
-        <fieldset>
+        <fieldset formArrayName="contacts">
+          <div>
+            <button type="button" (click)="addQuestion()">add question</button> 
+          </div>
           <label class="medium-text fieldset-label">Contatos</label>
-          <div class="fieldset-table-container">
-            <table>
-              <thead>
-                <tr>
-                  <th>Nome</th>
-                  <th>Número</th>
-                </tr>
-              </thead>
-              <tbody>
-                @for(item of contacts; track item.id; let idx = $index){
-                <tr>
-                  <td class="medium-text"><input #contact (blur)="updatingContact(idx, 'contact', contact.value)"
-                      type="text" [value]="item.contact" placeholder="nome"></td>
-                  <td class="medium-text"><input #phone_number
-                      (blur)="updatingContact(idx, 'phone_number', phone_number.value)" type="text"
-                      [value]="item.phone_number" placeholder="número"></td>
-                  <td>
-                    <button class="del-btn" (click)="removeContact(item)" type="button">
-                      <span><i class="fa-solid fa-minus"></i></span>
-                    </button>
-                  </td>
-                </tr>
-                }
-                <tr>
-                  <td>
-                    <input maxlength="60" [formControl]="contactNameControl" class="medium-text" type="text"
-                      placeholder="adicionar nome">
-                  </td>
-                  <td>
-                    <input maxlength="14" [formControl]="contactPhoneControl" class="medium-text" type="text"
-                      placeholder="adicionar número">
-                  </td>
-                  <td>
-                    <button [disabled]="addContactState" type="button" class="add-btn" (click)="createContact()">
-                      <span><i class="fa-solid fa-plus"></i></span>
-                    </button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+          <div class="formarraycontainer">
+            @for(register of contacts.controls; track register; let idx = $index) {
+              <div [formGroupName]="idx" class="formGroup">
+                <div class="input-container">
+                  <label class="light-text">Contato</label>
+                  <input class="medium-text" formControlName="contact" placeholder="teste" />
+                </div>
+                <div class="input-container">
+                  <label class="light-text">Número</label>
+                  <input class="medium-text" formControlName="phone_number" placeholder="teste" />
+                </div>
+                <button type="button" (click)="removeContact(idx)">remover</button>
+              </div>
+            }
           </div>
         </fieldset>
       </div>

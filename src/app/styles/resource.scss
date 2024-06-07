@@ -90,6 +90,18 @@
             z-index: 999;
           }
 
+          .formarraycontainer {
+            display: flex;
+            width: 35%;
+            flex-direction: column;
+            gap: 3vmin;
+
+            .formGroup {
+              display: flex;
+              gap: 3vmin;
+            }
+          }
+
           .input-container {
             position: relative;
             display: flex;
