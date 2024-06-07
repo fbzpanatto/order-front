@@ -9,8 +9,6 @@ import { FetchCustomerService } from '../../../shared/services/fetchCustomer.ser
 import { SuccessGETbyId, SuccessPATCH, SuccessPOST } from '../../../shared/interfaces/response/response';
 import { FormService } from '../../../shared/services/form.service';
 
-interface Contact { id: number | null, contact: string, phone_number: string }
-
 @Component({
   selector: 'app-customers-form',
   standalone: true,
@@ -95,8 +93,29 @@ export class CustomersFormComponent implements OnDestroy {
   ngOnDestroy(): void { this.#formService.originalValues = {} }
 
   updateFormValues(person: any) {
+
     this.form.patchValue(person);
+
+    for (let contact of person.contacts) {
+      const formArray = this.#fb.group({
+        id: [contact.id],
+        person_id: [contact.person_id],
+        contact: [contact.contact],
+        phone_number: [contact.phone_number]
+      })
+      this.contacts.push(formArray)
+      this.contacts.updateValueAndValidity()
+    }
+
     this.#formService.originalValues = this.form.value;
+  }
+
+  setContacts(contacts: any[]) {
+    const contactFGs = contacts.map(contact => this.#fb.group(contact));
+    const contactFormArray = this.#fb.array(contactFGs);
+
+    ((this.form as any).get('contacts') as FormArray).push(contactFormArray)
+    this.contacts.updateValueAndValidity()
   }
 
   async getByPersonId(personId: number) { return (await this.#fetchCustomerService.getById(personId) as SuccessGETbyId).data }
@@ -118,11 +137,11 @@ export class CustomersFormComponent implements OnDestroy {
 
   redirect() { this.#router.navigate(['/customers']) }
 
-  addQuestion() {
+  addContact() {
     const formArray = this.#fb.group({
       id: [null],
       person_id: [''],
-      contact: [''],
+      contact: new FormControl('', { validators: [Validators.minLength(3), Validators.maxLength(20)] }),
       phone_number: new FormControl('', { validators: [Validators.maxLength(14)] })
     })
 
@@ -148,7 +167,6 @@ export class CustomersFormComponent implements OnDestroy {
   }
 
   isNumeric(str: string): boolean { return str.match(/^\d+$/) !== null }
-
 
   get getDiff() { return this.#formService.getChangedValues() }
   get originalValues() { return this.#formService.originalValues }
