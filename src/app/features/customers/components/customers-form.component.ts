@@ -100,8 +100,8 @@ export class CustomersFormComponent implements OnDestroy {
       const formArray = this.#fb.group({
         id: [contact.id],
         person_id: [contact.person_id],
-        contact: [contact.contact],
-        phone_number: [contact.phone_number]
+        contact: new FormControl(contact.contact, { validators: [Validators.required, Validators.minLength(3), Validators.maxLength(20)] }),
+        phone_number: new FormControl(contact.phone_number, { validators: [Validators.required, Validators.minLength(10), Validators.maxLength(14), Validators.pattern(/^\d+$/)] })
       })
       this.contacts.push(formArray)
       this.contacts.updateValueAndValidity()
@@ -138,15 +138,17 @@ export class CustomersFormComponent implements OnDestroy {
   redirect() { this.#router.navigate(['/customers']) }
 
   addContact() {
+
+    this.contacts.updateValueAndValidity()
+
     const formArray = this.#fb.group({
       id: [null],
       person_id: [''],
-      contact: new FormControl('', { validators: [Validators.minLength(3), Validators.maxLength(20)] }),
-      phone_number: new FormControl('', { validators: [Validators.maxLength(14)] })
+      contact: new FormControl('', { validators: [Validators.required, Validators.minLength(3), Validators.maxLength(20)] }),
+      phone_number: new FormControl('', { validators: [Validators.required, Validators.minLength(10), Validators.maxLength(14), Validators.pattern(/^\d+$/)] })
     })
 
     this.contacts.push(formArray)
-    this.contacts.updateValueAndValidity()
 
     return
   }
