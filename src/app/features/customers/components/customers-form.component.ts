@@ -8,6 +8,7 @@ import { CommonModule } from '@angular/common';
 import { FetchCustomerService } from '../../../shared/services/fetchCustomer.service';
 import { SuccessGETbyId, SuccessPATCH, SuccessPOST } from '../../../shared/interfaces/response/response';
 import { FormService } from '../../../shared/services/form.service';
+import { format } from 'date-fns';
 
 @Component({
   selector: 'app-customers-form',
@@ -36,37 +37,13 @@ export class CustomersFormComponent implements OnDestroy {
   #person = {}
 
   normalForm = this.#fb.group({
-    person_id: [''],
-    cpf: ['', {
-      validators: [Validators.required, Validators.minLength(11), Validators.maxLength(11)],
-    }],
-    first_name: ['', {
-      validators: [Validators.required, Validators.minLength(3), Validators.maxLength(60)],
-    }],
-    middle_name: ['', {
-      validators: [Validators.minLength(2), Validators.maxLength(60)],
-    }],
-    last_name: ['', {
-      validators: [Validators.required, Validators.minLength(3), Validators.maxLength(60)],
-    }],
+    customer: this.#fb.group({ ...this.normalCustomer }),
     contacts: this.#fb.array([]),
     address: this.#fb.group({ ...this.address }),
   })
 
   legalForm = this.#fb.group({
-    person_id: [''],
-    cnpj: ['', {
-      validators: [Validators.required, Validators.minLength(14), Validators.maxLength(14)],
-    }],
-    corporate_name: ['', {
-      validators: [Validators.required, Validators.minLength(3), Validators.maxLength(100)],
-    }],
-    social_name: ['', {
-      validators: [Validators.required, Validators.minLength(3), Validators.maxLength(100)],
-    }],
-    state_registration: ['', {
-      validators: [Validators.required, Validators.minLength(3), Validators.maxLength(9)],
-    }],
+    customer: this.#fb.group({ ...this.legalCustomer }),
     contacts: this.#fb.array([]),
     address: this.#fb.group({ ...this.address }),
   })
@@ -170,6 +147,11 @@ export class CustomersFormComponent implements OnDestroy {
 
   isNumeric(str: string): boolean { return str.match(/^\d+$/) !== null }
 
+  formatDate(date: Date): string {
+    const localDate = new Date(date.getTime() + (3 * 60 * 60 * 1000));
+    return format(localDate, 'yyyy-MM-dd HH:mm:ss');
+  }
+
   get formDiff() { return this.#formService.getChangedValues() }
   get originalValues() { return this.#formService.originalValues }
   get currentValues() { return this.#formService.currentForm.value }
@@ -193,6 +175,45 @@ export class CustomersFormComponent implements OnDestroy {
   get customerTypeUrlParam() { return this.#route.snapshot.paramMap.get('type') }
 
   get form() { return this.customerType === 'legal' ? this.legalForm : this.normalForm }
+
+  get legalCustomer() {
+    return {
+      person_id: [''],
+      cnpj: ['', {
+        validators: [Validators.required, Validators.minLength(14), Validators.maxLength(14)],
+      }],
+      corporate_name: ['', {
+        validators: [Validators.required, Validators.minLength(3), Validators.maxLength(100)],
+      }],
+      social_name: ['', {
+        validators: [Validators.required, Validators.minLength(3), Validators.maxLength(100)],
+      }],
+      state_registration: ['', {
+        validators: [Validators.required, Validators.minLength(3), Validators.maxLength(9)],
+      }],
+      created_at: [''],
+    }
+  }
+
+  get normalCustomer() {
+    return {
+      person_id: [''],
+      cpf: ['', {
+        validators: [Validators.required, Validators.minLength(11), Validators.maxLength(11)],
+      }],
+      first_name: ['', {
+        validators: [Validators.required, Validators.minLength(3), Validators.maxLength(60)],
+      }],
+      middle_name: ['', {
+        validators: [Validators.minLength(2), Validators.maxLength(60)],
+      }],
+      last_name: ['', {
+        validators: [Validators.required, Validators.minLength(3), Validators.maxLength(60)],
+      }],
+      created_at: [''],
+    }
+  }
+
   get address() {
     return {
       id: [''],
@@ -211,7 +232,8 @@ export class CustomersFormComponent implements OnDestroy {
       }],
       add_neighborhood: ['', {
         validators: [Validators.required, Validators.minLength(3), Validators.maxLength(60)],
-      }]
+      }],
+      created_at: [''],
     }
   }
 }

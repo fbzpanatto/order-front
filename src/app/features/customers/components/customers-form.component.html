@@ -7,7 +7,7 @@
       <div class="fieldsets-container">
         @switch (customerType) {
         @case('legal') {
-        <fieldset>
+        <fieldset [formGroup]="form.controls.customer">
           <label class="medium-text fieldset-label">Identificação</label>
           <div class="input-container">
             <label class="light-text" for="corporate_name">Razão social</label>
@@ -36,7 +36,7 @@
         </fieldset>
         }
         @case('normal') {
-        <fieldset>
+        <fieldset [formGroup]="form.controls.customer">
           <label class="medium-text fieldset-label">Identificação</label>
           <div class="input-container">
             <label class="light-text" for="first_name">Primeiro Nome</label>
