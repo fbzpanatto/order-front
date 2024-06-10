@@ -23,6 +23,12 @@ export interface SuccessPATCH {
   affectedRows: number
 }
 
+export interface SuccessDELETE {
+  status: number,
+  messagem: string,
+  affectedRows: number
+}
+
 export interface ApiError {
   status: number,
   message: string

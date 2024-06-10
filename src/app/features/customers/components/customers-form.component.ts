@@ -6,7 +6,7 @@ import { FormArray, FormBuilder, FormControl, ReactiveFormsModule, Validators } 
 import { AsideService } from '../../../shared/services/aside.service';
 import { CommonModule } from '@angular/common';
 import { FetchCustomerService } from '../../../shared/services/fetchCustomer.service';
-import { SuccessGETbyId, SuccessPATCH, SuccessPOST } from '../../../shared/interfaces/response/response';
+import { SuccessDELETE, SuccessGETbyId, SuccessPATCH, SuccessPOST } from '../../../shared/interfaces/response/response';
 import { FormService } from '../../../shared/services/form.service';
 import { format } from 'date-fns';
 
@@ -135,8 +135,8 @@ export class CustomersFormComponent implements OnDestroy {
   async removeContact(idx: number) {
     const { id: contact_id, person_id } = ((this.form as any).get('contacts') as FormArray).at(idx).value
 
-    const result = await this.#fetchCustomerService.deleteContact(person_id, contact_id)
-    console.log('removeContact', result)
+    const response = await this.#fetchCustomerService.deleteContact(person_id, contact_id)
+    if (!(response as SuccessDELETE).affectedRows) { return }
 
     return ((this.form as any).get('contacts') as FormArray).removeAt(idx)
   }
