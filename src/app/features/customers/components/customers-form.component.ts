@@ -132,7 +132,14 @@ export class CustomersFormComponent implements OnDestroy {
     return
   }
 
-  removeContact(idx: number) { return ((this.form as any).get('contacts') as FormArray).removeAt(idx) }
+  async removeContact(idx: number) {
+    const { id: contact_id, person_id } = ((this.form as any).get('contacts') as FormArray).at(idx).value
+
+    const result = await this.#fetchCustomerService.deleteContact(person_id, contact_id)
+    console.log('removeContact', result)
+
+    return ((this.form as any).get('contacts') as FormArray).removeAt(idx)
+  }
 
   async onSubmit() {
     if (this.command === 'new') {
