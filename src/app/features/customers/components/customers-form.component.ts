@@ -11,11 +11,11 @@ import { FormService } from '../../../shared/services/form.service';
 import { format } from 'date-fns';
 
 @Component({
-  selector: 'app-customers-form',
-  standalone: true,
-  imports: [ReactiveFormsModule, CommonModule],
-  templateUrl: './customers-form.component.html',
-  styleUrls: ['./customers-form.component.scss', '../../../styles/resource.scss']
+    selector: 'app-customers-form',
+    standalone: true,
+    templateUrl: './customers-form.component.html',
+    styleUrls: ['./customers-form.component.scss', '../../../styles/resource.scss'],
+    imports: [ReactiveFormsModule, CommonModule]
 })
 export class CustomersFormComponent implements OnDestroy {
 
