@@ -1,4 +1,5 @@
-import { Component, input } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { DialogService } from '../services/dialog.service';
 
 @Component({
   selector: 'app-dialog',
@@ -9,6 +10,22 @@ import { Component, input } from '@angular/core';
 })
 export class DialogComponent {
 
-  opened = input(true);
+  #dialogService = inject(DialogService)
 
+  ngOnInit(): void { }
+
+  accept() {
+    this.#dialogService.next(true)
+    this.#dialogService.showDialog = false
+  }
+
+  refuse() {
+    this.#dialogService.next(false)
+    this.#dialogService.showDialog = false
+  }
+
+  cancel() {
+    this.#dialogService.next(false)
+    this.#dialogService.showDialog = false
+  }
 }

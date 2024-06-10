@@ -167,6 +167,12 @@
 
             .add-btn {
               background: #333;
+
+              &:hover {
+                background-color: #555;
+                color: #fff;
+                border-color: #555;
+              }
             }
 
             button.add-btn:disabled,

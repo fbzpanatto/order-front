@@ -1,11 +1,25 @@
-<dialog [open]="opened()">
+<dialog>
   <div class="header">
-    <p>header</p>
+    <h2>
+      <span><i class="fa-solid fa-circle-exclamation"></i></span>
+      <span>Alerta</span>
+    </h2>
+    <button (click)="cancel()" type="button">
+      <span><i class="fa-solid fa-xmark"></i></span>
+      <span>Fechar</span>
+    </button>
   </div>
   <div class="body">
-    <p>body</p>
+    <p class="medium-text">Deseja remover?</p>
   </div>
   <div class="footer">
-    <p>footer</p>
+    <button class="medium-text" type="button" (click)="refuse()">
+      <span><i class="fa-solid fa-xmark"></i></span>
+      <span>Não</span>
+    </button>
+    <button class="medium-text remove" type="button" (click)="accept()">
+      <span><i class="fa-solid fa-check"></i></span>
+      <span>Sim</span>
+    </button>
   </div>
 </dialog>

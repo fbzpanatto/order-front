@@ -9,13 +9,15 @@ import { FetchCustomerService } from '../../../shared/services/fetchCustomer.ser
 import { SuccessDELETE, SuccessGETbyId, SuccessPATCH, SuccessPOST } from '../../../shared/interfaces/response/response';
 import { FormService } from '../../../shared/services/form.service';
 import { format } from 'date-fns';
+import { DialogService } from '../../../shared/services/dialog.service';
+import { Subscription } from 'rxjs';
 
 @Component({
-    selector: 'app-customers-form',
-    standalone: true,
-    templateUrl: './customers-form.component.html',
-    styleUrls: ['./customers-form.component.scss', '../../../styles/resource.scss'],
-    imports: [ReactiveFormsModule, CommonModule]
+  selector: 'app-customers-form',
+  standalone: true,
+  templateUrl: './customers-form.component.html',
+  styleUrls: ['./customers-form.component.scss', '../../../styles/resource.scss'],
+  imports: [ReactiveFormsModule, CommonModule]
 })
 export class CustomersFormComponent implements OnDestroy {
 
@@ -27,14 +29,20 @@ export class CustomersFormComponent implements OnDestroy {
   counter: number = 1
   addContactState = true
 
+  userChoice?: boolean
+
   #fb = inject(FormBuilder)
   #router = inject(Router)
+  #subscription?: Subscription
   #route = inject(ActivatedRoute)
   #formService = inject(FormService)
   #asideService = inject(AsideService)
+  #dialogService = inject(DialogService)
   #toolbarMenuService = inject(ToolbarMenuService)
   #fetchCustomerService = inject(FetchCustomerService)
   #customer = {}
+
+  contactId?: number
 
   normalForm = this.#fb.group({
     customer: this.#fb.group({ ...this.normalCustomer }),
@@ -69,7 +77,10 @@ export class CustomersFormComponent implements OnDestroy {
     if (this.command != 'new') { return this.redirect() }
   }
 
-  ngOnDestroy(): void { this.#formService.originalValues = {} }
+  ngOnDestroy(): void {
+    this.#subscription?.unsubscribe()
+    this.#formService.originalValues = {}
+  }
 
   updateFormValues(person: any) {
 
@@ -133,16 +144,24 @@ export class CustomersFormComponent implements OnDestroy {
   }
 
   async removeContact(idx: number) {
+
     const { id: contact_id, person_id } = ((this.form as any).get('contacts') as FormArray).at(idx).value
 
     if (contact_id) {
-      // TODO: create a dialog to confirm delete.
-      const response = await this.#fetchCustomerService.deleteContact(person_id, contact_id)
-      if (!(response as SuccessDELETE).affectedRows) { return }
-      // TODO: create a bar?
-      alert('Removido com sucesso')
-    }
-    return ((this.form as any).get('contacts') as FormArray).removeAt(idx)
+      this.#dialogService.showDialog = true
+
+      let subscription: Subscription
+
+      subscription = this.#dialogService.subject.subscribe(async value => {
+        if (!value) { return }
+        const response = await this.#fetchCustomerService.deleteContact(person_id, contact_id)
+        if (!(response as SuccessDELETE).affectedRows) { return }
+        return ((this.form as any).get('contacts') as FormArray).removeAt(idx)
+      })
+
+      this.#subscription?.add(subscription)
+
+    } else { ((this.form as any).get('contacts') as FormArray).removeAt(idx) }
   }
 
   async onSubmit() {
