@@ -98,6 +98,33 @@
               name="add_neighborhood" type="text" placeholder="bairro">
           </div>
         </fieldset>
+        <fieldset [formGroup]="form.controls.person">
+          <label class="medium-text fieldset-label">Complementares</label>
+          <div class="input-container">
+            <label class="light-text" for="first_field">Primeiro Campo</label>
+            <span><i class="fa-solid fa-pen-to-square"></i></span>
+            <input maxlength="100" formControlName="first_field" class="medium-text" id="first_field" name="first_field"
+              type="text" placeholder="primeiro Campo">
+          </div>
+          <div class="input-container">
+            <label class="light-text" for="second_field">Segundo Campo</label>
+            <span><i class="fa-solid fa-pen-to-square"></i></span>
+            <input maxlength="100" formControlName="second_field" class="medium-text" id="second_field"
+              name="second_field" type="text" placeholder="segundo campo">
+          </div>
+          <div class="input-container">
+            <label class="light-text" for="third_field">Terceiro Campo</label>
+            <span><i class="fa-solid fa-pen-to-square"></i></span>
+            <input maxlength="100" formControlName="third_field" class="medium-text" id="third_field" name="third_field"
+              type="text" placeholder="terceiro campo">
+          </div>
+          <div class="input-container">
+            <label class="light-text" for="observation">Observação</label>
+            <span><i class="fa-solid fa-pen-to-square"></i></span>
+            <input maxlength="45" formControlName="observation" class="medium-text" id="observation" name="observation"
+              type="text" placeholder="observação">
+          </div>
+        </fieldset>
         <fieldset formArrayName="contacts" class="formArray">
           <label class="medium-text fieldset-label">Contatos</label>
           @for(register of contacts.controls; track register; let idx = $index) {
@@ -145,15 +172,17 @@
   </form>
 </div>
 
-<!-- <pre>
-  <h2>current</h2>
-  {{ currentValues | json }}
-</pre>
-<pre>
-  <h2>Original</h2>
-  {{ originalValues | json }}
-</pre>
-<pre>
-  <h2>Diferença</h2>
-  {{ formDiff | json }}
-</pre> -->
+<!-- <div style="display: flex; flex-direction: column;">
+  <pre>
+    <h2>current</h2>
+    {{ currentValues | json }}
+  </pre>
+  <pre>
+    <h2>Original</h2>
+    {{ originalValues | json }}
+  </pre>
+  <pre>
+    <h2>Diferença</h2>
+    {{ formDiff | json }}
+  </pre>
+</div> -->

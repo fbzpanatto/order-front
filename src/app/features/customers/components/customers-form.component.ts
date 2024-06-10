@@ -23,7 +23,7 @@ export class CustomersFormComponent implements OnDestroy {
   contactPhoneControl = new FormControl<string>('')
 
   #title?: string
-  #personId?: number
+  #customerId?: number
   counter: number = 1
   addContactState = true
 
@@ -34,18 +34,20 @@ export class CustomersFormComponent implements OnDestroy {
   #asideService = inject(AsideService)
   #toolbarMenuService = inject(ToolbarMenuService)
   #fetchCustomerService = inject(FetchCustomerService)
-  #person = {}
+  #customer = {}
 
   normalForm = this.#fb.group({
     customer: this.#fb.group({ ...this.normalCustomer }),
     contacts: this.#fb.array([]),
     address: this.#fb.group({ ...this.address }),
+    person: this.#fb.group({ ...this.person })
   })
 
   legalForm = this.#fb.group({
     customer: this.#fb.group({ ...this.legalCustomer }),
     contacts: this.#fb.array([]),
     address: this.#fb.group({ ...this.address }),
+    person: this.#fb.group({ ...this.person })
   })
 
   async ngOnInit() {
@@ -59,9 +61,9 @@ export class CustomersFormComponent implements OnDestroy {
     this.#formService.currentForm = this.form;
 
     if (!isNaN(Number(this.command))) {
-      this.personId = parseInt(this.command as string)
-      this.person = await this.getByPersonId(this.personId)
-      return this.person != undefined ? this.updateFormValues(this.person) : null
+      this.customerId = parseInt(this.command as string)
+      this.customer = await this.getByPersonId(this.customerId)
+      return this.customer != undefined ? this.updateFormValues(this.customer) : null
     }
 
     if (this.command != 'new') { return this.redirect() }
@@ -120,7 +122,7 @@ export class CustomersFormComponent implements OnDestroy {
 
     const formArray = this.#fb.group({
       id: [null],
-      person_id: [this.personId ?? ''],
+      person_id: [this.customerId ?? ''],
       contact: [''],
       phone_number: ['']
     })
@@ -139,7 +141,7 @@ export class CustomersFormComponent implements OnDestroy {
       return this.redirect()
     }
     if (!isNaN(Number(this.command))) {
-      const response = await this.#fetchCustomerService.updateData(this.personId as number, this.formDiff)
+      const response = await this.#fetchCustomerService.updateData(this.customerId as number, this.formDiff)
       if (!(response as SuccessPATCH).affectedRows) { return }
       return this.redirect()
     }
@@ -161,14 +163,14 @@ export class CustomersFormComponent implements OnDestroy {
     return (this.form as any).get('contacts') as FormArray
   }
 
-  get personId() { return this.#personId }
-  set personId(value: number | undefined) { this.#personId = value }
+  get customerId() { return this.#customerId }
+  set customerId(value: number | undefined) { this.#customerId = value }
+
+  get customer() { return this.#customer }
+  set customer(value: any) { this.#customer = value }
 
   get title() { return this.#title }
   set title(value: string | undefined) { this.#title = value }
-
-  get person() { return this.#person }
-  set person(value: any) { this.#person = value }
 
   get customerType() { return this.#asideService.customerType() }
   get command() { return this.#route.snapshot.paramMap.get('command') }
@@ -234,6 +236,24 @@ export class CustomersFormComponent implements OnDestroy {
         validators: [Validators.required, Validators.minLength(3), Validators.maxLength(60)],
       }],
       created_at: [''],
+    }
+  }
+
+  get person() {
+    return {
+      id: [''],
+      observation: ['', {
+        validators: [Validators.minLength(3), Validators.maxLength(45)],
+      }],
+      first_field: ['', {
+        validators: [Validators.minLength(3), Validators.maxLength(100)],
+      }],
+      second_field: ['', {
+        validators: [Validators.minLength(3), Validators.maxLength(100)],
+      }],
+      third_field: ['', {
+        validators: [Validators.minLength(3), Validators.maxLength(100)],
+      }]
     }
   }
 }
