@@ -12,7 +12,8 @@ export const routes: Routes = [
     title: 'Home',
     loadComponent: () => import('./features/home/components/home.component').then(m => m.HomeComponent),
     data: {
-      menu: 'default'
+      menu: 'default',
+      filter: true
     },
   },
   {
