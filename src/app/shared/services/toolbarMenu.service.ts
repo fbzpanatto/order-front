@@ -67,7 +67,7 @@ export class ToolbarMenuService {
         id: 4,
         routerLink: 'home',
         iClass: 'fa-solid fa-house',
-        title: 'Voltar ao Sistema',
+        title: 'Home',
         toolbar: true,
         userMenu: false
       },
