@@ -30,7 +30,6 @@ export const routes: Routes = [
       },
       {
         path: ':type/:command',
-        // canActivate: [authGuard],
         loadComponent: () => import('./features/customers/components/customers-form.component').then(m => m.CustomersFormComponent),
         data: {
           menu: 'default',
@@ -53,7 +52,6 @@ export const routes: Routes = [
       },
       {
         path: ':command',
-        canActivate: [authGuard],
         loadComponent: () => import('./features/orders/components/orders-form.component').then(m => m.OrdersFormComponent),
         data: {
           menu: 'default',
@@ -76,7 +74,6 @@ export const routes: Routes = [
       },
       {
         path: ':command',
-        canActivate: [authGuard],
         loadComponent: () => import('./features/products/components/products-form.component').then(m => m.ProductsFormComponent),
         data: {
           menu: 'default',
@@ -88,11 +85,11 @@ export const routes: Routes = [
   {
     path: 'users',
     title: 'Usuários',
-    canActivate: [authGuard],
     children: [
       {
         path: '',
         loadComponent: () => import('./features/users/components/users-list.component').then(m => m.UsersListComponent),
+        // canActivate: [authGuard],
         data: {
           menu: 'settings',
           filter: true
@@ -100,7 +97,6 @@ export const routes: Routes = [
       },
       {
         path: ':command',
-        canActivate: [authGuard],
         loadComponent: () => import('./features/users/components/users-form.component').then(m => m.UsersFormComponent),
         data: {
           menu: 'settings',
@@ -112,7 +108,6 @@ export const routes: Routes = [
   {
     path: 'parameters',
     title: 'Parâmetros do Sistema',
-    canActivate: [authGuard],
     loadComponent: () => import('./features/parameters/components/parameters.component').then(m => m.ParametersComponent),
     data: {
       menu: 'settings',
