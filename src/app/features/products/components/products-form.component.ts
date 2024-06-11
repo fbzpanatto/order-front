@@ -29,9 +29,12 @@ export class ProductsFormComponent {
   }
 
   menuSettings() {
-    this.#toolbarMenuService.menuName = this.#route.snapshot.data[environment.MENU]
-    this.#toolbarMenuService.hasFilter = false
+    this.#toolbarMenuService.menuName = this.menuName
+    this.#toolbarMenuService.hasFilter = this.hasFilter
   }
+
+  get hasFilter() { return this.#route.snapshot.data[environment.FILTER] as boolean }
+  get menuName() { return this.#route.snapshot.data[environment.MENU] as string }
 
   get command() { return this.#route.snapshot.paramMap.get('command') }
 

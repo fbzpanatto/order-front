@@ -41,9 +41,9 @@ export class ToolbarMenuService {
     return [
       {
         id: 1,
-        routerLink: 'user',
+        routerLink: 'users',
         iClass: 'fa-solid fa-user-pen',
-        title: 'Editar usuário',
+        title: 'Usuários',
         toolbar: true,
         userMenu: true
       },

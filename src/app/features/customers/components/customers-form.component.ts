@@ -116,8 +116,8 @@ export class CustomersFormComponent implements OnDestroy {
   }
 
   menuSettings() {
-    this.#toolbarMenuService.menuName = this.#route.snapshot.data[environment.MENU]
-    this.#toolbarMenuService.hasFilter = false
+    this.#toolbarMenuService.menuName = this.menuName
+    this.#toolbarMenuService.hasFilter = this.hasFilter
   }
 
   titleSettings() {
@@ -208,6 +208,9 @@ export class CustomersFormComponent implements OnDestroy {
   get customerTypeUrlParam() { return this.#route.snapshot.paramMap.get('type') }
 
   get form() { return this.customerType === 'legal' ? this.legalForm : this.normalForm }
+
+  get hasFilter() { return this.#route.snapshot.data[environment.FILTER] as boolean }
+  get menuName() { return this.#route.snapshot.data[environment.MENU] as string }
 
   get legalCustomer() {
     return {

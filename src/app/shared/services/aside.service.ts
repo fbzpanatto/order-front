@@ -1,7 +1,7 @@
 import { Injectable, inject, signal } from '@angular/core';
 import { ToolbarMenuService } from './toolbarMenu.service';
 
-export type paths = 'void' | 'home' | 'customers' | 'products' | 'orders'
+export type paths = 'void' | 'home' | 'customers' | 'products' | 'orders' | 'users'
 type Filters = { [key: string]: FormFields[] }
 
 interface FormFields {

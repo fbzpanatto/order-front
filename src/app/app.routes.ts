@@ -85,14 +85,28 @@ export const routes: Routes = [
     ]
   },
   {
-    path: 'user',
-    title: 'Configurações do Usuário',
+    path: 'users',
+    title: 'Usuários',
     canActivate: [authGuard],
-    loadComponent: () => import('./features/users/components/users.component').then(m => m.UsersComponent),
-    data: {
-      menu: 'settings',
-      filter: false
-    }
+    children: [
+      {
+        path: '',
+        loadComponent: () => import('./features/users/components/users-list.component').then(m => m.UsersListComponent),
+        data: {
+          menu: 'settings',
+          filter: true
+        }
+      },
+      {
+        path: ':command',
+        canActivate: [authGuard],
+        loadComponent: () => import('./features/users/components/users-form.component').then(m => m.UsersFormComponent),
+        data: {
+          menu: 'settings',
+          filter: false
+        },
+      },
+    ]
   },
   {
     path: 'parameters',

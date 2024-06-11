@@ -28,10 +28,12 @@ export class HomeComponent {
     asideFilters() { this.#asideService.getResourceFilters(this.path) }
 
     menuSettings() {
-        this.#toolbarMenuService.menuName = this.#route.snapshot.data[environment.MENU]
-        this.#toolbarMenuService.hasFilter = true
-    }
+        this.#toolbarMenuService.menuName = this.menuName
+        this.#toolbarMenuService.hasFilter = this.hasFilter
+      }
+
+    get hasFilter() { return this.#route.snapshot.data[environment.FILTER] as boolean }
+    get menuName() { return this.#route.snapshot.data[environment.MENU] as string }
 
     get path() { return this.#route.snapshot.routeConfig?.path as paths }
-    get asideFlag() { return this.#asideService.flag }
 }

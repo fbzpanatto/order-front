@@ -23,9 +23,7 @@ export class CustomersListComponent {
     #fetchCustomerService = inject(FetchCustomerService)
     #customersArray?: any[]
 
-    constructor() {
-        effect(() => { this.getAll() })
-    }
+    constructor() { effect(() => { this.getAll() }) }
 
     ngOnInit() {
         this.asideFilters()
@@ -37,14 +35,16 @@ export class CustomersListComponent {
     asideFilters() { this.#asideService.getResourceFilters(this.path) }
 
     menuSettings() {
-        this.#toolbarMenuService.menuName = this.#route.snapshot.data[environment.MENU]
-        this.#toolbarMenuService.hasFilter = true
+        this.#toolbarMenuService.menuName = this.menuName
+        this.#toolbarMenuService.hasFilter = this.hasFilter
     }
+
+    get hasFilter() { return this.#route.snapshot.data[environment.FILTER] as boolean }
+    get menuName() { return this.#route.snapshot.data[environment.MENU] as string }
 
     get customersArray() { return this.#customersArray }
     set customersArray(value: any[] | undefined) { this.#customersArray = value }
 
-    get asideFlag() { return this.#asideService.flag }
     get customerType() { return this.#asideService.customerType }
     get path() { return this.#route.snapshot.parent?.routeConfig?.path as paths }
 }
