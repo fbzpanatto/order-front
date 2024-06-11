@@ -1,3 +1,37 @@
 <div class="container">
-  <p>users component</p>
+  <div class="title-bar">
+    <h1>Clientes Físicos</h1>
+    <button class="menu-item medium-text" [routerLink]="'new'">
+      <span><i class="fa-solid fa-plus"></i></span>
+      <span>Novo</span>
+    </button>
+  </div>
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>id</th>
+          <th>Nome</th>
+          <th>Username</th>
+          <th>Papel</th>
+          <th>Criado em</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (item of usersArray; track item.person_id) {
+        <tr>
+          <td class="medium-text">{{ item.person_id }}</td>
+          <td class="medium-text">{{ item.name }}</td>
+          <td class="medium-text">{{ item.username }}</td>
+          <td class="medium-text">{{ item.role }}</td>
+          <td class="medium-text">{{ item.created_at }}</td>
+        </tr>
+        } @empty {
+        <tr>
+          <td class="medium-text" [colSpan]="5">Se dados a exibir</td>
+        </tr>
+        }
+      </tbody>
+    </table>
+  </div>
 </div>

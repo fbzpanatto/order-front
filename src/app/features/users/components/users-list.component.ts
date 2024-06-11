@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { environment } from '../../../../environments/environment';
 import { ToolbarMenuService } from '../../../shared/services/toolbarMenu.service';
 import { AsideService, paths } from '../../../shared/services/aside.service';
@@ -8,12 +8,13 @@ import { AsideService, paths } from '../../../shared/services/aside.service';
 @Component({
   selector: 'app-users',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './users-list.component.html',
   styleUrls: ['./users-list.component.scss', '../../../styles/resource.scss']
 })
 export class UsersListComponent {
 
+  #usersArray?: any[]
   #route = inject(ActivatedRoute)
   #asideService = inject(AsideService)
   #toolbarMenuService = inject(ToolbarMenuService)
@@ -32,6 +33,9 @@ export class UsersListComponent {
 
   get hasFilter() { return this.#route.snapshot.data[environment.FILTER] as boolean }
   get menuName() { return this.#route.snapshot.data[environment.MENU] as string }
+
+  get usersArray() { return this.#usersArray }
+  set usersArray(value: any[] | undefined) { this.#usersArray = value }
 
   get path() { return this.#route.snapshot.parent?.routeConfig?.path as paths }
 }
