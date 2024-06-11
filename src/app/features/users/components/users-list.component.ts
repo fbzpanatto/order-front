@@ -5,7 +5,7 @@ import { environment } from '../../../../environments/environment';
 import { ToolbarMenuService } from '../../../shared/services/toolbarMenu.service';
 import { AsideService, paths } from '../../../shared/services/aside.service';
 
-interface User { id: number, name: string, username: string, role: string, created_at: string }
+interface User { id: number, name: string, active: boolean, username: string, role: string, created_at: string }
 
 @Component({
   selector: 'app-users',

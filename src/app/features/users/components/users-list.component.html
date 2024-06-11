@@ -13,6 +13,7 @@
           <th>id</th>
           <th>Nome</th>
           <th>Username</th>
+          <th>Ativo</th>
           <th>Papel</th>
           <th>Criado em</th>
         </tr>
@@ -23,12 +24,13 @@
           <td class="medium-text">{{ item.id }}</td>
           <td class="medium-text">{{ item.name }}</td>
           <td class="medium-text">{{ item.username }}</td>
+          <td class="medium-text">{{ item.active }}</td>
           <td class="medium-text">{{ item.role }}</td>
           <td class="medium-text">{{ item.created_at }}</td>
         </tr>
         } @empty {
         <tr>
-          <td class="medium-text" [colSpan]="5">Se dados a exibir</td>
+          <td class="medium-text" [colSpan]="6">Se dados a exibir</td>
         </tr>
         }
       </tbody>
