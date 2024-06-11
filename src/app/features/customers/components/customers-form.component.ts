@@ -145,16 +145,17 @@ export class CustomersFormComponent implements OnDestroy {
 
   async removeContact(idx: number) {
 
-    const { id: contact_id, person_id } = ((this.form as any).get('contacts') as FormArray).at(idx).value
+    const contact = ((this.form as any).get('contacts') as FormArray).at(idx).value
 
-    if (contact_id) {
+    if (contact.id != null) {
+      this.#dialogService.message = `Deseja remover ${contact.contact} ${contact.phone_number}? da lista de contatos?`
       this.#dialogService.showDialog = true
 
       let subscription: Subscription
 
       subscription = this.#dialogService.subject.subscribe(async value => {
         if (!value) { return }
-        const response = await this.#fetchCustomerService.deleteContact(person_id, contact_id)
+        const response = await this.#fetchCustomerService.deleteContact(contact.person_id, contact.id)
         if (!(response as SuccessDELETE).affectedRows) { return }
         return ((this.form as any).get('contacts') as FormArray).removeAt(idx)
       })

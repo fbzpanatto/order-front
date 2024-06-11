@@ -5,13 +5,16 @@ import { LoginComponent } from "./features/login/components/login.component";
 import { AuthService } from './shared/services/auth.service';
 import { DialogComponent } from "./shared/components/dialog.component";
 import { DialogService } from './shared/services/dialog.service';
+import { UserMenuAnimation } from './shared/animations/userMenuAnimation';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-root',
   standalone: true,
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
-  imports: [RouterOutlet, SidenavComponent, RouterLink, LoginComponent, DialogComponent]
+  imports: [RouterOutlet, SidenavComponent, RouterLink, LoginComponent, DialogComponent, CommonModule],
+  animations: [UserMenuAnimation],
 })
 export class AppComponent {
   title = 'front';

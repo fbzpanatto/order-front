@@ -28,4 +28,6 @@ export class DialogComponent {
     this.#dialogService.next(false)
     this.#dialogService.showDialog = false
   }
+
+  get message() { return this.#dialogService.message }
 }

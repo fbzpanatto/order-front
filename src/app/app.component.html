@@ -1,4 +1,4 @@
-@if (showDialog) { <app-dialog></app-dialog> }
+@if (showDialog) { <div class="backdrop"><app-dialog [@conditionalTrigger]="showDialog ? 'shown': 'notshown'"></app-dialog></div> }
 <router-outlet name="login"></router-outlet>
 <app-sidenav>
   <router-outlet></router-outlet>
