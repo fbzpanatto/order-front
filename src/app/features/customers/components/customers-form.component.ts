@@ -26,10 +26,7 @@ export class CustomersFormComponent implements OnDestroy {
 
   #title?: string
   #customerId?: number
-  counter: number = 1
   addContactState = true
-
-  userChoice?: boolean
 
   #fb = inject(FormBuilder)
   #router = inject(Router)

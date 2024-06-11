@@ -41,6 +41,14 @@ export class ToolbarMenuService {
     return [
       {
         id: 1,
+        routerLink: 'companies',
+        iClass: 'fa-solid fa-building',
+        title: 'Empresas',
+        toolbar: true,
+        userMenu: true
+      },
+      {
+        id: 2,
         routerLink: 'users',
         iClass: 'fa-solid fa-user-pen',
         title: 'Usuários',
@@ -48,7 +56,7 @@ export class ToolbarMenuService {
         userMenu: true
       },
       {
-        id: 2,
+        id: 3,
         routerLink: 'parameters',
         iClass: 'fa-solid fa-screwdriver-wrench',
         title: 'Parâmetros',
@@ -56,7 +64,7 @@ export class ToolbarMenuService {
         userMenu: true
       },
       {
-        id: 3,
+        id: 4,
         routerLink: 'home',
         iClass: 'fa-solid fa-house',
         title: 'Voltar ao Sistema',
@@ -64,7 +72,7 @@ export class ToolbarMenuService {
         userMenu: false
       },
       {
-        id: 4,
+        id: 5,
         iClass: 'fa-solid fa-right-from-bracket',
         title: 'Sair',
         toolbar: false,
@@ -73,7 +81,7 @@ export class ToolbarMenuService {
         isLogout: true
       },
       {
-        id: 5,
+        id: 6,
         iClass: 'fa-solid fa-right-to-bracket',
         title: 'Entrar',
         toolbar: false,

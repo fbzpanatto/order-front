@@ -106,6 +106,29 @@ export const routes: Routes = [
     ]
   },
   {
+    path: 'companies',
+    title: 'Empresas',
+    children: [
+      {
+        path: '',
+        loadComponent: () => import('./features/companies/components/companies-list.component').then(m => m.CompaniesListComponent),
+        // canActivate: [authGuard],
+        data: {
+          menu: 'settings',
+          filter: true
+        }
+      },
+      {
+        path: ':command',
+        loadComponent: () => import('./features/companies/components/companies-form.component').then(m => m.CompaniesFormComponent),
+        data: {
+          menu: 'settings',
+          filter: false
+        },
+      },
+    ]
+  },
+  {
     path: 'parameters',
     title: 'Parâmetros do Sistema',
     loadComponent: () => import('./features/parameters/components/parameters.component').then(m => m.ParametersComponent),
