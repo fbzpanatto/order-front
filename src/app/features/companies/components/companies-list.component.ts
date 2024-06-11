@@ -1,10 +1,12 @@
-import { Component, inject } from '@angular/core';
+import { Component, effect, inject } from '@angular/core';
 import { AsideService } from '../../../shared/services/aside.service';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { ToolbarMenuService } from '../../../shared/services/toolbarMenu.service';
 import { environment } from '../../../../environments/environment';
 import { paths } from '../../../shared/services/aside.service';
+import { FetchCompaniesService } from '../../../shared/services/fetchCompanies.service';
+import { SuccessGET } from '../../../shared/interfaces/response/response';
 
 interface Company { id: number, company_name: string, cnpj: string }
 
@@ -21,11 +23,16 @@ export class CompaniesListComponent {
   #route = inject(ActivatedRoute)
   #asideService = inject(AsideService)
   #toolbarMenuService = inject(ToolbarMenuService)
+  #http = inject(FetchCompaniesService)
 
-  ngOnInit() {
+  async ngOnInit() {
     this.asideFilters()
     this.menuSettings()
+
+    await this.getAll()
   }
+
+  async getAll() { this.companiesArray = ((await this.#http.getAll() as SuccessGET).data) as Company[] }
 
   asideFilters() { this.#asideService.getResourceFilters(this.path) }
 

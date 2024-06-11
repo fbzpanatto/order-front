@@ -5,7 +5,7 @@ import { environment } from '../../../../environments/environment';
 import { FormArray, FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AsideService } from '../../../shared/services/aside.service';
 import { CommonModule } from '@angular/common';
-import { FetchCustomerService } from '../../../shared/services/fetchCustomer.service';
+import { FetchCustomerService } from '../../../shared/services/fetchCustomers.service';
 import { SuccessDELETE, SuccessGETbyId, SuccessPATCH, SuccessPOST } from '../../../shared/interfaces/response/response';
 import { FormService } from '../../../shared/services/form.service';
 import { format } from 'date-fns';

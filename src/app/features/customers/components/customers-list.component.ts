@@ -5,7 +5,7 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { ToolbarMenuService } from '../../../shared/services/toolbarMenu.service';
 import { environment } from '../../../../environments/environment';
 import { paths } from '../../../shared/services/aside.service';
-import { FetchCustomerService } from '../../../shared/services/fetchCustomer.service';
+import { FetchCustomerService } from '../../../shared/services/fetchCustomers.service';
 import { SuccessGET } from '../../../shared/interfaces/response/response';
 
 @Component({
@@ -20,7 +20,7 @@ export class CustomersListComponent {
     #route = inject(ActivatedRoute)
     #asideService = inject(AsideService)
     #toolbarMenuService = inject(ToolbarMenuService)
-    #fetchCustomerService = inject(FetchCustomerService)
+    #http = inject(FetchCustomerService)
     #customersArray?: any[]
 
     constructor() { effect(() => { this.getAll() }) }
@@ -30,7 +30,7 @@ export class CustomersListComponent {
         this.menuSettings()
     }
 
-    async getAll() { this.customersArray = (await this.#fetchCustomerService.getAll() as SuccessGET).data }
+    async getAll() { this.customersArray = (await this.#http.getAll() as SuccessGET).data }
 
     asideFilters() { this.#asideService.getResourceFilters(this.path) }
 

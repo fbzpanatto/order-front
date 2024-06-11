@@ -5,5 +5,6 @@ export const environment = {
   FILTER: 'filter',
   DEFAULT: 'default',
   SETTINGS: 'settings',
-  CUSTOMERS: 'persons'
+  CUSTOMERS: 'persons',
+  COMPANIES: 'companies'
 }
