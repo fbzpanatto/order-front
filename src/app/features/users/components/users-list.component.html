@@ -18,9 +18,9 @@
         </tr>
       </thead>
       <tbody>
-        @for (item of usersArray; track item.person_id) {
+        @for (item of usersArray; track item.id) {
         <tr>
-          <td class="medium-text">{{ item.person_id }}</td>
+          <td class="medium-text">{{ item.id }}</td>
           <td class="medium-text">{{ item.name }}</td>
           <td class="medium-text">{{ item.username }}</td>
           <td class="medium-text">{{ item.role }}</td>

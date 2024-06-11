@@ -5,6 +5,8 @@ import { environment } from '../../../../environments/environment';
 import { ToolbarMenuService } from '../../../shared/services/toolbarMenu.service';
 import { AsideService, paths } from '../../../shared/services/aside.service';
 
+interface User { id: number, name: string, username: string, role: string, created_at: string }
+
 @Component({
   selector: 'app-users',
   standalone: true,
@@ -14,7 +16,7 @@ import { AsideService, paths } from '../../../shared/services/aside.service';
 })
 export class UsersListComponent {
 
-  #usersArray?: any[]
+  #usersArray?: User[]
   #route = inject(ActivatedRoute)
   #asideService = inject(AsideService)
   #toolbarMenuService = inject(ToolbarMenuService)
@@ -35,7 +37,7 @@ export class UsersListComponent {
   get menuName() { return this.#route.snapshot.data[environment.MENU] as string }
 
   get usersArray() { return this.#usersArray }
-  set usersArray(value: any[] | undefined) { this.#usersArray = value }
+  set usersArray(value: User[] | undefined) { this.#usersArray = value }
 
   get path() { return this.#route.snapshot.parent?.routeConfig?.path as paths }
 }
