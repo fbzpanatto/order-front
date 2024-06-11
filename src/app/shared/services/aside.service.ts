@@ -1,7 +1,7 @@
 import { Injectable, inject, signal } from '@angular/core';
 import { ToolbarMenuService } from './toolbarMenu.service';
 
-export type paths = 'void' | 'home' | 'customers' | 'products' | 'orders' | 'users'
+export type paths = 'void' | 'home' | 'customers' | 'products' | 'orders' | 'users' | 'customers'
 type Filters = { [key: string]: FormFields[] }
 
 interface FormFields {
@@ -46,7 +46,9 @@ export class AsideService {
   private get filters(): Filters {
     return {
       home: this.homeFilterForm,
-      customers: this.customerFilterForm
+      customers: this.customersFilterForm,
+      companies: this.companiesFilterForm,
+      users: this.usersFilterForm
     }
   }
   private get homeFilterForm(): FormFields[] {
@@ -59,7 +61,30 @@ export class AsideService {
       },
     ]
   }
-  private get customerFilterForm(): FormFields[] {
+
+  private get companiesFilterForm(): FormFields[] {
+    return [
+      {
+        id: 'search',
+        name: 'search',
+        type: 'text',
+        placeholder: 'search'
+      },
+    ]
+  }
+
+  private get usersFilterForm(): FormFields[] {
+    return [
+      {
+        id: 'search',
+        name: 'search',
+        type: 'text',
+        placeholder: 'search'
+      },
+    ]
+  }
+
+  private get customersFilterForm(): FormFields[] {
     return [
       {
         id: 'customerType',
