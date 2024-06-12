@@ -6,10 +6,12 @@ import { FormArray, FormBuilder, FormControl, ReactiveFormsModule, Validators } 
 import { AsideService } from '../../../shared/services/aside.service';
 import { CommonModule } from '@angular/common';
 import { FetchCustomerService } from '../../../shared/services/fetchCustomers.service';
-import { SuccessDELETE, SuccessGETbyId, SuccessPATCH, SuccessPOST } from '../../../shared/interfaces/response/response';
+import { SuccessDELETE, SuccessGET, SuccessGETbyId, SuccessPATCH, SuccessPOST } from '../../../shared/interfaces/response/response';
 import { FormService } from '../../../shared/services/form.service';
 import { DialogService } from '../../../shared/services/dialog.service';
 import { Subscription } from 'rxjs';
+import { Company } from '../../companies/components/companies-list.component';
+import { FetchCompaniesService } from '../../../shared/services/fetchCompanies.service';
 
 @Component({
   selector: 'app-customers-form',
@@ -26,6 +28,7 @@ export class CustomersFormComponent implements OnDestroy {
   #title?: string
   #customerId?: number
   addContactState = true
+  #companiesArray?: Company[]
 
   #fb = inject(FormBuilder)
   #router = inject(Router)
@@ -34,8 +37,9 @@ export class CustomersFormComponent implements OnDestroy {
   #formService = inject(FormService)
   #asideService = inject(AsideService)
   #dialogService = inject(DialogService)
+  #customersHttp = inject(FetchCustomerService)
+  #companiesHttp = inject(FetchCompaniesService)
   #toolbarMenuService = inject(ToolbarMenuService)
-  #fetchCustomerService = inject(FetchCustomerService)
   #customer = {}
 
   contactId?: number
@@ -58,11 +62,15 @@ export class CustomersFormComponent implements OnDestroy {
 
   async ngOnInit() {
 
+    this.#formService.originalValues = this.form.value;
+    
     this.#asideService.changeCustomerType(this.customerTypeUrlParam as string)
 
     this.canProced()
     this.menuSettings()
     this.titleSettings()
+
+    await this.getCompanies()
 
     this.#formService.currentForm = this.form;
 
@@ -74,6 +82,8 @@ export class CustomersFormComponent implements OnDestroy {
 
     if (this.command != 'new') { return this.redirect() }
   }
+
+  async getCompanies() { this.companiesArray = ((await this.#companiesHttp.getAll() as SuccessGET).data) as Company[] }
 
   ngOnDestroy(): void {
     this.#subscription?.unsubscribe()
@@ -106,7 +116,7 @@ export class CustomersFormComponent implements OnDestroy {
     this.contacts.updateValueAndValidity()
   }
 
-  async getByPersonId(personId: number) { return (await this.#fetchCustomerService.getById(personId) as SuccessGETbyId).data }
+  async getByPersonId(personId: number) { return (await this.#customersHttp.getById(personId) as SuccessGETbyId).data }
 
   canProced() {
     return !((this.customerType && this.customerType === 'normal') || (this.customerType && this.customerType === 'legal')) ?
@@ -153,7 +163,7 @@ export class CustomersFormComponent implements OnDestroy {
 
       subscription = this.#dialogService.subject.subscribe(async value => {
         if (!value) { return }
-        const response = await this.#fetchCustomerService.deleteContact(contact.person_id, contact.id)
+        const response = await this.#customersHttp.deleteContact(contact.person_id, contact.id)
         if (!(response as SuccessDELETE).affectedRows) { return }
         return ((this.form as any).get('contacts') as FormArray).removeAt(idx)
       })
@@ -165,12 +175,12 @@ export class CustomersFormComponent implements OnDestroy {
 
   async onSubmit() {
     if (this.command === 'new') {
-      const response = await this.#fetchCustomerService.saveData(this.formDiff)
+      const response = await this.#customersHttp.saveData(this.formDiff)
       if (!(response as SuccessPOST).affectedRows) { return }
       return this.redirect()
     }
     if (!isNaN(Number(this.command))) {
-      const response = await this.#fetchCustomerService.updateData(this.customerId as number, this.formDiff)
+      const response = await this.#customersHttp.updateData(this.customerId as number, this.formDiff)
       if (!(response as SuccessPATCH).affectedRows) { return }
       return this.redirect()
     }
@@ -186,6 +196,9 @@ export class CustomersFormComponent implements OnDestroy {
     if (!(this.form as any).get('contacts')) return new FormArray([]) as unknown as FormArray
     return (this.form as any).get('contacts') as FormArray
   }
+
+  get companiesArray() { return this.#companiesArray }
+  set companiesArray(value: Company[] | undefined) { this.#companiesArray = value }
 
   get customerId() { return this.#customerId }
   set customerId(value: number | undefined) { this.#customerId = value }

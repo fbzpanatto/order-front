@@ -43,6 +43,12 @@ export class FetchCustomerService {
         .pipe(catchError((apiError) => this.errorHandler(apiError.error as ApiError))))
   }
 
+  async getCompanies() {
+    return await firstValueFrom(
+      this.#http.get(environment.API_URL + '/companies')
+        .pipe(catchError((apiError) => this.errorHandler(apiError.error as ApiError))))
+  }
+
   errorHandler(apiError: ApiError) {
     // TODO: open a dialog with error message
     return of(apiError)

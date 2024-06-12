@@ -8,7 +8,7 @@ import { paths } from '../../../shared/services/aside.service';
 import { FetchCompaniesService } from '../../../shared/services/fetchCompanies.service';
 import { SuccessGET } from '../../../shared/interfaces/response/response';
 
-interface Company { company_id: number, corporate_name: string, social_name: string, cnpj: string, state_registration: string, active: number | boolean }
+export interface Company { company_id: number, corporate_name: string, social_name: string, cnpj: string, state_registration: string, active: number | boolean }
 
 @Component({
   selector: 'app-companies-list',

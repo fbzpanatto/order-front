@@ -35,6 +35,9 @@ export class CompaniesFormComponent {
   })
 
   async ngOnInit() {
+
+    this.#formService.originalValues = this.form.value;
+
     this.menuSettings()
     this.titleSettings()
 
