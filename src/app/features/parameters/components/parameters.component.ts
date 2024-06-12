@@ -34,26 +34,26 @@ export class ParametersComponent {
       {
         id: 1,
         routerLink: 'roles',
-        iClass: '',
-        title: 'Papeis'
+        iClass: 'fa-solid fa-sitemap',
+        title: 'Papéis'
       },
       {
         id: 2,
         routerLink: 'permissions',
-        iClass: '',
+        iClass: 'fa-solid fa-key',
         title: 'Permissões'
       },
       {
         id: 3,
         routerLink: 'segments',
-        iClass: '',
+        iClass: 'fa-solid fa-cube',
         title: 'Segmentos'
       },
       {
         id: 4,
         routerLink: 'production-status',
-        iClass: '',
-        title: 'Status de Produção'
+        iClass: 'fa-solid fa-list-check',
+        title: 'Status do Produto'
       }
     ]
   }
