@@ -5,10 +5,10 @@ import { Component } from '@angular/core';
   standalone: true,
   imports: [],
   templateUrl: './roles.component.html',
-  styleUrls: ['./roles.component.scss', '../../../styles/resource.scss', '../../../styles/table.scss']
+  styleUrls: ['../../../styles/title-bar.scss', '../../../styles/table.scss']
 })
 export class RolesComponent {
 
-  get rolesArray():any[] { return [] }
+  get rolesArray(): any[] { return [] }
 
 }
