@@ -41,6 +41,14 @@ export class ToolbarMenuService {
     return [
       {
         id: 1,
+        routerLink: 'home',
+        iClass: 'fa-solid fa-house',
+        title: 'Home',
+        toolbar: true,
+        userMenu: false
+      },
+      {
+        id: 2,
         routerLink: 'companies',
         iClass: 'fa-solid fa-building',
         title: 'Empresas',
@@ -48,7 +56,7 @@ export class ToolbarMenuService {
         userMenu: true
       },
       {
-        id: 2,
+        id: 3,
         routerLink: 'users',
         iClass: 'fa-solid fa-user-pen',
         title: 'Usuários',
@@ -56,20 +64,12 @@ export class ToolbarMenuService {
         userMenu: true
       },
       {
-        id: 3,
+        id: 4,
         routerLink: 'parameters',
         iClass: 'fa-solid fa-screwdriver-wrench',
         title: 'Parâmetros',
         toolbar: true,
         userMenu: true
-      },
-      {
-        id: 4,
-        routerLink: 'home',
-        iClass: 'fa-solid fa-house',
-        title: 'Home',
-        toolbar: true,
-        userMenu: false
       },
       {
         id: 5,
