@@ -1,8 +1,12 @@
 @import './variables.scss';
 
 .table-container {
-  height: calc(100vh - $toolbarHeight - 178px);
+  height: calc(100vh - $toolbarHeight - 122px);
   overflow: auto;
+
+  &.parameters {
+    height: calc(100vh - $toolbarHeight - 178px);
+  }
 
   table {
     width: 100%;

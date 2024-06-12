@@ -1,48 +1,42 @@
 @import '../../../styles/variables.scss';
 
-:host {
-  position: relative;
+.title-bar {
+  position: sticky;
   top: 0;
-  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  z-index: 100;
+  background-color: #fff;
+  padding-bottom: 16px;
 
-  .title-bar {
-    position: sticky;
-    top: 0;
+  h1 {
+    color: #333;
+    font-size: 28px;
+  }
+
+  button {
+    width: 110px;
     display: flex;
-    align-items: center;
-    justify-content: space-between;
     gap: 8px;
-    z-index: 100;
-    background-color: #fff;
-    padding-bottom: 16px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 20px;
+    border: 1px solid rgb(218, 218, 218);
+    padding: 10px 20px;
+    cursor: pointer;
+    background-color: #ebebeb;
+    transition: 100ms;
+    height: 40px;
 
-    h1 {
-      color: #333;
-      font-size: 28px;
+    &:hover {
+      background-color: rgb(224, 224, 224);
+      border: 1px solid #444
     }
 
-    button {
-      width: 110px;
-      display: flex;
-      gap: 8px;
-      align-items: center;
-      justify-content: center;
-      border-radius: 20px;
-      border: 1px solid rgb(218, 218, 218);
-      padding: 10px 20px;
-      cursor: pointer;
-      background-color: #ebebeb;
-      transition: 100ms;
-      height: 40px;
-
-      &:hover {
-        background-color: rgb(224, 224, 224);
-        border: 1px solid #444
-      }
-
-      &.clear-btn {
-        background-color: #fff;
-      }
+    &.clear-btn {
+      background-color: #fff;
     }
   }
 }
