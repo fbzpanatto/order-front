@@ -200,6 +200,7 @@ export const routes: Routes = [
               import(
                 './features/parameters/components/permissions/permissions-list.component'
               ).then((m) => m.PermissionsListComponent),
+            // canActivate: [authGuard],
             data: {
               menu: 'settings',
               filter: true,

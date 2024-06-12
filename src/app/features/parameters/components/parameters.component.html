@@ -2,7 +2,7 @@
   <nav>
     <ul>
       @for(item of menuArray; track item.id){
-      <li [routerLinkActiveOptions]="{ exact: true }" [routerLink]="item.routerLink" routerLinkActive="active">
+      <li [routerLinkActiveOptions]="{ exact: false }" [routerLink]="item.routerLink" routerLinkActive="active">
         <span><i [class]="item.iClass"></i></span>
         <span>{{ item.title }}</span>
       </li>
