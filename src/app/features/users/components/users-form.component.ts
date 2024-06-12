@@ -10,7 +10,7 @@ import { FormService } from '../../../shared/services/form.service';
   selector: 'app-users-form',
   standalone: true,
   templateUrl: './users-form.component.html',
-  styleUrls: ['../../../styles/resource.scss', '../../../styles/form.scss'],
+  styleUrls: ['../../../styles/resource.scss', '../../../styles/form.scss', '../../../styles/title-bar.scss'],
   imports: [ReactiveFormsModule, CommonModule],
 })
 export class UsersFormComponent {

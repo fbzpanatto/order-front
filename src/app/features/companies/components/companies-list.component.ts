@@ -15,7 +15,7 @@ export interface Company { company_id: number, corporate_name: string, social_na
   standalone: true,
   imports: [CommonModule, RouterLink],
   templateUrl: './companies-list.component.html',
-  styleUrls: ['../../../styles/resource.scss', '../../../styles/table.scss']
+  styleUrls: ['../../../styles/resource.scss', '../../../styles/table.scss', '../../../styles/title-bar.scss']
 })
 export class CompaniesListComponent {
 

@@ -8,7 +8,7 @@ import { environment } from '../../../../environments/environment';
   standalone: true,
   imports: [],
   templateUrl: './orders-form.component.html',
-  styleUrls: ['../../../styles/resource.scss', '../../../styles/form.scss'],
+  styleUrls: ['../../../styles/resource.scss', '../../../styles/form.scss', '../../../styles/title-bar.scss'],
 })
 export class OrdersFormComponent {
 

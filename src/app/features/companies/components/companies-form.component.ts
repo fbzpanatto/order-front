@@ -12,7 +12,7 @@ import { SuccessGETbyId, SuccessPATCH, SuccessPOST } from '../../../shared/inter
   selector: 'app-companies-form',
   standalone: true,
   templateUrl: './companies-form.component.html',
-  styleUrls: ['../../../styles/resource.scss', '../../../styles/form.scss'],
+  styleUrls: ['../../../styles/resource.scss', '../../../styles/form.scss', '../../../styles/title-bar.scss'],
   imports: [ReactiveFormsModule, CommonModule],
 })
 export class CompaniesFormComponent {

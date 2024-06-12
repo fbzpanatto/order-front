@@ -9,7 +9,7 @@ import { environment } from '../../../../environments/environment';
     standalone: true,
     imports: [CommonModule, RouterLink],
     templateUrl: './orders-list.component.html',
-    styleUrls: ['../../../styles/resource.scss', '../../../styles/table.scss']
+    styleUrls: ['../../../styles/resource.scss', '../../../styles/table.scss', '../../../styles/title-bar.scss'],
 })
 export class OrdersListComponent {
 

@@ -17,7 +17,7 @@ import { FetchCompaniesService } from '../../../shared/services/fetchCompanies.s
   selector: 'app-customers-form',
   standalone: true,
   templateUrl: './customers-form.component.html',
-  styleUrls: ['../../../styles/resource.scss', '../../../styles/form.scss'],
+  styleUrls: ['../../../styles/resource.scss', '../../../styles/form.scss', '../../../styles/title-bar.scss'],
   imports: [ReactiveFormsModule, CommonModule]
 })
 export class CustomersFormComponent implements OnDestroy {
