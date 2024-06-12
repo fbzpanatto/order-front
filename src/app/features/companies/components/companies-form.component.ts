@@ -5,6 +5,9 @@ import { ToolbarMenuService } from '../../../shared/services/toolbarMenu.service
 import { CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormService } from '../../../shared/services/form.service';
+import { FetchCompaniesService } from '../../../shared/services/fetchCompanies.service';
+import { SuccessGETbyId, SuccessPOST } from '../../../shared/interfaces/response/response';
+import { format } from 'date-fns';
 
 @Component({
   selector: 'app-companies-form',
@@ -24,6 +27,7 @@ export class CompaniesFormComponent {
   #fb = inject(FormBuilder)
   #route = inject(ActivatedRoute)
   #formService = inject(FormService)
+  #http = inject(FetchCompaniesService)
   #toolbarMenuService = inject(ToolbarMenuService)
 
   form = this.#fb.group({
@@ -46,9 +50,7 @@ export class CompaniesFormComponent {
     if (this.command != 'new') { return this.redirect() }
   }
 
-  async getByCompanyId(userId: number) {
-    // TODO
-  }
+  async getByCompanyId(companyId: number) { return (await this.#http.getById(companyId) as SuccessGETbyId).data }
 
   redirect() { this.#router.navigate(['/users']) }
 
@@ -57,13 +59,25 @@ export class CompaniesFormComponent {
     this.#toolbarMenuService.hasFilter = this.hasFilter
   }
 
-  updateFormValues(user: any) {
-    this.form.patchValue(user)
+  updateFormValues(company: any) {
+    this.form.patchValue(company)
     this.#formService.originalValues = this.form.value;
   }
 
-  onSubmit() {
+  async onSubmit() {
+    if (this.command === 'new') {
+      const response = await this.#http.saveData(this.formDiff)
 
+      console.log('response', response)
+
+      if (!(response as SuccessPOST).affectedRows) { return }
+      return this.redirect()
+    }
+  }
+
+  formatDate(date: Date): string {
+    const localDate = new Date(date.getTime() + (3 * 60 * 60 * 1000));
+    return format(localDate, 'yyyy-MM-dd HH:mm:ss');
   }
 
   titleSettings() { this.command !== 'new' ? this.title = 'Editando' : this.title = 'Nova Empresa' }
@@ -88,7 +102,7 @@ export class CompaniesFormComponent {
 
   get companyFormFields() {
     return {
-      id: [''],
+      id: [null],
       cnpj: ['', {
         validators: [Validators.required, Validators.minLength(14), Validators.maxLength(14)],
       }],
@@ -101,15 +115,14 @@ export class CompaniesFormComponent {
       state_registration: ['', {
         validators: [Validators.required, Validators.minLength(3), Validators.maxLength(9)],
       }],
-      active: [''],
-      created_at: [''],
+      active: [true]
     }
   }
 
   get address() {
     return {
-      id: [''],
-      person_id: [''],
+      id: [null],
+      company_id: [null],
       add_street: ['', {
         validators: [Validators.required, Validators.minLength(3), Validators.maxLength(100)],
       }],
@@ -127,8 +140,7 @@ export class CompaniesFormComponent {
       }],
       add_neighborhood: ['', {
         validators: [Validators.required, Validators.minLength(3), Validators.maxLength(60)],
-      }],
-      created_at: [''],
+      }]
     }
   }
 }

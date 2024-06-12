@@ -11,20 +11,26 @@
       <thead>
         <tr>
           <th>id</th>
-          <th>Nome</th>
+          <th>Razão Social</th>
+          <th>Nome Fantasia</th>
           <th>Cnpj</th>
+          <th>Inscrição Estadual</th>
+          <th>Ativo</th>
         </tr>
       </thead>
       <tbody>
         @for (item of companiesArray; track item.id) {
-        <tr>
+        <tr [routerLink]="'/companies/' + item.id">
           <td class="medium-text">{{ item.id }}</td>
-          <td class="medium-text">{{ item.company_name }}</td>
+          <td class="medium-text">{{ item.corporate_name }}</td>
+          <td class="medium-text">{{ item.social_name }}</td>
           <td class="medium-text">{{ item.cnpj }}</td>
+          <td class="medium-text">{{ item.state_registration }}</td>
+          <td class="medium-text">{{ !!item.active }}</td>
         </tr>
         } @empty {
         <tr>
-          <td class="medium-text" [colSpan]="3">Sem dados a exibir</td>
+          <td class="medium-text" [colSpan]="6">Sem dados a exibir</td>
         </tr>
         }
       </tbody>
