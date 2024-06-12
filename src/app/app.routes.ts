@@ -138,6 +138,11 @@ export const routes: Routes = [
     },
     children: [
       {
+        path: '',
+        redirectTo: '/parameters/roles',
+        pathMatch: 'full',
+      },
+      {
         path: 'roles',
         loadComponent: () => import('./features/parameters/components/roles.component').then(m => m.RolesComponent),
         data: {
