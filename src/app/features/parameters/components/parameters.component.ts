@@ -51,7 +51,7 @@ export class ParametersComponent {
       },
       {
         id: 4,
-        routerLink: 'status',
+        routerLink: 'production-status',
         iClass: '',
         title: 'Status de Produção'
       }

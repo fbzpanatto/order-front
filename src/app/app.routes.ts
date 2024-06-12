@@ -144,6 +144,7 @@ export const routes: Routes = [
       },
       {
         path: 'roles',
+        title: 'Papéis',
         loadComponent: () => import('./features/parameters/components/roles.component').then(m => m.RolesComponent),
         data: {
           menu: 'settings',
@@ -152,7 +153,26 @@ export const routes: Routes = [
       },
       {
         path: 'segments',
+        title: 'Segmentos',
         loadComponent: () => import('./features/parameters/components/segments.component').then(m => m.SegmentsComponent),
+        data: {
+          menu: 'settings',
+          filter: false
+        }
+      },
+      {
+        path: 'permissions',
+        title: 'Permissões',
+        loadComponent: () => import('./features/parameters/components/permissions.component').then(m => m.PermissionsComponent),
+        data: {
+          menu: 'settings',
+          filter: false
+        }
+      },
+      {
+        path: 'production-status',
+        title: 'Status de Produção',
+        loadComponent: () => import('./features/parameters/components/production-status.component').then(m => m.ProductionStatusComponent),
         data: {
           menu: 'settings',
           filter: false

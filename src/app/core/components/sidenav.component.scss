@@ -19,9 +19,7 @@
     .resource-container {
       position: absolute;
       overflow: auto;
-      // height: calc(100vh - $toolbarHeight - ($pad16 * 2));
       width: calc(100% - ($pad16 * 4));
-      padding: $pad16;
       border-radius: 8px;
       background-color: #fff;
       transition: 100ms ease-in;
