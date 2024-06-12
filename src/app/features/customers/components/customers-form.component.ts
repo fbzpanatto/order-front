@@ -8,7 +8,6 @@ import { CommonModule } from '@angular/common';
 import { FetchCustomerService } from '../../../shared/services/fetchCustomers.service';
 import { SuccessDELETE, SuccessGETbyId, SuccessPATCH, SuccessPOST } from '../../../shared/interfaces/response/response';
 import { FormService } from '../../../shared/services/form.service';
-import { format } from 'date-fns';
 import { DialogService } from '../../../shared/services/dialog.service';
 import { Subscription } from 'rxjs';
 
@@ -43,18 +42,18 @@ export class CustomersFormComponent implements OnDestroy {
 
   normalForm = this.#fb.group({
     customer: this.#fb.group({ ...this.normalCustomer }),
-    contacts: this.#fb.array([]),
-    address: this.#fb.group({ ...this.address }),
     person: this.#fb.group({ ...this.person }),
-    company: this.#fb.group({ ...this.company })
+    address: this.#fb.group({ ...this.address }),
+    company: this.#fb.group({ ...this.company }),
+    contacts: this.#fb.array([]),
   })
 
   legalForm = this.#fb.group({
     customer: this.#fb.group({ ...this.legalCustomer }),
-    contacts: this.#fb.array([]),
-    address: this.#fb.group({ ...this.address }),
     person: this.#fb.group({ ...this.person }),
-    company: this.#fb.group({ ...this.company })
+    address: this.#fb.group({ ...this.address }),
+    company: this.#fb.group({ ...this.company }),
+    contacts: this.#fb.array([]),
   })
 
   async ngOnInit() {
@@ -132,9 +131,9 @@ export class CustomersFormComponent implements OnDestroy {
 
     const formArray = this.#fb.group({
       id: [null],
-      person_id: [this.customerId ?? ''],
-      contact: [''],
-      phone_number: ['']
+      person_id: [this.customerId ?? null],
+      contact: [null],
+      phone_number: [null]
     })
 
     this.contacts.push(formArray)
@@ -257,7 +256,6 @@ export class CustomersFormComponent implements OnDestroy {
 
   get address() {
     return {
-      id: [null],
       person_id: [null],
       add_street: [null, {
         validators: [Validators.required, Validators.minLength(3), Validators.maxLength(100)],

@@ -134,21 +134,21 @@
         <fieldset [formGroup]="form.controls.company">
           <label class="medium-text fieldset-label">Fornecedor</label>
           <div class="input-container">
-            <label class="light-text" for="corporate_name">Razão social</label>
+            <label class="light-text" for="company_corporate_name">Razão social</label>
             <span><i class="fa-solid fa-pen-to-square"></i></span>
-            <input readonly maxlength="=100" formControlName="corporate_name" class="medium-text" id="corporate_name"
-              name="corporate_name" type="text" placeholder="razão social">
+            <input readonly maxlength="=100" formControlName="corporate_name" class="medium-text" id="company_corporate_name"
+              name="company_corporate_name" type="text" placeholder="razão social">
           </div>
           <div class="input-container">
-            <label class="light-text" for="social_name">Nome Fantasia</label>
+            <label class="light-text" for="company_social_name">Nome Fantasia</label>
             <span><i class="fa-solid fa-pen-to-square"></i></span>
-            <input readonly maxlength="=100" formControlName="social_name" class="medium-text" id="social_name"
-              name="social_name" type="text" placeholder="nome fantasia">
+            <input readonly maxlength="=100" formControlName="social_name" class="medium-text" id="company_social_name"
+              name="company_social_name" type="text" placeholder="nome fantasia">
           </div>
           <div class="input-container">
-            <label class="light-text" for="cnpj">Cnpj</label>
+            <label class="light-text" for="company_cnpj">Cnpj</label>
             <span><i class="fa-solid fa-id-card"></i></span>
-            <input readonly maxlength="14" formControlName="cnpj" class="medium-text" id="cnpj" name="cnpj" type="text"
+            <input readonly maxlength="14" formControlName="cnpj" class="medium-text" id="company_cnpj" name="company_cnpj" type="text"
               placeholder="cnpj">
           </div>
         </fieldset>
@@ -173,10 +173,10 @@
           }
           <div class="add-btn-container">
             <div class="input-container">
-              <input readonly style="display: none;" />
+              <input id="contact-display-none" readonly style="display: none;" />
             </div>
             <div class="input-container">
-              <input readonly style="display: none;" />
+              <input id="phone_number-display-none" readonly style="display: none;" />
             </div>
             <button class="add-btn" type="button" (click)="addContact()">
               <span><i class="fa-solid fa-plus"></i></span>
