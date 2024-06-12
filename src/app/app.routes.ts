@@ -139,17 +139,8 @@ export const routes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: '/parameters/roles',
+        redirectTo: '/parameters/permissions',
         pathMatch: 'full',
-      },
-      {
-        path: 'roles',
-        title: 'Papéis',
-        loadComponent: () => import('./features/parameters/components/roles.component').then(m => m.RolesComponent),
-        data: {
-          menu: 'settings',
-          filter: false
-        }
       },
       {
         path: 'segments',
