@@ -99,17 +99,17 @@ export class CompaniesFormComponent {
   get companyFormFields() {
     return {
       company_id: [null],
-      cnpj: ['', {
-        validators: [Validators.required, Validators.minLength(14), Validators.maxLength(14)],
+      cnpj: [null, {
+        validators: [Validators.required, Validators.minLength(14), Validators.maxLength(14), Validators.pattern(/^\d+$/)],
       }],
-      corporate_name: ['', {
+      corporate_name: [null, {
         validators: [Validators.required, Validators.minLength(3), Validators.maxLength(100)],
       }],
-      social_name: ['', {
+      social_name: [null, {
         validators: [Validators.required, Validators.minLength(3), Validators.maxLength(100)],
       }],
-      state_registration: ['', {
-        validators: [Validators.required, Validators.minLength(3), Validators.maxLength(9)],
+      state_registration: [null, {
+        validators: [Validators.required, Validators.minLength(3), Validators.maxLength(9), Validators.pattern(/^\d+$/)],
       }],
       active: [true]
     }
@@ -118,22 +118,22 @@ export class CompaniesFormComponent {
   get address() {
     return {
       company_id: [null],
-      add_street: ['', {
+      add_street: [null, {
         validators: [Validators.required, Validators.minLength(3), Validators.maxLength(100)],
       }],
-      add_number: ['', {
+      add_number: [null, {
         validators: [Validators.maxLength(10)],
       }],
-      add_zipcode: ['', {
-        validators: [Validators.required, Validators.minLength(8), Validators.maxLength(8)],
+      add_zipcode: [null, {
+        validators: [Validators.required, Validators.minLength(8), Validators.maxLength(8), Validators.pattern(/^\d+$/)],
       }],
-      add_city: ['', {
+      add_city: [null, {
         validators: [Validators.required, Validators.minLength(3), Validators.maxLength(60)],
       }],
-      add_uf: ['', {
+      add_uf: [null, {
         validators: [Validators.required, Validators.minLength(2), Validators.maxLength(2)],
       }],
-      add_neighborhood: ['', {
+      add_neighborhood: [null, {
         validators: [Validators.required, Validators.minLength(3), Validators.maxLength(60)],
       }]
     }

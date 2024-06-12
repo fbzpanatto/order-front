@@ -213,7 +213,9 @@ export class CustomersFormComponent implements OnDestroy {
       }],
       corporate_name: [null],
       social_name: [null],
-      cnpj: [null]
+      cnpj: [null, {
+        validators: [Validators.pattern(/^\d+$/)]
+      }]
     }
   }
 
@@ -221,7 +223,7 @@ export class CustomersFormComponent implements OnDestroy {
     return {
       person_id: [null],
       cnpj: [null, {
-        validators: [Validators.required, Validators.minLength(14), Validators.maxLength(14)],
+        validators: [Validators.required, Validators.minLength(14), Validators.maxLength(14), Validators.pattern(/^\d+$/)],
       }],
       corporate_name: [null, {
         validators: [Validators.required, Validators.minLength(3), Validators.maxLength(100)],
@@ -230,7 +232,7 @@ export class CustomersFormComponent implements OnDestroy {
         validators: [Validators.required, Validators.minLength(3), Validators.maxLength(100)],
       }],
       state_registration: [null, {
-        validators: [Validators.required, Validators.minLength(3), Validators.maxLength(9)],
+        validators: [Validators.required, Validators.minLength(3), Validators.maxLength(9), Validators.pattern(/^\d+$/)],
       }]
     }
   }
@@ -239,7 +241,7 @@ export class CustomersFormComponent implements OnDestroy {
     return {
       person_id: [null],
       cpf: [null, {
-        validators: [Validators.required, Validators.minLength(11), Validators.maxLength(11)],
+        validators: [Validators.required, Validators.minLength(11), Validators.maxLength(11), Validators.pattern(/^\d+$/)],
       }],
       first_name: [null, {
         validators: [Validators.required, Validators.minLength(3), Validators.maxLength(60)],
@@ -264,7 +266,7 @@ export class CustomersFormComponent implements OnDestroy {
         validators: [Validators.maxLength(10)],
       }],
       add_zipcode: [null, {
-        validators: [Validators.required, Validators.minLength(8), Validators.maxLength(8)],
+        validators: [Validators.required, Validators.minLength(8), Validators.maxLength(8), Validators.pattern(/^\d+$/)],
       }],
       add_city: [null, {
         validators: [Validators.required, Validators.minLength(3), Validators.maxLength(60)],
