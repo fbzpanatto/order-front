@@ -5,7 +5,7 @@ import { Component } from '@angular/core';
   standalone: true,
   imports: [],
   templateUrl: './roles.component.html',
-  styleUrls: ['./roles.component.scss', '../../../styles/resource.scss']
+  styleUrls: ['./roles.component.scss', '../../../styles/resource.scss', '../../../styles/table.scss']
 })
 export class RolesComponent {
 

@@ -9,7 +9,7 @@ import { environment } from '../../../../environments/environment';
     selector: 'app-products-list',
     standalone: true,
     templateUrl: './products-list.component.html',
-    styleUrls: ['./products-list.component.scss', '../../../styles/resource.scss'],
+    styleUrls: ['../../../styles/resource.scss', '../../../styles/table.scss'],
     imports: [CommonModule, RouterLink]
 })
 export class ProductsListComponent {

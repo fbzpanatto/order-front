@@ -12,7 +12,7 @@ interface User { id: number, name: string, active: boolean, username: string, co
   standalone: true,
   imports: [CommonModule, RouterLink],
   templateUrl: './users-list.component.html',
-  styleUrls: ['./users-list.component.scss', '../../../styles/resource.scss']
+  styleUrls: ['../../../styles/resource.scss', '../../../styles/table.scss']
 })
 export class UsersListComponent {
 

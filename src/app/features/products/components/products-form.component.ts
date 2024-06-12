@@ -8,7 +8,7 @@ import { environment } from '../../../../environments/environment';
   standalone: true,
   imports: [],
   templateUrl: './products-form.component.html',
-  styleUrls: ['./products-form.component.scss', '../../../styles/resource.scss']
+  styleUrls: ['../../../styles/resource.scss', '../../../styles/form.scss'],
 })
 export class ProductsFormComponent {
 

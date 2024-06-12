@@ -10,7 +10,7 @@ import { paths } from '../../../shared/services/aside.service';
     selector: 'app-home',
     standalone: true,
     templateUrl: './home.component.html',
-    styleUrls: ['./home.component.scss', '../../../styles/resource.scss'],
+    styleUrls: ['../../../styles/resource.scss', '../../../styles/table.scss'],
     imports: [CommonModule]
 })
 export class HomeComponent {

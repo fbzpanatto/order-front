@@ -9,7 +9,7 @@ import { ToolbarMenuService } from '../../../shared/services/toolbarMenu.service
   standalone: true,
   imports: [CommonModule, RouterLink, RouterOutlet, RouterLinkActive],
   templateUrl: './parameters.component.html',
-  styleUrls: ['./parameters.component.scss', '../../../styles/resource.scss'],
+  styleUrls: ['./parameters.component.scss'],
 
 })
 export class ParametersComponent {

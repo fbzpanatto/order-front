@@ -12,7 +12,7 @@ import { SuccessGET } from '../../../shared/interfaces/response/response';
     selector: 'app-customers-list',
     standalone: true,
     templateUrl: './customers-list.component.html',
-    styleUrls: ['./customers-list.component.scss', '../../../styles/resource.scss'],
+    styleUrls: ['../../../styles/resource.scss', '../../../styles/table.scss'],
     imports: [CommonModule, RouterLink]
 })
 export class CustomersListComponent {
