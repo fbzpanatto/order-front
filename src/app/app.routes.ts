@@ -135,7 +135,25 @@ export const routes: Routes = [
     data: {
       menu: 'settings',
       filter: false
-    }
+    },
+    children: [
+      {
+        path: 'roles',
+        loadComponent: () => import('./features/parameters/components/roles.component').then(m => m.RolesComponent),
+        data: {
+          menu: 'settings',
+          filter: false
+        }
+      },
+      {
+        path: 'segments',
+        loadComponent: () => import('./features/parameters/components/segments.component').then(m => m.SegmentsComponent),
+        data: {
+          menu: 'settings',
+          filter: false
+        }
+      }
+    ]
   },
   {
     path: 'login',

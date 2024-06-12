@@ -1,3 +1,15 @@
 <div class="container">
-  <p>parameters component</p>
+  <nav>
+    <ul>
+      @for(item of menuArray; track item.id){
+      <li [routerLinkActiveOptions]="{ exact: true }" [routerLink]="item.routerLink" routerLinkActive="active">
+        <span><i [class]="item.iClass"></i></span>
+        <span>{{ item.title }}</span>
+      </li>
+      }
+    </ul>
+  </nav>
+  <div class="content">
+    <router-outlet></router-outlet>
+  </div>
 </div>
