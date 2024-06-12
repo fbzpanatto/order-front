@@ -1,7 +1,6 @@
-@import '../../styles/variables.scss';
+@import "../../styles/variables.scss";
 
 :host {
-
   width: 100%;
   height: calc(100vh - $toolbarHeight - ($pad16 * 2));
 
@@ -55,7 +54,6 @@
         }
 
         .input-container {
-
           position: relative;
 
           input {
