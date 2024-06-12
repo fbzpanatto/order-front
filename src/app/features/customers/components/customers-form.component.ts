@@ -45,14 +45,16 @@ export class CustomersFormComponent implements OnDestroy {
     customer: this.#fb.group({ ...this.normalCustomer }),
     contacts: this.#fb.array([]),
     address: this.#fb.group({ ...this.address }),
-    person: this.#fb.group({ ...this.person })
+    person: this.#fb.group({ ...this.person }),
+    company: this.#fb.group({ ...this.company })
   })
 
   legalForm = this.#fb.group({
     customer: this.#fb.group({ ...this.legalCustomer }),
     contacts: this.#fb.array([]),
     address: this.#fb.group({ ...this.address }),
-    person: this.#fb.group({ ...this.person })
+    person: this.#fb.group({ ...this.person }),
+    company: this.#fb.group({ ...this.company })
   })
 
   async ngOnInit() {
@@ -177,11 +179,6 @@ export class CustomersFormComponent implements OnDestroy {
 
   isNumeric(str: string): boolean { return str.match(/^\d+$/) !== null }
 
-  formatDate(date: Date): string {
-    const localDate = new Date(date.getTime() + (3 * 60 * 60 * 1000));
-    return format(localDate, 'yyyy-MM-dd HH:mm:ss');
-  }
-
   get formDiff() { return this.#formService.getChangedValues() }
   get originalValues() { return this.#formService.originalValues }
   get currentValues() { return this.#formService.currentForm.value }
@@ -209,80 +206,91 @@ export class CustomersFormComponent implements OnDestroy {
   get hasFilter() { return this.#route.snapshot.data[environment.FILTER] as boolean }
   get menuName() { return this.#route.snapshot.data[environment.MENU] as string }
 
+  get company() {
+    return {
+      company_id: [null, {
+        validators: [Validators.required]
+      }],
+      corporate_name: [null],
+      social_name: [null],
+      cnpj: [null]
+    }
+  }
+
   get legalCustomer() {
     return {
-      person_id: [''],
-      cnpj: ['', {
+      person_id: [null],
+      cnpj: [null, {
         validators: [Validators.required, Validators.minLength(14), Validators.maxLength(14)],
       }],
-      corporate_name: ['', {
+      corporate_name: [null, {
         validators: [Validators.required, Validators.minLength(3), Validators.maxLength(100)],
       }],
-      social_name: ['', {
+      social_name: [null, {
         validators: [Validators.required, Validators.minLength(3), Validators.maxLength(100)],
       }],
-      state_registration: ['', {
+      state_registration: [null, {
         validators: [Validators.required, Validators.minLength(3), Validators.maxLength(9)],
-      }],
-      created_at: [''],
+      }]
     }
   }
 
   get normalCustomer() {
     return {
-      person_id: [''],
-      cpf: ['', {
+      person_id: [null],
+      cpf: [null, {
         validators: [Validators.required, Validators.minLength(11), Validators.maxLength(11)],
       }],
-      first_name: ['', {
+      first_name: [null, {
         validators: [Validators.required, Validators.minLength(3), Validators.maxLength(60)],
       }],
-      middle_name: ['', {
+      middle_name: [null, {
         validators: [Validators.minLength(2), Validators.maxLength(60)],
       }],
-      last_name: ['', {
+      last_name: [null, {
         validators: [Validators.required, Validators.minLength(3), Validators.maxLength(60)],
-      }],
-      created_at: [''],
+      }]
     }
   }
 
   get address() {
     return {
-      id: [''],
-      person_id: [''],
-      add_street: ['', {
+      id: [null],
+      person_id: [null],
+      add_street: [null, {
         validators: [Validators.required, Validators.minLength(3), Validators.maxLength(100)],
       }],
-      add_number: ['', {
+      add_number: [null, {
         validators: [Validators.maxLength(10)],
       }],
-      add_zipcode: ['', {
+      add_zipcode: [null, {
         validators: [Validators.required, Validators.minLength(8), Validators.maxLength(8)],
       }],
-      add_city: ['', {
+      add_city: [null, {
         validators: [Validators.required, Validators.minLength(3), Validators.maxLength(60)],
       }],
-      add_neighborhood: ['', {
-        validators: [Validators.required, Validators.minLength(3), Validators.maxLength(60)],
+      add_uf: [null, {
+        validators: [Validators.required, Validators.minLength(2), Validators.maxLength(2)],
       }],
-      created_at: [''],
+      add_neighborhood: [null, {
+        validators: [Validators.required, Validators.minLength(3), Validators.maxLength(60)],
+      }]
     }
   }
 
   get person() {
     return {
-      id: [''],
-      observation: ['', {
+      id: [null],
+      observation: [null, {
         validators: [Validators.minLength(3), Validators.maxLength(45)],
       }],
-      first_field: ['', {
+      first_field: [null, {
         validators: [Validators.minLength(3), Validators.maxLength(100)],
       }],
-      second_field: ['', {
+      second_field: [null, {
         validators: [Validators.minLength(3), Validators.maxLength(100)],
       }],
-      third_field: ['', {
+      third_field: [null, {
         validators: [Validators.minLength(3), Validators.maxLength(100)],
       }]
     }

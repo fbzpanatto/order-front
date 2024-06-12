@@ -6,8 +6,7 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormService } from '../../../shared/services/form.service';
 import { FetchCompaniesService } from '../../../shared/services/fetchCompanies.service';
-import { SuccessGETbyId, SuccessPOST } from '../../../shared/interfaces/response/response';
-import { format } from 'date-fns';
+import { SuccessGETbyId, SuccessPATCH, SuccessPOST } from '../../../shared/interfaces/response/response';
 
 @Component({
   selector: 'app-companies-form',
@@ -52,7 +51,9 @@ export class CompaniesFormComponent {
 
   async getByCompanyId(companyId: number) { return (await this.#http.getById(companyId) as SuccessGETbyId).data }
 
-  redirect() { this.#router.navigate(['/users']) }
+  redirect() { this.#router.navigate(['/companies']) }
+
+  titleSettings() { this.command !== 'new' ? this.title = 'Editando' : this.title = 'Nova Empresa' }
 
   menuSettings() {
     this.#toolbarMenuService.menuName = this.menuName
@@ -67,20 +68,15 @@ export class CompaniesFormComponent {
   async onSubmit() {
     if (this.command === 'new') {
       const response = await this.#http.saveData(this.formDiff)
-
-      console.log('response', response)
-
       if (!(response as SuccessPOST).affectedRows) { return }
       return this.redirect()
     }
+    if (!isNaN(Number(this.command))) {
+      const response = await this.#http.updateData(this.#companyId as number, this.formDiff)
+      if (!(response as SuccessPATCH).affectedRows) { return }
+      return this.redirect()
+    }
   }
-
-  formatDate(date: Date): string {
-    const localDate = new Date(date.getTime() + (3 * 60 * 60 * 1000));
-    return format(localDate, 'yyyy-MM-dd HH:mm:ss');
-  }
-
-  titleSettings() { this.command !== 'new' ? this.title = 'Editando' : this.title = 'Nova Empresa' }
 
   get formDiff() { return this.#formService.getChangedValues() }
   get originalValues() { return this.#formService.originalValues }
@@ -102,7 +98,7 @@ export class CompaniesFormComponent {
 
   get companyFormFields() {
     return {
-      id: [null],
+      company_id: [null],
       cnpj: ['', {
         validators: [Validators.required, Validators.minLength(14), Validators.maxLength(14)],
       }],
@@ -121,7 +117,6 @@ export class CompaniesFormComponent {
 
   get address() {
     return {
-      id: [null],
       company_id: [null],
       add_street: ['', {
         validators: [Validators.required, Validators.minLength(3), Validators.maxLength(100)],

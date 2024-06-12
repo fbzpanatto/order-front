@@ -19,9 +19,9 @@
         </tr>
       </thead>
       <tbody>
-        @for (item of companiesArray; track item.id) {
-        <tr [routerLink]="'/companies/' + item.id">
-          <td class="medium-text">{{ item.id }}</td>
+        @for (item of companiesArray; track item.company_id) {
+        <tr [routerLink]="'/companies/' + item.company_id">
+          <td class="medium-text">{{ item.company_id }}</td>
           <td class="medium-text">{{ item.corporate_name }}</td>
           <td class="medium-text">{{ item.social_name }}</td>
           <td class="medium-text">{{ item.cnpj }}</td>
