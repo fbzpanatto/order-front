@@ -1,18 +1,13 @@
 <label class="light-text">{{ label() }}</label>
 <span><i [class]="currentState()? 'fa-solid fa-chevron-up': 'fa-solid fa-chevron-down'"></i></span>
-<input readonly class="medium-text" (click)="changeState()" [placeholder]="placeholder()"
-  [value]="currentOption()?.label" />
+<input readonly class="medium-text" (click)="changeState()" [placeholder]="placeholder()" [value]="currentOption()?.label" />
 @if(currentState()){
 <div class="menu-container" [@conditionalTrigger]="currentState() ? 'shown' : 'notshown'"
   [appOutSideClick]="currentState()" (outSideClick)="changeState(false)">
   <ul>
     @for(option of options(); track option.id) {
-      @if(option.create){
-      <li (click)="onCreate()" (click)="changeState(false)">{{ option.label }}</li>
-      }
-    @else {
-    <li (click)="setOption(option)" (click)="changeState(false)">{{ option.label }}</li>
-      }
+      @if(option.create){ <li (click)="onCreate()" (click)="changeState(false)">{{ option.label }}</li> }
+      @else { <li (click)="setOption(option)" (click)="changeState(false)">{{ option.label }}</li> }
     }
   </ul>
 </div>

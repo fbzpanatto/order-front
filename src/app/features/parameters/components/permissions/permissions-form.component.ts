@@ -64,4 +64,64 @@ export class PermissionsFormComponent {
 
   get command() { return this.#route.snapshot.paramMap.get('command') }
 
+  get resources() {
+    return [
+      {
+        "id": 1,
+        "label": "Clientes",
+        "resource": "customers",
+        "separator": ".",
+        "permissions": ["create", "read", "update"]
+      },
+      {
+        "id": 2,
+        "label": "Empresas",
+        "resource": "companies",
+        "separator": ".",
+        "permissions": ["create", "read", "update"]
+      },
+      {
+        "id": 3,
+        "label": "Pedidos",
+        "resource": "orders",
+        "separator": ".",
+        "permissions": ["create", "read", "update"]
+      },
+      {
+        "id": 4,
+        "label": "Permissões",
+        "resource": "permissions",
+        "separator": ".",
+        "permissions": ["create", "read", "update"]
+      },
+      {
+        "id": 5,
+        "label": "Produtos",
+        "resource": "products",
+        "separator": ".",
+        "permissions": ["create", "read", "update"]
+      },
+      {
+        "id": 6,
+        "label": "Segmentos",
+        "resource": "segments",
+        "separator": ".",
+        "permissions": ["create", "read", "update"]
+      },
+      {
+        "id": 7,
+        "label": "Status do Produto",
+        "resource": "production-status",
+        "separator": ".",
+        "permissions": ["create", "read", "update"]
+      },
+      {
+        "id": 8,
+        "label": "Usuários",
+        "resource": "users",
+        "separator": ".",
+        "permissions": ["create", "read", "update"]
+      }
+    ]
+  }
 }

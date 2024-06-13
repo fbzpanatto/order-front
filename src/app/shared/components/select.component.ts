@@ -27,8 +27,6 @@ export class SelectComponent {
   #asideService = inject(AsideService)
 
   ngOnInit(): void {
-
-
     if (this.isCustomer()) {
       const option = this.options()?.find(option => option.value === this.customerType)
       this.#currentOption.update(currentOption => currentOption = option)
