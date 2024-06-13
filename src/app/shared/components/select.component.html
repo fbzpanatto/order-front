@@ -1,11 +1,16 @@
 <div class="input-container">
-  <span><i class="fa-solid fa-chevron-down"></i></span>
-  <input readonly class="medium-text" />
-  <div class="menu-container">
+  <span>
+    <i [class]="flag()? 'fa-solid fa-chevron-up': 'fa-solid fa-chevron-down'"></i>
+  </span>
+  <input readonly class="medium-text" (click)="changeFlag()" placeholder="selecione" [value]="1" />
+  @if(flag()){
+  <div class="menu-container" [@conditionalTrigger]="flag() ? 'shown' : 'notshown'" [appOutSideClick]="flag()"
+    (outSideClick)="changeFlag(false)">
     <ul>
       @for(option of options(); track option.id){
-      <li>{{ option.label }}</li>
+      <li (click)="changeFlag(false)">{{ option.label }}</li>
       }
     </ul>
   </div>
+  }
 </div>
