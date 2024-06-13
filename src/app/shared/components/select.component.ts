@@ -2,6 +2,8 @@ import { Component, input, signal } from '@angular/core';
 import { ClickOutsideDirective } from '../directives/clickOutside.directive';
 import { UserMenuAnimation } from '../animations/userMenuAnimation';
 
+interface Option { id: number, label: string, value: string, disabled?: boolean }
+
 @Component({
   selector: 'app-select',
   standalone: true,
@@ -12,12 +14,19 @@ import { UserMenuAnimation } from '../animations/userMenuAnimation';
 })
 export class SelectComponent {
 
-  options = input<{ id: number, label: string, value: string, disabled?: boolean }[] | undefined>([])
+  options = input<Option[] | undefined>([])
 
-  #flag = signal<boolean | undefined>(false)
-  flag = this.#flag.asReadonly()
+  #state = signal<boolean | undefined>(false)
+  #currentOption = signal<Option | undefined>(undefined)
 
-  changeFlag(state?: boolean) {
-    this.#flag.update(value => state != undefined ? value = state : value = !value)
+  changeState(state?: boolean) {
+    this.#state.update(value => state != undefined ? value = state : value = !value)
   }
+
+  setOption(option: Option) {
+    this.#currentOption.update(currentOption => currentOption = option)
+  }
+
+  get currentState() { return this.#state.asReadonly() }
+  get currentOption() { return this.#currentOption.asReadonly() }
 }
