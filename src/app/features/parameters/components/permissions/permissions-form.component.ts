@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, ElementRef, ViewChild, inject, viewChild } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormService } from '../../../../shared/services/form.service';
@@ -15,6 +15,10 @@ import { SuccessGET } from '../../../../shared/interfaces/response/response';
   imports: [ReactiveFormsModule, CommonModule, SelectComponent]
 })
 export class PermissionsFormComponent {
+
+
+  disabled: boolean = true
+  @ViewChild('newRole', { static: false }) newRole?: ElementRef
 
   #title?: string
   #rolesArray: any[] = []
@@ -40,6 +44,13 @@ export class PermissionsFormComponent {
   }
 
   titleSettings() { this.command !== 'new' ? this.title = 'Editando Permissões' : this.title = 'Criando Permissões' }
+
+  onCreateElement(e: any) {
+    this.disabled = false
+    setTimeout(() => {
+      this.newRole?.nativeElement.focus()
+    }, 100)
+  }
 
   onSubmit() {
 

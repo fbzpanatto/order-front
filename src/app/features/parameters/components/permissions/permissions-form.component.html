@@ -7,12 +7,12 @@
       <div class="fieldsets-container">
         <fieldset>
           <label class="medium-text fieldset-label">Papel</label>
-          <app-select [label]="'Papel'" [placeholder]="'selecione o papel'" class="input-container"
+          <app-select (createElement)="onCreateElement($event)" [label]="'Papel'" [placeholder]="'selecione o papel'" class="input-container"
             [options]="rolesArray"></app-select>
           <div class="input-container">
-            <label class="light-text" for="role">Nome do papel</label>
+            <label class="light-text" for="role">Novo papel</label>
             <span><i class="fa-solid fa-pen-to-square"></i></span>
-            <input maxlength="=100" class="medium-text" id="role" name="role" type="text" placeholder="nome do papel">
+            <input #newRole [disabled]="disabled" maxlength="=100" class="medium-text" id="role" name="role" type="text" placeholder="nome do novo papel">
           </div>
         </fieldset>
         <fieldset>

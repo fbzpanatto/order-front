@@ -1,4 +1,4 @@
-import { Component, inject, input, signal } from '@angular/core';
+import { Component, inject, input, output, signal } from '@angular/core';
 import { ClickOutsideDirective } from '../directives/clickOutside.directive';
 import { UserMenuAnimation } from '../animations/userMenuAnimation';
 import { AsideService } from '../services/aside.service';
@@ -14,6 +14,8 @@ export interface Option { id: number, label: string, value: string, create?: boo
   animations: [UserMenuAnimation],
 })
 export class SelectComponent {
+
+  createElement = output<boolean>()
 
   options = input<Option[]>([])
   isCustomer = input<boolean>(false)
@@ -37,7 +39,12 @@ export class SelectComponent {
     this.#state.update(value => state != undefined ? value = state : value = !value)
   }
 
+  onCreate() { this.createElement.emit(true) }
+
   setOption(option: Option) {
+
+    this.createElement.emit(false)
+
     this.#currentOption.update(currentOption => {
 
       if (this.isCustomer()) { this.#asideService.changeCustomerType(option.value) }
