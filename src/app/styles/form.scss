@@ -3,19 +3,17 @@
 form {
   display: flex;
   flex-direction: column;
-  gap: 48px;
-  border-top: 1px solid #444;
+  gap: 32px;
   border-radius: 8px;
 
   .inputs-container {
-
     display: flex;
     flex-direction: column;
     padding: 16px;
     border-radius: 8px;
-    border-left: 1px solid #444;
-    border-bottom: 1px solid #444;
-    border-right: 1px solid #444;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
 
     .fieldsets-container {
       display: flex;
@@ -31,15 +29,17 @@ form {
         flex-wrap: wrap;
         padding: 16px;
         border-radius: 8px;
-        border: 1px solid #d4d4d4;
+        border: 1px solid rgba(0, 0, 0, 0.12);
         gap: 3vmin;
         margin-top: 8px;
+        background-color: #fafafa;
+        // box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 
         .fieldset-label {
           position: absolute;
-          padding: 0px 8px;
+          padding: 0 8px;
           top: -14px;
-          background-color: #fff;
+          background-color: #fafafa;
           font-weight: bold;
           z-index: 999;
         }
@@ -58,30 +58,34 @@ form {
           }
 
           &:focus-within span {
-            color: black;
+            color: #333;
           }
 
           label {
             font-size: 12px;
+            color: rgba(0, 0, 0, 0.54);
+            transition: color 200ms;
           }
 
           span {
             top: 50%;
             position: absolute;
             left: 0;
-            color: rgb(180, 180, 180);
+            color: rgba(180, 180, 180, 0.87);
+            transition: color 200ms;
           }
 
           input {
             outline: none;
             border: none;
-            border-bottom: 1px solid #ebebeb;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.12);
             padding: 8px 8px 8px 28px;
-            transition: 400ms;
+            transition: border-bottom 200ms, background-color 200ms;
             letter-spacing: 0.06em;
 
             &:focus {
-              border-bottom: 1px solid #333;
+              border-bottom: 2px solid #333;
+              background-color: rgba(0, 0, 0, 0.05);
             }
           }
 
@@ -144,7 +148,7 @@ form {
             border: 1px solid #333;
             background-color: #fff;
             color: #333;
-            transition: 100ms;
+            transition: background-color 200ms;
 
             &:hover {
               background-color: #d4d4d4;
@@ -188,12 +192,12 @@ form {
       padding: 10px 20px;
       cursor: pointer;
       background-color: #ebebeb;
-      transition: 100ms;
+      transition: background-color 200ms, border-color 200ms;
       height: 40px;
 
       &:hover {
         background-color: rgb(224, 224, 224);
-        border: 1px solid #444
+        border: 1px solid #444;
       }
 
       &.clear-btn {
