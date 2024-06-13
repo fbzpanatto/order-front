@@ -1,4 +1,4 @@
-@import './variables.scss';
+@import "./variables.scss";
 
 form {
   display: flex;
@@ -33,7 +33,6 @@ form {
         gap: 3vmin;
         margin-top: 8px;
         background-color: #fafafa;
-        // box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 
         .fieldset-label {
           position: absolute;
@@ -121,6 +120,12 @@ form {
             gap: 8px;
             border: none;
             cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: background-color 200ms, box-shadow 200ms;
+
+            &:hover {
+              box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            }
           }
 
           .add-btn {
@@ -138,9 +143,11 @@ form {
             border: 1px solid rgb(218, 218, 218);
             background-color: #ebebeb;
             color: rgba(16, 16, 16, 0.3);
+            box-shadow: none;
 
             &:hover {
               border: 1px solid black;
+              box-shadow: none;
             }
           }
 
@@ -148,7 +155,6 @@ form {
             border: 1px solid #333;
             background-color: #fff;
             color: #333;
-            transition: background-color 200ms;
 
             &:hover {
               background-color: #d4d4d4;
