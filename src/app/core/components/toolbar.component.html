@@ -4,13 +4,11 @@
     @if(filterState){
     <button class="menu-item medium-text" (click)="changeAsideFlag()">
       <span>
-        <i
-          [class]="
+        <i [class]="
             asideFlag()
               ? 'fa-solid fa-filter-circle-xmark'
               : 'fa-solid fa-filter'
-          "
-        ></i>
+          "></i>
       </span>
       <span class="filter-text">Filtros</span>
     </button>
@@ -22,22 +20,16 @@
         <span>FP</span>
       </div>
       <span>
-        <i
-          [class]="
+        <i [class]="
             userMenuFlag()
               ? 'fa-solid fa-chevron-up'
               : 'fa-solid fa-chevron-down'
-          "
-        ></i>
+          "></i>
       </span>
     </button>
     @if(userMenuFlag()){
-    <div
-      class="menu-container"
-      [appOutSideClick]="userMenuFlag()"
-      (outSideClick)="changeMenuUserFlag(false)"
-      [@conditionalTrigger]="asideFlag() ? 'shown' : 'notshown'"
-    >
+    <div class="menu-container" [appOutSideClick]="userMenuFlag()" (outSideClick)="changeMenuUserFlag(false)"
+      [@conditionalTrigger]="asideFlag() ? 'shown' : 'notshown'">
       <ul>
         @for(item of menu; track item.id){ @if(item.userMenu &&
         !item.authAction) {

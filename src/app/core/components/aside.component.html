@@ -2,15 +2,14 @@
   <form>
     <fieldset>
       <label class="fieldset-label">Filtros</label>
-      @for(item of formFields; track item.id){
-        @switch (item.type) {
-          @case ('text') {
-          <div class="input-container">
-            <span><i class="fa-solid fa-magnifying-glass"></i></span>
-            <input id="search" class="medium-text" [type]="item.type" [placeholder]="item.placeholder">
-          </div>
-          }
-          @case ('select') {
+      @for(item of formFields; track item.id){ @switch (item.type) { @case
+      ('text') {
+      <div class="input-container">
+        <span><i class="fa-solid fa-magnifying-glass"></i></span>
+        <input id="search" class="medium-text" [type]="item.type" [placeholder]="item.placeholder" />
+      </div>
+      }
+      <!-- @case ('select') {
           <div class="input-container">
             <select class="medium-text" id="typeOfCustomer" #customerType name="customerType" id="customerType"
               (change)="onSelect(customerType.value)">
@@ -20,12 +19,22 @@
               }
             </select>
           </div>
-          }
-          @default {
-          <span>não aparecer nada</span>
-          }
-        }
-      }
+          } -->
+      @case ('select') {
+      <div class="input-container">
+        <span><i class="fa-solid fa-chevron-down"></i></span>
+        <input readonly class="medium-text" [type]="item.type" [placeholder]="item.placeholder" />
+        <div class="menu-container">
+          <ul>
+            @for(el of item.options; track el.id){
+            <li>{{ el.label }}</li>
+            }
+          </ul>
+        </div>
+      </div>
+      } @default {
+      <span>não aparecer nada</span>
+      } } }
     </fieldset>
   </form>
 </aside>
