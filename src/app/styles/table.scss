@@ -1,4 +1,4 @@
-@import './variables.scss';
+@import "./variables.scss";
 
 .table-container {
   height: calc(100vh - $toolbarHeight - 122px);
@@ -18,18 +18,17 @@
         th {
           position: sticky;
           top: 0;
-          background-color: #444;
-          padding: 8px 8px;
+          background-color: #fff;
+          padding: 8px;
           text-align: left;
-          color: #fff;
-
-          &:first-of-type {
-            border-top-left-radius: 8px;
-          }
-
-          &:last-of-type {
-            border-top-right-radius: 8px;
-          }
+          letter-spacing: 0.05rem;
+          font-size: 16px;
+          color: #333;
+          border-top: 1px solid #444;
+          border-bottom: 1px solid #444;
+          box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+          background-color: #fafafa;
+          text-transform: uppercase;
         }
       }
     }
@@ -46,29 +45,9 @@
 
       tr {
         td {
-          padding: 8px 8px 0;
-          border-left: 1px solid #ebebeb;
+          padding: 8px;
+          letter-spacing: 0.05rem;
           border-bottom: 1px solid #ebebeb;
-
-          &:last-of-type {
-            border-right: 1px solid #ebebeb;
-          }
-        }
-      }
-
-      tr {
-        &:last-of-type {
-          td {
-
-            &:first-of-type {
-              border-bottom-left-radius: 8px;
-
-            }
-
-            &:last-of-type {
-              border-bottom-right-radius: 8px;
-            }
-          }
         }
       }
     }
