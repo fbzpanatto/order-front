@@ -6,5 +6,6 @@ export const environment = {
   DEFAULT: 'default',
   SETTINGS: 'settings',
   CUSTOMERS: 'persons',
-  COMPANIES: 'companies'
+  COMPANIES: 'companies',
+  ROLES: 'roles'
 }

@@ -3,7 +3,7 @@ import { ClickOutsideDirective } from '../directives/clickOutside.directive';
 import { UserMenuAnimation } from '../animations/userMenuAnimation';
 import { AsideService } from '../services/aside.service';
 
-interface Option { id: number, label: string, value: string, disabled?: boolean }
+export interface Option { id: number, label: string, value: string, disabled?: boolean }
 
 @Component({
   selector: 'app-select',
@@ -15,7 +15,7 @@ interface Option { id: number, label: string, value: string, disabled?: boolean 
 })
 export class SelectComponent {
 
-  options = input<Option[] | undefined>([])
+  options = input<Option[]>([])
   isCustomer = input<boolean>(false)
 
   #state = signal<boolean | undefined>(false)
@@ -23,6 +23,8 @@ export class SelectComponent {
   #asideService = inject(AsideService)
 
   ngOnInit(): void {
+
+
     if (this.isCustomer()) {
       const option = this.options()?.find(option => option.value === this.customerType)
       this.#currentOption.update(currentOption => currentOption = option)

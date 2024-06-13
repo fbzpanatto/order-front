@@ -20,6 +20,7 @@ export interface Company { company_id: number, corporate_name: string, social_na
 export class CompaniesListComponent {
 
   #companiesArray?: Company[]
+  
   #route = inject(ActivatedRoute)
   #asideService = inject(AsideService)
   #toolbarMenuService = inject(ToolbarMenuService)
