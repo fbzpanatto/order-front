@@ -7,7 +7,14 @@
       <div class="fieldsets-container">
         <fieldset>
           <label class="medium-text fieldset-label">Papel</label>
-          <app-select [label]="'Papel'" [placeholder]="'selecione o papel'" class="input-container" [options]="rolesArray"></app-select>
+          <app-select [label]="'Papel'" [placeholder]="'selecione o papel'" class="input-container"
+            [options]="rolesArray"></app-select>
+          <div class="input-container">
+            <label class="light-text" for="role">Nome do papel</label>
+            <span><i class="fa-solid fa-pen-to-square"></i></span>
+            <input maxlength="=100" class="medium-text" id="role" name="role" type="text"
+              placeholder="nome do papel">
+          </div>
         </fieldset>
         <fieldset>
           <label class="medium-text fieldset-label">Permissões</label>
@@ -24,33 +31,24 @@
               <tbody>
                 <tr>
                   <td class="medium-text">Produtos</td>
-                  <td class="medium-text">Sim</td>
-                  <td class="medium-text">Sim</td>
-                  <td class="medium-text">Sim</td>
-                </tr>
-                <tr>
-                  <td class="medium-text">Produtos</td>
-                  <td class="medium-text">Sim</td>
-                  <td class="medium-text">Sim</td>
-                  <td class="medium-text">Sim</td>
-                </tr>
-                <tr>
-                  <td class="medium-text">Produtos</td>
-                  <td class="medium-text">Sim</td>
-                  <td class="medium-text">Sim</td>
-                  <td class="medium-text">Sim</td>
-                </tr>
-                <tr>
-                  <td class="medium-text">Produtos</td>
-                  <td class="medium-text">Sim</td>
-                  <td class="medium-text">Sim</td>
-                  <td class="medium-text">Sim</td>
-                </tr>
-                <tr>
-                  <td class="medium-text">Produtos</td>
-                  <td class="medium-text">Sim</td>
-                  <td class="medium-text">Sim</td>
-                  <td class="medium-text">Sim</td>
+                  <td>
+                    <label class="custom-checkbox">
+                      <input type="checkbox">
+                      <span class="checkmark"></span>
+                    </label>
+                  </td>
+                  <td>
+                    <label class="custom-checkbox">
+                      <input type="checkbox">
+                      <span class="checkmark"></span>
+                    </label>
+                  </td>
+                  <td>
+                    <label class="custom-checkbox">
+                      <input type="checkbox">
+                      <span class="checkmark"></span>
+                    </label>
+                  </td>
                 </tr>
                 <!-- @for (item of rolesArray; track item.person_id) {
                 <tr>
