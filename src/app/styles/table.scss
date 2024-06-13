@@ -3,15 +3,13 @@
 .table-container {
   height: calc(100vh - $toolbarHeight - 122px);
   overflow: auto;
-
-  &.parameters {
-    height: calc(100vh - $toolbarHeight - 178px);
-  }
+  width: 100%;
 
   table {
     width: 100%;
     border-collapse: separate;
     border-spacing: 0;
+    background-color: #fff;
 
     thead {
       tr {
@@ -63,5 +61,13 @@
         }
       }
     }
+  }
+
+  &.parameters {
+    height: calc(100vh - $toolbarHeight - 178px);
+  }
+
+  &.permissions {
+    height: calc(100vh - $toolbarHeight - 439px);
   }
 }

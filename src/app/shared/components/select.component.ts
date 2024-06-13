@@ -3,7 +3,7 @@ import { ClickOutsideDirective } from '../directives/clickOutside.directive';
 import { UserMenuAnimation } from '../animations/userMenuAnimation';
 import { AsideService } from '../services/aside.service';
 
-export interface Option { id: number, label: string, value: string, disabled?: boolean }
+export interface Option { id: number, label: string, value: string, create?: boolean }
 
 @Component({
   selector: 'app-select',
@@ -17,6 +17,8 @@ export class SelectComponent {
 
   options = input<Option[]>([])
   isCustomer = input<boolean>(false)
+  label = input<string | undefined>('')
+  placeholder = input<string | undefined>('')
 
   #state = signal<boolean | undefined>(false)
   #currentOption = signal<Option | undefined>(undefined)

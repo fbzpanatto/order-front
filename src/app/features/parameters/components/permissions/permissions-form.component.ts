@@ -6,17 +6,17 @@ import { CommonModule } from '@angular/common';
 import { SelectComponent } from "../../../../shared/components/select.component";
 import { FetchRolesService } from '../../../../shared/services/fetchRoles.service';
 import { SuccessGET } from '../../../../shared/interfaces/response/response';
-import { Option } from '../../../../shared/components/select.component';
 
 @Component({
   selector: 'app-permissions-form',
   standalone: true,
   templateUrl: './permissions-form.component.html',
-  styleUrls: ['../../../../styles/title-bar.scss', '../../../../styles/form.scss'],
+  styleUrls: ['../../../../styles/title-bar.scss', '../../../../styles/form.scss', '../../../../styles/table.scss'],
   imports: [ReactiveFormsModule, CommonModule, SelectComponent]
 })
 export class PermissionsFormComponent {
 
+  #title?: string
   #rolesArray: any[] = []
 
   #router = inject(Router)
@@ -29,18 +29,24 @@ export class PermissionsFormComponent {
   })
 
   async ngOnInit() {
+    this.titleSettings()
     await this.getRoles()
   }
 
-  async getRoles() {
-    const response = ((await this.#rolesHttp.getAll() as SuccessGET).data) as any[]
-    const id = response.length ? response.length + 1 : 1
-    this.rolesArray = [...response, { id: id, label: 'Adicionar novo', value: 'Adicionar novo' }]
+  async getRoles() { this.setArrayOfOptions(((await this.#rolesHttp.getAll() as SuccessGET).data) as any[]) }
+
+  setArrayOfOptions(res: any[]) {
+    this.rolesArray = [...res, { id: res.length ? res.length + 1 : 1, label: 'Adicionar novo', value: 'Adicionar novo', create: true }]
   }
+
+  titleSettings() { this.command !== 'new' ? this.title = 'Editando Permissões' : this.title = 'Criando Permissões' }
 
   onSubmit() {
 
   }
+
+  get title() { return this.#title }
+  set title(value: string | undefined) { this.#title = value }
 
   get rolesArray() { return this.#rolesArray }
   set rolesArray(value: any[]) { this.#rolesArray = value }

@@ -1,18 +1,88 @@
 <div class="container">
   <div class="title-bar">
-    <h1>Editando</h1>
+    <h1>{{ title }}</h1>
   </div>
   <form [formGroup]="form" (submit)="onSubmit()">
     <div class="inputs-container">
       <div class="fieldsets-container">
         <fieldset>
-          <label class="medium-text fieldset-label">Blabla</label>
-          <app-select class="input-container" [options]="rolesArray"></app-select>
-          <div class="input-container">
-            <label class="light-text" for="social_name">Nome Fantasia</label>
-            <span><i class="fa-solid fa-pen-to-square"></i></span>
-            <input maxlength="=100" formControlName="social_name" class="medium-text" id="social_name"
-              name="social_name" type="text" placeholder="nome fantasia">
+          <label class="medium-text fieldset-label">Papel</label>
+          <app-select [label]="'Papel'" [placeholder]="'selecione o papel'" class="input-container" [options]="rolesArray"></app-select>
+        </fieldset>
+        <fieldset>
+          <label class="medium-text fieldset-label">Permissões</label>
+          <div class="table-container permissions">
+            <table>
+              <thead>
+                <tr>
+                  <th>Recurso</th>
+                  <th>Ler</th>
+                  <th>Criar</th>
+                  <th>Editar</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="medium-text">Produtos</td>
+                  <td class="medium-text">Sim</td>
+                  <td class="medium-text">Sim</td>
+                  <td class="medium-text">Sim</td>
+                </tr>
+                <tr>
+                  <td class="medium-text">Produtos</td>
+                  <td class="medium-text">Sim</td>
+                  <td class="medium-text">Sim</td>
+                  <td class="medium-text">Sim</td>
+                </tr>
+                <tr>
+                  <td class="medium-text">Produtos</td>
+                  <td class="medium-text">Sim</td>
+                  <td class="medium-text">Sim</td>
+                  <td class="medium-text">Sim</td>
+                </tr>
+                <tr>
+                  <td class="medium-text">Produtos</td>
+                  <td class="medium-text">Sim</td>
+                  <td class="medium-text">Sim</td>
+                  <td class="medium-text">Sim</td>
+                </tr>
+                <tr>
+                  <td class="medium-text">Produtos</td>
+                  <td class="medium-text">Sim</td>
+                  <td class="medium-text">Sim</td>
+                  <td class="medium-text">Sim</td>
+                </tr>
+                <!-- @for (item of rolesArray; track item.person_id) {
+                <tr>
+                  <td class="medium-text">{{ item.person_id }}</td>
+                  <td class="medium-text">{{ item.corporate_name }}</td>
+                  <td class="medium-text">{{ item.social_name }}</td>
+                  <td class="medium-text">{{ item.cnpj }}</td>
+                  <td class="medium-text">{{ item.state_registration }}</td>
+                </tr>
+                } @empty {
+                <tr>
+                  <td class="medium-text" [colSpan]="5">Se dados a exibir</td>
+                </tr>
+                } -->
+              </tbody>
+              <!-- <tbody>
+                @for (item of companiesArray; track item.company_id) {
+                <tr [routerLink]="'/companies/' + item.company_id">
+                  <td class="medium-text">{{ item.company_id }}</td>
+                  <td class="medium-text">{{ item.corporate_name }}</td>
+                  <td class="medium-text">{{ item.social_name }}</td>
+                  <td class="medium-text">{{ item.cnpj }}</td>
+                  <td class="medium-text">{{ item.state_registration }}</td>
+                  <td class="medium-text">{{ !!item.active }}</td>
+                </tr>
+                } @empty {
+                <tr>
+                  <td class="medium-text" [colSpan]="6">Sem dados a exibir</td>
+                </tr>
+                }
+              </tbody> -->
+            </table>
           </div>
         </fieldset>
       </div>
