@@ -1,4 +1,4 @@
-@import '../../styles/variables.scss';
+@import "../../styles/variables.scss";
 
 :host {
   display: flex;
@@ -47,7 +47,7 @@
 
         &:hover {
           background-color: rgb(224, 224, 224);
-          border: 1px solid #444
+          border: 1px solid #444;
         }
       }
     }
@@ -77,21 +77,30 @@
           border-radius: 50%;
           min-width: 41px;
           min-height: 41px;
+          transition: background-color 200ms;
+
+          &:hover {
+            background-color: deepskyblue;
+          }
         }
       }
 
       .menu-container {
         position: absolute;
         top: 48px;
+        right: 0;
         width: 200px;
-        background-color: #f3f3f3;
+        background-color: #fff;
         border-radius: 8px;
         z-index: 200;
-        box-shadow: 0 4px 5px rgba(0, 0, 0, 0.15);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
         border: 1px solid #d4d4d4;
+        transition: opacity 200ms, visibility 200ms;
 
         ul {
           list-style: none;
+          padding: 0;
+          margin: 0;
 
           li {
             position: relative;
@@ -101,6 +110,11 @@
             display: flex;
             gap: 8px;
             align-items: center;
+            transition: background-color 200ms;
+
+            &:hover {
+              background-color: #f0f0f0;
+            }
 
             &::before {
               content: "";
@@ -111,15 +125,12 @@
               left: 0;
               background-color: #000;
               visibility: hidden;
-              -webkit-transform: scaleX(0);
               transform: scaleX(0);
-              -webkit-transition: all 0.3s ease-in-out 0s;
-              transition: all 0.3s ease-in-out 0s;
+              transition: all 0.3s ease-in-out;
             }
 
             &:hover::before {
               visibility: visible;
-              -webkit-transform: scaleX(1);
               transform: scaleX(1);
             }
 
