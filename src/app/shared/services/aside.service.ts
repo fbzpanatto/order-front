@@ -92,12 +92,12 @@ export class AsideService {
         type: 'select',
         options: [
           {
-            id: 2,
+            id: 1,
             label: 'Jurídico',
             value: 'legal'
           },
           {
-            id: 3,
+            id: 2,
             label: 'Físico',
             value: 'normal'
           }
