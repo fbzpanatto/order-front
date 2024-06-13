@@ -1,11 +1,12 @@
 import { Component, inject } from '@angular/core';
 import { AsideService } from '../../shared/services/aside.service';
 import { CommonModule } from '@angular/common';
+import { SelectComponent } from '../../shared/components/select.component';
 
 @Component({
   selector: 'app-aside',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, SelectComponent],
   templateUrl: './aside.component.html',
   styleUrl: './aside.component.scss'
 })
