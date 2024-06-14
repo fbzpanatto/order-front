@@ -17,24 +17,40 @@ import { PermissionsService } from '../../../../shared/services/permissions.serv
 })
 export class PermissionsFormComponent {
 
-  disabled: boolean = true
   @ViewChild('newRole', { static: false }) newRole?: ElementRef
+  disabled: boolean = true
 
   #title?: string
   #rolesArray: any[] = []
-  #resources?: any[]
   #router = inject(Router)
   #fb = inject(FormBuilder)
-  #permissions = inject(PermissionsService)
   #route = inject(ActivatedRoute)
   #formService = inject(FormService)
   #rolesHttp = inject(FetchRolesService)
+  #permissions = inject(PermissionsService)
 
-  form = this.#permissions.form 
+  resources = this.#permissions.resources
+  form: FormGroup;
+
+  constructor() {
+    this.form = this.#fb.group({});
+  }
 
   async ngOnInit() {
+    this.initializeForm();
     this.titleSettings()
     await this.getRoles()
+  }
+
+  initializeForm() {
+
+    for (let item of this.resources) {
+      const controlGroup = this.#fb.group({});
+      item.permissions.forEach(permission => {
+        controlGroup.addControl(permission.toLowerCase(), this.#fb.control(false));
+      });
+      this.form.addControl(item.resource, controlGroup);
+    }
   }
 
   async getRoles() { this.setArrayOfOptions(((await this.#rolesHttp.getAll() as SuccessGET).data) as any[]) }
@@ -54,7 +70,7 @@ export class PermissionsFormComponent {
 
   }
 
-  get resources() { return this.#permissions.resources }
+  trackById(index: number, item: any): number { return item.id }
 
   get title() { return this.#title }
   set title(value: string | undefined) { this.#title = value }

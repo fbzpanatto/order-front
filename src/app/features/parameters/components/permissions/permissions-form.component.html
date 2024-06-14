@@ -29,20 +29,17 @@
                 </tr>
               </thead>
               <tbody>
-                @for(item of resources; track item.id) {
-                    <tr style="cursor: default;">
-                      <td class="medium-text center">{{ item.label }}</td>
-                      @for(action of item.permissions; track action) {
-                      <td>
-                        <label class="custom-checkbox" style="cursor: pointer;">
-                          <input formControlName="{{ item.resource + action }}" [checked]="permission.value" #permission
-                            id="{{ item.resource + action }}" type="checkbox">
-                          <span class="checkmark"></span>
-                        </label>
-                      </td>
-                      }
-                    </tr>
-                }
+                <tr *ngFor="let item of resources; trackBy: trackById">
+                  <td class="medium-text center">{{ item.label }}</td>
+                  <ng-container [formGroupName]="item.resource">
+                    <td *ngFor="let action of item.permissions">
+                      <label class="custom-checkbox">
+                        <input formControlName="{{ action.toLowerCase() }}" type="checkbox">
+                        <span class="checkmark"></span>
+                      </label>
+                    </td>
+                  </ng-container>
+                </tr>
               </tbody>
               <!-- <tbody>
                     @for (item of companiesArray; track item.company_id) {
