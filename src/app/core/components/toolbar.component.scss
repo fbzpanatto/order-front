@@ -21,6 +21,8 @@
     background-color: #fafafa;
 
     h2 {
+      display: flex;
+      gap: 16px;
       color: rgb(42, 82, 95);
       flex: 1;
       text-wrap: nowrap;
