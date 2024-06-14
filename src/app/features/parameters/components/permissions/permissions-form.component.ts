@@ -1,5 +1,5 @@
-import { AfterViewInit, Component, ElementRef, ViewChild, inject, input, signal, viewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { Component, ElementRef, ViewChild, inject } from '@angular/core';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormService } from '../../../../shared/services/form.service';
 import { CommonModule } from '@angular/common';
