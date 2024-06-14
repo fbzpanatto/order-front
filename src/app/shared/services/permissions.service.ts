@@ -9,54 +9,57 @@ export class PermissionsService {
   constructor(private fb: FormBuilder) { }
 
   get resources() {
+
+    const permissions = ['permission_id', 'role_id', 'table_id', 'create', 'read', 'update']
+
     return [
       {
         id: 1,
         label: 'Clientes',
         resource: 'customers',
-        permissions: ['create', 'read', 'update']
+        permissions
       },
       {
         id: 2,
         label: 'Empresas',
         resource: 'companies',
-        permissions: ['create', 'read', 'update']
+        permissions
       },
       {
         id: 3,
         label: 'Pedidos',
         resource: 'orders',
-        permissions: ['create', 'read', 'update']
+        permissions
       },
       {
         id: 4,
         label: 'Permissões',
         resource: 'permissions',
-        permissions: ['create', 'read', 'update']
+        permissions
       },
       {
         id: 5,
         label: 'Produtos',
         resource: 'products',
-        permissions: ['create', 'read', 'update']
+        permissions
       },
       {
         id: 6,
         label: 'Segmentos',
         resource: 'segments',
-        permissions: ['create', 'read', 'update']
+        permissions
       },
       {
         id: 7,
         label: 'Status do Produto',
         resource: 'productionStatus',
-        permissions: ['create', 'read', 'update']
+        permissions
       },
       {
         id: 8,
         label: 'Usuários',
         resource: 'users',
-        permissions: ['create', 'read', 'update']
+        permissions
       }
     ]
   }

@@ -34,12 +34,14 @@
                   <td class="medium-text">{{ item.label }}</td>
                   <ng-container [formGroupName]="item.resource">
                     @for(action of item.permissions; track action){
-                    <td class="center">
-                      <label class="custom-checkbox" style="cursor: pointer;">
-                        <input formControlName="{{ action.toLowerCase() }}" type="checkbox">
-                        <span class="checkmark"></span>
-                      </label>
-                    </td>
+                      @if(action === 'create' || action === 'read' || action === 'update'){
+                        <td class="center">
+                          <label class="custom-checkbox" style="cursor: pointer;">
+                            <input formControlName="{{ action.toLowerCase() }}" type="checkbox">
+                            <span class="checkmark"></span>
+                          </label>
+                        </td>
+                      }
                     }
                   </ng-container>
                 </tr>
