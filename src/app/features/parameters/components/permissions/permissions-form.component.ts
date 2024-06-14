@@ -32,9 +32,7 @@ export class PermissionsFormComponent {
   resources = this.#permissions.resources
   form: FormGroup;
 
-  constructor() {
-    this.form = this.#fb.group({});
-  }
+  constructor() { this.form = this.#fb.group({}) }
 
   async ngOnInit() {
     this.initializeForm();
