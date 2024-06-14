@@ -10,7 +10,6 @@ export class PermissionsService {
 
   createForm() {
     let form = this.fb.group({})
-
     for (let item of this.resources) {
       for (let action of item.permissions) {
         const controlName = item.resource + action
