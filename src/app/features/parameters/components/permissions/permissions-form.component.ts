@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild, inject } from '@angular/core';
+import { Component, ElementRef, OnDestroy, ViewChild, inject } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormService } from '../../../../shared/services/form.service';
@@ -15,11 +15,12 @@ import { PermissionsService } from '../../../../shared/services/permissions.serv
   styleUrls: ['../../../../styles/title-bar.scss', '../../../../styles/form.scss', '../../../../styles/table.scss'],
   imports: [ReactiveFormsModule, CommonModule, SelectComponent]
 })
-export class PermissionsFormComponent {
+export class PermissionsFormComponent implements OnDestroy {
 
   @ViewChild('newRole', { static: false }) newRole?: ElementRef
   disabled: boolean = true
 
+  #timeoutId: any;
   #title?: string
   #rolesArray: any[] = []
   #router = inject(Router)
@@ -39,6 +40,8 @@ export class PermissionsFormComponent {
     this.titleSettings()
     await this.getRoles()
   }
+
+  ngOnDestroy(): void { if (this.#timeoutId) { clearTimeout(this.#timeoutId) } }
 
   initializeForm() {
     const arr = ['create', 'read', 'update']
@@ -63,7 +66,7 @@ export class PermissionsFormComponent {
 
   onCreateElement(e: any) {
     this.disabled = false
-    setTimeout(() => { this.newRole?.nativeElement.focus() }, 100)
+    this.#timeoutId = setTimeout(() => { this.newRole?.nativeElement.focus() }, 100)
   }
 
   onSubmit() {
