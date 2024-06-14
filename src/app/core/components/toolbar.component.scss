@@ -21,6 +21,7 @@
     background-color: #fafafa;
 
     h2 {
+      color: rgb(42, 82, 95);
       flex: 1;
       text-wrap: nowrap;
     }
@@ -41,23 +42,30 @@
         border: 1px solid rgba(0, 0, 0, 0.12);
         padding: 10px 20px;
         cursor: pointer;
-        background-color: #ebebeb;
-        transition: background-color 200ms, border-color 200ms, box-shadow 200ms;
+        background: rgb(42, 82, 95); // Cor de fundo principal
+        color: #fff;
+        transition: background-color 200ms, border-color 200ms, box-shadow 200ms, transform 100ms;
         height: 40px;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
       
         &:hover {
-          background-color: rgb(224, 224, 224);
+          background: rgb(86, 159, 184); // Cor de fundo ao passar o mouse
           border-color: rgba(0, 0, 0, 0.32);
           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
       
         &:active {
-          background-color: rgb(210, 210, 210);
+          background: rgb(20, 41, 47); // Cor de fundo ao clicar
           border-color: rgba(0, 0, 0, 0.54);
           box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+          transform: scale(0.98); // Efeito de "pressionar" ao clicar
         }
-      } 
+      
+        &:focus {
+          outline: none;
+          box-shadow: 0 0 0 3px rgba(42, 82, 95, 0.5); // Efeito de foco
+        }
+      }      
     }
 
     div.user-menu-container {
@@ -76,22 +84,38 @@
         border: none;
         background-color: transparent;
         cursor: pointer;
-
+      
         .circle {
           display: flex;
           align-items: center;
           justify-content: center;
-          background: lightblue;
+          background: rgb(42, 82, 95);  // Cor de fundo principal
           border-radius: 50%;
           min-width: 41px;
           min-height: 41px;
-          transition: background-color 200ms;
-
+          color: #fff;
+          transition: background-color 200ms, box-shadow 200ms, transform 100ms;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+          cursor: pointer;
+      
           &:hover {
-            background-color: deepskyblue;
+            background-color: rgb(86, 159, 184);  // Cor de fundo ao passar o mouse
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+          }
+      
+          &:active {
+            background-color: rgb(20, 41, 47);  // Cor de fundo ao clicar
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+            transform: scale(0.95);  // Efeito de "pressionar" ao clicar
+          }
+      
+          &:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(42, 82, 95, 0.5);  // Efeito de foco
           }
         }
       }
+      
 
       .menu-container {
         position: absolute;
@@ -119,6 +143,7 @@
             gap: 8px;
             align-items: center;
             transition: background-color 200ms;
+            color: rgb(42, 82, 95);
 
             &:hover {
               background-color: #f0f0f0;
@@ -131,7 +156,7 @@
               height: 2px;
               bottom: 0;
               left: 0;
-              background-color: #000;
+              background-color: rgb(42, 82, 95);
               visibility: hidden;
               transform: scaleX(0);
               transition: all 0.3s ease-in-out;
@@ -181,10 +206,15 @@
           color: #5f5f5f;
           height: inherit;
 
+          &.active {
+            color: rgb(42, 82, 95);
+          }
+
           &.active::before {
             visibility: visible;
             -webkit-transform: scaleX(1);
             transform: scaleX(1);
+            background-color: rgb(42, 82, 95);
           }
 
           &::before {

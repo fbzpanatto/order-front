@@ -41,6 +41,7 @@ form {
           background-color: #fafafa;
           font-weight: bold;
           z-index: 999;
+          color: rgb(65, 127, 148);
         }
 
         .input-container {
@@ -57,12 +58,12 @@ form {
           }
 
           &:focus-within span {
-            color: #333;
+            color: rgb(42, 82, 95);
           }
 
           label {
             font-size: 12px;
-            color: rgba(0, 0, 0, 0.54);
+            color: rgb(42, 82, 95);
             transition: color 200ms;
           }
 
@@ -83,7 +84,7 @@ form {
             letter-spacing: 0.06em;
 
             &:focus {
-              box-shadow: inset 0 -2px 0 0 #333;
+              box-shadow: inset 0 -2px 0 0 rgb(42, 82, 95);
               background-color: rgba(0, 0, 0, 0.05);
             }
           }
@@ -105,7 +106,7 @@ form {
         &.formArray {
           display: flex;
           flex-direction: column;
-
+        
           .add-btn,
           .del-btn {
             display: flex;
@@ -121,46 +122,61 @@ form {
             border: none;
             cursor: pointer;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            transition: background-color 200ms, box-shadow 200ms;
-
+            transition: background-color 200ms, box-shadow 200ms, transform 100ms;
+        
             &:hover {
               box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             }
+        
+            &:active {
+              transform: scale(0.98);
+            }
           }
-
+        
           .add-btn {
-            background: #333;
-
+            background: rgb(42, 82, 95);
+            color: #fff;
+        
             &:hover {
-              background-color: #555;
-              color: #fff;
-              border-color: #555;
+              background: rgb(86, 159, 184);
             }
-          }
-
-          button.add-btn:disabled,
-          button[disabled].add-btn {
-            border: 1px solid rgb(218, 218, 218);
-            background-color: #ebebeb;
-            color: rgba(16, 16, 16, 0.3);
-            box-shadow: none;
-
-            &:hover {
-              border: 1px solid black;
+        
+            &:active {
+              background: rgb(20, 41, 47);
+            }
+        
+            &:disabled,
+            &[disabled] {
+              border: 1px solid rgb(218, 218, 218);
+              background-color: #ebebeb;
+              color: rgba(16, 16, 16, 0.3);
               box-shadow: none;
+        
+              &:hover {
+                border: 1px solid rgb(218, 218, 218);
+                box-shadow: none;
+                background-color: #ebebeb;
+                color: rgba(16, 16, 16, 0.3);
+              }
             }
           }
-
+        
           .del-btn {
-            border: 1px solid #333;
+            border: 1px solid rgb(42, 82, 95);
             background-color: #fff;
-            color: #333;
-
+            color: rgb(42, 82, 95);
+        
             &:hover {
               background-color: #d4d4d4;
+              color: rgb(42, 82, 95);
+            }
+        
+            &:active {
+              background-color: #c4c4c4;
+              color: rgb(42, 82, 95);
             }
           }
-
+        
           .formGroup {
             display: flex;
             flex-direction: row;
@@ -168,7 +184,7 @@ form {
             align-items: center;
             width: 50vw;
           }
-
+        
           .add-btn-container {
             display: flex;
             flex-direction: row;
@@ -176,7 +192,7 @@ form {
             align-items: center;
             width: 50vw;
           }
-        }
+        }        
       }
     }
   }
@@ -186,7 +202,7 @@ form {
     display: flex;
     justify-content: flex-end;
     gap: 32px;
-
+  
     button {
       width: 110px;
       display: flex;
@@ -197,36 +213,60 @@ form {
       border: 1px solid rgba(0, 0, 0, 0.12);
       padding: 10px 20px;
       cursor: pointer;
-      background-color: #ebebeb;
-      transition: background-color 200ms, border-color 200ms, box-shadow 200ms;
+      background-color: rgb(42, 82, 95);  // Nova cor de fundo principal
+      color: #fff; // Cor do texto branca
+      transition: background-color 200ms, border-color 200ms, box-shadow 200ms, transform 100ms;
       height: 40px;
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-
+  
       &:hover {
-        background-color: rgb(224, 224, 224);
+        background: rgb(86, 159, 184);  // Cor de fundo ao passar o mouse
         border-color: rgba(0, 0, 0, 0.32);
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
       }
-
+  
       &:active {
-        background-color: rgb(210, 210, 210);
+        background: rgb(20, 41, 47);  // Cor de fundo ao clicar
         border-color: rgba(0, 0, 0, 0.54);
         box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        transform: scale(0.98);  // Efeito de "pressionar" ao clicar
       }
 
+      &:focus {
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(42, 82, 95, 0.5);  // Efeito de foco
+      }
+  
       &.clear-btn {
-        background-color: #fff;
-
+        background: #fff;
+        color: rgb(42, 82, 95);  // Cor do texto do botão clear
+    
         &:hover {
-          background-color: rgb(245, 245, 245);
+          background: #f5f5f5;  // Cor de fundo ao passar o mouse
           border-color: rgba(0, 0, 0, 0.32);
           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
-
+    
         &:active {
-          background-color: rgb(230, 230, 230);
+          background: #e6e6e6;  // Cor de fundo ao clicar
           border-color: rgba(0, 0, 0, 0.54);
           box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+          transform: scale(0.98);  // Efeito de "pressionar" ao clicar
+        }
+      }
+  
+      &:disabled,
+      &[disabled] {
+        background-color: #ebebeb;
+        color: rgba(16, 16, 16, 0.3);
+        box-shadow: none;
+        cursor: not-allowed;
+  
+        &:hover {
+          border: 1px solid rgba(0, 0, 0, 0.12);
+          box-shadow: none;
+          background-color: #ebebeb;
+          color: rgba(16, 16, 16, 0.3);
         }
       }
     }

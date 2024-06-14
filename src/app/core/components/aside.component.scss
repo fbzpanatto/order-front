@@ -53,6 +53,7 @@
           background-color: #fafafa;
           font-weight: bold;
           z-index: 999;
+          color: rgb(65, 127, 148);
         }
 
         .input-container {
@@ -72,7 +73,7 @@
             width: 100%;
 
             &:focus {
-              box-shadow: inset 0 -2px 0 0 #333;
+              box-shadow: inset 0 -2px 0 0 rgb(42, 82, 95);
               background-color: rgba(0, 0, 0, 0.05);
             }
           }
@@ -86,7 +87,7 @@
           }
 
           &:focus-within span {
-            color: #333;
+            color: rgb(65, 127, 148);
           }
         }
       }

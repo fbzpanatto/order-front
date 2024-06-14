@@ -29,10 +29,15 @@
           color: #5f5f5f;
           height: inherit;
 
+          &.active {
+            color: rgb(42, 82, 95);
+          }
+
           &.active::before {
             visibility: visible;
             -webkit-transform: scaleX(1);
             transform: scaleX(1);
+            background-color: rgb(42, 82, 95);
           }
 
           &::before {
