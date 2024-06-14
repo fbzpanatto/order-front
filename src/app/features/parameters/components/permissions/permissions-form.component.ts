@@ -42,15 +42,14 @@ export class PermissionsFormComponent {
 
   initializeForm() {
     for (let item of this.resources) {
-      const controlGroup = this.#fb.group({});
+      const formGroup = this.#fb.group({});
       item.permissions.forEach(field => {
         if (field === 'create' || field === 'read' || field === 'update') {
-          controlGroup.addControl(field.toLowerCase(), this.#fb.control(false));
-        } else {
-          controlGroup.addControl(field.toLowerCase(), this.#fb.control(null));
+          return formGroup.addControl(field.toLowerCase(), this.#fb.control(false));
         }
+        return formGroup.addControl(field.toLowerCase(), this.#fb.control(null));
       });
-      this.form.addControl(item.resource, controlGroup);
+      this.form.addControl(item.resource, formGroup);
     }
   }
 
