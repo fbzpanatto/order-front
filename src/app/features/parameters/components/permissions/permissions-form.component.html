@@ -29,11 +29,11 @@
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let item of resources; trackBy: trackById">
+                <tr *ngFor="let item of resources; trackBy: trackById" style="cursor: default;">
                   <td class="medium-text center">{{ item.label }}</td>
                   <ng-container [formGroupName]="item.resource">
                     <td *ngFor="let action of item.permissions">
-                      <label class="custom-checkbox">
+                      <label class="custom-checkbox" style="cursor: pointer;">
                         <input formControlName="{{ action.toLowerCase() }}" type="checkbox">
                         <span class="checkmark"></span>
                       </label>
@@ -76,6 +76,6 @@
   </form>
 </div>
 
-<pre>
+<!-- <pre>
   {{form.value | json}}
-</pre>
+</pre> -->
