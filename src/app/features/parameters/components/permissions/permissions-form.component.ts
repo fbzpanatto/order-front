@@ -41,15 +41,15 @@ export class PermissionsFormComponent {
   }
 
   initializeForm() {
-    for (let item of this.resources) {
-      const formGroup = this.#fb.group({});
-      item.permissions.forEach(field => {
-        if (field === 'create' || field === 'read' || field === 'update') {
-          return formGroup.addControl(field.toLowerCase(), this.#fb.control(false));
-        }
-        return formGroup.addControl(field.toLowerCase(), this.#fb.control(null));
+    const arr = ['create', 'read', 'update']
+    for (let r of this.resources) {
+      const fg = this.#fb.group({});
+      r.permissions.forEach(ac => {
+        arr.includes(ac) ?
+          fg.addControl(ac, this.#fb.control(false)) :
+          fg.addControl(ac, this.#fb.control(null))
       });
-      this.form.addControl(item.resource, formGroup);
+      this.form.addControl(r.resource, fg);
     }
   }
 
