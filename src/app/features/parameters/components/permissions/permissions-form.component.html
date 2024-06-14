@@ -7,12 +7,13 @@
       <div class="fieldsets-container">
         <fieldset>
           <label class="medium-text fieldset-label">Papel</label>
-          <app-select (createElement)="onCreateElement($event)" [label]="'Papel'" [placeholder]="'selecione o papel'" class="input-container"
-            [options]="rolesArray"></app-select>
+          <app-select (createElement)="onCreateElement($event)" [label]="'Papel'" [placeholder]="'selecione o papel'"
+            class="input-container" [options]="rolesArray"></app-select>
           <div class="input-container">
             <label class="light-text" for="role">Novo papel</label>
             <span><i class="fa-solid fa-pen-to-square"></i></span>
-            <input #newRole [disabled]="disabled" maxlength="=100" class="medium-text" id="role" name="role" type="text" placeholder="nome do novo papel">
+            <input #newRole [disabled]="disabled" maxlength="=100" class="medium-text" id="role" name="role" type="text"
+              placeholder="nome do novo papel">
           </div>
         </fieldset>
         <fieldset>
@@ -25,40 +26,40 @@
                   <th class="center">Ler dados</th>
                   <th class="center">Criar dados</th>
                   <th class="center">Editar dados</th>
-                </tr> 
+                </tr>
               </thead>
               <tbody>
                 @for(item of resources; track item.id) {
-                  <tr>
-                    <td class="medium-text">{{ item.label }}</td>
-                    @for(action of item.permissions; track action) {
-                      <td class="center">
-                        <label class="custom-checkbox">
-                          <!-- <input type="checkbox" [formControlName]="item.resource + item.separator + action"> -->
-                          <input type="checkbox">
-                          <span class="checkmark"></span>
-                        </label>
-                      </td>
-                    }
-                  </tr>
+                <tr style="cursor: default;">
+                  <td class="medium-text center">{{ item.label }}</td>
+                  @for(action of item.permissions; track action) {
+                  <td>
+                    <label class="custom-checkbox" style="cursor: pointer;">
+                      <input formControlName="{{ item.resource + action }}" [checked]="permission.value" #permission
+                        id="{{ item.resource + action }}" type="checkbox">
+                      <span class="checkmark"></span>
+                    </label>
+                  </td>
+                  }
+                </tr>
                 }
               </tbody>
               <!-- <tbody>
-                @for (item of companiesArray; track item.company_id) {
-                <tr [routerLink]="'/companies/' + item.company_id">
-                  <td class="medium-text">{{ item.company_id }}</td>
-                  <td class="medium-text">{{ item.corporate_name }}</td>
-                  <td class="medium-text">{{ item.social_name }}</td>
-                  <td class="medium-text">{{ item.cnpj }}</td>
-                  <td class="medium-text">{{ item.state_registration }}</td>
-                  <td class="medium-text">{{ !!item.active }}</td>
-                </tr>
-                } @empty {
-                <tr>
-                  <td class="medium-text" [colSpan]="6">Sem dados a exibir</td>
-                </tr>
-                }
-              </tbody> -->
+                    @for (item of companiesArray; track item.company_id) {
+                    <tr [routerLink]="'/companies/' + item.company_id">
+                      <td class="medium-text">{{ item.company_id }}</td>
+                      <td class="medium-text">{{ item.corporate_name }}</td>
+                      <td class="medium-text">{{ item.social_name }}</td>
+                      <td class="medium-text">{{ item.cnpj }}</td>
+                      <td class="medium-text">{{ item.state_registration }}</td>
+                      <td class="medium-text">{{ !!item.active }}</td>
+                    </tr>
+                    } @empty {
+                    <tr>
+                      <td class="medium-text" [colSpan]="6">Sem dados a exibir</td>
+                    </tr>
+                    }
+                  </tbody>-->
             </table>
           </div>
         </fieldset>
@@ -77,3 +78,7 @@
     </div>
   </form>
 </div>
+
+<pre>
+  {{form.value | json}}
+</pre>

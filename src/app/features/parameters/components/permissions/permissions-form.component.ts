@@ -1,11 +1,12 @@
-import { Component, ElementRef, ViewChild, inject, viewChild } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { AfterViewInit, Component, ElementRef, ViewChild, inject, input, signal, viewChild } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormService } from '../../../../shared/services/form.service';
 import { CommonModule } from '@angular/common';
 import { SelectComponent } from "../../../../shared/components/select.component";
 import { FetchRolesService } from '../../../../shared/services/fetchRoles.service';
 import { SuccessGET } from '../../../../shared/interfaces/response/response';
+import { PermissionsService } from '../../../../shared/services/permissions.service';
 
 @Component({
   selector: 'app-permissions-form',
@@ -16,21 +17,20 @@ import { SuccessGET } from '../../../../shared/interfaces/response/response';
 })
 export class PermissionsFormComponent {
 
-
   disabled: boolean = true
   @ViewChild('newRole', { static: false }) newRole?: ElementRef
 
   #title?: string
   #rolesArray: any[] = []
-
+  #resources?: any[]
   #router = inject(Router)
   #fb = inject(FormBuilder)
+  #permissions = inject(PermissionsService)
   #route = inject(ActivatedRoute)
   #formService = inject(FormService)
   #rolesHttp = inject(FetchRolesService)
 
-  form = this.#fb.group({
-  })
+  form = this.#permissions.form 
 
   async ngOnInit() {
     this.titleSettings()
@@ -47,14 +47,14 @@ export class PermissionsFormComponent {
 
   onCreateElement(e: any) {
     this.disabled = false
-    setTimeout(() => {
-      this.newRole?.nativeElement.focus()
-    }, 100)
+    setTimeout(() => { this.newRole?.nativeElement.focus() }, 100)
   }
 
   onSubmit() {
 
   }
+
+  get resources() { return this.#permissions.resources }
 
   get title() { return this.#title }
   set title(value: string | undefined) { this.#title = value }
@@ -63,65 +63,4 @@ export class PermissionsFormComponent {
   set rolesArray(value: any[]) { this.#rolesArray = value }
 
   get command() { return this.#route.snapshot.paramMap.get('command') }
-
-  get resources() {
-    return [
-      {
-        "id": 1,
-        "label": "Clientes",
-        "resource": "customers",
-        "separator": ".",
-        "permissions": ["create", "read", "update"]
-      },
-      {
-        "id": 2,
-        "label": "Empresas",
-        "resource": "companies",
-        "separator": ".",
-        "permissions": ["create", "read", "update"]
-      },
-      {
-        "id": 3,
-        "label": "Pedidos",
-        "resource": "orders",
-        "separator": ".",
-        "permissions": ["create", "read", "update"]
-      },
-      {
-        "id": 4,
-        "label": "Permissões",
-        "resource": "permissions",
-        "separator": ".",
-        "permissions": ["create", "read", "update"]
-      },
-      {
-        "id": 5,
-        "label": "Produtos",
-        "resource": "products",
-        "separator": ".",
-        "permissions": ["create", "read", "update"]
-      },
-      {
-        "id": 6,
-        "label": "Segmentos",
-        "resource": "segments",
-        "separator": ".",
-        "permissions": ["create", "read", "update"]
-      },
-      {
-        "id": 7,
-        "label": "Status do Produto",
-        "resource": "production-status",
-        "separator": ".",
-        "permissions": ["create", "read", "update"]
-      },
-      {
-        "id": 8,
-        "label": "Usuários",
-        "resource": "users",
-        "separator": ".",
-        "permissions": ["create", "read", "update"]
-      }
-    ]
-  }
 }
