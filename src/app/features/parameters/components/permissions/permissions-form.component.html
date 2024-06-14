@@ -31,7 +31,7 @@
               <tbody>
                 @for(item of resources; track item.id) {
                 <tr style="cursor: default;">
-                  <td class="medium-text center">{{ item.label }}</td>
+                  <td class="medium-text">{{ item.label }}</td>
                   <ng-container [formGroupName]="item.resource">
                     @for(action of item.permissions; track action){
                     <td class="center">
