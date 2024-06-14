@@ -8,7 +8,9 @@
     display: flex;
     position: relative;
     height: calc(100vh - $toolbarHeight);
-    background-color: rgb(238, 242, 243);
+    background: rgb(105,171,190);
+    background: radial-gradient(circle, rgba(105,171,190,1) 0%, rgba(127,159,167,1) 76%);
+
     padding: $pad16;
     width: 100%;
 
