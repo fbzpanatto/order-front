@@ -41,7 +41,6 @@ export class PermissionsFormComponent {
   }
 
   initializeForm() {
-
     for (let item of this.resources) {
       const controlGroup = this.#fb.group({});
       item.permissions.forEach(field => {
