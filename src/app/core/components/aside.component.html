@@ -11,7 +11,7 @@
             </div>
           }
           @case ('select') {
-            <app-select class="input-container" [isCustomer]="true" [options]="item.options!"></app-select> 
+            <app-select class="input-container" [isCustomer]="true" [options]="item.options!" [label]="'Tipo do cliente'"></app-select> 
           }
           @default {
             <span>não aparecer nada</span> 

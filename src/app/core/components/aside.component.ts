@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, ViewEncapsulation, inject } from '@angular/core';
 import { AsideService } from '../../shared/services/aside.service';
 import { CommonModule } from '@angular/common';
 import { SelectComponent } from '../../shared/components/select.component';
