@@ -68,8 +68,6 @@ export class PermissionsFormComponent {
 
   }
 
-  trackById(index: number, item: any): number { return item.id }
-
   get title() { return this.#title }
   set title(value: string | undefined) { this.#title = value }
 
