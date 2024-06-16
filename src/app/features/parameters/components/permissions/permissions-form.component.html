@@ -9,10 +9,10 @@
           <label class="medium-text fieldset-label">Papel</label>
           <app-select (createElement)="onCreateElement($event)" [label]="'Papel'" [placeholder]="'selecione o papel'"
             class="input-container" [options]="rolesArray"></app-select>
-          <div class="input-container">
-            <label class="light-text" for="role">Novo papel</label>
+          <div class="input-container" formGroupName="role">
+            <label class="light-text" for="role_name">Novo papel</label>
             <span><i class="fa-solid fa-pen-to-square"></i></span>
-            <input #newRole [disabled]="disabled" maxlength="=100" class="medium-text" id="role" name="role" type="text"
+            <input #newRole maxlength="=100" class="medium-text" formControlName="role_name" id="role_name" name="role_name" type="text"
               placeholder="nome do novo papel">
           </div>
         </fieldset>
@@ -34,14 +34,14 @@
                   <td class="medium-text">{{ item.label }}</td>
                   <ng-container [formGroupName]="item.resource">
                     @for(action of item.permissions; track action){
-                      @if(action === 'create' || action === 'read' || action === 'update'){
-                        <td class="center">
-                          <label class="custom-checkbox" style="cursor: pointer;">
-                            <input formControlName="{{ action.toLowerCase() }}" type="checkbox">
-                            <span class="checkmark"></span>
-                          </label>
-                        </td>
-                      }
+                    @if(action === 'create' || action === 'read' || action === 'update'){
+                    <td class="center">
+                      <label class="custom-checkbox" style="cursor: pointer;">
+                        <input formControlName="{{ action.toLowerCase() }}" type="checkbox">
+                        <span class="checkmark"></span>
+                      </label>
+                    </td>
+                    }
                     }
                   </ng-container>
                 </tr>

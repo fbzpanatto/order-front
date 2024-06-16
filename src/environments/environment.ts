@@ -7,5 +7,8 @@ export const environment = {
   SETTINGS: 'settings',
   CUSTOMERS: 'persons',
   COMPANIES: 'companies',
-  ROLES: 'roles'
+  ROLES: 'roles',
+  PERMISSIONS: 'permissions',
+  NEW: 'new',
+  SLASH: '/'
 }

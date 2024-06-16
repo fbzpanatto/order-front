@@ -7,7 +7,7 @@ export class PermissionsService {
 
   get resources() {
 
-    const permissions = ['permission_id', 'role_id', 'table_id', 'create', 'read', 'update']
+    const permissions = ['permission_id', 'role_id', 'create', 'read', 'update']
 
     return [
       {
@@ -49,7 +49,7 @@ export class PermissionsService {
       {
         id: 7,
         label: 'Status do Produto',
-        resource: 'productionStatus',
+        resource: 'production_status',
         permissions
       },
       {
