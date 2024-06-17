@@ -10,26 +10,26 @@
           <div class="input-container">
             <label class="light-text" for="corporate_name">Razão social</label>
             <span><i class="fa-solid fa-pen-to-square"></i></span>
-            <input maxlength="=100" formControlName="corporate_name" class="medium-text" id="corporate_name"
-              name="corporate_name" type="text" placeholder="razão social">
+            <input minlength="3" maxlength="=100" formControlName="corporate_name" class="medium-text"
+              id="corporate_name" name="corporate_name" type="text" placeholder="razão social">
           </div>
           <div class="input-container">
             <label class="light-text" for="social_name">Nome Fantasia</label>
             <span><i class="fa-solid fa-pen-to-square"></i></span>
-            <input maxlength="=100" formControlName="social_name" class="medium-text" id="social_name"
+            <input minlength="3" maxlength="=100" formControlName="social_name" class="medium-text" id="social_name"
               name="social_name" type="text" placeholder="nome fantasia">
           </div>
           <div class="input-container">
             <label class="light-text" for="cnpj">Cnpj</label>
             <span><i class="fa-solid fa-id-card"></i></span>
-            <input maxlength="14" formControlName="cnpj" class="medium-text" id="cnpj" name="cnpj" type="text"
-              placeholder="cnpj">
+            <input minlength="14" maxlength="14" formControlName="cnpj" class="medium-text" id="cnpj" name="cnpj"
+              type="text" placeholder="cnpj">
           </div>
           <div class="input-container">
             <label class="light-text" for="state_registration">Inscrição Estadual</label>
             <span><i class="fa-solid fa-id-card"></i></span>
-            <input maxlength="9" formControlName="state_registration" class="medium-text" id="state_registration"
-              name="state_registration" type="text" placeholder="inscrição estadual">
+            <input minlength="3" maxlength="9" formControlName="state_registration" class="medium-text"
+              id="state_registration" name="state_registration" type="text" placeholder="inscrição estadual">
           </div>
         </fieldset>
         <fieldset [formGroup]="form.controls.address">
@@ -37,8 +37,8 @@
           <div class="input-container">
             <label class="light-text" for="add_street">Logradouro</label>
             <span><i class="fa-solid fa-pen-to-square"></i></span>
-            <input maxlength="100" formControlName="add_street" class="medium-text" id="add_street" name="add_street"
-              type="text" placeholder="logradouro">
+            <input minlength="3" maxlength="100" formControlName="add_street" class="medium-text" id="add_street"
+              name="add_street" type="text" placeholder="logradouro">
           </div>
           <div class="input-container">
             <label class="light-text" for="add_number">Número</label>
@@ -49,26 +49,26 @@
           <div class="input-container">
             <label class="light-text" for="add_zipcode">Cep</label>
             <span><i class="fa-solid fa-pen-to-square"></i></span>
-            <input maxlength="8" formControlName="add_zipcode" class="medium-text" id="add_zipcode" name="add_zipcode"
-              type="text" placeholder="cep">
+            <input minlength="8" maxlength="8" formControlName="add_zipcode" class="medium-text" id="add_zipcode"
+              name="add_zipcode" type="text" placeholder="cep">
           </div>
           <div class="input-container">
             <label class="light-text" for="add_city">Cidade</label>
             <span><i class="fa-solid fa-pen-to-square"></i></span>
-            <input maxlength="60" formControlName="add_city" class="medium-text" id="add_city" name="add_city"
-              type="text" placeholder="cidade">
+            <input minlength="3" maxlength="60" formControlName="add_city" class="medium-text" id="add_city"
+              name="add_city" type="text" placeholder="cidade">
           </div>
           <div class="input-container">
             <label class="light-text" for="add_city">Unidade federativa</label>
             <span><i class="fa-solid fa-pen-to-square"></i></span>
-            <input maxlength="60" formControlName="add_uf" class="medium-text" id="add_uf" name="add_uf"
+            <input minlength="2" maxlength="2" formControlName="add_uf" class="medium-text" id="add_uf" name="add_uf"
               type="text" placeholder="unidade federativa">
           </div>
           <div class="input-container">
             <label class="light-text" for="add_neighborhood">Bairro</label>
             <span><i class="fa-solid fa-pen-to-square"></i></span>
-            <input maxlength="60" formControlName="add_neighborhood" class="medium-text" id="add_neighborhood"
-              name="add_neighborhood" type="text" placeholder="bairro">
+            <input minlength="3" maxlength="60" formControlName="add_neighborhood" class="medium-text"
+              id="add_neighborhood" name="add_neighborhood" type="text" placeholder="bairro">
           </div>
         </fieldset>
       </div>
