@@ -54,7 +54,7 @@ export class UsersFormComponent {
     name: ['', {
       validators: [Validators.required]
     }],
-    active: [''],
+    active: [false],
     username: ['', {
       validators: [Validators.required]
     }],
@@ -106,11 +106,7 @@ export class UsersFormComponent {
 
   updateFormValues(user: any) {
 
-    const body = user as User
-
-    console.log(body)
-
-    this.currentActive = body.active === 1 ? { id: 1, label: 'Sim', value: true } : { id: 2, label: 'Não', value: false }
+    this.currentActive = (user as User).active === 1 ? { id: 1, label: 'Sim', value: true } : { id: 2, label: 'Não', value: false }
 
     this.form.patchValue(user)
     this.#formService.originalValues = this.form.value;
