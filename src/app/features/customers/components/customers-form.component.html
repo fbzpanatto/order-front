@@ -6,64 +6,64 @@
     <div class="inputs-container">
       <div class="fieldsets-container">
         @switch (customerType) {
-          @case('legal') {
-          <fieldset [formGroup]="form.controls.customer">
-            <label class="medium-text fieldset-label">Identificação</label>
-            <div class="input-container">
-              <label class="light-text" for="corporate_name">Razão social</label>
-              <span><i class="fa-solid fa-pen-to-square"></i></span>
-              <input maxlength="=100" formControlName="corporate_name" class="medium-text" id="corporate_name"
-                name="corporate_name" type="text" placeholder="razão social">
-            </div>
-            <div class="input-container">
-              <label class="light-text" for="social_name">Nome Fantasia</label>
-              <span><i class="fa-solid fa-pen-to-square"></i></span>
-              <input maxlength="=100" formControlName="social_name" class="medium-text" id="social_name"
-                name="social_name" type="text" placeholder="nome fantasia">
-            </div>
-            <div class="input-container">
-              <label class="light-text" for="cnpj">Cnpj</label>
-              <span><i class="fa-solid fa-id-card"></i></span>
-              <input maxlength="14" formControlName="cnpj" class="medium-text" id="cnpj" name="cnpj" type="text"
-                placeholder="cnpj">
-            </div>
-            <div class="input-container">
-              <label class="light-text" for="state_registration">Inscrição Estadual</label>
-              <span><i class="fa-solid fa-id-card"></i></span>
-              <input maxlength="9" formControlName="state_registration" class="medium-text" id="state_registration"
-                name="state_registration" type="text" placeholder="inscrição estadual">
-            </div>
-          </fieldset>
-          }
-          @case('normal') {
-          <fieldset [formGroup]="form.controls.customer">
-            <label class="medium-text fieldset-label">Identificação</label>
-            <div class="input-container">
-              <label class="light-text" for="first_name">Primeiro Nome</label>
-              <span><i class="fa-solid fa-pen-to-square"></i></span>
-              <input maxlength="60" formControlName="first_name" class="medium-text" id="first_name" name="first_name"
-                type="text" placeholder="primeiro nome">
-            </div>
-            <div class="input-container">
-              <label class="light-text" for="middle_name">Nome do Meio</label>
-              <span><i class="fa-solid fa-pen-to-square"></i></span>
-              <input maxlength="60" formControlName="middle_name" class="medium-text" id="middle_name" name="middle_name"
-                type="text" placeholder="nome do meio">
-            </div>
-            <div class="input-container">
-              <label class="light-text" for="last_name">Último Nome</label>
-              <span><i class="fa-solid fa-pen-to-square"></i></span>
-              <input maxlength="60" formControlName="last_name" class="medium-text" id="last_name" name="last_name"
-                type="text" placeholder="último nome">
-            </div>
-            <div class="input-container">
-              <label class="light-text" for="cpf">Cpf</label>
-              <span><i class="fa-solid fa-id-card"></i></span>
-              <input maxlength="11" formControlName="cpf" class="medium-text" id="cpf" name="cpf" type="text"
-                placeholder="cpf">
-            </div>
-          </fieldset>
-          }
+        @case('legal') {
+        <fieldset [formGroup]="form.controls.customer">
+          <label class="medium-text fieldset-label">Identificação</label>
+          <div class="input-container">
+            <label class="light-text" for="corporate_name">Razão social</label>
+            <span><i class="fa-solid fa-pen-to-square"></i></span>
+            <input maxlength="=100" formControlName="corporate_name" class="medium-text" id="corporate_name"
+              name="corporate_name" type="text" placeholder="razão social">
+          </div>
+          <div class="input-container">
+            <label class="light-text" for="social_name">Nome Fantasia</label>
+            <span><i class="fa-solid fa-pen-to-square"></i></span>
+            <input maxlength="=100" formControlName="social_name" class="medium-text" id="social_name"
+              name="social_name" type="text" placeholder="nome fantasia">
+          </div>
+          <div class="input-container">
+            <label class="light-text" for="cnpj">Cnpj</label>
+            <span><i class="fa-solid fa-id-card"></i></span>
+            <input maxlength="14" formControlName="cnpj" class="medium-text" id="cnpj" name="cnpj" type="text"
+              placeholder="cnpj">
+          </div>
+          <div class="input-container">
+            <label class="light-text" for="state_registration">Inscrição Estadual</label>
+            <span><i class="fa-solid fa-id-card"></i></span>
+            <input maxlength="9" formControlName="state_registration" class="medium-text" id="state_registration"
+              name="state_registration" type="text" placeholder="inscrição estadual">
+          </div>
+        </fieldset>
+        }
+        @case('normal') {
+        <fieldset [formGroup]="form.controls.customer">
+          <label class="medium-text fieldset-label">Identificação</label>
+          <div class="input-container">
+            <label class="light-text" for="first_name">Primeiro Nome</label>
+            <span><i class="fa-solid fa-pen-to-square"></i></span>
+            <input maxlength="60" formControlName="first_name" class="medium-text" id="first_name" name="first_name"
+              type="text" placeholder="primeiro nome">
+          </div>
+          <div class="input-container">
+            <label class="light-text" for="middle_name">Nome do Meio</label>
+            <span><i class="fa-solid fa-pen-to-square"></i></span>
+            <input maxlength="60" formControlName="middle_name" class="medium-text" id="middle_name" name="middle_name"
+              type="text" placeholder="nome do meio">
+          </div>
+          <div class="input-container">
+            <label class="light-text" for="last_name">Último Nome</label>
+            <span><i class="fa-solid fa-pen-to-square"></i></span>
+            <input maxlength="60" formControlName="last_name" class="medium-text" id="last_name" name="last_name"
+              type="text" placeholder="último nome">
+          </div>
+          <div class="input-container">
+            <label class="light-text" for="cpf">Cpf</label>
+            <span><i class="fa-solid fa-id-card"></i></span>
+            <input maxlength="11" formControlName="cpf" class="medium-text" id="cpf" name="cpf" type="text"
+              placeholder="cpf">
+          </div>
+        </fieldset>
+        }
         }
         <fieldset [formGroup]="form.controls.address">
           <label class="medium-text fieldset-label">Endereço</label>
@@ -94,8 +94,8 @@
           <div class="input-container">
             <label class="light-text" for="add_city">Unidade federativa</label>
             <span><i class="fa-solid fa-pen-to-square"></i></span>
-            <input maxlength="60" formControlName="add_uf" class="medium-text" id="add_uf" name="add_uf"
-              type="text" placeholder="unidade federativa">
+            <input maxlength="60" formControlName="add_uf" class="medium-text" id="add_uf" name="add_uf" type="text"
+              placeholder="unidade federativa">
           </div>
           <div class="input-container">
             <label class="light-text" for="add_neighborhood">Bairro</label>
@@ -136,8 +136,8 @@
           <div class="input-container">
             <label class="light-text" for="company_corporate_name">Razão social</label>
             <span><i class="fa-solid fa-pen-to-square"></i></span>
-            <input readonly maxlength="=100" formControlName="corporate_name" class="medium-text" id="company_corporate_name"
-              name="company_corporate_name" type="text" placeholder="razão social">
+            <input readonly maxlength="=100" formControlName="corporate_name" class="medium-text"
+              id="company_corporate_name" name="company_corporate_name" type="text" placeholder="razão social">
           </div>
           <div class="input-container">
             <label class="light-text" for="company_social_name">Nome Fantasia</label>
@@ -148,8 +148,8 @@
           <div class="input-container">
             <label class="light-text" for="company_cnpj">Cnpj</label>
             <span><i class="fa-solid fa-id-card"></i></span>
-            <input readonly maxlength="14" formControlName="cnpj" class="medium-text" id="company_cnpj" name="company_cnpj" type="text"
-              placeholder="cnpj">
+            <input readonly maxlength="14" formControlName="cnpj" class="medium-text" id="company_cnpj"
+              name="company_cnpj" type="text" placeholder="cnpj">
           </div>
         </fieldset>
         <fieldset formArrayName="contacts" class="formArray">
