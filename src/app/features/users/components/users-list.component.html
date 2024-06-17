@@ -20,14 +20,14 @@
         </tr>
       </thead>
       <tbody>
-        @for (item of usersArray; track item.id) {
+        @for (item of usersArray; track item.user_id) {
         <tr>
-          <td class="medium-text">{{ item.id }}</td>
+          <td class="medium-text">{{ item.user_id }}</td>
           <td class="medium-text">{{ item.name }}</td>
           <td class="medium-text">{{ item.username }}</td>
           <td class="medium-text">{{ item.active }}</td>
-          <td class="medium-text">{{ item.company }}</td>
-          <td class="medium-text">{{ item.role }}</td>
+          <td class="medium-text">{{ item.corporate_name }}</td>
+          <td class="medium-text">{{ item.role_name }}</td>
           <td class="medium-text">{{ item.created_at }}</td>
         </tr>
         } @empty {

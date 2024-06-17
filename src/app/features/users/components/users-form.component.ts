@@ -40,21 +40,20 @@ export class UsersFormComponent {
   #httpUsers = inject(FetchUserService)
 
   form = this.#fb.group({
-    user_id: [null],
-    role_id: [null, {
+    role_id: ['', {
       validators: [Validators.required]
     }],
-    company_id: [null, {
+    company_id: ['', {
       validators: [Validators.required]
     }],
-    name: [null, {
+    name: ['', {
       validators: [Validators.required]
     }],
-    active: [null],
-    username: [null, {
+    active: [''],
+    username: ['', {
       validators: [Validators.required]
     }],
-    password: [null, {
+    password: ['', {
       validators: [Validators.required]
     }],
   })
@@ -63,6 +62,7 @@ export class UsersFormComponent {
     this.menuSettings()
     this.titleSettings()
 
+    this.#formService.originalValues = this.form.value;
     this.#formService.currentForm = this.form;
 
     if (!isNaN(Number(this.command))) {

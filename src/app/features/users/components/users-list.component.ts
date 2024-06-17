@@ -4,8 +4,10 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { environment } from '../../../../environments/environment';
 import { ToolbarMenuService } from '../../../shared/services/toolbarMenu.service';
 import { AsideService, paths } from '../../../shared/services/aside.service';
+import { FetchUserService } from '../../../shared/services/fetchUser.service';
+import { SuccessGET } from '../../../shared/interfaces/response/response';
 
-interface User { id: number, name: string, active: boolean, username: string, company: string, role: string, created_at: string }
+interface User { user_id: number, name: string, active: boolean, username: string, corporate_name: string, role_name: string, created_at: string }
 
 @Component({
   selector: 'app-users',
@@ -20,13 +22,18 @@ export class UsersListComponent {
   #route = inject(ActivatedRoute)
   #asideService = inject(AsideService)
   #toolbarMenuService = inject(ToolbarMenuService)
+  #http = inject(FetchUserService)
 
-  ngOnInit() {
+  async ngOnInit() {
     this.asideFilters()
     this.menuSettings()
+
+    await this.getAll()
   }
 
   asideFilters() { this.#asideService.getResourceFilters(this.path) }
+
+  async getAll() { this.usersArray = ((await this.#http.getAll() as SuccessGET).data) as User[] }
 
   menuSettings() {
     this.#toolbarMenuService.menuName = this.menuName
