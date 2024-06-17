@@ -6,12 +6,13 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormService } from '../../../shared/services/form.service';
 import { FetchPermissionsService } from '../../../shared/services/fetchPermissions.service';
-import { SuccessGET } from '../../../shared/interfaces/response/response';
+import { SuccessGET, SuccessGETbyId, SuccessPATCH, SuccessPOST } from '../../../shared/interfaces/response/response';
 import { Role } from '../../parameters/components/permissions-list.component';
 import { Option } from '../../../shared/components/select.component';
 import { SelectComponent } from "../../../shared/components/select.component";
 import { FetchCompaniesService } from '../../../shared/services/fetchCompanies.service';
 import { Company } from '../../companies/components/companies-list.component';
+import { FetchUserService } from '../../../shared/services/fetchUser.service';
 
 @Component({
   selector: 'app-users-form',
@@ -36,6 +37,7 @@ export class UsersFormComponent {
   #toolbarMenuService = inject(ToolbarMenuService)
   #httpPermissions = inject(FetchPermissionsService)
   #httpCompanies = inject(FetchCompaniesService)
+  #httpUsers = inject(FetchUserService)
 
   form = this.#fb.group({
     user_id: [null],
@@ -88,9 +90,7 @@ export class UsersFormComponent {
     this.companies = options.map(company => { return { id: company.company_id, label: company.corporate_name, value: company.company_id } })
   }
 
-  async getByUserId(userId: number) {
-    // TODO
-  }
+  async getByUserId(userId: number) { return (await this.#httpUsers.getById(userId) as SuccessGETbyId).data }
 
   redirect() { this.#router.navigate(['/users']) }
 
@@ -104,8 +104,17 @@ export class UsersFormComponent {
     this.#formService.originalValues = this.form.value;
   }
 
-  onSubmit() {
-
+  async onSubmit() {
+    if (this.command === 'new') {
+      const response = await this.#httpUsers.saveData(this.currentValues)
+      if (!(response as SuccessPOST).affectedRows) { return }
+      return this.redirect()
+    }
+    if (!isNaN(Number(this.command))) {
+      const response = await this.#httpUsers.updateData(this.userId as number, this.formDiff)
+      if (!(response as SuccessPATCH).affectedRows) { return }
+      return this.redirect()
+    }
   }
 
   setCurrentOption(e: Option, control: string) { this.form.get(control)?.patchValue(e.value) }
