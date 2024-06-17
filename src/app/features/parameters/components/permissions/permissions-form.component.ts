@@ -97,7 +97,7 @@ export class PermissionsFormComponent implements OnDestroy {
       return this.redirect()
     }
     if (!isNaN(Number(this.command))) {
-      const response = await this.#http.updateData(this.roleId as number, this.formDiff)
+      const response = await this.#http.updateData(this.roleId as number, this.currentValues)
       if (!(response as SuccessPATCH).affectedRows) { return }
       return this.redirect()
     }

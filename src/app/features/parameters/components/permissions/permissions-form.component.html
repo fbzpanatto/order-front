@@ -8,7 +8,7 @@
         <fieldset>
           <label class="medium-text fieldset-label">Papel</label>
           <div class="input-container" formGroupName="role">
-            <label class="light-text" for="role_name">Papel</label>
+            <label class="light-text" for="role_name">Nome do papel</label>
             <span><i class="fa-solid fa-pen-to-square"></i></span>
             <input #newRole maxlength="=100" class="medium-text" formControlName="role_name" id="role_name"
               name="role_name" type="text" placeholder="nome do papel">
@@ -62,19 +62,4 @@
       </button>
     </div>
   </form>
-</div>
-
-<div style="display: flex; flex-direction: column;">
-  <pre>
-    <h2>current</h2>
-    {{ currentValues | json }}
-  </pre>
-  <pre>
-    <h2>Original</h2>
-    {{ originalValues | json }}
-  </pre>
-  <pre>
-    <h2>Diferença</h2>
-    {{ formDiff | json }}
-  </pre>
 </div>
