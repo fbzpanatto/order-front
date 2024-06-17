@@ -24,7 +24,7 @@
         </thead>
         <tbody>
           @for (item of customersArray; track item.person_id) {
-            <tr [routerLink]="customerType() + '/' + item.person_id">     
+            <tr [routerLink]="customerType() + '/' + item.person_id">
               <td class="medium-text">{{ item.person_id }}</td>
               <td class="medium-text">{{ item.corporate_name }}</td>
               <td class="medium-text">{{ item.social_name }}</td>
@@ -33,7 +33,7 @@
             </tr>
           } @empty {
             <tr>
-              <td class="medium-text" [colSpan]="5">Se dados a exibir</td>
+              <td class="medium-text" [colSpan]="5">Sem dados a exibir</td>
             </tr>
           }
         </tbody>
@@ -51,7 +51,7 @@
         </thead>
         <tbody>
           @for (item of customersArray; track item.person_id) {
-            <tr [routerLink]="customerType() + '/' + item.person_id">     
+            <tr [routerLink]="customerType() + '/' + item.person_id">
               <td class="medium-text">{{ item.person_id }}</td>
               <td class="medium-text">{{ item.first_name }}</td>
               <td class="medium-text">{{ item.middle_name }}</td>
@@ -60,7 +60,7 @@
             </tr>
           } @empty {
             <tr>
-              <td class="medium-text" [colSpan]="5">Se dados a exibir</td>
+              <td class="medium-text" [colSpan]="5">Sem dados a exibir</td>
             </tr>
           }
         </tbody>
