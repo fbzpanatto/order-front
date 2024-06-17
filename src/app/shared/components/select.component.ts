@@ -16,6 +16,7 @@ export interface Option { id: number, label: string, value: string, create?: boo
 export class SelectComponent {
 
   createElement = output<boolean>()
+  emitCurrentOption = output<Option>()
 
   options = input<Option[]>([])
   isCustomer = input<boolean>(false)
@@ -33,7 +34,7 @@ export class SelectComponent {
     }
   }
 
-  changeState(state?: boolean) {
+  openOrClose(state?: boolean) {
     this.#state.update(value => state != undefined ? value = state : value = !value)
   }
 
@@ -46,6 +47,8 @@ export class SelectComponent {
     this.#currentOption.update(currentOption => {
 
       if (this.isCustomer()) { this.#asideService.changeCustomerType(option.value) }
+
+      this.emitCurrentOption.emit(option)
 
       return currentOption = option
     })

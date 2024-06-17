@@ -7,13 +7,11 @@
       <div class="fieldsets-container">
         <fieldset>
           <label class="medium-text fieldset-label">Papel</label>
-          <app-select (createElement)="onCreateElement($event)" [label]="'Papel'" [placeholder]="'selecione o papel'"
-            class="input-container" [options]="rolesArray"></app-select>
           <div class="input-container" formGroupName="role">
-            <label class="light-text" for="role_name">Novo papel</label>
+            <label class="light-text" for="role_name">Papel</label>
             <span><i class="fa-solid fa-pen-to-square"></i></span>
-            <input #newRole maxlength="=100" class="medium-text" formControlName="role_name" id="role_name" name="role_name" type="text"
-              placeholder="nome do novo papel">
+            <input #newRole maxlength="=100" class="medium-text" formControlName="role_name" id="role_name"
+              name="role_name" type="text" placeholder="nome do papel">
           </div>
         </fieldset>
         <fieldset>
@@ -34,10 +32,10 @@
                   <td class="medium-text">{{ item.label }}</td>
                   <ng-container [formGroupName]="item.resource">
                     @for(action of item.permissions; track action){
-                    @if(action === 'create' || action === 'read' || action === 'update'){
+                    @if(action === 'canCreate' || action === 'canRead' || action === 'canUpdate'){
                     <td class="center">
                       <label class="custom-checkbox" style="cursor: pointer;">
-                        <input formControlName="{{ action.toLowerCase() }}" type="checkbox">
+                        <input formControlName="{{ action }}" type="checkbox">
                         <span class="checkmark"></span>
                       </label>
                     </td>
@@ -66,6 +64,17 @@
   </form>
 </div>
 
-<pre>
-  {{form.value | json}}
-</pre>
+<div style="display: flex; flex-direction: column;">
+  <pre>
+    <h2>current</h2>
+    {{ currentValues | json }}
+  </pre>
+  <pre>
+    <h2>Original</h2>
+    {{ originalValues | json }}
+  </pre>
+  <pre>
+    <h2>Diferença</h2>
+    {{ formDiff | json }}
+  </pre>
+</div>

@@ -6,6 +6,13 @@ import { SuccessGET } from '../../../../shared/interfaces/response/response';
 import { AsideService, paths } from '../../../../shared/services/aside.service';
 import { ToolbarMenuService } from '../../../../shared/services/toolbarMenu.service';
 
+export interface Role {
+  role_id: number,
+  role_name: string,
+  created_at: string,
+  updated_at: string
+}
+
 @Component({
   selector: 'app-permissions',
   standalone: true,
@@ -15,7 +22,7 @@ import { ToolbarMenuService } from '../../../../shared/services/toolbarMenu.serv
 })
 export class PermissionsListComponent {
 
-  #permissionsArray?: any[]
+  #roles?: Role[]
 
   #route = inject(ActivatedRoute)
   #asideService = inject(AsideService)
@@ -29,7 +36,7 @@ export class PermissionsListComponent {
     await this.getAll()
   }
 
-  async getAll() { this.permissionsArray = ((await this.#http.getAll() as SuccessGET).data) as any[] }
+  async getAll() { this.roles = ((await this.#http.getAll() as SuccessGET).data) as Role[] }
 
   asideFilters() { this.#asideService.getResourceFilters(this.path) }
 
@@ -41,8 +48,8 @@ export class PermissionsListComponent {
   get hasFilter() { return this.#route.snapshot.data[environment.FILTER] as boolean }
   get menuName() { return this.#route.snapshot.data[environment.MENU] as string }
 
-  get permissionsArray() { return this.#permissionsArray }
-  set permissionsArray(value: any[] | undefined) { this.#permissionsArray = value }
+  get roles() { return this.#roles }
+  set roles(value: Role[] | undefined) { this.#roles = value }
 
   get path() { return this.#route.snapshot.parent?.routeConfig?.path as paths }
 

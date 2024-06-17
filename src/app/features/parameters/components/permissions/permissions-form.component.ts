@@ -1,14 +1,14 @@
-import { Component, ElementRef, OnDestroy, ViewChild, inject } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
-import { FormService } from '../../../../shared/services/form.service';
 import { CommonModule } from '@angular/common';
-import { SelectComponent } from "../../../../shared/components/select.component";
-import { FetchRolesService } from '../../../../shared/services/fetchRoles.service';
-import { SuccessGET, SuccessPOST } from '../../../../shared/interfaces/response/response';
-import { PermissionsService } from '../../../../shared/services/permissions.service';
-import { FetchPermissionsService } from '../../../../shared/services/fetchPermissions.service';
+import { Role } from './permissions-list.component';
+import { Router, ActivatedRoute } from '@angular/router';
 import { environment } from '../../../../../environments/environment';
+import { FormService } from '../../../../shared/services/form.service';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { SelectComponent } from "../../../../shared/components/select.component";
+import { Component, OnDestroy, inject } from '@angular/core';
+import { PermissionsService } from '../../../../shared/services/permissions.service';
+import { SuccessGETbyId, SuccessPATCH, SuccessPOST } from '../../../../shared/interfaces/response/response';
+import { FetchPermissionsService } from '../../../../shared/services/fetchPermissions.service';
 
 @Component({
   selector: 'app-permissions-form',
@@ -19,8 +19,8 @@ import { environment } from '../../../../../environments/environment';
 })
 export class PermissionsFormComponent implements OnDestroy {
 
-  @ViewChild('newRole', { static: false }) newRole?: ElementRef
-  disabled: boolean = true
+  #role = {}
+  #roleId?: number
 
   #timeoutId: any;
   #title?: string
@@ -29,34 +29,40 @@ export class PermissionsFormComponent implements OnDestroy {
   #fb = inject(FormBuilder)
   #route = inject(ActivatedRoute)
   #formService = inject(FormService)
-  #rolesHttp = inject(FetchRolesService)
+  #http = inject(FetchPermissionsService)
   #permissions = inject(PermissionsService)
-  #permissionsHttp = inject(FetchPermissionsService)
 
   resources = this.#permissions.resources
   form: FormGroup;
 
   constructor() {
     this.form = this.#fb.group({
-      role: this.#fb.group({ role_id: [null], role_name: ['', {disable:true}] })
+      role: this.#fb.group({ role_id: [null], role_name: ['', { disable: true }] })
     })
   }
 
   async ngOnInit() {
+
     this.initializeForm();
+    this.titleSettings()
 
     this.#formService.originalValues = this.form.value;
     this.#formService.currentForm = this.form;
 
-    this.titleSettings()
-    await this.getRoles()
+    if (!isNaN(Number(this.command))) {
+      this.roleId = parseInt(this.command as string)
+      this.role = await this.getByRoleId(this.roleId)
+      return this.role != undefined ? this.updateFormValues(this.role) : null
+    }
+
+    if (this.command != environment.NEW) { return this.redirect() }
   }
 
   ngOnDestroy(): void { if (this.#timeoutId) { clearTimeout(this.#timeoutId) } }
 
   initializeForm() {
     this.form.get('role_name')?.disable()
-    const arr = ['create', 'read', 'update']
+    const arr = ['canCreate', 'canRead', 'canUpdate']
     for (let r of this.resources) {
       const fg = this.#fb.group({});
       r.permissions.forEach(ac => {
@@ -68,31 +74,40 @@ export class PermissionsFormComponent implements OnDestroy {
     }
   }
 
+  async getByRoleId(roleId: number) { return (await this.#http.getById(roleId) as SuccessGETbyId).data }
+
+  updateFormValues(role: any) {
+    this.form.patchValue(role)
+    this.#formService.originalValues = this.form.value;
+  }
+
   redirect() { this.#router.navigate(['/parameters/permissions']) }
 
-  async getRoles() { this.setArrayOfOptions(((await this.#rolesHttp.getAll() as SuccessGET).data) as any[]) }
-
-  setArrayOfOptions(res: any[]) {
-    this.rolesArray = [...res, { id: res.length ? res.length + 1 : 1, label: 'Adicionar novo', value: 'Adicionar novo', create: true }]
+  setArrayOfOptions(res: Role[]) {
+    const options = res.map(el => { return { id: el.role_id, label: el.role_name, value: el.role_name, create: false } })
+    this.rolesArray = [...options, { id: res.length ? res.length + 1 : 1, label: 'Adicionar novo', value: 'Adicionar novo', create: true }]
   }
 
   titleSettings() { this.command !== environment.NEW ? this.title = 'Editando Permissões' : this.title = 'Criando Permissões' }
 
-  onCreateElement(e: any) {
-    this.disabled = false
-    this.#timeoutId = setTimeout(() => { this.newRole?.nativeElement.focus() }, 100)
-  }
-
   async onSubmit() {
     if (this.command === environment.NEW) {
-
-      console.log(this.formDiff)
-
-      const response = await this.#permissionsHttp.saveData(this.formDiff)
+      const response = await this.#http.saveData(this.currentValues)
       if (!(response as SuccessPOST).affectedRows) { return }
       return this.redirect()
     }
+    if (!isNaN(Number(this.command))) {
+      const response = await this.#http.updateData(this.roleId as number, this.formDiff)
+      if (!(response as SuccessPATCH).affectedRows) { return }
+      return this.redirect()
+    }
   }
+
+  get role() { return this.#role }
+  set role(value: any) { this.#role = value }
+
+  get roleId() { return this.#roleId }
+  set roleId(value: number | undefined) { this.#roleId = value }
 
   get formDiff() { return this.#formService.getChangedValues() }
   get originalValues() { return this.#formService.originalValues }

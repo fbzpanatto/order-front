@@ -7,7 +7,7 @@ export class PermissionsService {
 
   get resources() {
 
-    const permissions = ['permission_id', 'role_id', 'create', 'read', 'update']
+    const permissions = ['permission_id', 'role_id', 'canCreate', 'canRead', 'canUpdate']
 
     return [
       {

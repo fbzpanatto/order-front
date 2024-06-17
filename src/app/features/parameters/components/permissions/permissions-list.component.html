@@ -11,25 +11,21 @@
       <tr>
         <th>id</th>
         <th>Papel</th>
-        <th>Tabela</th>
-        <th>Ler</th>
-        <th>Criar</th>
-        <th>Editar</th>
+        <th>Criado em</th>
+        <th>Atualizado em</th>
       </tr>
     </thead>
     <tbody>
-      @for (item of permissionsArray; track item.permission_id) {
-      <tr [routerLink]="'/companies/' + item.company_id">
-        <td class="medium-text">{{ item.permissions_id }}</td>
-        <td class="medium-text">{{ item.role }}</td>
-        <td class="medium-text">{{ item.resource }}</td>
-        <td class="medium-text">{{ item.read }}</td>
-        <td class="medium-text">{{ item.create }}</td>
-        <td class="medium-text">{{ item.update }}</td>
+      @for (item of roles; track item.role_id) {
+      <tr [routerLink]="'/parameters/permissions/' + item.role_id">
+        <td class="medium-text">{{ item.role_id }}</td>
+        <td class="medium-text">{{ item.role_name }}</td>
+        <td class="medium-text">{{ item.created_at }}</td>
+        <td class="medium-text">{{ item.updated_at }}</td>
       </tr>
       } @empty {
       <tr>
-        <td class="medium-text" [colSpan]="6">Sem dados a exibir</td>
+        <td class="medium-text" [colSpan]="4">Sem dados a exibir</td>
       </tr>
       }
     </tbody>

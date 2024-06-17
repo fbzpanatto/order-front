@@ -17,9 +17,10 @@ export class FetchPermissionsService {
         .pipe(catchError((apiError) => this.errorHandler(apiError.error as ApiError))))
   }
 
-  async getById(permissionId: number | string) {
+  async getById(roleId: number | string) {
+    console.log('getById', roleId)
     return await firstValueFrom(
-      this.#http.get(this.fullResource + '/' + permissionId)
+      this.#http.get(this.fullResource + '/' + roleId)
         .pipe(catchError((apiError) => this.errorHandler(apiError.error as ApiError))))
   }
 
@@ -29,9 +30,9 @@ export class FetchPermissionsService {
         .pipe(catchError((apiError) => this.errorHandler(apiError.error as ApiError))))
   }
 
-  async updateData(permissionId: number, body: { [key: string]: any }) {
+  async updateData(roleId: number, body: { [key: string]: any }) {
     return await firstValueFrom(
-      this.#http.patch(this.fullResource + '/' + permissionId, body)
+      this.#http.patch(this.fullResource + '/' + roleId, body)
         .pipe(catchError((apiError) => this.errorHandler(apiError.error as ApiError))))
   }
 
