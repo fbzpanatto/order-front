@@ -7,7 +7,7 @@ import { AsideService, paths } from '../../../shared/services/aside.service';
 import { FetchUserService } from '../../../shared/services/fetchUser.service';
 import { SuccessGET } from '../../../shared/interfaces/response/response';
 
-interface User { user_id: number, name: string, active: boolean, username: string, corporate_name: string, role_name: string, created_at: string }
+export interface User { user_id: number, name: string, active: boolean | number, username: string, corporate_name: string, role_name: string, created_at: string }
 
 @Component({
   selector: 'app-users',

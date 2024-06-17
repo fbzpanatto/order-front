@@ -1,4 +1,4 @@
-import { Component, inject, input, output, signal } from '@angular/core';
+import { Component, effect, inject, input, output, signal } from '@angular/core';
 import { ClickOutsideDirective } from '../directives/clickOutside.directive';
 import { UserMenuAnimation } from '../animations/userMenuAnimation';
 import { AsideService } from '../services/aside.service';
@@ -27,14 +27,17 @@ export class SelectComponent {
   #currentOption = signal<Option | undefined>(undefined)
   #asideService = inject(AsideService)
 
+  constructor() {
+    effect(() => {
+      const option = this.currOption()
+      if (option != undefined) { this.setOption(option as Option) }
+    }, { allowSignalWrites: true })
+  }
+
   ngOnInit(): void {
     if (this.isCustomer()) {
       const option = this.options()?.find(option => option.value === this.customerType)
       this.#currentOption.update(currentOption => currentOption = option)
-    }
-
-    if(this.currOption() === undefined) {
-      console.log('opção é undefined')
     }
   }
 

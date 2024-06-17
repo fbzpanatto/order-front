@@ -13,6 +13,7 @@ import { SelectComponent } from "../../../shared/components/select.component";
 import { FetchCompaniesService } from '../../../shared/services/fetchCompanies.service';
 import { Company } from '../../companies/components/companies-list.component';
 import { FetchUserService } from '../../../shared/services/fetchUser.service';
+import { User } from './users-list.component';
 
 @Component({
   selector: 'app-users-form',
@@ -29,6 +30,10 @@ export class UsersFormComponent {
   #roles: Option[] = []
   #companies: Option[] = []
   #active: Option[] = []
+
+  #currentActive?: Option
+  #currentCompany?: Option
+  #currentRole?: Option
 
   #router = inject(Router)
   #fb = inject(FormBuilder)
@@ -100,6 +105,13 @@ export class UsersFormComponent {
   }
 
   updateFormValues(user: any) {
+
+    const body = user as User
+
+    console.log(body)
+
+    this.currentActive = body.active === 1 ? { id: 1, label: 'Sim', value: true } : { id: 2, label: 'Não', value: false }
+
     this.form.patchValue(user)
     this.#formService.originalValues = this.form.value;
   }
@@ -120,6 +132,14 @@ export class UsersFormComponent {
   setCurrentOption(e: Option, control: string) { this.form.get(control)?.patchValue(e.value) }
 
   titleSettings() { this.command !== 'new' ? this.title = 'Editando' : this.title = 'Novo usuário' }
+
+  get currentActive() { return this.#currentActive }
+  get currentCompany() { return this.#currentCompany }
+  get currentRole() { return this.#currentRole }
+
+  set currentActive(value: Option | undefined) { this.#currentActive = value }
+  set currentCompany(value: Option | undefined) { this.#currentCompany = value }
+  set currentRole(value: Option | undefined) { this.#currentRole = value }
 
   get formDiff() { return this.#formService.getChangedValues() }
   get originalValues() { return this.#formService.originalValues }
