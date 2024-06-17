@@ -27,6 +27,7 @@ export class UsersFormComponent {
   #userId?: number
   #roles: Option[] = []
   #companies: Option[] = []
+  #active: Option[] = []
 
   #router = inject(Router)
   #fb = inject(FormBuilder)
@@ -70,18 +71,21 @@ export class UsersFormComponent {
 
     if (this.command != 'new') { return this.redirect() }
 
-    await this.getRoles()
-    await this.getCompanies()
+    Promise.all([await this.getAtive(), await this.getRoles(), await this.getCompanies()])
+  }
+
+  async getAtive() {
+    this.active = [{ id: 1, label: 'Sim', value: true }, { id: 2, label: 'Não', value: false }]
   }
 
   async getRoles() {
     const options = ((await this.#httpPermissions.getAll() as SuccessGET).data) as Role[]
-    this.roles = options.map(role => { return { id: role.role_id, label: role.role_name, value: role.role_name } })
+    this.roles = options.map(role => { return { id: role.role_id, label: role.role_name, value: role.role_id } })
   }
 
   async getCompanies() {
     const options = ((await this.#httpCompanies.getAll() as SuccessGET).data) as Company[]
-    this.companies = options.map(company => { return { id: company.company_id, label: company.corporate_name, value: company.corporate_name } })
+    this.companies = options.map(company => { return { id: company.company_id, label: company.corporate_name, value: company.company_id } })
   }
 
   async getByUserId(userId: number) {
@@ -104,7 +108,7 @@ export class UsersFormComponent {
 
   }
 
-  setCurrentOption(e: Option, control: string) { this.form.get(control)?.patchValue(e.id) }
+  setCurrentOption(e: Option, control: string) { this.form.get(control)?.patchValue(e.value) }
 
   titleSettings() { this.command !== 'new' ? this.title = 'Editando' : this.title = 'Novo usuário' }
 
@@ -116,6 +120,9 @@ export class UsersFormComponent {
 
   get roles() { return this.#roles }
   set roles(value: Option[]) { this.#roles = value }
+
+  get active() { return this.#active }
+  set active(value: Option[]) { this.#active = value }
 
   get companies() { return this.#companies }
   set companies(value: Option[]) { this.#companies = value }

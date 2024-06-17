@@ -3,7 +3,7 @@ import { ClickOutsideDirective } from '../directives/clickOutside.directive';
 import { UserMenuAnimation } from '../animations/userMenuAnimation';
 import { AsideService } from '../services/aside.service';
 
-export interface Option { id: number, label: string, value: string, create?: boolean }
+export interface Option { id: number, label: string, value: any, create?: boolean }
 
 @Component({
   selector: 'app-select',

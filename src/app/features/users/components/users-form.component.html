@@ -28,10 +28,8 @@
               placeholder="password">
           </div>
           <div class="input-container">
-            <label class="light-text" for="active">Ativo</label>
-            <span><i class="fa-solid fa-pen-to-square"></i></span>
-            <input formControlName="active" class="medium-text" id="active" name="active" type="text"
-              placeholder="ativo">
+            <app-select (emitCurrentOption)="setCurrentOption($event, 'active')" [label]="'Está ativo?'"
+            [options]="active"></app-select>
           </div>
         </fieldset>
         <fieldset>
