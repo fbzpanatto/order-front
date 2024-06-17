@@ -37,21 +37,21 @@ export class UsersFormComponent {
   #httpCompanies = inject(FetchCompaniesService)
 
   form = this.#fb.group({
-    user_id: [''],
-    role_id: ['', {
+    user_id: [null],
+    role_id: [null, {
       validators: [Validators.required]
     }],
-    company_id: ['', {
+    company_id: [null, {
       validators: [Validators.required]
     }],
-    name: ['', {
+    name: [null, {
       validators: [Validators.required]
     }],
-    active: [''],
-    username: ['', {
+    active: [null],
+    username: [null, {
       validators: [Validators.required]
     }],
-    password: ['', {
+    password: [null, {
       validators: [Validators.required]
     }],
   })
@@ -104,9 +104,7 @@ export class UsersFormComponent {
 
   }
 
-  setCurrentOption(e: Option, control: string) {
-    console.log(this.form.get('user.role'))
-  }
+  setCurrentOption(e: Option, control: string) { this.form.get(control)?.patchValue(e.id) }
 
   titleSettings() { this.command !== 'new' ? this.title = 'Editando' : this.title = 'Novo usuário' }
 

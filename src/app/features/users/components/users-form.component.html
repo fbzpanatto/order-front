@@ -33,12 +33,15 @@
             <input formControlName="active" class="medium-text" id="active" name="active" type="text"
               placeholder="ativo">
           </div>
+        </fieldset>
+        <fieldset>
+          <label class="medium-text fieldset-label">Empresa e Papel</label>
           <div class="input-container">
-            <app-select (emitCurrentOption)="setCurrentOption($event, 'company')" [label]="'Selecione uma empresa'"
+            <app-select (emitCurrentOption)="setCurrentOption($event, 'company_id')" [label]="'Selecione uma empresa'"
               [options]="companies"></app-select>
           </div>
           <div class="input-container">
-            <app-select (emitCurrentOption)="setCurrentOption($event, 'user')" [label]="'Selecione um papel'"
+            <app-select (emitCurrentOption)="setCurrentOption($event, 'role_id')" [label]="'Selecione um papel'"
               [options]="roles"></app-select>
           </div>
         </fieldset>
