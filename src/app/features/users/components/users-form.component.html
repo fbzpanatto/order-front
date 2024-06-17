@@ -5,28 +5,15 @@
   <form [formGroup]="form" (submit)="onSubmit()">
     <div class="inputs-container">
       <div class="fieldsets-container">
-        <fieldset [formGroup]="form.controls.person">
+        <fieldset>
           <label class="medium-text fieldset-label">Pessoa</label>
           <div class="input-container">
-            <label class="light-text" for="first_name">Primeiro Nome</label>
+            <label class="light-text" for="name">Nome</label>
             <span><i class="fa-solid fa-pen-to-square"></i></span>
-            <input formControlName="first_name" class="medium-text" id="first_name" name="first_name" type="text"
-              placeholder="primeiro nome">
-          </div>
-          <div class="input-container">
-            <label class="light-text" for="middle_name">Nome do Meio</label>
-            <span><i class="fa-solid fa-pen-to-square"></i></span>
-            <input formControlName="middle_name" class="medium-text" id="middle_name" name="middle_name" type="text"
-              placeholder="nome do meio">
-          </div>
-          <div class="input-container">
-            <label class="light-text" for="last_name">Último Nome</label>
-            <span><i class="fa-solid fa-pen-to-square"></i></span>
-            <input formControlName="last_name" class="medium-text" id="last_name" name="last_name" type="text"
-              placeholder="último nome">
+            <input formControlName="name" class="medium-text" id="name" name="name" type="text" placeholder="nome">
           </div>
         </fieldset>
-        <fieldset [formGroup]="form.controls.user">
+        <fieldset>
           <label class="medium-text fieldset-label">Usuário</label>
           <div class="input-container">
             <label class="light-text" for="username">Username</label>
@@ -47,24 +34,12 @@
               placeholder="ativo">
           </div>
           <div class="input-container">
-            <label class="light-text" for="role">Papel</label>
-            <span><i class="fa-solid fa-pen-to-square"></i></span>
-            <input formControlName="role" class="medium-text" id="role" name="role" type="text" placeholder="papel">
-          </div>
-        </fieldset>
-        <fieldset [formGroup]="form.controls.company">
-          <label class="medium-text fieldset-label">Empresa</label>
-          <div class="input-container">
-            <label class="light-text" for="companyId">Código da Empresa</label>
-            <span><i class="fa-solid fa-pen-to-square"></i></span>
-            <input formControlName="companyId" class="medium-text" id="companyId" name="companyId" type="text"
-              placeholder="código da empresa">
+            <app-select (emitCurrentOption)="setCurrentOption($event, 'company')" [label]="'Selecione uma empresa'"
+              [options]="companies"></app-select>
           </div>
           <div class="input-container">
-            <label class="light-text" for="password">Nome da Empresa</label>
-            <span><i class="fa-solid fa-pen-to-square"></i></span>
-            <input formControlName="companyName" class="medium-text" id="companyName" name="companyName" type="text"
-              placeholder="nome da empresa">
+            <app-select (emitCurrentOption)="setCurrentOption($event, 'user')" [label]="'Selecione um papel'"
+              [options]="roles"></app-select>
           </div>
         </fieldset>
       </div>
@@ -81,4 +56,19 @@
       </button>
     </div>
   </form>
+</div>
+
+<div style="display: flex; flex-direction: column;">
+  <pre>
+    <h2>current</h2>
+    {{ currentValues | json }}
+  </pre>
+  <pre>
+    <h2>Original</h2>
+    {{ originalValues | json }}
+  </pre>
+  <pre>
+    <h2>Diferença</h2>
+    {{ formDiff | json }}
+  </pre>
 </div>

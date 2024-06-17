@@ -15,7 +15,6 @@ export interface Option { id: number, label: string, value: string, create?: boo
 })
 export class SelectComponent {
 
-  createElement = output<boolean>()
   emitCurrentOption = output<Option>()
 
   options = input<Option[]>([])
@@ -38,11 +37,7 @@ export class SelectComponent {
     this.#state.update(value => state != undefined ? value = state : value = !value)
   }
 
-  onCreate() { this.createElement.emit(true) }
-
   setOption(option: Option) {
-
-    this.createElement.emit(false)
 
     this.#currentOption.update(currentOption => {
 
