@@ -17,6 +17,7 @@ export class SelectComponent {
 
   emitCurrentOption = output<Option>()
 
+  currOption = input<Option | undefined>(undefined)
   options = input<Option[]>([])
   isCustomer = input<boolean>(false)
   label = input<string | undefined>('')
@@ -30,6 +31,10 @@ export class SelectComponent {
     if (this.isCustomer()) {
       const option = this.options()?.find(option => option.value === this.customerType)
       this.#currentOption.update(currentOption => currentOption = option)
+    }
+
+    if(this.currOption() === undefined) {
+      console.log('opção é undefined')
     }
   }
 

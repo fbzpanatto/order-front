@@ -65,6 +65,8 @@ export class UsersFormComponent {
     this.#formService.originalValues = this.form.value;
     this.#formService.currentForm = this.form;
 
+    Promise.all([await this.getAtive(), await this.getRoles(), await this.getCompanies()])
+
     if (!isNaN(Number(this.command))) {
       this.userId = parseInt(this.command as string)
       this.user = await this.getByUserId(this.userId)
@@ -72,8 +74,6 @@ export class UsersFormComponent {
     }
 
     if (this.command != 'new') { return this.redirect() }
-
-    Promise.all([await this.getAtive(), await this.getRoles(), await this.getCompanies()])
   }
 
   async getAtive() {

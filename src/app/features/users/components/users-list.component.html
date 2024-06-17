@@ -21,7 +21,7 @@
       </thead>
       <tbody>
         @for (item of usersArray; track item.user_id) {
-        <tr>
+        <tr [routerLink]="'/users/' + item.user_id">
           <td class="medium-text">{{ item.user_id }}</td>
           <td class="medium-text">{{ item.name }}</td>
           <td class="medium-text">{{ item.username }}</td>

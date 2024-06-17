@@ -30,6 +30,7 @@
       z-index: 100;
       border: 1px solid #d4d4d4;
       box-shadow: 0 4px 5px rgba(0, 0, 0, 0.15);
+      // height: calc(100vh - $toolbarHeight - ($pad16 * 2));
     }
 
     .small {
