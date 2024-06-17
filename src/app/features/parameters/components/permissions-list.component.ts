@@ -1,10 +1,10 @@
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { FetchPermissionsService } from '../../../../shared/services/fetchPermissions.service';
-import { environment } from '../../../../../environments/environment';
-import { SuccessGET } from '../../../../shared/interfaces/response/response';
-import { AsideService, paths } from '../../../../shared/services/aside.service';
-import { ToolbarMenuService } from '../../../../shared/services/toolbarMenu.service';
+import { FetchPermissionsService } from '../../../shared/services/fetchPermissions.service';
+import { environment } from '../../../../environments/environment';
+import { SuccessGET } from '../../../shared/interfaces/response/response';
+import { AsideService, paths } from '../../../shared/services/aside.service';
+import { ToolbarMenuService } from '../../../shared/services/toolbarMenu.service';
 
 export interface Role {
   role_id: number,
@@ -18,7 +18,7 @@ export interface Role {
   standalone: true,
   imports: [RouterLink],
   templateUrl: './permissions-list.component.html',
-  styleUrls: ['../../../../styles/title-bar.scss', '../../../../styles/table.scss']
+  styleUrls: ['../../../styles/title-bar.scss', '../../../styles/table.scss']
 })
 export class PermissionsListComponent {
 

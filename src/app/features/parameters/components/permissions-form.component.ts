@@ -1,20 +1,20 @@
 import { CommonModule } from '@angular/common';
 import { Role } from './permissions-list.component';
 import { Router, ActivatedRoute } from '@angular/router';
-import { environment } from '../../../../../environments/environment';
-import { FormService } from '../../../../shared/services/form.service';
+import { environment } from '../../../../environments/environment';
+import { FormService } from '../../../shared/services/form.service';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { SelectComponent } from "../../../../shared/components/select.component";
+import { SelectComponent } from "../../../shared/components/select.component";
 import { Component, OnDestroy, inject } from '@angular/core';
-import { PermissionsService } from '../../../../shared/services/permissions.service';
-import { SuccessGETbyId, SuccessPATCH, SuccessPOST } from '../../../../shared/interfaces/response/response';
-import { FetchPermissionsService } from '../../../../shared/services/fetchPermissions.service';
+import { PermissionsService } from '../../../shared/services/permissions.service';
+import { SuccessGETbyId, SuccessPATCH, SuccessPOST } from '../../../shared/interfaces/response/response';
+import { FetchPermissionsService } from '../../../shared/services/fetchPermissions.service';
 
 @Component({
   selector: 'app-permissions-form',
   standalone: true,
   templateUrl: './permissions-form.component.html',
-  styleUrls: ['../../../../styles/title-bar.scss', '../../../../styles/form.scss', '../../../../styles/table.scss'],
+  styleUrls: ['../../../styles/title-bar.scss', '../../../styles/form.scss', '../../../styles/table.scss'],
   imports: [ReactiveFormsModule, CommonModule, SelectComponent]
 })
 export class PermissionsFormComponent implements OnDestroy {

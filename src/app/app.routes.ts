@@ -165,7 +165,7 @@ export const routes: Routes = [
     path: 'parameters',
     title: 'Parâmetros do Sistema',
     loadComponent: () =>
-      import('./features/parameters/components/parameters.component').then(
+      import('./features/parameters/parameters.component').then(
         (m) => m.ParametersComponent
       ),
     data: {
@@ -198,7 +198,7 @@ export const routes: Routes = [
             path: '',
             loadComponent: () =>
               import(
-                './features/parameters/components/permissions/permissions-list.component'
+                './features/parameters/components/permissions-list.component'
               ).then((m) => m.PermissionsListComponent),
             // canActivate: [authGuard],
             data: {
@@ -210,7 +210,7 @@ export const routes: Routes = [
             path: ':command',
             loadComponent: () =>
               import(
-                './features/parameters/components/permissions/permissions-form.component'
+                './features/parameters/components/permissions-form.component'
               ).then((m) => m.PermissionsFormComponent),
             data: {
               menu: 'settings',

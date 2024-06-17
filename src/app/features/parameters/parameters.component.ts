@@ -1,8 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
-import { environment } from '../../../../environments/environment';
-import { ToolbarMenuService } from '../../../shared/services/toolbarMenu.service';
+import { environment } from '../../../environments/environment';
+import { ToolbarMenuService } from '../../shared/services/toolbarMenu.service';
 
 @Component({
   selector: 'app-parameters',
