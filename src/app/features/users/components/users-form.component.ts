@@ -55,7 +55,7 @@ export class UsersFormComponent {
     name: ['', {
       validators: [Validators.required]
     }],
-    active: [false],
+    active: [''],
     username: ['', {
       validators: [Validators.required]
     }],
