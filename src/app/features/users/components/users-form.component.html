@@ -6,6 +6,21 @@
     <div class="inputs-container">
       <div class="fieldsets-container">
         <fieldset>
+          <label class="medium-text fieldset-label">Empresa e Papel</label>
+          <div class="input-container">
+            <app-select [currOption]="currentCompany" (emitCurrentOption)="setCurrentOption($event, 'company_id')"
+              [label]="'Selecione uma empresa'" [options]="companies"></app-select>
+          </div>
+          <div class="input-container">
+            <app-select [currOption]="currentRole" (emitCurrentOption)="setCurrentOption($event, 'role_id')"
+              [label]="'Selecione um papel'" [options]="roles"></app-select>
+          </div>
+          <div class="input-container">
+            <app-select [currOption]="currentActive" (emitCurrentOption)="setCurrentOption($event, 'active')"
+              [label]="'Usuário ativo?'" [options]="active"></app-select>
+          </div>
+        </fieldset>
+        <fieldset>
           <label class="medium-text fieldset-label">Pessoa</label>
           <div class="input-container">
             <label class="light-text" for="name">Nome</label>
@@ -14,7 +29,7 @@
           </div>
         </fieldset>
         <fieldset>
-          <label class="medium-text fieldset-label">Usuário</label>
+          <label class="medium-text fieldset-label">Acesso</label>
           <div class="input-container">
             <label class="light-text" for="username">Username</label>
             <span><i class="fa-solid fa-pen-to-square"></i></span>
@@ -26,21 +41,6 @@
             <span><i class="fa-solid fa-pen-to-square"></i></span>
             <input formControlName="password" class="medium-text" id="password" name="password" type="text"
               placeholder="password">
-          </div>
-          <div class="input-container">
-            <app-select [currOption]="currentActive" (emitCurrentOption)="setCurrentOption($event, 'active')"
-              [label]="'Está ativo?'" [options]="active"></app-select>
-          </div>
-        </fieldset>
-        <fieldset>
-          <label class="medium-text fieldset-label">Empresa e Papel</label>
-          <div class="input-container">
-            <app-select [currOption]="currentCompany" (emitCurrentOption)="setCurrentOption($event, 'company_id')"
-              [label]="'Selecione uma empresa'" [options]="companies"></app-select>
-          </div>
-          <div class="input-container">
-            <app-select [currOption]="currentRole" (emitCurrentOption)="setCurrentOption($event, 'role_id')"
-              [label]="'Selecione um papel'" [options]="roles"></app-select>
           </div>
         </fieldset>
       </div>

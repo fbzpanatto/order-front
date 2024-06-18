@@ -13,7 +13,8 @@ import { SelectComponent } from "../../../shared/components/select.component";
 import { FetchCompaniesService } from '../../../shared/services/fetchCompanies.service';
 import { Company } from '../../companies/components/companies-list.component';
 import { FetchUserService } from '../../../shared/services/fetchUser.service';
-import { User } from './users-list.component';
+
+const ACTIVE_OPTIONS = [{ id: 1, label: 'Sim', value: true }, { id: 2, label: 'Não', value: false }]
 
 @Component({
   selector: 'app-users-form',
@@ -81,9 +82,7 @@ export class UsersFormComponent {
     if (this.command != 'new') { return this.redirect() }
   }
 
-  async getAtive() {
-    this.active = [{ id: 1, label: 'Sim', value: true }, { id: 2, label: 'Não', value: false }]
-  }
+  async getAtive() { this.active = ACTIVE_OPTIONS }
 
   async getRoles() {
     const options = ((await this.#httpPermissions.getAll() as SuccessGET).data) as Role[]
@@ -106,7 +105,9 @@ export class UsersFormComponent {
 
   updateFormValues(user: any) {
 
-    this.currentActive = (user as User).active === 1 ? { id: 1, label: 'Sim', value: true } : { id: 2, label: 'Não', value: false }
+    this.currentActive = user.active === 1 ? ACTIVE_OPTIONS.find(op => op.id === 1) : ACTIVE_OPTIONS.find(op => op.id === 2)
+    this.currentCompany = this.companies.find(c => c.id === user.company_id)
+    this.currentRole = this.roles.find(r => r.id === user.role_id)
 
     this.form.patchValue(user)
     this.#formService.originalValues = this.form.value;
@@ -130,16 +131,13 @@ export class UsersFormComponent {
   titleSettings() { this.command !== 'new' ? this.title = 'Editando' : this.title = 'Novo usuário' }
 
   get currentActive() { return this.#currentActive }
-  get currentCompany() { return this.#currentCompany }
-  get currentRole() { return this.#currentRole }
-
   set currentActive(value: Option | undefined) { this.#currentActive = value }
-  set currentCompany(value: Option | undefined) { this.#currentCompany = value }
-  set currentRole(value: Option | undefined) { this.#currentRole = value }
 
-  get formDiff() { return this.#formService.getChangedValues() }
-  get originalValues() { return this.#formService.originalValues }
-  get currentValues() { return this.#formService.currentForm.value }
+  get currentCompany() { return this.#currentCompany }
+  set currentCompany(value: Option | undefined) { this.#currentCompany = value }
+
+  get currentRole() { return this.#currentRole }
+  set currentRole(value: Option | undefined) { this.#currentRole = value }
 
   get command() { return this.#route.snapshot.paramMap.get('command') }
 
@@ -163,4 +161,8 @@ export class UsersFormComponent {
 
   get hasFilter() { return this.#route.snapshot.data[environment.FILTER] as boolean }
   get menuName() { return this.#route.snapshot.data[environment.MENU] as string }
+
+  get formDiff() { return this.#formService.getChangedValues() }
+  get originalValues() { return this.#formService.originalValues }
+  get currentValues() { return this.#formService.currentForm.value }
 }
