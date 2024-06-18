@@ -8,10 +8,10 @@
         <fieldset>
           <label class="medium-text fieldset-label">Empresa</label>
           <div class="input-container">
-            <app-select (emitCurrentOption)="setCurrentOption($event, 'active')" [label]="'Tabela'"></app-select>
+            <app-select [options]="resources" (emitCurrentOption)="setCurrentOption($event, 'table_id')" [label]="'Tabela'"></app-select>
           </div>
           <div class="input-container">
-            <app-select (emitCurrentOption)="setCurrentOption($event, 'active')" [label]="'Campo'"></app-select>
+            <app-select (emitCurrentOption)="setCurrentOption($event, 'field')" [label]="'Campo'"></app-select>
           </div>
           <div class="input-container">
             <label class="light-text" for="corporate_name">Máscara</label>

@@ -8,6 +8,7 @@ export const environment = {
   DEFAULT: 'default',
   SETTINGS: 'settings',
   CUSTOMERS: 'persons',
+  RESOURCES: 'resources',
   COMPANIES: 'companies',
   PERMISSIONS: 'permissions',
   NEW: 'new',

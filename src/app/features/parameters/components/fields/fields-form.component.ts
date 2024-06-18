@@ -1,14 +1,17 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
+import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { environment } from '../../../../../environments/environment';
-import { SuccessGETbyId, SuccessPOST, SuccessPATCH } from '../../../../shared/interfaces/response/response';
 import { FormService } from '../../../../shared/services/form.service';
-import { ToolbarMenuService } from '../../../../shared/services/toolbarMenu.service';
-import { FetchFieldService } from '../../../../shared/services/fetchField.service';
-import { SelectComponent } from '../../../../shared/components/select.component';
 import { Option } from '../../../../shared/components/select.component';
+import { SelectComponent } from '../../../../shared/components/select.component';
+import { FetchFieldService } from '../../../../shared/services/fetchField.service';
+import { ToolbarMenuService } from '../../../../shared/services/toolbarMenu.service';
+import { FetchResourceService } from '../../../../shared/services/fetchResource.service';
+import { SuccessGETbyId, SuccessPOST, SuccessPATCH, SuccessGET } from '../../../../shared/interfaces/response/response';
+
+interface Resource { id: number, label: string, resource: string, fields: [{ id: number, field: string }] }
 
 @Component({
   selector: 'app-fields-form',
@@ -23,12 +26,14 @@ export class FieldsFormComponent {
 
   #field = {}
   #fieldId?: number
+  #resources: Option[] = []
 
   #router = inject(Router)
   #fb = inject(FormBuilder)
   #route = inject(ActivatedRoute)
   #formService = inject(FormService)
   #http = inject(FetchFieldService)
+  #httpResources = inject(FetchResourceService)
   #toolbarMenuService = inject(ToolbarMenuService)
 
   form = this.#fb.group({
@@ -46,6 +51,8 @@ export class FieldsFormComponent {
 
     this.#formService.currentForm = this.form;
 
+    Promise.all([await this.getResources()])
+
     if (!isNaN(Number(this.command))) {
       this.fieldId = parseInt(this.command as string)
       this.field = await this.getByFieldId(this.fieldId)
@@ -56,6 +63,11 @@ export class FieldsFormComponent {
   }
 
   async getByFieldId(companyId: number) { return (await this.#http.getById(companyId) as SuccessGETbyId).data }
+
+  async getResources() {
+    const options = ((await this.#httpResources.getAll() as SuccessGET).data) as Resource[]
+    this.resources = options.map(o => { return { id: o.id, label: o.label, value: o.id } })
+  }
 
   redirect() { this.#router.navigate(['/parameters/fields']) }
 
@@ -85,6 +97,9 @@ export class FieldsFormComponent {
       return this.redirect()
     }
   }
+
+  get resources() { return this.#resources }
+  set resources(value: Option[]) { this.#resources = value }
 
   get formDiff() { return this.#formService.getChangedValues() }
   get originalValues() { return this.#formService.originalValues }
