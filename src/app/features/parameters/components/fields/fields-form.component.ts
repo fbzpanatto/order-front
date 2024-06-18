@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, output } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { environment } from '../../../../../environments/environment';
@@ -11,7 +11,8 @@ import { ToolbarMenuService } from '../../../../shared/services/toolbarMenu.serv
 import { FetchResourceService } from '../../../../shared/services/fetchResource.service';
 import { SuccessGETbyId, SuccessPOST, SuccessPATCH, SuccessGET } from '../../../../shared/interfaces/response/response';
 
-interface Resource { id: number, label: string, resource: string, fields: [{ id: number, field: string }] }
+interface Field { id: number, field: string, label: string }
+interface Resource { id: number, label: string, resource: string, fields: Field[] }
 
 @Component({
   selector: 'app-fields-form',
@@ -26,7 +27,14 @@ export class FieldsFormComponent {
 
   #field = {}
   #fieldId?: number
-  #resources: Option[] = []
+
+  #resources?: Resource[]
+  #resourcesSelectOptions: Option[] = []
+
+  #resourceFields: Field[] = []
+  #resourceFieldsOptions: Option[] = []
+
+  #currentfield?: Option
 
   #router = inject(Router)
   #fb = inject(FormBuilder)
@@ -65,8 +73,8 @@ export class FieldsFormComponent {
   async getByFieldId(companyId: number) { return (await this.#http.getById(companyId) as SuccessGETbyId).data }
 
   async getResources() {
-    const options = ((await this.#httpResources.getAll() as SuccessGET).data) as Resource[]
-    this.resources = options.map(o => { return { id: o.id, label: o.label, value: o.id } })
+    this.resources = ((await this.#httpResources.getAll() as SuccessGET).data) as Resource[]
+    this.resourceSelectOptions = this.resources.map((o: Resource) => { return { id: o.id, label: o.label, value: o.id } })
   }
 
   redirect() { this.#router.navigate(['/parameters/fields']) }
@@ -78,7 +86,14 @@ export class FieldsFormComponent {
     this.#toolbarMenuService.hasFilter = this.hasFilter
   }
 
-  setCurrentOption(e: Option, control: string) { this.form.get(control)?.patchValue(e.value) }
+  setCurrentOption(e: Option, control: string, formControlChildName?: string) {
+    this.form.get(control)?.patchValue(e.value)
+    const value = this.form.get(control)?.value
+    if (formControlChildName === 'field') {
+      this.resourceFieldsOptions = this.resources?.find(r => r.id === value)?.fields.map(o => { return { id: o.id, label: o.label, value: o.id } }) as Option[]
+      this.currentfield = this.resourceFieldsOptions[0]
+    }
+  }
 
   updateFormValues(field: any) {
     this.form.patchValue(field)
@@ -98,8 +113,20 @@ export class FieldsFormComponent {
     }
   }
 
+  get currentfield() { return this.#currentfield }
+  set currentfield(value: Option | undefined) { this.#currentfield = value }
+
+  get resourceFields() { return this.#resourceFields }
+  set resourceFields(value: Field[]) { this.#resourceFields = value }
+
+  get resourceFieldsOptions() { return this.#resourceFieldsOptions }
+  set resourceFieldsOptions(value: Option[]) { this.#resourceFieldsOptions = value }
+
   get resources() { return this.#resources }
-  set resources(value: Option[]) { this.#resources = value }
+  set resources(value: Resource[] | undefined) { this.#resources = value }
+
+  get resourceSelectOptions() { return this.#resourcesSelectOptions }
+  set resourceSelectOptions(value: Option[]) { this.#resourcesSelectOptions = value }
 
   get formDiff() { return this.#formService.getChangedValues() }
   get originalValues() { return this.#formService.originalValues }
@@ -118,5 +145,4 @@ export class FieldsFormComponent {
 
   get hasFilter() { return this.#route.snapshot.data[environment.FILTER] as boolean }
   get menuName() { return this.#route.snapshot.data[environment.MENU] as string }
-
 }
