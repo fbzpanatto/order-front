@@ -33,22 +33,28 @@ export class ParametersComponent {
     return [
       {
         id: 1,
+        routerLink: 'fields',
+        iClass: 'fa-solid fa-pen-to-square',
+        title: 'Campos do Cliente'
+      },
+      {
+        id: 2,
         routerLink: 'permissions',
         iClass: 'fa-solid fa-key',
         title: 'Permissões'
       },
       {
-        id: 2,
+        id: 3,
         routerLink: 'segments',
         iClass: 'fa-solid fa-cube',
         title: 'Segmentos'
       },
       {
-        id: 3,
+        id: 4,
         routerLink: 'production-status',
         iClass: 'fa-solid fa-list-check',
         title: 'Status do Produto'
-      }
+      },
     ]
   }
 }

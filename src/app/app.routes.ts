@@ -175,7 +175,7 @@ export const routes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: '/parameters/permissions',
+        redirectTo: '/parameters/fields',
         pathMatch: 'full',
       },
       {
@@ -184,6 +184,18 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./features/parameters/components/segments.component').then(
             (m) => m.SegmentsComponent
+          ),
+        data: {
+          menu: 'settings',
+          filter: false,
+        },
+      },
+      {
+        path: 'fields',
+        title: 'Campos',
+        loadComponent: () =>
+          import('./features/parameters/components/fields.component').then(
+            (m) => m.FieldsComponent
           ),
         data: {
           menu: 'settings',
