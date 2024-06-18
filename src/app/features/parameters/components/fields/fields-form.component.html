@@ -1,54 +1,37 @@
-<div class="container">
-  <div class="title-bar">
-    <h1>{{ title }}</h1>
-  </div>
-  <form class="half" [formGroup]="form" (submit)="onSubmit()">
-    <div class="inputs-container">
-      <div class="fieldsets-container">
-        <fieldset>
-          <label class="medium-text fieldset-label">Empresa</label>
-          <div class="input-container">
-            <app-select [options]="resourceSelectOptions"
-              (emitCurrentOption)="setCurrentOption($event, 'table_id', 'field')" [label]="'Tabela'"></app-select>
-          </div>
-          <div class="input-container">
-            <app-select [currOption]="currentfield" [options]="resourceFieldsOptions" (emitCurrentOption)="setCurrentOption($event, 'field')"
-              [label]="'Campo'"></app-select>
-          </div>
-          <div class="input-container">
-            <label class="light-text" for="corporate_name">Máscara</label>
-            <span><i class="fa-solid fa-pen-to-square"></i></span>
-            <input minlength="3" maxlength="=100" class="medium-text" id="corporate_name" formControlName="label"
-              name="corporate_name" type="text" placeholder="máscara">
-          </div>
-        </fieldset>
-      </div>
-    </div>
-    <div class="form-actions">
-      <button class="medium-text clear-btn" type="button" [disabled]="form.pristine">
-        <span><i class="fa-solid fa-eraser"></i></span>
-        @if(this.command === 'new'){ <span>Limpar</span> }
-        @else { <span>Desfazer</span> }
-      </button>
-      <button class="medium-text" type="submit" [disabled]="!form.valid || form.pristine">
-        <span><i class="fa-solid fa-floppy-disk"></i></span>
-        <span>Salvar</span>
-      </button>
-    </div>
-  </form>
+<div class="title-bar">
+  <h1>{{ title }}</h1>
 </div>
-
-<!-- <div style="display: flex; flex-direction: column;">
-  <pre>
-    <h2>current</h2>
-    {{ currentValues | json }}
-  </pre>
-  <pre>
-    <h2>Original</h2>
-    {{ originalValues | json }}
-  </pre>
-  <pre>
-    <h2>Diferença</h2>
-    {{ formDiff | json }}
-  </pre>
-</div> -->
+<form class="half" [formGroup]="form" (submit)="onSubmit()">
+  <div class="inputs-container">
+    <div class="fieldsets-container">
+      <fieldset>
+        <label class="medium-text fieldset-label">Empresa</label>
+        <div class="input-container">
+          <app-select [options]="resourceSelectOptions"
+            (emitCurrentOption)="setCurrentOption($event, 'table_id', 'field')" [label]="'Tabela'"></app-select>
+        </div>
+        <div class="input-container">
+          <app-select [currOption]="currentfield" [options]="resourceFieldsOptions" (emitCurrentOption)="setCurrentOption($event, 'field')"
+            [label]="'Campo'"></app-select>
+        </div>
+        <div class="input-container">
+          <label class="light-text" for="corporate_name">Máscara</label>
+          <span><i class="fa-solid fa-pen-to-square"></i></span>
+          <input minlength="3" maxlength="=100" class="medium-text" id="corporate_name" formControlName="label"
+            name="corporate_name" type="text" placeholder="máscara">
+        </div>
+      </fieldset>
+    </div>
+  </div>
+  <div class="form-actions">
+    <button class="medium-text clear-btn" type="button" [disabled]="form.pristine">
+      <span><i class="fa-solid fa-eraser"></i></span>
+      @if(this.command === 'new'){ <span>Limpar</span> }
+      @else { <span>Desfazer</span> }
+    </button>
+    <button class="medium-text" type="submit" [disabled]="!form.valid || form.pristine">
+      <span><i class="fa-solid fa-floppy-disk"></i></span>
+      <span>Salvar</span>
+    </button>
+  </div>
+</form>
