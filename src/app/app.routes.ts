@@ -182,7 +182,7 @@ export const routes: Routes = [
         path: 'segments',
         title: 'Segmentos',
         loadComponent: () =>
-          import('./features/parameters/components/segments.component').then(
+          import('./features/parameters/components/segments/segments.component').then(
             (m) => m.SegmentsComponent
           ),
         data: {
@@ -193,14 +193,31 @@ export const routes: Routes = [
       {
         path: 'fields',
         title: 'Campos',
-        loadComponent: () =>
-          import('./features/parameters/components/fields.component').then(
-            (m) => m.FieldsComponent
-          ),
-        data: {
-          menu: 'settings',
-          filter: false,
-        },
+        children: [
+          {
+            path: '',
+            loadComponent: () =>
+              import(
+                './features/parameters/components/fields/fields-list.component'
+              ).then((m) => m.FieldsListComponent),
+            // canActivate: [authGuard],
+            data: {
+              menu: 'settings',
+              filter: false,
+            },
+          },
+          {
+            path: ':command',
+            loadComponent: () =>
+              import(
+                './features/parameters/components/fields/fields-form.component'
+              ).then((m) => m.FieldsFormComponent),
+            data: {
+              menu: 'settings',
+              filter: false,
+            },
+          },
+        ],
       },
       {
         path: 'permissions',
@@ -210,7 +227,7 @@ export const routes: Routes = [
             path: '',
             loadComponent: () =>
               import(
-                './features/parameters/components/permissions-list.component'
+                './features/parameters/components/permissions/permissions-list.component'
               ).then((m) => m.PermissionsListComponent),
             // canActivate: [authGuard],
             data: {
@@ -222,7 +239,7 @@ export const routes: Routes = [
             path: ':command',
             loadComponent: () =>
               import(
-                './features/parameters/components/permissions-form.component'
+                './features/parameters/components/permissions/permissions-form.component'
               ).then((m) => m.PermissionsFormComponent),
             data: {
               menu: 'settings',
@@ -236,7 +253,7 @@ export const routes: Routes = [
         title: 'Status de Produção',
         loadComponent: () =>
           import(
-            './features/parameters/components/production-status.component'
+            './features/parameters/components/production-status/production-status.component'
           ).then((m) => m.ProductionStatusComponent),
         data: {
           menu: 'settings',

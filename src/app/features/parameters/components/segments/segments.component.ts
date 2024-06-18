@@ -5,7 +5,7 @@ import { Component } from '@angular/core';
   standalone: true,
   imports: [],
   templateUrl: './segments.component.html',
-  styleUrls: ['../../../styles/title-bar.scss', '../../../styles/table.scss']
+  styleUrls: ['../../../../styles/title-bar.scss', '../../../../styles/table.scss']
 })
 export class SegmentsComponent {
 

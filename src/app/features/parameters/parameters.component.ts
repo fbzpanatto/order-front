@@ -35,7 +35,7 @@ export class ParametersComponent {
         id: 1,
         routerLink: 'fields',
         iClass: 'fa-solid fa-pen-to-square',
-        title: 'Campos do Cliente'
+        title: 'Campos'
       },
       {
         id: 2,

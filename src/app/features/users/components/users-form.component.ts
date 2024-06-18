@@ -7,7 +7,7 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormService } from '../../../shared/services/form.service';
 import { FetchPermissionsService } from '../../../shared/services/fetchPermissions.service';
 import { SuccessGET, SuccessGETbyId, SuccessPATCH, SuccessPOST } from '../../../shared/interfaces/response/response';
-import { Role } from '../../parameters/components/permissions-list.component';
+import { Role } from '../../parameters/components/permissions/permissions-list.component';
 import { Option } from '../../../shared/components/select.component';
 import { SelectComponent } from "../../../shared/components/select.component";
 import { FetchCompaniesService } from '../../../shared/services/fetchCompanies.service';
