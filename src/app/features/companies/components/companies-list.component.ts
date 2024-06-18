@@ -1,4 +1,4 @@
-import { Component, effect, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { AsideService } from '../../../shared/services/aside.service';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
@@ -20,7 +20,7 @@ export interface Company { company_id: number, corporate_name: string, social_na
 export class CompaniesListComponent {
 
   #companiesArray?: Company[]
-  
+
   #route = inject(ActivatedRoute)
   #asideService = inject(AsideService)
   #toolbarMenuService = inject(ToolbarMenuService)

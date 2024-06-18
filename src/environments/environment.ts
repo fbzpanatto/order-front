@@ -4,6 +4,7 @@ export const environment = {
   MENU: 'menu',
   USERS: 'USERS',
   FILTER: 'filter',
+  FIELDS: 'fields',
   DEFAULT: 'default',
   SETTINGS: 'settings',
   CUSTOMERS: 'persons',
