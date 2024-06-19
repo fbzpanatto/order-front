@@ -29,7 +29,6 @@ export class SelectComponent {
 
   constructor() {
     effect(() => {
-      const options = this.options()
       const option = this.currOption()
       if (option != undefined) { this.setOption(option as Option) }
     }, { allowSignalWrites: true })

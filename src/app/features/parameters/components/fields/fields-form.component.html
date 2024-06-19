@@ -8,11 +8,11 @@
         <label class="medium-text fieldset-label">Empresa</label>
         <div class="input-container">
           <app-select [options]="resourceSelectOptions"
-            (emitCurrentOption)="setCurrentOption($event, 'table_id', 'field')" [label]="'Tabela'"></app-select>
+            (emitCurrentOption)="setCurrentOption($event, 'table_id', 'field_id')" [label]="'Tabela'"></app-select>
         </div>
         <div class="input-container">
-          <app-select [currOption]="currentfield" [options]="resourceFieldsOptions"
-            (emitCurrentOption)="setCurrentOption($event, 'field')" [label]="'Campo'"></app-select>
+          <app-select [currOption]="currentTableField" [options]="resourceFieldsOptions"
+            (emitCurrentOption)="setCurrentOption($event, 'field_id')" [label]="'Campo'"></app-select>
         </div>
         <div class="input-container">
           <label class="light-text" for="corporate_name">Máscara</label>
@@ -35,3 +35,18 @@
     </button>
   </div>
 </form>
+
+<div style="display: flex; flex-direction: column;">
+  <pre>
+    <h2>current</h2>
+    {{ currentValues | json }}
+  </pre>
+  <pre>
+    <h2>Original</h2>
+    {{ originalValues | json }}
+  </pre>
+  <pre>
+    <h2>Diferença</h2>
+    {{ formDiff | json }}
+  </pre>
+</div>

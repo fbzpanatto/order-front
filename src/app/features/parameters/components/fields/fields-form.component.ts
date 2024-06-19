@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, output } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { environment } from '../../../../../environments/environment';
 import { FormService } from '../../../../shared/services/form.service';
 import { Option } from '../../../../shared/components/select.component';
@@ -34,7 +34,7 @@ export class FieldsFormComponent {
   #resourceFields: Field[] = []
   #resourceFieldsOptions: Option[] = []
 
-  #currentfield?: Option
+  #currentTableField?: Option
 
   #router = inject(Router)
   #fb = inject(FormBuilder)
@@ -45,9 +45,15 @@ export class FieldsFormComponent {
   #toolbarMenuService = inject(ToolbarMenuService)
 
   form = this.#fb.group({
-    table_id: [''],
-    field: [''],
-    label: ['']
+    table_id: ['', {
+      validators: [Validators.required]
+    }],
+    field_id: ['', {
+      validators: [Validators.required]
+    }],
+    label: ['', {
+      validators: [Validators.required, Validators.minLength(3)]
+    }]
   })
 
   async ngOnInit() {
@@ -89,9 +95,9 @@ export class FieldsFormComponent {
   setCurrentOption(e: Option, control: string, formControlChildName?: string) {
     this.form.get(control)?.patchValue(e.value)
     const value = this.form.get(control)?.value
-    if (formControlChildName === 'field') {
+    if (formControlChildName === 'field_id') {
       this.resourceFieldsOptions = this.resources?.find(r => r.id === value)?.fields.map(o => { return { id: o.id, label: o.label, value: o.id } }) as Option[]
-      this.currentfield = this.resourceFieldsOptions[0]
+      this.currentTableField = this.resourceFieldsOptions[0]
     }
   }
 
@@ -113,8 +119,10 @@ export class FieldsFormComponent {
     }
   }
 
-  get currentfield() { return this.#currentfield }
-  set currentfield(value: Option | undefined) { this.#currentfield = value }
+  get command() { return this.#route.snapshot.paramMap.get('command') }
+
+  get currentTableField() { return this.#currentTableField }
+  set currentTableField(value: Option | undefined) { this.#currentTableField = value }
 
   get resourceFields() { return this.#resourceFields }
   set resourceFields(value: Field[]) { this.#resourceFields = value }
@@ -128,12 +136,6 @@ export class FieldsFormComponent {
   get resourceSelectOptions() { return this.#resourcesSelectOptions }
   set resourceSelectOptions(value: Option[]) { this.#resourcesSelectOptions = value }
 
-  get formDiff() { return this.#formService.getChangedValues() }
-  get originalValues() { return this.#formService.originalValues }
-  get currentValues() { return this.#formService.currentForm.value }
-
-  get command() { return this.#route.snapshot.paramMap.get('command') }
-
   get field() { return this.#field }
   set field(value: any) { this.#field = value }
 
@@ -145,4 +147,8 @@ export class FieldsFormComponent {
 
   get hasFilter() { return this.#route.snapshot.data[environment.FILTER] as boolean }
   get menuName() { return this.#route.snapshot.data[environment.MENU] as string }
+
+  get formDiff() { return this.#formService.getChangedValues() }
+  get originalValues() { return this.#formService.originalValues }
+  get currentValues() { return this.#formService.currentForm.value }
 }
