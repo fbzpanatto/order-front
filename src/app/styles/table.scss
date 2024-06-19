@@ -1,7 +1,7 @@
 @import "./variables.scss";
 
 .table-container {
-  height: calc(100vh - $toolbarHeight - 122px);
+  max-height: calc(100vh - $toolbarHeight - 122px);
   overflow: auto;
   width: 100%;
 
@@ -127,10 +127,10 @@
   }
 
   &.parameters {
-    height: calc(100vh - $toolbarHeight - 178px);
+    max-height: calc(100vh - $toolbarHeight - 178px);
   }
 
   &.permissions {
-    height: calc(100vh - $toolbarHeight - 439px);
+    max-height: calc(100vh - $toolbarHeight - 439px);
   }
 }
