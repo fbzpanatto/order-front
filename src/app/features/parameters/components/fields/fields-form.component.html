@@ -7,17 +7,17 @@
       <fieldset>
         <label class="medium-text fieldset-label">Empresa</label>
         <div class="input-container">
-          <app-select [options]="resourceSelectOptions"
+          <app-select [currOption]="currentTable" [options]="tableOptions"
             (emitCurrentOption)="setCurrentOption($event, 'table_id', 'field_id')" [label]="'Tabela'"></app-select>
         </div>
         <div class="input-container">
-          <app-select [currOption]="currentTableField" [options]="resourceFieldsOptions"
+          <app-select [currOption]="currentField" [options]="fieldOptions"
             (emitCurrentOption)="setCurrentOption($event, 'field_id')" [label]="'Campo'"></app-select>
         </div>
         <div class="input-container">
           <label class="light-text" for="corporate_name">Máscara</label>
           <span><i class="fa-solid fa-pen-to-square"></i></span>
-          <input minlength="3" maxlength="=100" class="medium-text" id="corporate_name" formControlName="label"
+          <input minlength="3" maxlength="20" class="medium-text" id="corporate_name" formControlName="label"
             name="corporate_name" type="text" placeholder="máscara">
         </div>
       </fieldset>

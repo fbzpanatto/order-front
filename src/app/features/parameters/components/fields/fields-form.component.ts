@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, output } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { environment } from '../../../../../environments/environment';
@@ -28,13 +28,13 @@ export class FieldsFormComponent {
   #field = {}
   #fieldId?: number
 
-  #resources?: Resource[]
-  #resourcesSelectOptions: Option[] = []
+  #tables?: Resource[]
 
-  #resourceFields: Field[] = []
-  #resourceFieldsOptions: Option[] = []
+  #currentTable?: Option
+  #tableOptions: Option[] = []
 
-  #currentTableField?: Option
+  #currentField?: Option
+  #fieldOptions: Option[] = []
 
   #router = inject(Router)
   #fb = inject(FormBuilder)
@@ -79,8 +79,8 @@ export class FieldsFormComponent {
   async getByFieldId(companyId: number) { return (await this.#http.getById(companyId) as SuccessGETbyId).data }
 
   async getResources() {
-    this.resources = ((await this.#httpResources.getAll() as SuccessGET).data) as Resource[]
-    this.resourceSelectOptions = this.resources.map((o: Resource) => { return { id: o.id, label: o.label, value: o.id } })
+    this.tables = ((await this.#httpResources.getAll() as SuccessGET).data) as Resource[]
+    this.tableOptions = this.tables.map((o: Resource) => { return { id: o.id, label: o.label, value: o.id } })
   }
 
   redirect() { this.#router.navigate(['/parameters/fields']) }
@@ -96,14 +96,17 @@ export class FieldsFormComponent {
     this.form.get(control)?.patchValue(e.value)
     const value = this.form.get(control)?.value
     if (formControlChildName === 'field_id') {
-      this.resourceFieldsOptions = this.resources?.find(r => r.id === value)?.fields.map(o => { return { id: o.id, label: o.label, value: o.id } }) as Option[]
-      this.currentTableField = this.resourceFieldsOptions[0]
+      this.fieldOptions = this.tables?.find(r => r.id === value)?.fields.map(o => { return { id: o.id, label: o.label, value: o.id } }) as Option[]
+      // this.currentTableField = this.resourceFieldsOptions[0]
     }
   }
 
   updateFormValues(field: any) {
-    this.form.patchValue(field)
+    this.currentTable = this.tableOptions?.find(r => r.id === field.table_id)
+    this.fieldOptions = this.tables?.find(r => r.id === field.table_id)?.fields.map(o => { return { id: o.id, label: o.label, value: o.id } }) as Option[]
+    this.currentField = this.fieldOptions.find(r => r.id === field.field_id)
     this.#formService.originalValues = this.form.value;
+    this.form.patchValue(field)
   }
 
   async onSubmit() {
@@ -121,20 +124,20 @@ export class FieldsFormComponent {
 
   get command() { return this.#route.snapshot.paramMap.get('command') }
 
-  get currentTableField() { return this.#currentTableField }
-  set currentTableField(value: Option | undefined) { this.#currentTableField = value }
+  get currentTable() { return this.#currentTable }
+  set currentTable(value: Option | undefined) { this.#currentTable = value }
 
-  get resourceFields() { return this.#resourceFields }
-  set resourceFields(value: Field[]) { this.#resourceFields = value }
+  get currentField() { return this.#currentField }
+  set currentField(value: Option | undefined) { this.#currentField = value }
 
-  get resourceFieldsOptions() { return this.#resourceFieldsOptions }
-  set resourceFieldsOptions(value: Option[]) { this.#resourceFieldsOptions = value }
+  get fieldOptions() { return this.#fieldOptions }
+  set fieldOptions(value: Option[]) { this.#fieldOptions = value }
 
-  get resources() { return this.#resources }
-  set resources(value: Resource[] | undefined) { this.#resources = value }
+  get tables() { return this.#tables }
+  set tables(value: Resource[] | undefined) { this.#tables = value }
 
-  get resourceSelectOptions() { return this.#resourcesSelectOptions }
-  set resourceSelectOptions(value: Option[]) { this.#resourcesSelectOptions = value }
+  get tableOptions() { return this.#tableOptions }
+  set tableOptions(value: Option[]) { this.#tableOptions = value }
 
   get field() { return this.#field }
   set field(value: any) { this.#field = value }

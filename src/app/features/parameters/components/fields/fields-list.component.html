@@ -17,7 +17,7 @@
     </thead>
     <tbody>
       @for (item of fields; track item.id) {
-      <tr [routerLink]="'/parameters/permissions/' + item.id">
+      <tr [routerLink]="'/parameters/fields/' + item.id">
         <td class="medium-text">{{ item.id }}</td>
         <td class="medium-text">{{ item.table }}</td>
         <td class="medium-text">{{ item.field }}</td>
