@@ -13,6 +13,8 @@ import { Subscription } from 'rxjs';
 import { Company } from '../../companies/components/companies-list.component';
 import { FetchCompaniesService } from '../../../shared/services/fetchCompanies.service';
 
+interface CustomFields { id: number, table: string, field: string, label: string }
+
 @Component({
   selector: 'app-customers-form',
   standalone: true,
@@ -24,11 +26,13 @@ export class CustomersFormComponent implements OnDestroy {
 
   contactNameControl = new FormControl<string>('')
   contactPhoneControl = new FormControl<string>('')
+  addContactState = true
 
+  #customer = {}
   #title?: string
   #customerId?: number
-  addContactState = true
   #companiesArray?: Company[]
+  #customFields?: CustomFields[]
 
   #fb = inject(FormBuilder)
   #router = inject(Router)
@@ -40,7 +44,6 @@ export class CustomersFormComponent implements OnDestroy {
   #customersHttp = inject(FetchCustomerService)
   #companiesHttp = inject(FetchCompaniesService)
   #toolbarMenuService = inject(ToolbarMenuService)
-  #customer = {}
 
   contactId?: number
 
@@ -62,8 +65,6 @@ export class CustomersFormComponent implements OnDestroy {
 
   async ngOnInit() {
 
-    this.#formService.originalValues = this.form.value;
-
     this.#asideService.changeCustomerType(this.customerTypeUrlParam as string)
 
     this.canProced()
@@ -72,6 +73,7 @@ export class CustomersFormComponent implements OnDestroy {
 
     await this.getCompanies()
 
+    this.#formService.originalValues = this.form.value;
     this.#formService.currentForm = this.form;
 
     if (!isNaN(Number(this.command))) {
@@ -84,9 +86,9 @@ export class CustomersFormComponent implements OnDestroy {
   }
 
   async getCompanies() {
-    const resposne = (await this.#companiesHttp.getAll('?customFields=true') as SuccessGET)
-    this.companiesArray = resposne.data as Company[]
-    console.log(resposne.meta.extra)
+    const response = (await this.#companiesHttp.getAll('?customFields=true') as SuccessGET)
+    this.companiesArray = response.data as Company[]
+    this.customFields = response.meta.extra
   }
 
   ngOnDestroy(): void {
@@ -200,6 +202,9 @@ export class CustomersFormComponent implements OnDestroy {
     if (!(this.form as any).get('contacts')) return new FormArray([]) as unknown as FormArray
     return (this.form as any).get('contacts') as FormArray
   }
+
+  get customFields() { return this.#customFields }
+  set customFields(value: CustomFields[] | undefined) { this.#customFields = value }
 
   get companiesArray() { return this.#companiesArray }
   set companiesArray(value: Company[] | undefined) { this.#companiesArray = value }
