@@ -2,8 +2,8 @@
   <div class="title-bar">
     <h1>{{ title }}</h1>
   </div>
-  <form [formGroup]="form" (submit)="onSubmit()" class="fullHeight">
-    <div class="inputs-container">
+  <form [formGroup]="form" (submit)="onSubmit()">
+    <div class="inputs-container fullheight">
       <div class="fieldsets-container">
         @switch (customerType) {
         @case('legal') {

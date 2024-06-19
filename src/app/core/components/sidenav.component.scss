@@ -8,9 +8,8 @@
     display: flex;
     position: relative;
     height: calc(100vh - $toolbarHeight);
-    background: rgb(105,171,190);
-    background: radial-gradient(circle, rgba(105,171,190,1) 0%, rgba(127,159,167,1) 76%);
-
+    background: rgb(105, 171, 190);
+    background: radial-gradient(circle, rgba(105, 171, 190, 1) 0%, rgba(127, 159, 167, 1) 76%);
     padding: $pad16;
     width: 100%;
 
@@ -30,7 +29,7 @@
       z-index: 100;
       border: 1px solid #d4d4d4;
       box-shadow: 0 4px 5px rgba(0, 0, 0, 0.15);
-      // height: calc(100vh - $toolbarHeight - ($pad16 * 2));
+      overflow: visible;
     }
 
     .small {

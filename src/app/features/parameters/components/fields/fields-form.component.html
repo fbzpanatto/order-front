@@ -2,8 +2,8 @@
   <h1>{{ title }}</h1>
 </div>
 <form class="half" [formGroup]="form" (submit)="onSubmit()">
-  <div class="inputs-container">
-    <div class="fieldsets-container">
+  <div class="inputs-container visible">
+    <div class="fieldsets-container visible">
       <fieldset>
         <label class="medium-text fieldset-label">Empresa</label>
         <div class="input-container">
@@ -11,8 +11,8 @@
             (emitCurrentOption)="setCurrentOption($event, 'table_id', 'field')" [label]="'Tabela'"></app-select>
         </div>
         <div class="input-container">
-          <app-select [currOption]="currentfield" [options]="resourceFieldsOptions" (emitCurrentOption)="setCurrentOption($event, 'field')"
-            [label]="'Campo'"></app-select>
+          <app-select [currOption]="currentfield" [options]="resourceFieldsOptions"
+            (emitCurrentOption)="setCurrentOption($event, 'field')" [label]="'Campo'"></app-select>
         </div>
         <div class="input-container">
           <label class="light-text" for="corporate_name">Máscara</label>

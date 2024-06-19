@@ -6,10 +6,6 @@ form {
   gap: 32px;
   border-radius: 8px;
 
-  &.fullHeight {
-    height: calc(100vh - 138px - 119px);
-  }
-
   .inputs-container {
     display: flex;
     flex-direction: column;
@@ -17,14 +13,25 @@ form {
     border-radius: 8px;
     border: 1px solid rgba(0, 0, 0, 0.12);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    background-color: #fff;
+    overflow: auto;
+
+    &.fullheight {
+      height: calc(100vh - 138px - 191px);
+    }
+
+    &.visible {
+      overflow: visible;
+    }
 
     .fieldsets-container {
       display: flex;
       gap: 16px;
       flex-direction: column;
-      max-height: calc(100vh - $toolbarHeight - 239px);
       overflow: auto;
+
+      &.visible {
+        overflow: visible;
+      }
 
       fieldset {
         position: relative;
