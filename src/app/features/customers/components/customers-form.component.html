@@ -10,7 +10,7 @@
         <fieldset [formGroup]="form.controls.company">
           <label class="medium-text fieldset-label">Cliente da empresa</label>
           <div class="input-container">
-            <app-select [currOption]="currentCompany" (emitCurrentOption)="setCurrentOption($event, 'company.company_id')"
+            <app-select [currOption]="currentCompany" (emitCurrentOption)="setCurrentOption($event, 'person.company_id')"
               [label]="'Selecione uma empresa'" [options]="companies"></app-select>
           </div>
           <div class="input-container">

@@ -120,7 +120,7 @@ export class CustomersFormComponent implements OnDestroy {
   }
 
   setCurrentOption(e: Option, control: string) {
-    if(control === 'company.company_id'){
+    if (control === 'person.company_id') {
       const company = this.#arrayOfCompanies.find(c => c.company_id === e.value)
       this.form.get(control).patchValue(company?.company_id)
       this.form.get('company.cnpj').patchValue(company?.cnpj)
@@ -247,14 +247,9 @@ export class CustomersFormComponent implements OnDestroy {
 
   get company() {
     return {
-      company_id: [null, {
-        validators: [Validators.required]
-      }],
       corporate_name: [null],
       social_name: [null],
-      cnpj: [null, {
-        validators: [Validators.pattern(/^\d+$/)]
-      }]
+      cnpj: [null, { validators: [Validators.pattern(/^\d+$/)] }]
     }
   }
 
@@ -332,7 +327,10 @@ export class CustomersFormComponent implements OnDestroy {
       }],
       third_field: [null, {
         validators: [Validators.minLength(3), Validators.maxLength(100)],
-      }]
+      }],
+      company_id: [null, {
+        Validators: [Validators.required]
+      }],
     }
   }
 }
