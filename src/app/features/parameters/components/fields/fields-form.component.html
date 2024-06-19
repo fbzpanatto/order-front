@@ -7,11 +7,11 @@
       <fieldset>
         <label class="medium-text fieldset-label">Empresa</label>
         <div class="input-container">
-          <app-select [currOption]="currentTable" [options]="tableOptions"
+          <app-select [disabled]="fieldId ? true: false" [currOption]="currentTable" [options]="tableOptions"
             (emitCurrentOption)="setCurrentOption($event, 'table_id', 'field_id')" [label]="'Tabela'"></app-select>
         </div>
         <div class="input-container">
-          <app-select [currOption]="currentField" [options]="fieldOptions"
+          <app-select [disabled]="fieldId ? true: false" [currOption]="currentField" [options]="fieldOptions"
             (emitCurrentOption)="setCurrentOption($event, 'field_id')" [label]="'Campo'"></app-select>
         </div>
         <div class="input-container">
@@ -36,7 +36,7 @@
   </div>
 </form>
 
-<div style="display: flex; flex-direction: column;">
+<!-- <div style="display: flex; flex-direction: column;">
   <pre>
     <h2>current</h2>
     {{ currentValues | json }}
@@ -49,4 +49,4 @@
     <h2>Diferença</h2>
     {{ formDiff | json }}
   </pre>
-</div>
+</div> -->

@@ -17,6 +17,7 @@ export class SelectComponent {
 
   emitCurrentOption = output<Option>()
 
+  disabled = input<boolean>(false)
   currOption = input<Option | undefined>(undefined)
   options = input<Option[]>([])
   isCustomer = input<boolean>(false)
