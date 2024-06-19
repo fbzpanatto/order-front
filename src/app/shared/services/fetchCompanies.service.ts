@@ -11,9 +11,9 @@ export class FetchCompaniesService {
 
   #http = inject(HttpClient)
 
-  async getAll() {
+  async getAll(queryParams?: string) {
     return await firstValueFrom(
-      this.#http.get(this.fullResource)
+      this.#http.get(this.fullResource + (queryParams ?? ''))
         .pipe(catchError((apiError) => this.errorHandler(apiError.error as ApiError))))
   }
 

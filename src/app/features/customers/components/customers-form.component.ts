@@ -63,7 +63,7 @@ export class CustomersFormComponent implements OnDestroy {
   async ngOnInit() {
 
     this.#formService.originalValues = this.form.value;
-    
+
     this.#asideService.changeCustomerType(this.customerTypeUrlParam as string)
 
     this.canProced()
@@ -83,7 +83,11 @@ export class CustomersFormComponent implements OnDestroy {
     if (this.command != 'new') { return this.redirect() }
   }
 
-  async getCompanies() { this.companiesArray = ((await this.#companiesHttp.getAll() as SuccessGET).data) as Company[] }
+  async getCompanies() {
+    const resposne = (await this.#companiesHttp.getAll('?customFields=true') as SuccessGET)
+    this.companiesArray = resposne.data as Company[]
+    console.log(resposne.meta.extra)
+  }
 
   ngOnDestroy(): void {
     this.#subscription?.unsubscribe()

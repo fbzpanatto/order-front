@@ -2,7 +2,7 @@ export interface SuccessGET {
   status: number,
   message: string,
   data: {}[],
-  meta: { page: number }
+  meta: { page: number, extra: any }
 }
 
 export interface SuccessGETbyId {
