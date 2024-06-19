@@ -177,7 +177,7 @@ export class CustomersFormComponent implements OnDestroy {
     const contact = ((this.form as any).get('contacts') as FormArray).at(idx).value
 
     if (contact.id != null) {
-      this.#dialogService.message = `Deseja remover ${contact.contact} ${contact.phone_number}? da lista de contatos?`
+      this.#dialogService.message = `Deseja remover ${contact.contact} ${contact.phone_number} da lista de contatos?`
       this.#dialogService.showDialog = true
 
       let subscription: Subscription
