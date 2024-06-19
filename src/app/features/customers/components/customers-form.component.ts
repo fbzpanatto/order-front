@@ -101,11 +101,11 @@ export class CustomersFormComponent implements OnDestroy {
     this.#formService.originalValues = {}
   }
 
-  updateFormValues(person: any) {
+  updateFormValues(body: any) {
 
-    this.form.patchValue(person);
+    this.currentCompany = this.companies.find(c => c.id === body.person.company_id)
 
-    for (let contact of person.contacts) {
+    for (let contact of body.contacts) {
       const formArray = this.#fb.group({
         id: [contact.id],
         person_id: [contact.person_id],
@@ -116,6 +116,7 @@ export class CustomersFormComponent implements OnDestroy {
       this.contacts.updateValueAndValidity()
     }
 
+    this.form.patchValue(body);
     this.#formService.originalValues = this.form.value;
   }
 
