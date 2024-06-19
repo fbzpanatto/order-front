@@ -12,6 +12,8 @@ import { DialogService } from '../../../shared/services/dialog.service';
 import { Subscription } from 'rxjs';
 import { Company } from '../../companies/components/companies-list.component';
 import { FetchCompaniesService } from '../../../shared/services/fetchCompanies.service';
+import { SelectComponent } from '../../../shared/components/select.component';
+import { Option } from '../../../shared/components/select.component';
 
 interface CustomFields { id: number, table: string, field: string, label: string }
 
@@ -20,7 +22,7 @@ interface CustomFields { id: number, table: string, field: string, label: string
   standalone: true,
   templateUrl: './customers-form.component.html',
   styleUrls: ['../../../styles/resource.scss', '../../../styles/form.scss', '../../../styles/title-bar.scss'],
-  imports: [ReactiveFormsModule, CommonModule]
+  imports: [ReactiveFormsModule, CommonModule, SelectComponent]
 })
 export class CustomersFormComponent implements OnDestroy {
 
@@ -31,8 +33,10 @@ export class CustomersFormComponent implements OnDestroy {
   #customer = {}
   #title?: string
   #customerId?: number
-  #companiesArray?: Company[]
   #customFields?: CustomFields[]
+  #currentCompany?: Option
+  #companies: Option[] = []
+  #arrayOfCompanies: Company[] = []
 
   #fb = inject(FormBuilder)
   #router = inject(Router)
@@ -87,7 +91,8 @@ export class CustomersFormComponent implements OnDestroy {
 
   async getCompanies() {
     const response = (await this.#companiesHttp.getAll('?customFields=true') as SuccessGET)
-    this.companiesArray = response.data as Company[]
+    this.#arrayOfCompanies = response.data as Company[]
+    this.companies = ((response.data) as Company[]).map((company) => { return { id: company.company_id, label: company.corporate_name, value: company.company_id } })
     this.customFields = response.meta.extra
   }
 
@@ -112,6 +117,16 @@ export class CustomersFormComponent implements OnDestroy {
     }
 
     this.#formService.originalValues = this.form.value;
+  }
+
+  setCurrentOption(e: Option, control: string) {
+    if(control === 'company.company_id'){
+      const company = this.#arrayOfCompanies.find(c => c.company_id === e.value)
+      this.form.get(control).patchValue(company?.company_id)
+      this.form.get('company.cnpj').patchValue(company?.cnpj)
+      this.form.get('company.social_name').patchValue(company?.social_name)
+      this.form.get('company.corporate_name').patchValue(company?.corporate_name)
+    }
   }
 
   setContacts(contacts: any[]) {
@@ -203,11 +218,14 @@ export class CustomersFormComponent implements OnDestroy {
     return (this.form as any).get('contacts') as FormArray
   }
 
+  get companies() { return this.#companies }
+  set companies(value: Option[]) { this.#companies = value }
+
+  get currentCompany() { return this.#currentCompany }
+  set currentCompany(value: Option | undefined) { this.#currentCompany = value }
+
   get customFields() { return this.#customFields }
   set customFields(value: CustomFields[] | undefined) { this.#customFields = value }
-
-  get companiesArray() { return this.#companiesArray }
-  set companiesArray(value: Company[] | undefined) { this.#companiesArray = value }
 
   get customerId() { return this.#customerId }
   set customerId(value: number | undefined) { this.#customerId = value }
@@ -222,7 +240,7 @@ export class CustomersFormComponent implements OnDestroy {
   get command() { return this.#route.snapshot.paramMap.get('command') }
   get customerTypeUrlParam() { return this.#route.snapshot.paramMap.get('type') }
 
-  get form() { return this.customerType === 'legal' ? this.legalForm : this.normalForm }
+  get form() { return this.customerType === 'legal' ? ((this.legalForm) as any) : ((this.normalForm) as any) }
 
   get hasFilter() { return this.#route.snapshot.data[environment.FILTER] as boolean }
   get menuName() { return this.#route.snapshot.data[environment.MENU] as string }

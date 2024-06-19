@@ -7,8 +7,27 @@
       <div class="fieldsets-container">
         @switch (customerType) {
         @case('legal') {
+        <fieldset [formGroup]="form.controls.company">
+          <label class="medium-text fieldset-label">Cliente da empresa</label>
+          <div class="input-container">
+            <app-select [currOption]="currentCompany" (emitCurrentOption)="setCurrentOption($event, 'company.company_id')"
+              [label]="'Selecione uma empresa'" [options]="companies"></app-select>
+          </div>
+          <div class="input-container">
+            <label class="light-text" for="company_social_name">Nome Fantasia</label>
+            <span><i class="fa-solid fa-pen-to-square"></i></span>
+            <input readonly formControlName="social_name" class="medium-text" id="company_social_name"
+              name="company_social_name" type="text" placeholder="nome fantasia">
+          </div>
+          <div class="input-container">
+            <label class="light-text" for="company_cnpj">Cnpj</label>
+            <span><i class="fa-solid fa-id-card"></i></span>
+            <input readonly formControlName="cnpj" class="medium-text" id="company_cnpj"
+              name="company_cnpj" type="text" placeholder="cnpj">
+          </div>
+        </fieldset>
         <fieldset [formGroup]="form.controls.customer">
-          <label class="medium-text fieldset-label">Identificação</label>
+          <label class="medium-text fieldset-label">Identificação do novo cliente</label>
           <div class="input-container">
             <label class="light-text" for="corporate_name">Razão social</label>
             <span><i class="fa-solid fa-pen-to-square"></i></span>
@@ -105,7 +124,7 @@
           </div>
         </fieldset>
         <fieldset [formGroup]="form.controls.person">
-          <label class="medium-text fieldset-label">Complementares</label>
+          <label class="medium-text fieldset-label">Dados complementares</label>
           @for(field of customFields; track field.id) {
           <div class="input-container">
             <label class="light-text" [for]="field.field">{{ field.label }}</label>
@@ -119,27 +138,6 @@
             <span><i class="fa-solid fa-pen-to-square"></i></span>
             <input maxlength="45" formControlName="observation" class="medium-text" id="observation" name="observation"
               type="text" placeholder="observação">
-          </div>
-        </fieldset>
-        <fieldset [formGroup]="form.controls.company">
-          <label class="medium-text fieldset-label">Fornecedor</label>
-          <div class="input-container">
-            <label class="light-text" for="company_corporate_name">Razão social</label>
-            <span><i class="fa-solid fa-pen-to-square"></i></span>
-            <input readonly maxlength="=100" formControlName="corporate_name" class="medium-text"
-              id="company_corporate_name" name="company_corporate_name" type="text" placeholder="razão social">
-          </div>
-          <div class="input-container">
-            <label class="light-text" for="company_social_name">Nome Fantasia</label>
-            <span><i class="fa-solid fa-pen-to-square"></i></span>
-            <input readonly maxlength="=100" formControlName="social_name" class="medium-text" id="company_social_name"
-              name="company_social_name" type="text" placeholder="nome fantasia">
-          </div>
-          <div class="input-container">
-            <label class="light-text" for="company_cnpj">Cnpj</label>
-            <span><i class="fa-solid fa-id-card"></i></span>
-            <input readonly maxlength="14" formControlName="cnpj" class="medium-text" id="company_cnpj"
-              name="company_cnpj" type="text" placeholder="cnpj">
           </div>
         </fieldset>
         <fieldset formArrayName="contacts" class="formArray">
@@ -189,7 +187,7 @@
   </form>
 </div>
 
-<!-- <div style="display: flex; flex-direction: column;">
+<div style="display: flex; flex-direction: column;">
   <pre>
     <h2>current</h2>
     {{ currentValues | json }}
@@ -202,4 +200,4 @@
     <h2>Diferença</h2>
     {{ formDiff | json }}
   </pre>
-</div> -->
+</div>
