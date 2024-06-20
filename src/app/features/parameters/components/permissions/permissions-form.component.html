@@ -5,8 +5,13 @@
   <form [formGroup]="form" (submit)="onSubmit()">
     <div class="inputs-container">
       <div class="fieldsets-container">
-        <fieldset>
-          <label class="medium-text fieldset-label">Papel</label>
+        <fieldset formGroupName="company">
+          <label class="medium-text fieldset-label">Empresa e Papel</label>
+          <div class="input-container">
+            <app-select [disabled]="roleId ? true: false" [currOption]="currentCompany"
+              (emitCurrentOption)="setCurrentOption($event, 'company.company_id')" [label]="'Selecione uma empresa'"
+              [options]="companies"></app-select>
+          </div>
           <div class="input-container" formGroupName="role">
             <label class="light-text" for="role_name">Nome do papel</label>
             <span><i class="fa-solid fa-pen-to-square"></i></span>
@@ -63,3 +68,20 @@
     </div>
   </form>
 </div>
+
+<!--
+
+<div style="display: flex; flex-direction: column;">
+  <pre>
+    <h2>current</h2>
+    {{ currentValues | json }}
+  </pre>
+  <pre>
+    <h2>Original</h2>
+    {{ originalValues | json }}
+  </pre>
+  <pre>
+    <h2>Diferença</h2>
+    {{ formDiff | json }}
+  </pre>
+</div> -->

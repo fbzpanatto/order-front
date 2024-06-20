@@ -5,13 +5,12 @@
   <form [formGroup]="form" (submit)="onSubmit()">
     <div class="inputs-container fullheight">
       <div class="fieldsets-container">
-        @switch (customerType) {
-        @case('legal') {
         <fieldset [formGroup]="form.controls.company">
           <label class="medium-text fieldset-label">Cliente da empresa</label>
           <div class="input-container">
-            <app-select [disabled]="customerId ? true: false" [currOption]="currentCompany" (emitCurrentOption)="setCurrentOption($event, 'person.company_id')"
-              [label]="'Selecione uma empresa'" [options]="companies"></app-select>
+            <app-select [disabled]="customerId ? true: false" [currOption]="currentCompany"
+              (emitCurrentOption)="setCurrentOption($event, 'person.company_id')" [label]="'Selecione uma empresa'"
+              [options]="companies"></app-select>
           </div>
           <div class="input-container">
             <label class="light-text" for="company_social_name">Nome Fantasia</label>
@@ -22,10 +21,12 @@
           <div class="input-container">
             <label class="light-text" for="company_cnpj">Cnpj</label>
             <span><i class="fa-solid fa-id-card"></i></span>
-            <input readonly formControlName="cnpj" class="medium-text" id="company_cnpj"
-              name="company_cnpj" type="text" placeholder="cnpj">
+            <input readonly formControlName="cnpj" class="medium-text" id="company_cnpj" name="company_cnpj" type="text"
+              placeholder="cnpj">
           </div>
         </fieldset>
+        @switch (customerType) {
+        @case('legal') {
         <fieldset [formGroup]="form.controls.customer">
           <label class="medium-text fieldset-label">Identificação do novo cliente</label>
           <div class="input-container">

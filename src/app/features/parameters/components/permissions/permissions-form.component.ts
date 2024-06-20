@@ -7,8 +7,11 @@ import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { SelectComponent } from "../../../../shared/components/select.component";
 import { Component, OnDestroy, inject } from '@angular/core';
 import { PermissionsService } from '../../../../shared/services/permissions.service';
-import { SuccessGETbyId, SuccessPATCH, SuccessPOST } from '../../../../shared/interfaces/response/response';
+import { SuccessGET, SuccessGETbyId, SuccessPATCH, SuccessPOST } from '../../../../shared/interfaces/response/response';
 import { FetchPermissionsService } from '../../../../shared/services/fetchPermissions.service';
+import { Option } from '../../../../shared/components/select.component';
+import { Company } from '../../../companies/components/companies-list.component';
+import { FetchCompaniesService } from '../../../../shared/services/fetchCompanies.service';
 
 @Component({
   selector: 'app-permissions-form',
@@ -21,6 +24,9 @@ export class PermissionsFormComponent implements OnDestroy {
 
   #role = {}
   #roleId?: number
+  #currentCompany?: Option
+  #companies: Option[] = []
+  #arrayOfCompanies: Company[] = []
 
   #timeoutId: any;
   #title?: string
@@ -31,13 +37,20 @@ export class PermissionsFormComponent implements OnDestroy {
   #formService = inject(FormService)
   #http = inject(FetchPermissionsService)
   #permissions = inject(PermissionsService)
+  #companiesHttp = inject(FetchCompaniesService)
 
   resources = this.#permissions.resources
   form: FormGroup;
 
   constructor() {
     this.form = this.#fb.group({
-      role: this.#fb.group({ role_id: [null], role_name: ['', { disable: true }] })
+      role: this.#fb.group({
+        role_id: [null],
+        role_name: ['', { disable: true }]
+      }),
+      company: this.#fb.group({
+        company_id: [null]
+      })
     })
   }
 
@@ -48,6 +61,8 @@ export class PermissionsFormComponent implements OnDestroy {
 
     this.#formService.originalValues = this.form.value;
     this.#formService.currentForm = this.form;
+
+    await this.getCompanies()
 
     if (!isNaN(Number(this.command))) {
       this.roleId = parseInt(this.command as string)
@@ -76,9 +91,25 @@ export class PermissionsFormComponent implements OnDestroy {
 
   async getByRoleId(roleId: number) { return (await this.#http.getById(roleId) as SuccessGETbyId).data }
 
-  updateFormValues(role: any) {
-    this.form.patchValue(role)
+  updateFormValues(body: any) {
+
+    this.currentCompany = this.companies.find(c => c.id === body.person.company_id)
+
+    this.form.patchValue(body)
     this.#formService.originalValues = this.form.value;
+  }
+
+  async getCompanies() {
+    const response = (await this.#companiesHttp.getAll('?customFields=true') as SuccessGET)
+    this.#arrayOfCompanies = response.data as Company[]
+    this.companies = ((response.data) as Company[]).map((company) => { return { id: company.company_id, label: company.corporate_name, value: company.company_id } })
+  }
+
+  setCurrentOption(e: Option, control: string) {
+    if (control === 'company.company_id') {
+      const company = this.#arrayOfCompanies.find(c => c.company_id === e.value)
+      this.form.get(control)?.patchValue(company?.company_id)
+    }
   }
 
   redirect() { this.#router.navigate(['/parameters/permissions']) }
@@ -102,6 +133,12 @@ export class PermissionsFormComponent implements OnDestroy {
       return this.redirect()
     }
   }
+
+  get currentCompany() { return this.#currentCompany }
+  set currentCompany(value: Option | undefined) { this.#currentCompany = value }
+
+  get companies() { return this.#companies }
+  set companies(value: Option[]) { this.#companies = value }
 
   get role() { return this.#role }
   set role(value: any) { this.#role = value }
