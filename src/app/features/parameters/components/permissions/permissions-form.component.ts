@@ -58,8 +58,8 @@ export class PermissionsFormComponent implements OnDestroy {
 
     await this.getCompanies()
 
-    if ((this.action != environment.NEW || this.action === null) && (!isNaN(parseInt(this.role_id as string)) && !isNaN(parseInt(this.company_id as string)))) {
-      this.role = await this.getByRoleId({ company_id: parseInt(this.company_id as string), role_id: parseInt(this.role_id as string) })
+    if (this.idIsTrue) {
+      this.role = (await this.getByRoleId({ company_id: parseInt(this.company_id as string), role_id: parseInt(this.role_id as string) }))
       return this.role != undefined ? this.updateFormValues(this.role) : null
     }
   }
@@ -80,6 +80,12 @@ export class PermissionsFormComponent implements OnDestroy {
     }
   }
 
+  async getCompanies() {
+    const response = (await this.#companiesHttp.getAll() as SuccessGET)
+    this.#arrayOfCompanies = response.data as Company[]
+    this.companies = ((response.data) as Company[]).map((company) => { return { id: company.company_id, label: company.corporate_name, value: company.company_id } })
+  }
+
   async getByRoleId(queryParams: { [key: string]: any }) { return (await this.#http.getById(queryParams) as SuccessGETbyId).data }
 
   updateFormValues(body: any) {
@@ -90,20 +96,12 @@ export class PermissionsFormComponent implements OnDestroy {
     this.#formService.originalValues = this.form.value;
   }
 
-  async getCompanies() {
-    const response = (await this.#companiesHttp.getAll() as SuccessGET)
-    this.#arrayOfCompanies = response.data as Company[]
-    this.companies = ((response.data) as Company[]).map((company) => { return { id: company.company_id, label: company.corporate_name, value: company.company_id } })
-  }
-
   setCurrentOption(e: Option, control: string) {
     if (control === 'company.company_id') {
       const company = this.#arrayOfCompanies.find(c => c.company_id === e.value)
       this.form.get(control)?.patchValue(company?.company_id)
     }
   }
-
-  redirect() { this.#router.navigate(['/parameters/permissions']) }
 
   setArrayOfOptions(res: Role[]) {
     const options = res.map(el => { return { id: el.role_id, label: el.role_name, value: el.role_name, create: false } })
@@ -113,17 +111,17 @@ export class PermissionsFormComponent implements OnDestroy {
   titleSettings() { this.action !== environment.NEW ? this.title = 'Editando Permissões' : this.title = 'Criando Permissões' }
 
   async onSubmit() {
-    if (this.action === environment.NEW) {
+    if (!this.idIsTrue) {
       const response = await this.#http.saveData(this.currentValues)
       if (!(response as SuccessPOST).affectedRows) { return }
       return this.redirect()
     }
-    if (!isNaN(Number(this.action))) {
-      const response = await this.#http.updateData(parseInt(this.role_id as string), this.currentValues)
-      if (!(response as SuccessPATCH).affectedRows) { return }
-      return this.redirect()
-    }
+    const response = await this.#http.updateData({ company_id: parseInt(this.company_id as string), role_id: parseInt(this.role_id as string) }, this.currentValues)
+    if (!(response as SuccessPATCH).affectedRows) { return }
+    return this.redirect()
   }
+
+  redirect() { this.#router.navigate(['/parameters/permissions']) }
 
   get currentCompany() { return this.#currentCompany }
   set currentCompany(value: Option | undefined) { this.#currentCompany = value }
@@ -147,4 +145,6 @@ export class PermissionsFormComponent implements OnDestroy {
   get action() { return this.#route.snapshot.queryParamMap.get('action') }
   get company_id() { return this.#route.snapshot.queryParamMap.get('company_id') }
   get role_id() { return this.#route.snapshot.queryParamMap.get('role_id') }
+
+  get idIsTrue() { return (this.action != environment.NEW || this.action === null) && (!isNaN(parseInt(this.role_id as string)) && !isNaN(parseInt(this.company_id as string))) }
 }
