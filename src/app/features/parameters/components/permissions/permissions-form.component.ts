@@ -43,13 +43,8 @@ export class PermissionsFormComponent implements OnDestroy {
 
   constructor() {
     this.form = this.#fb.group({
-      company: this.#fb.group({
-        company_id: [null]
-      }),
-      role: this.#fb.group({
-        role_id: [null],
-        role_name: ['', { disable: true }]
-      })
+      company: this.#fb.group({ company_id: [null] }),
+      role: this.#fb.group({ role_id: [null], role_name: ['', { disable: true }] })
     })
   }
 
@@ -63,12 +58,8 @@ export class PermissionsFormComponent implements OnDestroy {
 
     await this.getCompanies()
 
-    console.log(this.role_id, this.company_id, this.action)
-
-    if (this.action != environment.NEW || this.action === undefined || this.action === null) {
-      const role_id = parseInt(this.role_id as string)
-      const company_id = parseInt(this.company_id as string)
-      this.role = await this.getByRoleId({ company_id, role_id })
+    if ((this.action != environment.NEW || this.action === null) && (!isNaN(parseInt(this.role_id as string)) && !isNaN(parseInt(this.company_id as string)))) {
+      this.role = await this.getByRoleId({ company_id: parseInt(this.company_id as string), role_id: parseInt(this.role_id as string) })
       return this.role != undefined ? this.updateFormValues(this.role) : null
     }
   }
