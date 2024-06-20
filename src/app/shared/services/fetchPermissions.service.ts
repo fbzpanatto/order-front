@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { firstValueFrom, catchError, of } from 'rxjs';
 import { environment } from '../../../environments/environment';
@@ -17,10 +17,9 @@ export class FetchPermissionsService {
         .pipe(catchError((apiError) => this.errorHandler(apiError.error as ApiError))))
   }
 
-  async getById(roleId: number | string) {
-    console.log('getById', roleId)
+  async getById(queryParams: { [key: string]: any }) {
     return await firstValueFrom(
-      this.#http.get(this.fullResource + '/' + roleId)
+      this.#http.get(this.fullResource + `?${this.createQueryString(queryParams)}`)
         .pipe(catchError((apiError) => this.errorHandler(apiError.error as ApiError))))
   }
 
@@ -34,6 +33,16 @@ export class FetchPermissionsService {
     return await firstValueFrom(
       this.#http.patch(this.fullResource + '/' + roleId, body)
         .pipe(catchError((apiError) => this.errorHandler(apiError.error as ApiError))))
+  }
+
+  createQueryString(queryParams: { [key: string]: any }): string {
+    let params = new HttpParams();
+    for (const key in queryParams) {
+      if (queryParams.hasOwnProperty(key)) {
+        params = params.set(key, queryParams[key]);
+      }
+    }
+    return params.toString();
   }
 
   errorHandler(apiError: ApiError) {

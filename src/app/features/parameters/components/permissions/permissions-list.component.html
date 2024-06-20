@@ -1,6 +1,6 @@
 <div class="title-bar">
   <h1>Permissões</h1>
-  <button class="menu-item medium-text" [routerLink]="'new'">
+  <button class="menu-item medium-text" (click)="navigateTo({ action: 'new' })">
     <span><i class="fa-solid fa-plus"></i></span>
     <span>Novo</span>
   </button>
@@ -9,7 +9,7 @@
   <table>
     <thead>
       <tr>
-        <th>id</th>
+        <th>Empresa</th>
         <th>Papel</th>
         <th>Criado em</th>
         <th>Atualizado em</th>
@@ -17,8 +17,8 @@
     </thead>
     <tbody>
       @for (item of roles; track item.role_id) {
-      <tr [routerLink]="'/parameters/permissions/' + item.role_id">
-        <td class="medium-text">{{ item.role_id }}</td>
+      <tr (click)="navigateTo({ company_id: item.company_id, role_id: item.role_id })">
+        <td class="medium-text">{{ item.corporate_name }}</td>
         <td class="medium-text">{{ item.role_name }}</td>
         <td class="medium-text">{{ item.created_at }}</td>
         <td class="medium-text">{{ item.updated_at }}</td>

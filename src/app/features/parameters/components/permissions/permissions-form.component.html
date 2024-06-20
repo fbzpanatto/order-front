@@ -8,15 +8,17 @@
         <fieldset formGroupName="company">
           <label class="medium-text fieldset-label">Empresa e Papel</label>
           <div class="input-container">
-            <app-select [disabled]="roleId ? true: false" [currOption]="currentCompany"
+            <app-select [disabled]="role_id && company_id ? true: false" [currOption]="currentCompany"
               (emitCurrentOption)="setCurrentOption($event, 'company.company_id')" [label]="'Selecione uma empresa'"
               [options]="companies"></app-select>
           </div>
-          <div class="input-container" formGroupName="role">
+        </fieldset>
+        <fieldset formGroupName="role">
+          <div class="input-container">
             <label class="light-text" for="role_name">Nome do papel</label>
             <span><i class="fa-solid fa-pen-to-square"></i></span>
-            <input #newRole maxlength="=100" class="medium-text" formControlName="role_name" id="role_name"
-              name="role_name" type="text" placeholder="nome do papel">
+            <input maxlength="=100" class="medium-text" formControlName="role_name" id="role_name" name="role_name"
+              type="text" placeholder="nome do papel">
           </div>
         </fieldset>
         <fieldset>
@@ -58,7 +60,7 @@
     <div class="form-actions">
       <button class="medium-text clear-btn" type="button" [disabled]="form.pristine">
         <span><i class="fa-solid fa-eraser"></i></span>
-        @if(this.command === 'new'){ <span>Limpar</span> } @else {
+        @if(this.action === 'new'){ <span>Limpar</span> } @else {
         <span>Desfazer</span> }
       </button>
       <button class="medium-text" type="submit" [disabled]="!form.valid || form.pristine">
@@ -69,7 +71,7 @@
   </form>
 </div>
 
-<!--
+
 
 <div style="display: flex; flex-direction: column;">
   <pre>
@@ -84,4 +86,4 @@
     <h2>Diferença</h2>
     {{ formDiff | json }}
   </pre>
-</div> -->
+</div>

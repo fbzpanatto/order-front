@@ -236,7 +236,7 @@ export const routes: Routes = [
             },
           },
           {
-            path: ':command',
+            path: 'form',
             loadComponent: () =>
               import(
                 './features/parameters/components/permissions/permissions-form.component'

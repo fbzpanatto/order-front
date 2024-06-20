@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Params, Router, RouterLink } from '@angular/router';
 import { FetchPermissionsService } from '../../../../shared/services/fetchPermissions.service';
 import { environment } from '../../../../../environments/environment';
 import { SuccessGET } from '../../../../shared/interfaces/response/response';
@@ -8,9 +8,11 @@ import { ToolbarMenuService } from '../../../../shared/services/toolbarMenu.serv
 
 export interface Role {
   role_id: number,
+  company_id: number,
   role_name: string,
   created_at: string,
-  updated_at: string
+  updated_at: string,
+  corporate_name: string
 }
 
 @Component({
@@ -28,6 +30,7 @@ export class PermissionsListComponent {
   #asideService = inject(AsideService)
   #toolbarMenuService = inject(ToolbarMenuService)
   #http = inject(FetchPermissionsService)
+  #router = inject(Router)
 
   async ngOnInit() {
     this.asideFilters()
@@ -39,6 +42,10 @@ export class PermissionsListComponent {
   async getAll() { this.roles = ((await this.#http.getAll() as SuccessGET).data) as Role[] }
 
   asideFilters() { this.#asideService.getResourceFilters(this.path) }
+
+  navigateTo(queryParams: { [key: string]: any }) {
+    this.#router.navigate(['/parameters/permissions/form'], { queryParams })
+  }
 
   menuSettings() {
     this.#toolbarMenuService.menuName = this.menuName
