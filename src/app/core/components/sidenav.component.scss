@@ -21,15 +21,16 @@
       position: absolute;
       overflow: auto;
       width: calc(100% - ($pad16 * 4));
-      border-radius: 8px;
-      background-color: #fff;
       transition: 100ms ease-in;
       top: $pad16;
       margin: 0 $pad16;
       z-index: 100;
-      border: 1px solid #d4d4d4;
-      box-shadow: 0 4px 5px rgba(0, 0, 0, 0.15);
+      // background-color: #fff;
+      // border: 1px solid #d4d4d4;
+      // box-shadow: 0 4px 5px rgba(0, 0, 0, 0.15);
+      // border-radius: 8px;
       overflow: visible;
+      height: calc(100vh - 138px - ($pad16 * 2));
     }
 
     .small {

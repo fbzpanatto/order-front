@@ -5,9 +5,11 @@ form {
   flex-direction: column;
   gap: 32px;
   border-radius: 8px;
+  max-height: calc(100vh - 257px);
 
   .inputs-container {
     display: flex;
+    flex: 1;
     flex-direction: column;
     padding: 16px;
     border-radius: 8px;
@@ -15,9 +17,9 @@ form {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     overflow: auto;
 
-    &.fullheight {
-      height: calc(100vh - 138px - 214px);
-    }
+    // &.fullheight {
+    //   height: calc(100vh - 138px - 214px);
+    // }
 
     &.visible {
       overflow: visible;
@@ -209,7 +211,6 @@ form {
   }
 
   .form-actions {
-    flex-basis: 100%;
     display: flex;
     justify-content: flex-end;
     gap: 32px;

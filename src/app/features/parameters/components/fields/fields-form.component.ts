@@ -19,7 +19,7 @@ interface Resource { id: number, label: string, resource: string, fields: Field[
   standalone: true,
   imports: [ReactiveFormsModule, CommonModule, SelectComponent],
   templateUrl: './fields-form.component.html',
-  styleUrls: ['../../../../styles/resource.scss', '../../../../styles/form.scss', '../../../../styles/title-bar.scss'],
+  styleUrls: ['../../../../styles/form.scss', '../../../../styles/title-bar.scss'],
 })
 export class FieldsFormComponent {
 
