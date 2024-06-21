@@ -1,6 +1,6 @@
 <div class="title-bar">
   <h1>Máscaras</h1>
-  <button class="menu-item medium-text" [routerLink]="'new'">
+  <button class="menu-item medium-text" (click)="navigateTo({ action: 'new' })">
     <span><i class="fa-solid fa-plus"></i></span>
     <span>Novo</span>
   </button>
@@ -9,16 +9,16 @@
   <table>
     <thead>
       <tr>
-        <th>id</th>
+        <th>Empresa</th>
         <th>Recurso</th>
         <th>Campo Original</th>
         <th>Máscara</th>
       </tr>
     </thead>
     <tbody>
-      @for (item of fields; track item.id) {
-      <tr [routerLink]="'/parameters/fields/' + item.id">
-        <td class="medium-text">{{ item.id }}</td>
+      @for (item of fields; track $index) {
+      <tr (click)="navigateTo({ company_id: item.company_id, table_id: item.table_id, field_id: item.field_id})">
+        <td class="medium-text">{{ item.corporate_name }}</td>
         <td class="medium-text">{{ item.table }}</td>
         <td class="medium-text">{{ item.field }}</td>
         <td class="medium-text">{{ item.label }}</td>

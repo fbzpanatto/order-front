@@ -45,38 +45,29 @@ export class FieldsFormComponent {
   #toolbarMenuService = inject(ToolbarMenuService)
 
   form = this.#fb.group({
-    table_id: ['', {
-      validators: [Validators.required]
-    }],
-    field_id: ['', {
-      validators: [Validators.required]
-    }],
-    label: ['', {
-      validators: [Validators.required, Validators.minLength(3)]
-    }]
+    table_id: ['', { validators: [Validators.required] }],
+    field_id: ['', { validators: [Validators.required] }],
+    company_id: [1, {}],
+    label: ['', { validators: [Validators.required, Validators.minLength(3)] }]
   })
 
   async ngOnInit() {
 
-    this.#formService.originalValues = this.form.value;
-
     this.menuSettings()
     this.titleSettings()
 
+    this.#formService.originalValues = this.form.value;
     this.#formService.currentForm = this.form;
 
-    Promise.all([await this.getResources()])
+    await this.getResources()
 
-    if (!isNaN(Number(this.command))) {
-      this.fieldId = parseInt(this.command as string)
-      this.field = await this.getByFieldId(this.fieldId)
+    if (this.idIsTrue) {
+      this.field = (await this.getByFieldId(this.queryParams))
       return this.field != undefined ? this.updateFormValues(this.field) : null
     }
-
-    if (this.command != 'new') { return this.redirect() }
   }
 
-  async getByFieldId(companyId: number) { return (await this.#http.getById(companyId) as SuccessGETbyId).data }
+  async getByFieldId(queryParams: { [key: string]: any }) { return (await this.#http.getById(queryParams) as SuccessGETbyId).data }
 
   async getResources() {
     this.tables = ((await this.#httpResources.getAll() as SuccessGET).data) as Resource[]
@@ -110,16 +101,14 @@ export class FieldsFormComponent {
   }
 
   async onSubmit() {
-    if (this.command === 'new') {
+    if (!this.idIsTrue) {
       const response = await this.#http.saveData(this.currentValues)
       if (!(response as SuccessPOST).affectedRows) { return }
       return this.redirect()
     }
-    if (!isNaN(Number(this.command))) {
-      const response = await this.#http.updateData(this.#fieldId as number, this.currentValues)
-      if (!(response as SuccessPATCH).affectedRows) { return }
-      return this.redirect()
-    }
+    const response = await this.#http.updateData(this.queryParams, this.currentValues)
+    if (!(response as SuccessPATCH).affectedRows) { return }
+    return this.redirect()
   }
 
   get command() { return this.#route.snapshot.paramMap.get('command') }
@@ -154,4 +143,13 @@ export class FieldsFormComponent {
   get formDiff() { return this.#formService.getChangedValues() }
   get originalValues() { return this.#formService.originalValues }
   get currentValues() { return this.#formService.currentForm.value }
+
+  get action() { return this.#route.snapshot.queryParamMap.get('action') }
+  get company_id() { return this.#route.snapshot.queryParamMap.get('company_id') }
+  get table_id() { return this.#route.snapshot.queryParamMap.get('table_id') }
+  get field_id() { return this.#route.snapshot.queryParamMap.get('field_id') }
+
+  get queryParams() { return { company_id: parseInt(this.company_id as string), table_id: parseInt(this.table_id as string), field_id: parseInt(this.field_id as string) } }
+
+  get idIsTrue() { return (this.action != environment.NEW || this.action === null) && (!isNaN(parseInt(this.table_id as string)) && !isNaN(parseInt(this.company_id as string)) && !isNaN(parseInt(this.field_id as string))) }
 }

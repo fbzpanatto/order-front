@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AsideService, paths } from '../../../../shared/services/aside.service';
 import { ToolbarMenuService } from '../../../../shared/services/toolbarMenu.service';
@@ -7,7 +7,7 @@ import { FetchFieldService } from '../../../../shared/services/fetchField.servic
 import { environment } from '../../../../../environments/environment';
 import { SuccessGET } from '../../../../shared/interfaces/response/response';
 
-interface Field { id: number, table: string, field: string, label: string }
+interface Field { table: string, field: string, label: string, company_id: number, field_id: number, table_id: number, corporate_name: string }
 
 @Component({
   selector: 'app-fields',
@@ -24,6 +24,7 @@ export class FieldsListComponent {
   #http = inject(FetchFieldService)
   #asideService = inject(AsideService)
   #toolbarMenuService = inject(ToolbarMenuService)
+  #router = inject(Router)
 
   async ngOnInit() {
     this.asideFilters()
@@ -35,6 +36,10 @@ export class FieldsListComponent {
   async getAll() { this.fields = ((await this.#http.getAll() as SuccessGET).data) as Field[] }
 
   asideFilters() { this.#asideService.getResourceFilters(this.path) }
+
+  navigateTo(queryParams: { [key: string]: any }) {
+    this.#router.navigate(['/parameters/fields/form'], { queryParams })
+  }
 
   menuSettings() {
     this.#toolbarMenuService.menuName = this.menuName

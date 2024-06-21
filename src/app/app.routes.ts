@@ -10,14 +10,8 @@ export const routes: Routes = [
   {
     path: 'home',
     title: 'Home',
-    loadComponent: () =>
-      import('./features/home/components/home.component').then(
-        (m) => m.HomeComponent
-      ),
-    data: {
-      menu: 'default',
-      filter: true,
-    },
+    loadComponent: () => import('./features/home/components/home.component').then((m) => m.HomeComponent),
+    data: { menu: 'default', filter: true },
   },
   {
     path: 'customers',
@@ -25,25 +19,13 @@ export const routes: Routes = [
     children: [
       {
         path: '',
-        loadComponent: () =>
-          import(
-            './features/customers/components/customers-list.component'
-          ).then((m) => m.CustomersListComponent),
-        data: {
-          menu: 'default',
-          filter: true,
-        },
+        loadComponent: () => import('./features/customers/components/customers-list.component').then((m) => m.CustomersListComponent),
+        data: { menu: 'default', filter: true },
       },
       {
         path: ':type/:command',
-        loadComponent: () =>
-          import(
-            './features/customers/components/customers-form.component'
-          ).then((m) => m.CustomersFormComponent),
-        data: {
-          menu: 'default',
-          filter: false,
-        },
+        loadComponent: () => import('./features/customers/components/customers-form.component').then((m) => m.CustomersFormComponent),
+        data: { menu: 'default', filter: false, },
       },
     ],
   },
@@ -196,26 +178,13 @@ export const routes: Routes = [
         children: [
           {
             path: '',
-            loadComponent: () =>
-              import(
-                './features/parameters/components/fields/fields-list.component'
-              ).then((m) => m.FieldsListComponent),
-            // canActivate: [authGuard],
-            data: {
-              menu: 'settings',
-              filter: false,
-            },
+            loadComponent: () => import('./features/parameters/components/fields/fields-list.component').then((m) => m.FieldsListComponent),
+            data: { menu: 'settings', filter: false },
           },
           {
-            path: ':command',
-            loadComponent: () =>
-              import(
-                './features/parameters/components/fields/fields-form.component'
-              ).then((m) => m.FieldsFormComponent),
-            data: {
-              menu: 'settings',
-              filter: false,
-            },
+            path: 'form',
+            loadComponent: () => import('./features/parameters/components/fields/fields-form.component').then((m) => m.FieldsFormComponent),
+            data: { menu: 'settings', filter: false },
           },
         ],
       },
@@ -225,26 +194,13 @@ export const routes: Routes = [
         children: [
           {
             path: '',
-            loadComponent: () =>
-              import(
-                './features/parameters/components/permissions/permissions-list.component'
-              ).then((m) => m.PermissionsListComponent),
-            // canActivate: [authGuard],
-            data: {
-              menu: 'settings',
-              filter: true,
-            },
+            loadComponent: () => import('./features/parameters/components/permissions/permissions-list.component').then((m) => m.PermissionsListComponent),
+            data: { menu: 'settings', filter: true },
           },
           {
             path: 'form',
-            loadComponent: () =>
-              import(
-                './features/parameters/components/permissions/permissions-form.component'
-              ).then((m) => m.PermissionsFormComponent),
-            data: {
-              menu: 'settings',
-              filter: false,
-            },
+            loadComponent: () => import('./features/parameters/components/permissions/permissions-form.component').then((m) => m.PermissionsFormComponent),
+            data: { menu: 'settings', filter: false },
           },
         ],
       },
