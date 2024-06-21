@@ -5,7 +5,7 @@
   <div class="inputs-container visible">
     <div class="fieldsets-container visible">
       <fieldset>
-        <label class="medium-text fieldset-label">Empresa</label>
+        <label class="medium-text fieldset-label">Campo & Máscara</label>
         <div class="input-container">
           <app-select [disabled]="idIsTrue ? true: false" [currOption]="currentTable" [options]="tableOptions"
             (emitCurrentOption)="setCurrentOption($event, 'table_id', 'field_id')" [label]="'Tabela'"></app-select>
