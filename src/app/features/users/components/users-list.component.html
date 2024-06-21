@@ -1,7 +1,7 @@
 <div class="container">
   <div class="title-bar">
     <h1>Usuários</h1>
-    <button class="menu-item medium-text" [routerLink]="'new'">
+    <button class="menu-item medium-text" (click)="navigateTo({ action: 'new' })">
       <span><i class="fa-solid fa-plus"></i></span>
       <span>Novo</span>
     </button>
@@ -10,29 +10,27 @@
     <table>
       <thead>
         <tr>
-          <th>id</th>
+          <th>Empresa</th>
           <th>Nome</th>
           <th>Username</th>
           <th>Ativo</th>
-          <th>Empresa</th>
           <th>Papel</th>
           <th>Criado em</th>
         </tr>
       </thead>
       <tbody>
-        @for (item of usersArray; track item.user_id) {
-        <tr [routerLink]="'/users/' + item.user_id">
-          <td class="medium-text">{{ item.user_id }}</td>
+        @for (item of usersArray; track $index) {
+        <tr (click)="navigateTo({ company_id: item.company_id, user_id: item.user_id})">
+          <td class="medium-text">{{ item.corporate_name }}</td>
           <td class="medium-text">{{ item.name }}</td>
           <td class="medium-text">{{ item.username }}</td>
           <td class="medium-text">{{ item.active }}</td>
-          <td class="medium-text">{{ item.corporate_name }}</td>
           <td class="medium-text">{{ item.role_name }}</td>
           <td class="medium-text">{{ item.created_at }}</td>
         </tr>
         } @empty {
         <tr>
-          <td class="medium-text" [colSpan]="7">Se dados a exibir</td>
+          <td class="medium-text" [colSpan]="7">Sem dados a exibir</td>
         </tr>
         }
       </tbody>

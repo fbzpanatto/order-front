@@ -91,26 +91,14 @@ export const routes: Routes = [
     children: [
       {
         path: '',
-        loadComponent: () =>
-          import('./features/users/components/users-list.component').then(
-            (m) => m.UsersListComponent
-          ),
+        loadComponent: () => import('./features/users/components/users-list.component').then((m) => m.UsersListComponent),
         // canActivate: [authGuard],
-        data: {
-          menu: 'settings',
-          filter: true,
-        },
+        data: { menu: 'settings', filter: true },
       },
       {
-        path: ':command',
-        loadComponent: () =>
-          import('./features/users/components/users-form.component').then(
-            (m) => m.UsersFormComponent
-          ),
-        data: {
-          menu: 'settings',
-          filter: false,
-        },
+        path: 'form',
+        loadComponent: () => import('./features/users/components/users-form.component').then((m) => m.UsersFormComponent),
+        data: { menu: 'settings', filter: false },
       },
     ],
   },
@@ -146,14 +134,8 @@ export const routes: Routes = [
   {
     path: 'parameters',
     title: 'Parâmetros do Sistema',
-    loadComponent: () =>
-      import('./features/parameters/parameters.component').then(
-        (m) => m.ParametersComponent
-      ),
-    data: {
-      menu: 'settings',
-      filter: false,
-    },
+    loadComponent: () => import('./features/parameters/parameters.component').then((m) => m.ParametersComponent),
+    data: { menu: 'settings', filter: false },
     children: [
       {
         path: '',
@@ -163,14 +145,8 @@ export const routes: Routes = [
       {
         path: 'segments',
         title: 'Segmentos',
-        loadComponent: () =>
-          import('./features/parameters/components/segments/segments.component').then(
-            (m) => m.SegmentsComponent
-          ),
-        data: {
-          menu: 'settings',
-          filter: false,
-        },
+        loadComponent: () => import('./features/parameters/components/segments/segments.component').then((m) => m.SegmentsComponent),
+        data: { menu: 'settings', filter: false }
       },
       {
         path: 'fields',

@@ -1,13 +1,13 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { environment } from '../../../../environments/environment';
 import { ToolbarMenuService } from '../../../shared/services/toolbarMenu.service';
 import { AsideService, paths } from '../../../shared/services/aside.service';
 import { FetchUserService } from '../../../shared/services/fetchUser.service';
 import { SuccessGET } from '../../../shared/interfaces/response/response';
 
-export interface User { user_id: number, name: string, active: boolean | number, username: string, corporate_name: string, role_name: string, created_at: string }
+export interface User { user_id: number, name: string, active: boolean | number, username: string, corporate_name: string, role_name: string, created_at: string, company_id: number }
 
 @Component({
   selector: 'app-users',
@@ -23,6 +23,7 @@ export class UsersListComponent {
   #asideService = inject(AsideService)
   #toolbarMenuService = inject(ToolbarMenuService)
   #http = inject(FetchUserService)
+  #router = inject(Router)
 
   async ngOnInit() {
     this.asideFilters()
@@ -32,6 +33,10 @@ export class UsersListComponent {
   }
 
   asideFilters() { this.#asideService.getResourceFilters(this.path) }
+
+  navigateTo(queryParams: { [key: string]: any }) {
+    this.#router.navigate(['/users/form'], { queryParams })
+  }
 
   async getAll() { this.usersArray = ((await this.#http.getAll() as SuccessGET).data) as User[] }
 
