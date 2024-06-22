@@ -5,13 +5,10 @@ import { ToolbarMenuService } from '../../../shared/services/toolbarMenu.service
 import { CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormService } from '../../../shared/services/form.service';
-import { FetchPermissionsService } from '../../../shared/services/fetchPermissions.service';
 import { SuccessGET, SuccessGETbyId, SuccessPATCH, SuccessPOST } from '../../../shared/interfaces/response/response';
-import { Role } from '../../parameters/components/permissions/permissions-list.component';
 import { Option } from '../../../shared/components/select.component';
 import { SelectComponent } from "../../../shared/components/select.component";
 import { FetchCompaniesService } from '../../../shared/services/fetchCompanies.service';
-import { Company } from '../../companies/components/companies-list.component';
 import { FetchUserService } from '../../../shared/services/fetchUser.service';
 
 const ACTIVE_OPTIONS = [{ id: 1, label: 'Sim', value: true }, { id: 2, label: 'Não', value: false }]
@@ -28,10 +25,10 @@ export class UsersFormComponent {
   #title?: string
   #user = {}
   #userId?: number
-  #roles: Option[] = []
-  #companies: Option[] = []
-  #active: Option[] = []
+  #companiesRoles: any
 
+  #rolesOptions: Option[] = []
+  #companiesOptions: Option[] = []
   #currentActive?: Option
   #currentCompany?: Option
   #currentRole?: Option
@@ -41,7 +38,6 @@ export class UsersFormComponent {
   #route = inject(ActivatedRoute)
   #formService = inject(FormService)
   #toolbarMenuService = inject(ToolbarMenuService)
-  #httpPermissions = inject(FetchPermissionsService)
   #httpCompanies = inject(FetchCompaniesService)
   #httpUsers = inject(FetchUserService)
 
@@ -71,27 +67,12 @@ export class UsersFormComponent {
     this.#formService.originalValues = this.form.value;
     this.#formService.currentForm = this.form;
 
-    Promise.all([await this.getAtive(), await this.getRoles(), await this.getCompanies()])
-
-    if (!isNaN(Number(this.command))) {
-      this.userId = parseInt(this.command as string)
-      this.user = await this.getByUserId(this.userId)
-      return this.user != undefined ? this.updateFormValues(this.user) : null
-    }
-
-    if (this.command != 'new') { return this.redirect() }
-  }
-
-  async getAtive() { this.active = ACTIVE_OPTIONS }
-
-  async getRoles() {
-    const options = ((await this.#httpPermissions.getAll() as SuccessGET).data) as Role[]
-    this.roles = options.map(role => { return { id: role.role_id, label: role.role_name, value: role.role_id } })
+    await this.getCompanies()
   }
 
   async getCompanies() {
-    const options = ((await this.#httpCompanies.getAll() as SuccessGET).data) as Company[]
-    this.companies = options.map(company => { return { id: company.company_id, label: company.corporate_name, value: company.company_id } })
+    this.companiesRoles = ((await this.#httpCompanies.getAll('?roles=true') as SuccessGET).data) as any
+    this.companiesOptions = this.companiesRoles.map((company: any) => { return { id: company.company_id, label: company.corporate_name, value: company.company_id } })
   }
 
   async getByUserId(userId: number) { return (await this.#httpUsers.getById(userId) as SuccessGETbyId).data }
@@ -106,8 +87,8 @@ export class UsersFormComponent {
   updateFormValues(user: any) {
 
     this.currentActive = user.active === 1 ? ACTIVE_OPTIONS.find(op => op.id === 1) : ACTIVE_OPTIONS.find(op => op.id === 2)
-    this.currentCompany = this.companies.find(c => c.id === user.company_id)
-    this.currentRole = this.roles.find(r => r.id === user.role_id)
+    this.currentCompany = this.companiesOptions.find(c => c.id === user.company_id)
+    this.currentRole = this.rolesOptions.find(r => r.id === user.role_id)
 
     this.form.patchValue(user)
     this.#formService.originalValues = this.form.value;
@@ -126,9 +107,19 @@ export class UsersFormComponent {
     }
   }
 
-  setCurrentOption(e: Option, control: string) { this.form.get(control)?.patchValue(e.value) }
+  setCurrentOption(e: Option, control: string) {
+    this.form.get(control)?.patchValue(e.value)
+    if (control === 'company_id') {
+      const roles = this.companiesRoles.find((c: any) => c.company_id === e.id).roles as { role_id: number, role_name: string }[]
+      this.rolesOptions = roles.map(r => { return { id: r.role_id, label: r.role_name, value: r.role_id } })
+      this.currentRole = this.rolesOptions[0]
+    }
+  }
 
   titleSettings() { this.command !== 'new' ? this.title = 'Editando' : this.title = 'Novo usuário' }
+
+  get companiesRoles() { return this.#companiesRoles }
+  set companiesRoles(value: any) { this.#companiesRoles = value }
 
   get currentActive() { return this.#currentActive }
   set currentActive(value: Option | undefined) { this.#currentActive = value }
@@ -141,14 +132,13 @@ export class UsersFormComponent {
 
   get command() { return this.#route.snapshot.paramMap.get('command') }
 
-  get roles() { return this.#roles }
-  set roles(value: Option[]) { this.#roles = value }
+  get active() { return ACTIVE_OPTIONS }
 
-  get active() { return this.#active }
-  set active(value: Option[]) { this.#active = value }
+  get rolesOptions() { return this.#rolesOptions }
+  set rolesOptions(value: Option[]) { this.#rolesOptions = value }
 
-  get companies() { return this.#companies }
-  set companies(value: Option[]) { this.#companies = value }
+  get companiesOptions() { return this.#companiesOptions }
+  set companiesOptions(value: Option[]) { this.#companiesOptions = value }
 
   get user() { return this.#user }
   set user(value: any) { this.#user = value }

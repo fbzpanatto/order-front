@@ -9,11 +9,11 @@
           <label class="medium-text fieldset-label">Empresa e Papel</label>
           <div class="input-container">
             <app-select [currOption]="currentCompany" (emitCurrentOption)="setCurrentOption($event, 'company_id')"
-              [label]="'Selecione uma empresa'" [options]="companies"></app-select>
+              [label]="'Selecione uma empresa'" [options]="companiesOptions"></app-select>
           </div>
           <div class="input-container">
             <app-select [currOption]="currentRole" (emitCurrentOption)="setCurrentOption($event, 'role_id')"
-              [label]="'Selecione um papel'" [options]="roles"></app-select>
+              [label]="'Selecione um papel'" [options]="rolesOptions"></app-select>
           </div>
           <div class="input-container">
             <app-select [currOption]="currentActive" (emitCurrentOption)="setCurrentOption($event, 'active')"
@@ -59,7 +59,7 @@
   </form>
 </div>
 
-<!-- <div style="display: flex; flex-direction: column;">
+<div style="display: flex; flex-direction: column;">
   <pre>
     <h2>current</h2>
     {{ currentValues | json }}
@@ -72,4 +72,4 @@
     <h2>Diferença</h2>
     {{ formDiff | json }}
   </pre>
-</div> -->
+</div>
