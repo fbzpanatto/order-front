@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { firstValueFrom, catchError, of } from 'rxjs';
 import { environment } from '../../../environments/environment';
@@ -29,10 +29,16 @@ export class FetchUserService {
         .pipe(catchError((apiError) => this.errorHandler(apiError.error as ApiError))))
   }
 
-  async updateData(userId: number, body: { [key: string]: any }) {
+  async updateData(queryParams: { [key: string]: any }, body: { [key: string]: any }) {
     return await firstValueFrom(
-      this.#http.patch(this.fullResource + '/' + userId, body)
+      this.#http.patch(this.fullResource + `?${this.createQueryString(queryParams)}`, body)
         .pipe(catchError((apiError) => this.errorHandler(apiError.error as ApiError))))
+  }
+
+  createQueryString(queryParams: { [key: string]: any }): string {
+    let params = new HttpParams();
+    for (const key in queryParams) { if (queryParams.hasOwnProperty(key)) { params = params.set(key, queryParams[key]) } }
+    return params.toString();
   }
 
   errorHandler(apiError: ApiError) {

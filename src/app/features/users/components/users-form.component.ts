@@ -24,7 +24,6 @@ export class UsersFormComponent {
 
   #title?: string
   #user = {}
-  #userId?: number
   #companiesRoles: any
 
   #rolesOptions: Option[] = []
@@ -85,7 +84,6 @@ export class UsersFormComponent {
   }
 
   updateFormValues(user: any) {
-
     this.currentActive = user.active === 1 ? ACTIVE_OPTIONS.find(op => op.id === 1) : ACTIVE_OPTIONS.find(op => op.id === 2)
     this.currentCompany = this.companiesOptions.find(c => c.id === user.company_id)
     this.currentRole = this.rolesOptions.find(r => r.id === user.role_id)
@@ -95,16 +93,14 @@ export class UsersFormComponent {
   }
 
   async onSubmit() {
-    if (this.command === 'new') {
+    if (!this.idIsTrue) {
       const response = await this.#httpUsers.saveData(this.currentValues)
       if (!(response as SuccessPOST).affectedRows) { return }
       return this.redirect()
     }
-    if (!isNaN(Number(this.command))) {
-      const response = await this.#httpUsers.updateData(this.userId as number, this.formDiff)
-      if (!(response as SuccessPATCH).affectedRows) { return }
-      return this.redirect()
-    }
+    const response = await this.#httpUsers.updateData({ company_id: parseInt(this.company_id as string), user_id: parseInt(this.user_id as string) }, this.currentValues)
+    if (!(response as SuccessPATCH).affectedRows) { return }
+    return this.redirect()
   }
 
   setCurrentOption(e: Option, control: string) {
@@ -143,16 +139,17 @@ export class UsersFormComponent {
   get user() { return this.#user }
   set user(value: any) { this.#user = value }
 
-  get userId() { return this.#userId }
-  set userId(value: number | undefined) { this.#userId = value }
-
   get title() { return this.#title }
   set title(value: string | undefined) { this.#title = value }
 
   get hasFilter() { return this.#route.snapshot.data[environment.FILTER] as boolean }
   get menuName() { return this.#route.snapshot.data[environment.MENU] as string }
 
-  get formDiff() { return this.#formService.getChangedValues() }
-  get originalValues() { return this.#formService.originalValues }
   get currentValues() { return this.#formService.currentForm.value }
+
+  get action() { return this.#route.snapshot.queryParamMap.get('action') }
+  get company_id() { return this.#route.snapshot.queryParamMap.get('company_id') }
+  get user_id() { return this.#route.snapshot.queryParamMap.get('user_id') }
+
+  get idIsTrue() { return (this.action != environment.NEW || this.action === null) && (!isNaN(parseInt(this.user_id as string)) && !isNaN(parseInt(this.company_id as string))) }
 }
