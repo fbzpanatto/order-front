@@ -48,8 +48,7 @@
     <div class="form-actions">
       <button class="medium-text clear-btn" type="button" [disabled]="form.pristine">
         <span><i class="fa-solid fa-eraser"></i></span>
-        @if(this.command === 'new'){ <span>Limpar</span> }
-        @else { <span>Desfazer</span> }
+        @if(!idIsTrue){ <span>Limpar</span> } @else { <span>Desfazer</span> }
       </button>
       <button class="medium-text" type="submit" [disabled]="!form.valid || form.pristine">
         <span><i class="fa-solid fa-floppy-disk"></i></span>

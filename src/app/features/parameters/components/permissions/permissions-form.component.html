@@ -4,7 +4,7 @@
 <form [formGroup]="form" (submit)="onSubmit()">
   <div class="inputs-container">
     <div class="fieldsets-container">
-      <fieldset >
+      <fieldset>
         <label class="medium-text fieldset-label" formGroupName="company">Empresa e Papel</label>
         <div class="input-container">
           <app-select [disabled]="idIsTrue ? true: false" [currOption]="currentCompany"
@@ -57,8 +57,7 @@
   <div class="form-actions">
     <button class="medium-text clear-btn" type="button" [disabled]="form.pristine">
       <span><i class="fa-solid fa-eraser"></i></span>
-      @if(!idIsTrue){ <span>Limpar</span> } @else {
-      <span>Desfazer</span> }
+      @if(!idIsTrue){ <span>Limpar</span> } @else { <span>Desfazer</span> }
     </button>
     <button class="medium-text" type="submit" [disabled]="!form.valid || form.pristine">
       <span><i class="fa-solid fa-floppy-disk"></i></span>

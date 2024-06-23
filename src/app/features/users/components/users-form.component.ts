@@ -41,6 +41,7 @@ export class UsersFormComponent {
   #httpUsers = inject(FetchUserService)
 
   form = this.#fb.group({
+    user_id: ['', {}],
     role_id: ['', {
       validators: [Validators.required]
     }],
@@ -48,14 +49,16 @@ export class UsersFormComponent {
       validators: [Validators.required]
     }],
     name: ['', {
+      validators: [Validators.required, Validators.minLength(8)]
+    }],
+    active: ['', {
       validators: [Validators.required]
     }],
-    active: [''],
     username: ['', {
-      validators: [Validators.required]
+      validators: [Validators.required, Validators.minLength(3)]
     }],
     password: ['', {
-      validators: [Validators.required]
+      validators: [Validators.required, Validators.minLength(8)]
     }],
   })
 
@@ -115,6 +118,7 @@ export class UsersFormComponent {
       this.rolesOptions = roles.map(r => { return { id: r.role_id, label: r.role_name, value: r.role_id } })
       this.currentRole = this.rolesOptions[0]
     }
+    this.form.get(control)?.markAsDirty()
   }
 
   titleSettings() { this.command !== 'new' ? this.title = 'Editando' : this.title = 'Novo usuário' }
