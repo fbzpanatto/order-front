@@ -67,6 +67,11 @@ export class UsersFormComponent {
     this.#formService.currentForm = this.form;
 
     await this.getCompanies()
+
+    if (this.idIsTrue) {
+      this.user = (await this.getByUserId({ company_id: parseInt(this.company_id as string), user_id: parseInt(this.user_id as string) }))
+      return this.user != undefined ? this.updateFormValues(this.user) : null
+    }
   }
 
   async getCompanies() {
@@ -74,7 +79,7 @@ export class UsersFormComponent {
     this.companiesOptions = this.companiesRoles.map((company: any) => { return { id: company.company_id, label: company.corporate_name, value: company.company_id } })
   }
 
-  async getByUserId(userId: number) { return (await this.#httpUsers.getById(userId) as SuccessGETbyId).data }
+  async getByUserId(queryParams: { [key: string]: any }) { return (await this.#httpUsers.getById(queryParams) as SuccessGETbyId).data }
 
   redirect() { this.#router.navigate(['/users']) }
 

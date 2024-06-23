@@ -2,7 +2,7 @@ export const environment = {
   API_URL: 'http://localhost:3000/',
   COMMAND: 'command',
   MENU: 'menu',
-  USERS: 'USERS',
+  USERS: 'users',
   FILTER: 'filter',
   FIELDS: 'fields',
   DEFAULT: 'default',
