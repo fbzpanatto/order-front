@@ -11,7 +11,7 @@ import { SelectComponent } from "../../../shared/components/select.component";
 import { FetchCompaniesService } from '../../../shared/services/fetchCompanies.service';
 import { FetchUserService } from '../../../shared/services/fetchUser.service';
 
-const ACTIVE_OPTIONS = [{ id: 1, label: 'Sim', value: true }, { id: 2, label: 'Não', value: false }]
+const ACTIVE_OPTIONS = [{ id: 1, label: 'Sim', value: 1 }, { id: 2, label: 'Não', value: 0 }]
 
 @Component({
   selector: 'app-users-form',
@@ -118,7 +118,7 @@ export class UsersFormComponent {
       this.rolesOptions = roles.map(r => { return { id: r.role_id, label: r.role_name, value: r.role_id } })
       this.currentRole = this.rolesOptions[0]
     }
-    this.form.get(control)?.markAsDirty()
+    Object.keys(this.formDiff).length ? this.form.markAsDirty() : this.form.markAsPristine()
   }
 
   titleSettings() { this.command !== 'new' ? this.title = 'Editando' : this.title = 'Novo usuário' }
@@ -154,6 +154,8 @@ export class UsersFormComponent {
   get hasFilter() { return this.#route.snapshot.data[environment.FILTER] as boolean }
   get menuName() { return this.#route.snapshot.data[environment.MENU] as string }
 
+  get formDiff() { return this.#formService.getChangedValues() }
+  get originalValues() { return this.#formService.originalValues }
   get currentValues() { return this.#formService.currentForm.value }
 
   get action() { return this.#route.snapshot.queryParamMap.get('action') }
