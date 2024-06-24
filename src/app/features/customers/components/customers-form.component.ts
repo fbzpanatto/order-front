@@ -69,7 +69,7 @@ export class CustomersFormComponent implements OnDestroy {
 
   async ngOnInit() {
 
-    this.#asideService.changeCustomerType(this.customerTypeUrlParam as string)
+    this.#asideService.changeCustomerType(this.customerQueryType as string)
 
     this.canProced()
     this.menuSettings()
@@ -239,7 +239,7 @@ export class CustomersFormComponent implements OnDestroy {
 
   get customerType() { return this.#asideService.customerType() }
   get command() { return this.#route.snapshot.paramMap.get('command') }
-  get customerTypeUrlParam() { return this.#route.snapshot.paramMap.get('type') }
+  get customerQueryType() { return this.#route.snapshot.queryParamMap.get('type') }
 
   get form() { return this.customerType === 'legal' ? ((this.legalForm) as any) : ((this.normalForm) as any) }
 

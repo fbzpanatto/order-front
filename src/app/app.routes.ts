@@ -23,7 +23,7 @@ export const routes: Routes = [
         data: { menu: 'default', filter: true },
       },
       {
-        path: ':type/:command',
+        path: 'form',
         loadComponent: () => import('./features/customers/components/customers-form.component').then((m) => m.CustomersFormComponent),
         data: { menu: 'default', filter: false, },
       },
@@ -35,10 +35,7 @@ export const routes: Routes = [
     children: [
       {
         path: '',
-        loadComponent: () =>
-          import('./features/orders/components/orders-list.component').then(
-            (m) => m.OrdersListComponent
-          ),
+        loadComponent: () => import('./features/orders/components/orders-list.component').then((m) => m.OrdersListComponent),
         data: {
           menu: 'default',
           filter: true,
@@ -46,10 +43,7 @@ export const routes: Routes = [
       },
       {
         path: ':command',
-        loadComponent: () =>
-          import('./features/orders/components/orders-form.component').then(
-            (m) => m.OrdersFormComponent
-          ),
+        loadComponent: () => import('./features/orders/components/orders-form.component').then((m) => m.OrdersFormComponent),
         data: {
           menu: 'default',
           filter: false,
@@ -63,10 +57,7 @@ export const routes: Routes = [
     children: [
       {
         path: '',
-        loadComponent: () =>
-          import('./features/products/components/products-list.component').then(
-            (m) => m.ProductsListComponent
-          ),
+        loadComponent: () => import('./features/products/components/products-list.component').then((m) => m.ProductsListComponent),
         data: {
           menu: 'default',
           filter: true,
@@ -74,10 +65,7 @@ export const routes: Routes = [
       },
       {
         path: ':command',
-        loadComponent: () =>
-          import('./features/products/components/products-form.component').then(
-            (m) => m.ProductsFormComponent
-          ),
+        loadComponent: () => import('./features/products/components/products-form.component').then((m) => m.ProductsFormComponent),
         data: {
           menu: 'default',
           filter: false,
@@ -108,10 +96,7 @@ export const routes: Routes = [
     children: [
       {
         path: '',
-        loadComponent: () =>
-          import(
-            './features/companies/components/companies-list.component'
-          ).then((m) => m.CompaniesListComponent),
+        loadComponent: () => import('./features/companies/components/companies-list.component').then((m) => m.CompaniesListComponent),
         // canActivate: [authGuard],
         data: {
           menu: 'settings',
@@ -120,10 +105,7 @@ export const routes: Routes = [
       },
       {
         path: ':command',
-        loadComponent: () =>
-          import(
-            './features/companies/components/companies-form.component'
-          ).then((m) => m.CompaniesFormComponent),
+        loadComponent: () => import('./features/companies/components/companies-form.component').then((m) => m.CompaniesFormComponent),
         data: {
           menu: 'settings',
           filter: false,
@@ -183,10 +165,7 @@ export const routes: Routes = [
       {
         path: 'production-status',
         title: 'Status de Produção',
-        loadComponent: () =>
-          import(
-            './features/parameters/components/production-status/production-status.component'
-          ).then((m) => m.ProductionStatusComponent),
+        loadComponent: () => import('./features/parameters/components/production-status/production-status.component').then((m) => m.ProductionStatusComponent),
         data: {
           menu: 'settings',
           filter: false,
@@ -203,10 +182,7 @@ export const routes: Routes = [
     path: 'auth',
     title: 'Login',
     outlet: 'login',
-    loadComponent: () =>
-      import('./features/login/components/login.component').then(
-        (m) => m.LoginComponent
-      ),
+    loadComponent: () => import('./features/login/components/login.component').then((m) => m.LoginComponent),
   },
   {
     path: '**',
