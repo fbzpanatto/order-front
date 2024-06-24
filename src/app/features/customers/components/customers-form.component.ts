@@ -77,11 +77,18 @@ export class CustomersFormComponent implements OnDestroy {
     this.menuSettings()
     this.titleSettings()
 
-    await this.getCompanies()
-
     this.#formService.originalValues = this.form.value;
     this.#formService.currentForm = this.form;
+
+    await this.getCompanies()
+
+    if (this.idIsTrue) {
+      this.customer = (await this.getByPersonId({ company_id: parseInt(this.company_id as string), person_id: parseInt(this.person_id as string) }))
+      return this.customer != undefined ? this.updateFormValues(this.customer) : null
+    }
   }
+
+  async getByPersonId(queryParams: { [key: string]: any }) { return (await this.#customersHttp.getById(queryParams) as SuccessGETbyId).data }
 
   async getCompanies() {
     const response = (await this.#companiesHttp.getAll({ custom_fields: true }) as SuccessGET)
@@ -146,8 +153,6 @@ export class CustomersFormComponent implements OnDestroy {
     this.contacts.updateValueAndValidity()
   }
 
-  async getByPersonId(personId: number) { return (await this.#customersHttp.getById(personId) as SuccessGETbyId).data }
-
   canProced() {
     return !((this.customerType && this.customerType === 'normal') || (this.customerType && this.customerType === 'legal')) ?
       this.redirect() : null
@@ -181,8 +186,8 @@ export class CustomersFormComponent implements OnDestroy {
   async removeContact(idx: number) {
 
     const contact = ((this.form as any).get('contacts') as FormArray).at(idx).value
-
-    if (contact.id != null) {
+    
+    if (contact.contact_id != null) {
       this.#dialogService.message = `Deseja remover ${contact.contact} ${contact.phone_number} da lista de contatos?`
       this.#dialogService.showDialog = true
 
@@ -206,7 +211,7 @@ export class CustomersFormComponent implements OnDestroy {
       if (!(response as SuccessPOST).affectedRows) { return }
       return this.redirect()
     }
-    const response = await this.#customersHttp.updateData({ company_id: parseInt(this.company_id as string), customer_id: parseInt(this.customer_id as string) }, this.formDiff)
+    const response = await this.#customersHttp.updateData({ company_id: parseInt(this.company_id as string), customer_id: parseInt(this.person_id as string) }, this.formDiff)
     if (!(response as SuccessPATCH).affectedRows) { return }
     return this.redirect()
   }
@@ -249,10 +254,10 @@ export class CustomersFormComponent implements OnDestroy {
   get menuName() { return this.#route.snapshot.data[environment.MENU] as string }
 
   get company_id() { return this.#route.snapshot.queryParamMap.get('company_id') }
-  get customer_id() { return this.#route.snapshot.queryParamMap.get('customer_id') }
+  get person_id() { return this.#route.snapshot.queryParamMap.get('person_id') }
   get action() { return this.#route.snapshot.queryParamMap.get('action') }
 
-  get idIsTrue() { return (this.action != environment.NEW || this.action === null) && (!isNaN(parseInt(this.customer_id as string)) && !isNaN(parseInt(this.company_id as string))) }
+  get idIsTrue() { return (this.action != environment.NEW || this.action === null) && (!isNaN(parseInt(this.person_id as string)) && !isNaN(parseInt(this.company_id as string))) }
 
   get company() {
     return {
@@ -333,7 +338,10 @@ export class CustomersFormComponent implements OnDestroy {
 
   get person() {
     return {
-      id: [null],
+      person_id: [null],
+      company_id: [null, {
+        Validators: [Validators.required]
+      }],
       observation: [null, {
         validators: [Validators.minLength(3), Validators.maxLength(45)],
       }],
@@ -345,10 +353,7 @@ export class CustomersFormComponent implements OnDestroy {
       }],
       third_field: [null, {
         validators: [Validators.minLength(3), Validators.maxLength(100)],
-      }],
-      company_id: [null, {
-        Validators: [Validators.required]
-      }],
+      }]
     }
   }
 }
