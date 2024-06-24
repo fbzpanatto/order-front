@@ -36,7 +36,7 @@ export class FetchCustomerService {
 
   async updateData(queryParams: { [key: string]: any }, body: { [key: string]: any }) {
     return await firstValueFrom(
-      this.#http.patch(this.fullResource + `?${this.createQueryString(queryParams)}`, body)
+      this.#http.patch(this.fullResource + '/patch' + `?${this.createQueryString(queryParams)}`, body)
         .pipe(catchError((apiError) => this.errorHandler(apiError.error as ApiError))))
   }
 

@@ -174,8 +174,8 @@ export class CustomersFormComponent implements OnDestroy {
     this.contacts.updateValueAndValidity()
     const formArray = this.#fb.group({
       contact_id: [null],
-      person_id: [this.customerId ?? null],
-      company_id: this.form.get('person.company_id').value,
+      person_id: [parseInt(this.person_id as string) ?? null],
+      company_id: [parseInt(this.company_id as string) ?? null],
       contact: [null],
       phone_number: [null]
     })
@@ -186,7 +186,7 @@ export class CustomersFormComponent implements OnDestroy {
   async removeContact(idx: number) {
 
     const contact = ((this.form as any).get('contacts') as FormArray).at(idx).value
-    
+
     if (contact.contact_id != null) {
       this.#dialogService.message = `Deseja remover ${contact.contact} ${contact.phone_number} da lista de contatos?`
       this.#dialogService.showDialog = true
@@ -195,7 +195,7 @@ export class CustomersFormComponent implements OnDestroy {
 
       subscription = this.#dialogService.subject.subscribe(async value => {
         if (!value) { return }
-        const response = await this.#customersHttp.deleteContact(contact.person_id, contact.id)
+        const response = await this.#customersHttp.deleteContact(contact.person_id, contact.contact_id)
         if (!(response as SuccessDELETE).affectedRows) { return }
         return ((this.form as any).get('contacts') as FormArray).removeAt(idx)
       })
@@ -211,7 +211,7 @@ export class CustomersFormComponent implements OnDestroy {
       if (!(response as SuccessPOST).affectedRows) { return }
       return this.redirect()
     }
-    const response = await this.#customersHttp.updateData({ company_id: parseInt(this.company_id as string), customer_id: parseInt(this.person_id as string) }, this.formDiff)
+    const response = await this.#customersHttp.updateData({ company_id: parseInt(this.company_id as string), person_id: parseInt(this.person_id as string) }, this.formDiff)
     if (!(response as SuccessPATCH).affectedRows) { return }
     return this.redirect()
   }
@@ -235,9 +235,6 @@ export class CustomersFormComponent implements OnDestroy {
 
   get customFields() { return this.#customFields }
   set customFields(value: CustomFields[] | undefined) { this.#customFields = value }
-
-  get customerId() { return this.#customerId }
-  set customerId(value: number | undefined) { this.#customerId = value }
 
   get customer() { return this.#customer }
   set customer(value: any) { this.#customer = value }
