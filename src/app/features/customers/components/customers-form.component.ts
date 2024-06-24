@@ -116,10 +116,12 @@ export class CustomersFormComponent implements OnDestroy {
   }
 
   async setCurrentOption(e: Option, control: string) {
-    if (control === 'person.company_id') {
+    if (control === 'person.company_id' && this.form.get(control).value != e.value) {
 
       const response = ((await this.getCustomFields(e.value) as SuccessGET).data) as CustomFields[]
       if (response) { this.customFields = response }
+
+      for (let contact of this.contacts.value) { contact.company_id = e.value }
 
       const company = this.#arrayOfCompanies.find(c => c.company_id === e.value)
 
