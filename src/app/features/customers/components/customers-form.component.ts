@@ -119,6 +119,7 @@ export class CustomersFormComponent implements OnDestroy {
     if (control === 'person.company_id' && this.form.get(control).value != e.value) {
 
       const response = ((await this.getCustomFields(e.value) as SuccessGET).data) as CustomFields[]
+
       if (response) { this.customFields = response }
 
       for (let contact of this.contacts.value) { contact.company_id = e.value }
