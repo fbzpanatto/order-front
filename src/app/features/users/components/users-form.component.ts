@@ -8,8 +8,8 @@ import { FormService } from '../../../shared/services/form.service';
 import { SuccessGET, SuccessGETbyId, SuccessPATCH, SuccessPOST } from '../../../shared/interfaces/response/response';
 import { Option } from '../../../shared/components/select.component';
 import { SelectComponent } from "../../../shared/components/select.component";
-import { FetchCompaniesService } from '../../../shared/services/fetchCompanies.service';
 import { FetchUserService } from '../../../shared/services/fetchUser.service';
+import { FetchCompaniesService } from '../../../shared/services/fetchCompanies.service';
 
 const ACTIVE_OPTIONS = [{ id: 1, label: 'Sim', value: 1 }, { id: 2, label: 'Não', value: 0 }]
 
@@ -37,8 +37,8 @@ export class UsersFormComponent {
   #route = inject(ActivatedRoute)
   #formService = inject(FormService)
   #toolbarMenuService = inject(ToolbarMenuService)
+  #http = inject(FetchUserService)
   #httpCompanies = inject(FetchCompaniesService)
-  #httpUsers = inject(FetchUserService)
 
   form = this.#fb.group({
     user_id: ['', {}],
@@ -69,20 +69,15 @@ export class UsersFormComponent {
     this.#formService.originalValues = this.form.value;
     this.#formService.currentForm = this.form;
 
-    await this.getCompanies()
-
     if (this.idIsTrue) {
-      this.user = (await this.getByUserId({ company_id: parseInt(this.company_id as string), user_id: parseInt(this.user_id as string) }))
-      return this.user != undefined ? this.updateFormValues(this.user) : null
+      const response = await this.getByUserId({ company_id: parseInt(this.company_id as string), user_id: parseInt(this.user_id as string), roles: true })
+      return this.user != undefined ? this.updateFormValues(response) : null
     }
+
+    await this.getCompanies()
   }
 
-  async getCompanies() {
-    this.companiesRoles = ((await this.#httpCompanies.getAll('?roles=true') as SuccessGET).data) as any
-    this.companiesOptions = this.companiesRoles.map((company: any) => { return { id: company.company_id, label: company.corporate_name, value: company.company_id } })
-  }
-
-  async getByUserId(queryParams: { [key: string]: any }) { return (await this.#httpUsers.getById(queryParams) as SuccessGETbyId).data }
+  async getByUserId(queryParams: { [key: string]: any }) { return (await this.#http.getById(queryParams) as SuccessGETbyId) }
 
   redirect() { this.#router.navigate(['/users']) }
 
@@ -91,22 +86,31 @@ export class UsersFormComponent {
     this.#toolbarMenuService.hasFilter = this.hasFilter
   }
 
-  updateFormValues(user: any) {
-    this.currentActive = user.active === 1 ? ACTIVE_OPTIONS.find(op => op.id === 1) : ACTIVE_OPTIONS.find(op => op.id === 2)
-    this.currentCompany = this.companiesOptions.find(c => c.id === user.company_id)
-    this.currentRole = this.rolesOptions.find(r => r.id === user.role_id)
+  async getCompanies() {
+    this.companiesRoles = ((await this.#httpCompanies.getAll('?roles=true') as SuccessGET).data) as any
+    this.companiesOptions = this.companiesRoles.map((company: any) => { return { id: company.company_id, label: company.corporate_name, value: company.company_id } })
+  }
 
-    this.form.patchValue(user)
+  updateFormValues(response: any) {
+    this.companiesRoles = response.meta.companyRoles
+    this.companiesOptions = this.companiesRoles.map((company: any) => { return { id: company.company_id, label: company.corporate_name, value: company.company_id } })
+
+    this.currentActive = response.active === 1 ? ACTIVE_OPTIONS.find(op => op.id === 1) : ACTIVE_OPTIONS.find(op => op.id === 2)
+
+    this.currentCompany = this.companiesOptions.find(c => c.id === response.data.company_id)
+    this.currentRole = this.rolesOptions.find(r => r.id === response.data.role_id)
+
+    this.form.patchValue(response.data)
     this.#formService.originalValues = this.form.value;
   }
 
   async onSubmit() {
     if (!this.idIsTrue) {
-      const response = await this.#httpUsers.saveData(this.currentValues)
+      const response = await this.#http.saveData(this.currentValues)
       if (!(response as SuccessPOST).affectedRows) { return }
       return this.redirect()
     }
-    const response = await this.#httpUsers.updateData({ company_id: parseInt(this.company_id as string), user_id: parseInt(this.user_id as string) }, this.currentValues)
+    const response = await this.#http.updateData({ company_id: parseInt(this.company_id as string), user_id: parseInt(this.user_id as string) }, this.currentValues)
     if (!(response as SuccessPATCH).affectedRows) { return }
     return this.redirect()
   }
