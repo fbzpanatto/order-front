@@ -101,8 +101,9 @@ export class CustomersFormComponent implements OnDestroy {
 
     for (let contact of body.contacts) {
       const formArray = this.#fb.group({
-        id: [contact.id],
         person_id: [contact.person_id],
+        company_id: [contact.company_id],
+        contact_id: [contact.contact_id],
         contact: new FormControl(contact.contact, { validators: [Validators.required, Validators.minLength(3), Validators.maxLength(20)] }),
         phone_number: new FormControl(contact.phone_number, { validators: [Validators.required, Validators.minLength(10), Validators.maxLength(14), Validators.pattern(/^\d+$/)] })
       })
@@ -121,6 +122,10 @@ export class CustomersFormComponent implements OnDestroy {
       if (response) { this.customFields = response }
 
       const company = this.#arrayOfCompanies.find(c => c.company_id === e.value)
+
+      this.form.get('customer.company_id').patchValue(company?.company_id)
+      this.form.get('address.company_id').patchValue(company?.company_id)
+
       this.form.get(control).patchValue(company?.company_id)
       this.form.get('company.cnpj').patchValue(company?.cnpj)
       this.form.get('company.social_name').patchValue(company?.social_name)
@@ -151,7 +156,7 @@ export class CustomersFormComponent implements OnDestroy {
   }
 
   titleSettings() {
-    if (this.command !== 'new') { this.title = 'Editando' }
+    if (this.action !== 'new') { this.title = 'Editando' }
     else { this.title = this.customerType === 'legal' ? 'Novo cliente Jurídico' : 'Novo cliente Físico' }
   }
 
@@ -160,8 +165,9 @@ export class CustomersFormComponent implements OnDestroy {
   addContact() {
     this.contacts.updateValueAndValidity()
     const formArray = this.#fb.group({
-      id: [null],
+      contact_id: [null],
       person_id: [this.customerId ?? null],
+      company_id: this.form.get('person.company_id').value,
       contact: [null],
       phone_number: [null]
     })
@@ -192,16 +198,14 @@ export class CustomersFormComponent implements OnDestroy {
   }
 
   async onSubmit() {
-    if (this.command === 'new') {
+    if (!this.idIsTrue) {
       const response = await this.#customersHttp.saveData(this.formDiff)
       if (!(response as SuccessPOST).affectedRows) { return }
       return this.redirect()
     }
-    if (!isNaN(Number(this.command))) {
-      const response = await this.#customersHttp.updateData(this.customerId as number, this.formDiff)
-      if (!(response as SuccessPATCH).affectedRows) { return }
-      return this.redirect()
-    }
+    const response = await this.#customersHttp.updateData({ company_id: parseInt(this.company_id as string), customer_id: parseInt(this.customer_id as string) }, this.formDiff)
+    if (!(response as SuccessPATCH).affectedRows) { return }
+    return this.redirect()
   }
 
   isNumeric(str: string): boolean { return str.match(/^\d+$/) !== null }
@@ -234,13 +238,18 @@ export class CustomersFormComponent implements OnDestroy {
   set title(value: string | undefined) { this.#title = value }
 
   get customerType() { return this.#asideService.customerType() }
-  get command() { return this.#route.snapshot.paramMap.get('command') }
   get customerQueryType() { return this.#route.snapshot.queryParamMap.get('type') }
 
   get form() { return this.customerType === 'legal' ? ((this.legalForm) as any) : ((this.normalForm) as any) }
 
   get hasFilter() { return this.#route.snapshot.data[environment.FILTER] as boolean }
   get menuName() { return this.#route.snapshot.data[environment.MENU] as string }
+
+  get company_id() { return this.#route.snapshot.queryParamMap.get('company_id') }
+  get customer_id() { return this.#route.snapshot.queryParamMap.get('customer_id') }
+  get action() { return this.#route.snapshot.queryParamMap.get('action') }
+
+  get idIsTrue() { return (this.action != environment.NEW || this.action === null) && (!isNaN(parseInt(this.customer_id as string)) && !isNaN(parseInt(this.company_id as string))) }
 
   get company() {
     return {
@@ -253,6 +262,9 @@ export class CustomersFormComponent implements OnDestroy {
   get legalCustomer() {
     return {
       person_id: [null],
+      company_id: [null, {
+        Validators: [Validators.required]
+      }],
       cnpj: [null, {
         validators: [Validators.required, Validators.minLength(14), Validators.maxLength(14), Validators.pattern(/^\d+$/)],
       }],
@@ -271,6 +283,9 @@ export class CustomersFormComponent implements OnDestroy {
   get normalCustomer() {
     return {
       person_id: [null],
+      company_id: [null, {
+        Validators: [Validators.required]
+      }],
       cpf: [null, {
         validators: [Validators.required, Validators.minLength(11), Validators.maxLength(11), Validators.pattern(/^\d+$/)],
       }],
@@ -289,6 +304,9 @@ export class CustomersFormComponent implements OnDestroy {
   get address() {
     return {
       person_id: [null],
+      company_id: [null, {
+        Validators: [Validators.required]
+      }],
       add_street: [null, {
         validators: [Validators.required, Validators.minLength(3), Validators.maxLength(100)],
       }],
