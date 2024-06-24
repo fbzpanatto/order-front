@@ -126,13 +126,34 @@
         </fieldset>
         <fieldset [formGroup]="form.controls.person">
           <label class="medium-text fieldset-label">Dados complementares</label>
-          @for(field of customFields; track field.id) {
-          <div class="input-container">
-            <label class="light-text" [for]="field.field">{{ field.label }}</label>
-            <span><i class="fa-solid fa-pen-to-square"></i></span>
-            <input maxlength="45" [formControlName]="field.field" class="medium-text" [id]="field.field"
-              [name]="field.field" type="text" [placeholder]="field.label.toLocaleLowerCase()">
-          </div>
+          @if(customFields){
+            @for(field of customFields; track field.id) {
+            <div class="input-container">
+              <label class="light-text" [for]="field.field">{{ field.label }}</label>
+              <span><i class="fa-solid fa-pen-to-square"></i></span>
+              <input maxlength="45" [formControlName]="field.field" class="medium-text" [id]="field.field"
+                [name]="field.field" type="text" [placeholder]="field.label.toLocaleLowerCase()">
+            </div>
+            }
+          } @else {
+            <div class="input-container">
+              <label class="light-text" for="first_field">Primeiro campo</label>
+              <span><i class="fa-solid fa-pen-to-square"></i></span>
+              <input maxlength="45" formControlName="first_field" class="medium-text" id="first_field" name="first_field"
+                type="text" placeholder="primeiro campo">
+            </div>
+            <div class="input-container">
+              <label class="light-text" for="second_field">Segundo campo</label>
+              <span><i class="fa-solid fa-pen-to-square"></i></span>
+              <input maxlength="45" formControlName="second_field" class="medium-text" id="second_field" name="second_field"
+                type="text" placeholder="segundo campo">
+            </div>
+            <div class="input-container">
+              <label class="light-text" for="third_field">Terceiro campo</label>
+              <span><i class="fa-solid fa-pen-to-square"></i></span>
+              <input maxlength="45" formControlName="third_field" class="medium-text" id="third_field" name="third_field"
+                type="text" placeholder="terceiro campo">
+            </div>
           }
           <div class="input-container">
             <label class="light-text" for="observation">Observação</label>

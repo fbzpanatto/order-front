@@ -33,7 +33,7 @@ export class FieldsListComponent {
     await this.getAll()
   }
 
-  async getAll() { this.fields = ((await this.#http.getAll() as SuccessGET).data) as Field[] }
+  async getAll() { this.fields = ((await this.#http.getAll({}) as SuccessGET).data) as Field[] }
 
   asideFilters() { this.#asideService.getResourceFilters(this.path) }
 

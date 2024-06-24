@@ -33,7 +33,7 @@ export class CompaniesListComponent {
     await this.getAll()
   }
 
-  async getAll() { this.companiesArray = ((await this.#http.getAll() as SuccessGET).data) as Company[] }
+  async getAll() { this.companiesArray = ((await this.#http.getAll({}) as SuccessGET).data) as Company[] }
 
   asideFilters() { this.#asideService.getResourceFilters(this.path) }
 

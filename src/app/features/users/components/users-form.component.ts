@@ -79,7 +79,7 @@ export class UsersFormComponent {
   }
 
   async getCompanies() {
-    this.companiesRoles = (await this.#httpCompanies.getAll('?roles=true') as SuccessGET).data
+    this.companiesRoles = (await this.#httpCompanies.getAll({ roles: true }) as SuccessGET).data
     this.companiesOptions = this.companiesRoles.map((company: CompanyRoles) => { return { id: company.company_id, label: company.corporate_name, value: company.company_id } })
   }
 

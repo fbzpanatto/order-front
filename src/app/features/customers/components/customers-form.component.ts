@@ -14,6 +14,7 @@ import { Company } from '../../companies/components/companies-list.component';
 import { FetchCompaniesService } from '../../../shared/services/fetchCompanies.service';
 import { SelectComponent } from '../../../shared/components/select.component';
 import { Option } from '../../../shared/components/select.component';
+import { FetchFieldService } from '../../../shared/services/fetchField.service';
 
 interface CustomFields { id: number, table: string, field: string, label: string }
 
@@ -45,6 +46,7 @@ export class CustomersFormComponent implements OnDestroy {
   #formService = inject(FormService)
   #asideService = inject(AsideService)
   #dialogService = inject(DialogService)
+  #fieldsHttp = inject(FetchFieldService)
   #customersHttp = inject(FetchCustomerService)
   #companiesHttp = inject(FetchCompaniesService)
   #toolbarMenuService = inject(ToolbarMenuService)
@@ -79,18 +81,10 @@ export class CustomersFormComponent implements OnDestroy {
 
     this.#formService.originalValues = this.form.value;
     this.#formService.currentForm = this.form;
-
-    if (!isNaN(Number(this.command))) {
-      this.customerId = parseInt(this.command as string)
-      this.customer = await this.getByPersonId(this.customerId)
-      return this.customer != undefined ? this.updateFormValues(this.customer) : null
-    }
-
-    if (this.command != 'new') { return this.redirect() }
   }
 
   async getCompanies() {
-    const response = (await this.#companiesHttp.getAll('?customFields=true') as SuccessGET)
+    const response = (await this.#companiesHttp.getAll({ custom_fields: true }) as SuccessGET)
     this.#arrayOfCompanies = response.data as Company[]
     this.companies = ((response.data) as Company[]).map((company) => { return { id: company.company_id, label: company.corporate_name, value: company.company_id } })
     this.customFields = response.meta.extra
@@ -120,8 +114,12 @@ export class CustomersFormComponent implements OnDestroy {
     this.#formService.originalValues = this.form.value;
   }
 
-  setCurrentOption(e: Option, control: string) {
+  async setCurrentOption(e: Option, control: string) {
     if (control === 'person.company_id') {
+
+      const response = ((await this.getCustomFields(e.value) as SuccessGET).data) as CustomFields[]
+      this.customFields = response
+
       const company = this.#arrayOfCompanies.find(c => c.company_id === e.value)
       this.form.get(control).patchValue(company?.company_id)
       this.form.get('company.cnpj').patchValue(company?.cnpj)
@@ -129,6 +127,8 @@ export class CustomersFormComponent implements OnDestroy {
       this.form.get('company.corporate_name').patchValue(company?.corporate_name)
     }
   }
+
+  async getCustomFields(company_id: number) { return this.#fieldsHttp.getAll({ custom_fields: true, company_id }) }
 
   setContacts(contacts: any[]) {
     const contactFGs = contacts.map(contact => this.#fb.group(contact));

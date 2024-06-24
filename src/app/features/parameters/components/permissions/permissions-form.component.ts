@@ -81,7 +81,7 @@ export class PermissionsFormComponent implements OnDestroy {
   }
 
   async getCompanies() {
-    const response = (await this.#companiesHttp.getAll() as SuccessGET)
+    const response = (await this.#companiesHttp.getAll({}) as SuccessGET)
     this.#arrayOfCompanies = response.data as Company[]
     this.companies = ((response.data) as Company[]).map((company) => { return { id: company.company_id, label: company.corporate_name, value: company.company_id } })
   }

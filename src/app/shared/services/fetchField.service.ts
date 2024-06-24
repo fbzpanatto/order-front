@@ -11,9 +11,10 @@ export class FetchFieldService {
 
   #http = inject(HttpClient)
 
-  async getAll() {
+  async getAll(queryParams: { [key: string]: any }) {
+    console.log(queryParams)
     return await firstValueFrom(
-      this.#http.get(this.fullResource)
+      this.#http.get(this.fullResource + `?${this.createQueryString(queryParams)}`)
         .pipe(catchError((apiError) => this.errorHandler(apiError.error as ApiError))))
   }
 
