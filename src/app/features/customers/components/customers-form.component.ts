@@ -118,7 +118,7 @@ export class CustomersFormComponent implements OnDestroy {
     if (control === 'person.company_id') {
 
       const response = ((await this.getCustomFields(e.value) as SuccessGET).data) as CustomFields[]
-      this.customFields = response
+      if (response) { this.customFields = response }
 
       const company = this.#arrayOfCompanies.find(c => c.company_id === e.value)
       this.form.get(control).patchValue(company?.company_id)
@@ -158,18 +158,14 @@ export class CustomersFormComponent implements OnDestroy {
   redirect() { this.#router.navigate(['/customers']) }
 
   addContact() {
-
     this.contacts.updateValueAndValidity()
-
     const formArray = this.#fb.group({
       id: [null],
       person_id: [this.customerId ?? null],
       contact: [null],
       phone_number: [null]
     })
-
     this.contacts.push(formArray)
-
     return
   }
 
