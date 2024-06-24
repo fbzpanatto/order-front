@@ -11,7 +11,9 @@ import { SelectComponent } from "../../../shared/components/select.component";
 import { FetchUserService } from '../../../shared/services/fetchUser.service';
 import { FetchCompaniesService } from '../../../shared/services/fetchCompanies.service';
 
+interface CompanyRoles { company_id: number, corporate_name: string, roles: [{ role_id: number, role_name: string }] }
 const ACTIVE_OPTIONS = [{ id: 1, label: 'Sim', value: 1 }, { id: 2, label: 'Não', value: 0 }]
+
 
 @Component({
   selector: 'app-users-form',
@@ -24,7 +26,7 @@ export class UsersFormComponent {
 
   #title?: string
   #user = {}
-  #companiesRoles: any
+  #companiesRoles: CompanyRoles[] = []
 
   #rolesOptions: Option[] = []
   #companiesOptions: Option[] = []
@@ -77,8 +79,8 @@ export class UsersFormComponent {
   }
 
   async getCompanies() {
-    this.companiesRoles = ((await this.#httpCompanies.getAll('?roles=true') as SuccessGET).data) as any
-    this.companiesOptions = this.companiesRoles.map((company: any) => { return { id: company.company_id, label: company.corporate_name, value: company.company_id } })
+    this.companiesRoles = (await this.#httpCompanies.getAll('?roles=true') as SuccessGET).data
+    this.companiesOptions = this.companiesRoles.map((company: CompanyRoles) => { return { id: company.company_id, label: company.corporate_name, value: company.company_id } })
   }
 
   async getByUserId(queryParams: { [key: string]: any }) { return (await this.#http.getById(queryParams) as SuccessGETbyId) }
