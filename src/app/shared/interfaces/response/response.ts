@@ -7,7 +7,7 @@ export interface SuccessGET {
 
 export interface SuccessGETbyId {
   status: number,
-  messagem: string,
+  message: string,
   data: {}
 }
 

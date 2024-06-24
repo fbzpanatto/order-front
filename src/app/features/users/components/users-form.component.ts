@@ -73,17 +73,7 @@ export class UsersFormComponent {
       const response = await this.getByUserId({ company_id: parseInt(this.company_id as string), user_id: parseInt(this.user_id as string), roles: true })
       return this.user != undefined ? this.updateFormValues(response) : null
     }
-
     await this.getCompanies()
-  }
-
-  async getByUserId(queryParams: { [key: string]: any }) { return (await this.#http.getById(queryParams) as SuccessGETbyId) }
-
-  redirect() { this.#router.navigate(['/users']) }
-
-  menuSettings() {
-    this.#toolbarMenuService.menuName = this.menuName
-    this.#toolbarMenuService.hasFilter = this.hasFilter
   }
 
   async getCompanies() {
@@ -91,17 +81,27 @@ export class UsersFormComponent {
     this.companiesOptions = this.companiesRoles.map((company: any) => { return { id: company.company_id, label: company.corporate_name, value: company.company_id } })
   }
 
+  async getByUserId(queryParams: { [key: string]: any }) { return (await this.#http.getById(queryParams) as SuccessGETbyId) }
+
+  menuSettings() {
+    this.#toolbarMenuService.menuName = this.menuName
+    this.#toolbarMenuService.hasFilter = this.hasFilter
+  }
+
   updateFormValues(response: any) {
-    this.companiesRoles = response.meta.companyRoles
-    this.companiesOptions = this.companiesRoles.map((company: any) => { return { id: company.company_id, label: company.corporate_name, value: company.company_id } })
-
-    this.currentActive = response.active === 1 ? ACTIVE_OPTIONS.find(op => op.id === 1) : ACTIVE_OPTIONS.find(op => op.id === 2)
-
-    this.currentCompany = this.companiesOptions.find(c => c.id === response.data.company_id)
-    this.currentRole = this.rolesOptions.find(r => r.id === response.data.role_id)
+    this.settingSelectOptions(response)
 
     this.form.patchValue(response.data)
     this.#formService.originalValues = this.form.value;
+  }
+
+  settingSelectOptions(response: any) {
+    this.companiesRoles = response.meta.companyRoles
+    this.companiesOptions = this.companiesRoles.map((company: any) => { return { id: company.company_id, label: company.corporate_name, value: company.company_id } })
+
+    this.currentActive = response.data.active === 1 ? ACTIVE_OPTIONS.find(op => op.id === 1) : ACTIVE_OPTIONS.find(op => op.id === 2)
+    this.currentCompany = this.companiesOptions.find(c => c.id === response.data.company_id)
+    this.currentRole = this.rolesOptions.find(r => r.id === response.data.role_id)
   }
 
   async onSubmit() {
@@ -124,6 +124,8 @@ export class UsersFormComponent {
     }
     Object.keys(this.formDiff).length ? this.form.markAsDirty() : this.form.markAsPristine()
   }
+
+  redirect() { this.#router.navigate(['/users']) }
 
   titleSettings() { this.command !== 'new' ? this.title = 'Editando' : this.title = 'Novo usuário' }
 
