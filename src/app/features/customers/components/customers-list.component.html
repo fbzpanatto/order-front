@@ -1,10 +1,7 @@
 <div class="container">
   <div class="title-bar">
-    @if(customerType() === 'legal') {
-    <h1>Clientes Jurídicos</h1>
-    }@else {
-    <h1>Clientes Físicos</h1>
-    }
+    @if(customerType() === 'legal') { <h1>Clientes Jurídicos</h1> }
+    @else { <h1>Clientes Físicos</h1> }
     <button class="menu-item medium-text" (click)="navigateTo({ type: customerType(), action: 'new' })">
       <span><i class="fa-solid fa-plus"></i></span>
       <span>Novo</span>
@@ -23,7 +20,7 @@
         </tr>
       </thead>
       <tbody>
-        @for (item of customersArray; track item.person_id) {
+        @for (item of customersArray; track $index) {
         <tr (click)="navigateTo({ type: customerType(), company_id: item.company_id, person_id: item.person_id })">
           <td class="medium-text">{{ item.person_id }}</td>
           <td class="medium-text">{{ item.corporate_name }}</td>
@@ -31,11 +28,9 @@
           <td class="medium-text">{{ item.cnpj }}</td>
           <td class="medium-text">{{ item.state_registration }}</td>
         </tr>
-        } @empty {
-        <tr>
+        } @empty { <tr>
           <td class="medium-text" [colSpan]="5">Sem dados a exibir</td>
-        </tr>
-        }
+        </tr> }
       </tbody>
     </table>
     }@else {
@@ -50,7 +45,7 @@
         </tr>
       </thead>
       <tbody>
-        @for (item of customersArray; track item.person_id) {
+        @for (item of customersArray; track $index) {
         <tr [routerLink]="customerType() + '/' + item.person_id">
           <td class="medium-text">{{ item.person_id }}</td>
           <td class="medium-text">{{ item.first_name }}</td>

@@ -198,9 +198,7 @@ export class CustomersFormComponent implements OnDestroy {
           if (!(response as SuccessDELETE).affectedRows) { return }
           return ((this.form as any).get('contacts') as FormArray).removeAt(idx)
         })
-      return
-    }
-    ((this.form as any).get('contacts') as FormArray).removeAt(idx)
+    } else { ((this.form as any).get('contacts') as FormArray).removeAt(idx) }
   }
 
   async onSubmit() {

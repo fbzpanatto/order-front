@@ -20,9 +20,6 @@ export class FetchCustomerService {
   }
 
   async getById(queryParams: { [key: string]: any }) {
-
-    console.log('customerType', this.customerType)
-
     return await firstValueFrom(
       this.#http.get(this.fullResource + '/select' + `?${this.createQueryString(queryParams)}`)
         .pipe(catchError((apiError) => this.errorHandler(apiError.error as ApiError))))
