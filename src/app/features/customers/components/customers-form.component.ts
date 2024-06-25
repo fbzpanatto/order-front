@@ -73,15 +73,14 @@ export class CustomersFormComponent implements OnDestroy {
     this.menuSettings()
     this.titleSettings()
 
-    this.#formService.originalValues = this.form.value;
-    this.#formService.currentForm = this.form;
-
     await this.getCompanies()
 
     if (this.idIsTrue) {
       this.customer = (await this.getByPersonId({ company_id: parseInt(this.company_id as string), person_id: parseInt(this.person_id as string) }))
       return this.customer != undefined ? this.updateFormValues(this.customer) : null
     }
+
+    this.#formService.originalValues = this.form.value;
   }
 
   async getByPersonId(queryParams: { [key: string]: any }) { return (await this.#customersHttp.getById(queryParams) as SuccessGETbyId).data }
@@ -96,6 +95,8 @@ export class CustomersFormComponent implements OnDestroy {
   ngOnDestroy(): void { this.#formService.originalValues = {} }
 
   updateFormValues(body: any) {
+
+    this.form.patchValue(body);
 
     this.currentCompany = this.companies.find(c => c.id === body.person.company_id)
 
@@ -122,8 +123,8 @@ export class CustomersFormComponent implements OnDestroy {
       this.segments.updateValueAndValidity()
     }
 
-    this.form.patchValue(body);
     this.#formService.originalValues = this.form.value;
+    this.#formService.currentForm = this.form;
   }
 
   async setCurrentOption(e: Option, control: string) {
