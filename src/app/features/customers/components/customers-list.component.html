@@ -46,7 +46,7 @@
       </thead>
       <tbody>
         @for (item of customersArray; track $index) {
-        <tr [routerLink]="customerType() + '/' + item.person_id">
+        <tr (click)="navigateTo({ type: customerType(), company_id: item.company_id, person_id: item.person_id })">
           <td class="medium-text">{{ item.company_name }}</td>
           <td class="medium-text">{{ item.first_name }}</td>
           <td class="medium-text">{{ item.middle_name }}</td>

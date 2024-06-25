@@ -173,8 +173,8 @@ export class CustomersFormComponent implements OnDestroy {
     this.contacts.updateValueAndValidity()
     const formArray = this.#fb.group({
       contact_id: [null],
-      person_id: [parseInt(this.person_id as string) ?? null],
-      company_id: [parseInt(this.company_id as string) ?? null],
+      person_id: [this.form.get('person.person_id').value ?? null],
+      company_id: [this.form.get('person.company_id').value ?? null],
       contact: [null],
       phone_number: [null]
     })
