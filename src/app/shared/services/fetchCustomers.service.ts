@@ -37,7 +37,7 @@ export class FetchCustomerService {
         .pipe(catchError((apiError) => this.errorHandler(apiError.error as ApiError))))
   }
 
-  async deleteContact(queryParams: { [key: string]: any }) {
+  async delete(queryParams: { [key: string]: any }) {
     return await firstValueFrom(
       this.#http.delete(this.fullResource + `?${this.createQueryString(queryParams)}`)
         .pipe(catchError((apiError) => this.errorHandler(apiError.error as ApiError))))
