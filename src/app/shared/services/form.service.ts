@@ -33,11 +33,19 @@ export class FormService {
         } else if (original[key] !== current[key]) {
           differences[key] = current[key];
         }
+        // Preserve properties with "_id" in their name
+        if (key.includes('_id')) {
+          differences[key] = current[key];
+        }
       }
     }
 
     for (const key of Object.keys(current)) {
       if (!original.hasOwnProperty(key)) {
+        differences[key] = current[key];
+      }
+      // Ensure new "_id" properties are also preserved
+      if (key.includes('_id')) {
         differences[key] = current[key];
       }
     }

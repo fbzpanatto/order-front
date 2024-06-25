@@ -29,11 +29,6 @@ export class CustomersFormComponent implements OnDestroy {
 
   destroyRef = inject(DestroyRef)
 
-  contactNameControl = new FormControl<string>('')
-  contactPhoneControl = new FormControl<string>('')
-
-  segmentControl = new FormControl<string>('')
-
   #customer = {}
   #title?: string
   #customFields?: CustomFields[]
@@ -41,8 +36,8 @@ export class CustomersFormComponent implements OnDestroy {
   #companies: Option[] = []
   #arrayOfCompanies: Company[] = []
 
-  #fb = inject(FormBuilder)
   #router = inject(Router)
+  #fb = inject(FormBuilder)
   #route = inject(ActivatedRoute)
   #formService = inject(FormService)
   #asideService = inject(AsideService)
@@ -116,6 +111,17 @@ export class CustomersFormComponent implements OnDestroy {
       this.contacts.updateValueAndValidity()
     }
 
+    for (let segment of body.segments) {
+      const formArray = this.#fb.group({
+        person_id: [segment.person_id],
+        company_id: [segment.company_id],
+        segment_id: [segment.segment_id],
+        segment: new FormControl(segment.name),
+      })
+      this.segments.push(formArray)
+      this.segments.updateValueAndValidity()
+    }
+
     this.form.patchValue(body);
     this.#formService.originalValues = this.form.value;
   }
@@ -160,11 +166,11 @@ export class CustomersFormComponent implements OnDestroy {
 
   async onSubmit() {
     if (!this.idIsTrue) {
-      const response = await this.#customersHttp.saveData(this.currentValues)
+      const response = await this.#customersHttp.saveData(this.formDiff)
       if (!(response as SuccessPOST).affectedRows) { return }
       return this.redirect()
     }
-    const response = await this.#customersHttp.updateData({ company_id: parseInt(this.company_id as string), person_id: parseInt(this.person_id as string) }, this.currentValues)
+    const response = await this.#customersHttp.updateData({ company_id: parseInt(this.company_id as string), person_id: parseInt(this.person_id as string) }, this.formDiff)
     if (!(response as SuccessPATCH).affectedRows) { return }
     return this.redirect()
   }
