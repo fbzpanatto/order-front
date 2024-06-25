@@ -1,4 +1,4 @@
-import { Component, OnDestroy, inject } from '@angular/core';
+import { Component, DestroyRef, OnDestroy, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToolbarMenuService } from '../../../shared/services/toolbarMenu.service';
 import { environment } from '../../../../environments/environment';
@@ -15,6 +15,7 @@ import { FetchCompaniesService } from '../../../shared/services/fetchCompanies.s
 import { SelectComponent } from '../../../shared/components/select.component';
 import { Option } from '../../../shared/components/select.component';
 import { FetchFieldService } from '../../../shared/services/fetchField.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 interface CustomFields { id: number, table: string, field: string, label: string }
 
@@ -31,9 +32,10 @@ export class CustomersFormComponent implements OnDestroy {
   contactPhoneControl = new FormControl<string>('')
   addContactState = true
 
+  destroyRef = inject(DestroyRef)
+
   #customer = {}
   #title?: string
-  #customerId?: number
   #customFields?: CustomFields[]
   #currentCompany?: Option
   #companies: Option[] = []
@@ -97,10 +99,7 @@ export class CustomersFormComponent implements OnDestroy {
     this.customFields = response.meta.extra
   }
 
-  ngOnDestroy(): void {
-    this.#subscription?.unsubscribe()
-    this.#formService.originalValues = {}
-  }
+  ngOnDestroy(): void { this.#formService.originalValues = {} }
 
   updateFormValues(body: any) {
 
@@ -191,18 +190,17 @@ export class CustomersFormComponent implements OnDestroy {
       this.#dialogService.message = `Deseja remover ${contact.contact} ${contact.phone_number} da lista de contatos?`
       this.#dialogService.showDialog = true
 
-      let subscription: Subscription
-
-      subscription = this.#dialogService.subject.subscribe(async value => {
-        if (!value) { return }
-        const response = await this.#customersHttp.deleteContact(contact.person_id, contact.contact_id)
-        if (!(response as SuccessDELETE).affectedRows) { return }
-        return ((this.form as any).get('contacts') as FormArray).removeAt(idx)
-      })
-
-      this.#subscription?.add(subscription)
-
-    } else { ((this.form as any).get('contacts') as FormArray).removeAt(idx) }
+      this.#dialogService.subject
+        .pipe(takeUntilDestroyed(this.destroyRef))
+        .subscribe(async value => {
+          if (!value) { return }
+          const response = await this.#customersHttp.deleteContact({ company_id: this.company_id, person_id: this.person_id, contact_id: contact.contact_id })
+          if (!(response as SuccessDELETE).affectedRows) { return }
+          return ((this.form as any).get('contacts') as FormArray).removeAt(idx)
+        })
+      return
+    }
+    ((this.form as any).get('contacts') as FormArray).removeAt(idx)
   }
 
   async onSubmit() {
