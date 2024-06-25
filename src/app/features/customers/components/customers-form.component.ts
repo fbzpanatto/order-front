@@ -27,11 +27,10 @@ interface CustomFields { id: number, table: string, field: string, label: string
 })
 export class CustomersFormComponent implements OnDestroy {
 
+  destroyRef = inject(DestroyRef)
+
   contactNameControl = new FormControl<string>('')
   contactPhoneControl = new FormControl<string>('')
-  addContactState = true
-
-  destroyRef = inject(DestroyRef)
 
   #customer = {}
   #title?: string
