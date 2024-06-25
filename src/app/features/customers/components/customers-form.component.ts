@@ -9,7 +9,6 @@ import { FetchCustomerService } from '../../../shared/services/fetchCustomers.se
 import { SuccessDELETE, SuccessGET, SuccessGETbyId, SuccessPATCH, SuccessPOST } from '../../../shared/interfaces/response/response';
 import { FormService } from '../../../shared/services/form.service';
 import { DialogService } from '../../../shared/services/dialog.service';
-import { Subscription } from 'rxjs';
 import { Company } from '../../companies/components/companies-list.component';
 import { FetchCompaniesService } from '../../../shared/services/fetchCompanies.service';
 import { SelectComponent } from '../../../shared/components/select.component';
@@ -43,7 +42,6 @@ export class CustomersFormComponent implements OnDestroy {
 
   #fb = inject(FormBuilder)
   #router = inject(Router)
-  #subscription?: Subscription
   #route = inject(ActivatedRoute)
   #formService = inject(FormService)
   #asideService = inject(AsideService)
@@ -52,8 +50,6 @@ export class CustomersFormComponent implements OnDestroy {
   #customersHttp = inject(FetchCustomerService)
   #companiesHttp = inject(FetchCompaniesService)
   #toolbarMenuService = inject(ToolbarMenuService)
-
-  contactId?: number
 
   normalForm = this.#fb.group({
     customer: this.#fb.group({ ...this.normalCustomer }),
@@ -144,14 +140,6 @@ export class CustomersFormComponent implements OnDestroy {
 
   async getCustomFields(company_id: number) { return this.#fieldsHttp.getAll({ custom_fields: true, company_id }) }
 
-  setContacts(contacts: any[]) {
-    const contactFGs = contacts.map(contact => this.#fb.group(contact));
-    const contactFormArray = this.#fb.array(contactFGs);
-
-    ((this.form as any).get('contacts') as FormArray).push(contactFormArray)
-    this.contacts.updateValueAndValidity()
-  }
-
   canProced() {
     return !((this.customerType && this.customerType === 'normal') || (this.customerType && this.customerType === 'legal')) ?
       this.redirect() : null
@@ -167,6 +155,17 @@ export class CustomersFormComponent implements OnDestroy {
     else { this.title = this.customerType === 'legal' ? 'Novo cliente Jurídico' : 'Novo cliente Físico' }
   }
 
+  async onSubmit() {
+    if (!this.idIsTrue) {
+      const response = await this.#customersHttp.saveData(this.currentValues)
+      if (!(response as SuccessPOST).affectedRows) { return }
+      return this.redirect()
+    }
+    const response = await this.#customersHttp.updateData({ company_id: parseInt(this.company_id as string), person_id: parseInt(this.person_id as string) }, this.currentValues)
+    if (!(response as SuccessPATCH).affectedRows) { return }
+    return this.redirect()
+  }
+
   redirect() { this.#router.navigate(['/customers']) }
 
   addContact() {
@@ -180,6 +179,14 @@ export class CustomersFormComponent implements OnDestroy {
     })
     this.contacts.push(formArray)
     return
+  }
+
+  setContacts(contacts: any[]) {
+    const contactFGs = contacts.map(contact => this.#fb.group(contact));
+    const contactFormArray = this.#fb.array(contactFGs);
+
+    ((this.form as any).get('contacts') as FormArray).push(contactFormArray)
+    this.contacts.updateValueAndValidity()
   }
 
   async removeContact(idx: number) {
@@ -201,27 +208,14 @@ export class CustomersFormComponent implements OnDestroy {
     } else { ((this.form as any).get('contacts') as FormArray).removeAt(idx) }
   }
 
-  async onSubmit() {
-    if (!this.idIsTrue) {
-      const response = await this.#customersHttp.saveData(this.currentValues)
-      if (!(response as SuccessPOST).affectedRows) { return }
-      return this.redirect()
-    }
-    const response = await this.#customersHttp.updateData({ company_id: parseInt(this.company_id as string), person_id: parseInt(this.person_id as string) }, this.currentValues)
-    if (!(response as SuccessPATCH).affectedRows) { return }
-    return this.redirect()
-  }
-
-  isNumeric(str: string): boolean { return str.match(/^\d+$/) !== null }
-
-  get formDiff() { return this.#formService.getChangedValues() }
-  get originalValues() { return this.#formService.originalValues }
-  get currentValues() { return this.#formService.currentForm.value }
-
   get contacts() {
     if (!(this.form as any).get('contacts')) return new FormArray([]) as unknown as FormArray
     return (this.form as any).get('contacts') as FormArray
   }
+
+  get formDiff() { return this.#formService.getChangedValues() }
+  get originalValues() { return this.#formService.originalValues }
+  get currentValues() { return this.#formService.currentForm.value }
 
   get companies() { return this.#companies }
   set companies(value: Option[]) { this.#companies = value }

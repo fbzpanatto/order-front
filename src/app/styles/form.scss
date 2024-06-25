@@ -17,10 +17,6 @@ form {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     overflow: auto;
 
-    // &.fullheight {
-    //   height: calc(100vh - 138px - 214px);
-    // }
-
     &.visible {
       overflow: visible;
     }
@@ -45,7 +41,7 @@ form {
         border: 1px solid rgba(0, 0, 0, 0.12);
         gap: 3vmin;
         margin-top: 8px;
-        background-color: #fafafa;
+        background-color: rgba(65, 127, 148, 0.067);
 
         .fieldset-label {
           position: absolute;
