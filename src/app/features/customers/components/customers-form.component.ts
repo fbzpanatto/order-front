@@ -166,11 +166,11 @@ export class CustomersFormComponent implements OnDestroy {
 
   async onSubmit() {
     if (!this.idIsTrue) {
-      const response = await this.#customersHttp.saveData(this.formDiff)
+      const response = await this.#customersHttp.saveData(this.currentValues)
       if (!(response as SuccessPOST).affectedRows) { return }
       return this.redirect()
     }
-    const response = await this.#customersHttp.updateData({ company_id: parseInt(this.company_id as string), person_id: parseInt(this.person_id as string) }, this.formDiff)
+    const response = await this.#customersHttp.updateData({ company_id: parseInt(this.company_id as string), person_id: parseInt(this.person_id as string) }, this.currentValues)
     if (!(response as SuccessPATCH).affectedRows) { return }
     return this.redirect()
   }
