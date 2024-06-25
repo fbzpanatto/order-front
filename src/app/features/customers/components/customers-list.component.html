@@ -13,6 +13,7 @@
       <thead>
         <tr>
           <th>id</th>
+          <th>Empresa</th>
           <th>Razão Social</th>
           <th>Nome Fantasia</th>
           <th>Cnpj</th>
@@ -23,13 +24,14 @@
         @for (item of customersArray; track $index) {
         <tr (click)="navigateTo({ type: customerType(), company_id: item.company_id, person_id: item.person_id })">
           <td class="medium-text">{{ item.person_id }}</td>
+          <td class="medium-text">{{ item.company_name }}</td>
           <td class="medium-text">{{ item.corporate_name }}</td>
           <td class="medium-text">{{ item.social_name }}</td>
           <td class="medium-text">{{ item.cnpj }}</td>
           <td class="medium-text">{{ item.state_registration }}</td>
         </tr>
         } @empty { <tr>
-          <td class="medium-text" [colSpan]="5">Sem dados a exibir</td>
+          <td class="medium-text" [colSpan]="6">Sem dados a exibir</td>
         </tr> }
       </tbody>
     </table>
@@ -48,6 +50,7 @@
         @for (item of customersArray; track $index) {
         <tr [routerLink]="customerType() + '/' + item.person_id">
           <td class="medium-text">{{ item.person_id }}</td>
+          <td class="medium-text">{{ item.company_name }}</td>
           <td class="medium-text">{{ item.first_name }}</td>
           <td class="medium-text">{{ item.middle_name }}</td>
           <td class="medium-text">{{ item.last_name }}</td>
@@ -55,7 +58,7 @@
         </tr>
         } @empty {
         <tr>
-          <td class="medium-text" [colSpan]="5">Sem dados a exibir</td>
+          <td class="medium-text" [colSpan]="6">Sem dados a exibir</td>
         </tr>
         }
       </tbody>
