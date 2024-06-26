@@ -45,13 +45,9 @@ export class SelectComponent {
   openOrClose(state?: boolean) { this.#state.update(value => state != undefined ? value = state : value = !value) }
 
   setOption(option: Option) {
-
     this.#currentOption.update(currentOption => {
-
       if (this.isCustomer()) { this.#asideService.changeCustomerType(option.value) }
-
       this.emitCurrentOption.emit(option)
-
       return currentOption = option
     })
   }

@@ -9,7 +9,7 @@ export interface SuccessGETbyId {
   status: number,
   message: string,
   data: {},
-  meta: { extra: any }
+  meta: { extra: { custom_fields?: [], segments?: [] } }
 }
 
 export interface SuccessPOST {

@@ -1,8 +1,8 @@
-import { Component, DestroyRef, OnDestroy, inject } from '@angular/core';
+import { Component, DestroyRef, OnDestroy, effect, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToolbarMenuService } from '../../../shared/services/toolbarMenu.service';
 import { environment } from '../../../../environments/environment';
-import { FormArray, FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AsideService } from '../../../shared/services/aside.service';
 import { CommonModule } from '@angular/common';
 import { FetchCustomerService } from '../../../shared/services/fetchCustomers.service';
@@ -14,7 +14,7 @@ import { FetchCompaniesService } from '../../../shared/services/fetchCompanies.s
 import { SelectComponent } from '../../../shared/components/select.component';
 import { Option } from '../../../shared/components/select.component';
 import { FetchFieldService } from '../../../shared/services/fetchField.service';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 
 interface CustomFields { id: number, table: string, field: string, label: string }
 
@@ -29,12 +29,17 @@ export class CustomersFormComponent implements OnDestroy {
 
   destroyRef = inject(DestroyRef)
 
+  segmentControl = new FormControl('', {})
+
   #customer = {}
   #title?: string
   #customFields?: CustomFields[]
   #currentCompany?: Option
   #companies: Option[] = []
   #arrayOfCompanies: Company[] = []
+
+  arrOfSegments?: { segment_id: number, company_id: number, name: string }[]
+  arrOfSegmentsToFront = this.arrOfSegments
 
   #router = inject(Router)
   #fb = inject(FormBuilder)
@@ -65,6 +70,15 @@ export class CustomersFormComponent implements OnDestroy {
     segments: this.#fb.array([]),
   })
 
+  constructor() {
+    this.segmentControl.valueChanges.subscribe(search => {
+      this.arrOfSegmentsToFront = this.arrOfSegments?.filter(el => el.name.toLowerCase().includes(search?.toLowerCase() ?? ''));
+
+      const item = ((this.form.get('segments') as FormArray).value as Array<any>).find(el => el.segment_id === null)
+      item ? item.segment = search : null
+    })
+  }
+
   async ngOnInit() {
 
     this.#asideService.changeCustomerType(this.customerQueryType as string)
@@ -77,6 +91,8 @@ export class CustomersFormComponent implements OnDestroy {
 
     if (this.idIsTrue) {
       const response = (await this.getByPersonId({ company_id: parseInt(this.company_id as string), person_id: parseInt(this.person_id as string), custom_fields: true, segments: true }))
+      this.arrOfSegments = response.meta.extra.segments
+      this.arrOfSegmentsToFront = this.arrOfSegments
       this.customFields = response.meta.extra.custom_fields
       return this.customer != undefined ? this.updateFormValues(response.data) : null
     }
@@ -86,10 +102,9 @@ export class CustomersFormComponent implements OnDestroy {
   async getByPersonId(queryParams: { [key: string]: any }) { return (await this.#customersHttp.getById(queryParams) as SuccessGETbyId) }
 
   async getCompanies() {
-    const response = (await this.#companiesHttp.getAll({ custom_fields: true, segments: true }) as SuccessGET)
+    const response = (await this.#companiesHttp.getAll({}) as SuccessGET)
     this.#arrayOfCompanies = response.data as Company[]
     this.companies = ((response.data) as Company[]).map((company) => { return { id: company.company_id, label: company.corporate_name, value: company.company_id } })
-    this.customFields = response.meta.extra.custom_fields ?? undefined
   }
 
   ngOnDestroy(): void { this.#formService.originalValues = {} }
@@ -121,6 +136,10 @@ export class CustomersFormComponent implements OnDestroy {
   async setCurrentOption(e: Option, control: string) {
     if (control === 'person.company_id' && this.form.get(control).value != e.value) {
       const response = await this.getCustomFields(e.value) as SuccessGET
+
+      this.arrOfSegments = response.meta.extra.segments
+      this.arrOfSegmentsToFront = this.arrOfSegments
+
       const custom_fields = response.meta.extra.custom_fields as Array<CustomFields>
 
       (custom_fields && custom_fields.length) ? this.customFields = custom_fields : this.customFields = undefined
@@ -169,22 +188,22 @@ export class CustomersFormComponent implements OnDestroy {
 
   redirect() { this.#router.navigate(['/customers']) }
 
-  addSegment() {
+  addSegment(formArray?: FormGroup<{ segment_id: FormControl<null>, person_id: FormControl<any>, company_id: FormControl<any>, segment: FormControl<null> }>) {
     this.contacts.updateValueAndValidity()
-    const formArray = this.#fb.group({
-      segment_id: [null],
-      person_id: [this.form.get('person.person_id').value ?? null],
-      company_id: [this.form.get('person.company_id').value ?? null],
-      segment: [null],
-    })
-    return this.segments.push(formArray)
+    const newFormArray = this.#fb.group({ segment_id: [null], person_id: [this.form.get('person.person_id').value ?? null], company_id: [this.form.get('person.company_id').value ?? null], segment: [null] })
+
+    this.segments.push(formArray ?? newFormArray)
   }
 
-  setSegments(segments: any[]) {
-    const segmentsFGs = segments.map(contact => this.#fb.group(contact));
-    const segmentFormArray = this.#fb.array(segmentsFGs);
-    ((this.form as any).get('segments') as FormArray).push(segmentFormArray)
-    this.contacts.updateValueAndValidity()
+  includeSegment(segment: { segment_id: number, company_id: number, name: string }) {
+    const formArray = this.#fb.group({
+      person_id: [this.form.get('person.person_id').value], company_id: [segment.company_id], segment_id: [segment.segment_id],
+      segment: [segment.name],
+    }) as FormGroup<{ segment_id: FormControl<null>, person_id: FormControl<any>, company_id: FormControl<any>, segment: FormControl<null> }>
+    this.addSegment(formArray)
+
+    const idx = (this.segments.value as Array<any>).findIndex(el => el.segment_id === null);
+    (this.form.get('segments') as FormArray).removeAt(idx)
   }
 
   async removeSegment(idx: number) {
@@ -212,14 +231,6 @@ export class CustomersFormComponent implements OnDestroy {
     return this.contacts.push(formArray)
   }
 
-  setContacts(contacts: any[]) {
-    const contactFGs = contacts.map(contact => this.#fb.group(contact));
-    const contactFormArray = this.#fb.array(contactFGs);
-
-    ((this.form as any).get('contacts') as FormArray).push(contactFormArray)
-    this.contacts.updateValueAndValidity()
-  }
-
   async removeContact(idx: number) {
 
     const contact = ((this.form as any).get('contacts') as FormArray).at(idx).value
@@ -237,6 +248,10 @@ export class CustomersFormComponent implements OnDestroy {
           return ((this.form as any).get('contacts') as FormArray).removeAt(idx)
         })
     } else { ((this.form as any).get('contacts') as FormArray).removeAt(idx) }
+  }
+
+  segmentSearch(value: string) {
+    console.log(value)
   }
 
   get contacts() {
