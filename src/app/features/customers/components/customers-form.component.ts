@@ -89,15 +89,13 @@ export class CustomersFormComponent implements OnDestroy {
     const response = (await this.#companiesHttp.getAll({ custom_fields: true, segments: true }) as SuccessGET)
     this.#arrayOfCompanies = response.data as Company[]
     this.companies = ((response.data) as Company[]).map((company) => { return { id: company.company_id, label: company.corporate_name, value: company.company_id } })
-    this.customFields = response.meta.extra
+    this.customFields = response.meta.extra.custom_fields
   }
 
   ngOnDestroy(): void { this.#formService.originalValues = {} }
 
   updateFormValues(body: any) {
-
     this.form.patchValue(body);
-
     this.currentCompany = this.companies.find(c => c.id === body.person.company_id)
 
     for (let contact of body.contacts) {
@@ -120,17 +118,16 @@ export class CustomersFormComponent implements OnDestroy {
       })
       this.segments.push(formArray)
     }
-
     this.#formService.originalValues = this.form.value;
     this.#formService.currentForm = this.form;
   }
 
   async setCurrentOption(e: Option, control: string) {
     if (control === 'person.company_id' && this.form.get(control).value != e.value) {
+      const response = await this.getCustomFields(e.value) as SuccessGET
+      const custom_fields = response.meta.extra.custom_fields as Array<CustomFields>
 
-      const response = ((await this.getCustomFields(e.value) as SuccessGET).data) as CustomFields[]
-
-      (response && response.length) ? this.customFields = response : this.customFields = undefined
+      (custom_fields && custom_fields.length) ? this.customFields = custom_fields : this.customFields = undefined
 
       for (let contact of this.contacts.value) { contact.company_id = e.value }
 
@@ -146,7 +143,7 @@ export class CustomersFormComponent implements OnDestroy {
     }
   }
 
-  async getCustomFields(company_id: number) { return this.#fieldsHttp.getAll({ custom_fields: true, company_id }) }
+  async getCustomFields(company_id: number) { return this.#fieldsHttp.getAll({ custom_fields: true, company_id, segments: true }) }
 
   canProced() {
     return !((this.customerType && this.customerType === 'normal') || (this.customerType && this.customerType === 'legal')) ?
@@ -184,14 +181,12 @@ export class CustomersFormComponent implements OnDestroy {
       company_id: [this.form.get('person.company_id').value ?? null],
       segment: [null],
     })
-    this.segments.push(formArray)
-    return
+    return this.segments.push(formArray)
   }
 
   setSegments(segments: any[]) {
     const segmentsFGs = segments.map(contact => this.#fb.group(contact));
     const segmentFormArray = this.#fb.array(segmentsFGs);
-
     ((this.form as any).get('segments') as FormArray).push(segmentFormArray)
     this.contacts.updateValueAndValidity()
   }
@@ -217,15 +212,8 @@ export class CustomersFormComponent implements OnDestroy {
 
   addContact() {
     this.contacts.updateValueAndValidity()
-    const formArray = this.#fb.group({
-      contact_id: [null],
-      person_id: [this.form.get('person.person_id').value ?? null],
-      company_id: [this.form.get('person.company_id').value ?? null],
-      contact: [null],
-      phone_number: [null]
-    })
-    this.contacts.push(formArray)
-    return
+    const formArray = this.#fb.group({ contact_id: [null], person_id: [this.form.get('person.person_id').value ?? null], company_id: [this.form.get('person.company_id').value ?? null], contact: [null], phone_number: [null] })
+    return this.contacts.push(formArray)
   }
 
   setContacts(contacts: any[]) {
