@@ -99,9 +99,11 @@
               }
               @else {
               <input [formControl]="segmentControl" class="medium-text" maxlength="20" placeholder="segmento">
-              <div class="menu-container">
-                <ul>@for(segment of arrOfSegmentsToFront; track $index) { <li (click)="includeSegment(segment)">{{ segment.name }}</li>}</ul>
-              </div>
+              @if(arrOfSegmentsToFront?.length){
+                <div class="menu-container">
+                  <ul>@for(segment of arrOfSegmentsToFront; track $index) { <li (click)="includeSegment(segment)">{{ segment.name }}</li>}</ul>
+                </div>
+              }
               }
             </div>
             <button class="del-btn" type="button" (click)="removeSegment(seg_idx)">
