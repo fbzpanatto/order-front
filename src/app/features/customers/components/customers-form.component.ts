@@ -89,7 +89,7 @@ export class CustomersFormComponent implements OnDestroy {
     const response = (await this.#companiesHttp.getAll({ custom_fields: true, segments: true }) as SuccessGET)
     this.#arrayOfCompanies = response.data as Company[]
     this.companies = ((response.data) as Company[]).map((company) => { return { id: company.company_id, label: company.corporate_name, value: company.company_id } })
-    this.customFields = response.meta.extra.custom_fields
+    this.customFields = response.meta.extra.custom_fields ?? undefined
   }
 
   ngOnDestroy(): void { this.#formService.originalValues = {} }
@@ -100,9 +100,7 @@ export class CustomersFormComponent implements OnDestroy {
 
     for (let contact of body.contacts) {
       const formArray = this.#fb.group({
-        person_id: [contact.person_id],
-        company_id: [contact.company_id],
-        contact_id: [contact.contact_id],
+        person_id: [contact.person_id], company_id: [contact.company_id], contact_id: [contact.contact_id],
         contact: new FormControl(contact.contact, { validators: [Validators.required, Validators.minLength(3), Validators.maxLength(20)] }),
         phone_number: new FormControl(contact.phone_number, { validators: [Validators.required, Validators.minLength(10), Validators.maxLength(14), Validators.pattern(/^\d+$/)] })
       })
@@ -111,9 +109,7 @@ export class CustomersFormComponent implements OnDestroy {
 
     for (let segment of body.segments) {
       const formArray = this.#fb.group({
-        person_id: [segment.person_id],
-        company_id: [segment.company_id],
-        segment_id: [segment.segment_id],
+        person_id: [segment.person_id], company_id: [segment.company_id], segment_id: [segment.segment_id],
         segment: new FormControl(segment.name),
       })
       this.segments.push(formArray)
