@@ -1,4 +1,4 @@
-import { Component, DestroyRef, OnDestroy, effect, inject } from '@angular/core';
+import { Component, DestroyRef, OnDestroy, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToolbarMenuService } from '../../../shared/services/toolbarMenu.service';
 import { environment } from '../../../../environments/environment';
@@ -71,12 +71,12 @@ export class CustomersFormComponent implements OnDestroy {
   })
 
   constructor() {
-    this.segmentControl.valueChanges.subscribe(search => {
-      this.arrOfSegmentsToFront = this.arrOfSegments?.filter(el => el.name.toLowerCase().includes(search?.toLowerCase() ?? ''));
-
-      const item = ((this.form.get('segments') as FormArray).value as Array<any>).find(el => el.segment_id === null)
-      item ? item.segment = search : null
-    })
+    this.segmentControl.valueChanges
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(search => {
+        this.arrOfSegmentsToFront = this.arrOfSegments?.filter(el => el.name.toLowerCase().includes(search?.toLowerCase() ?? ''));
+        ((this.form.get('segments') as FormArray).value as Array<any>).find(el => el.segment_id === null).segment = search
+      })
   }
 
   async ngOnInit() {
@@ -188,20 +188,20 @@ export class CustomersFormComponent implements OnDestroy {
 
   redirect() { this.#router.navigate(['/customers']) }
 
-  addSegment(formArray?: FormGroup<{ segment_id: FormControl<null>, person_id: FormControl<any>, company_id: FormControl<any>, segment: FormControl<null> }>) {
-    this.contacts.updateValueAndValidity()
+  addSegment(formArray?: any) {
     const newFormArray = this.#fb.group({ segment_id: [null], person_id: [this.form.get('person.person_id').value ?? null], company_id: [this.form.get('person.company_id').value ?? null], segment: [null] })
-
     this.segments.push(formArray ?? newFormArray)
   }
 
   includeSegment(segment: { segment_id: number, company_id: number, name: string }) {
-    const formArray = this.#fb.group({
-      person_id: [this.form.get('person.person_id').value], company_id: [segment.company_id], segment_id: [segment.segment_id],
-      segment: [segment.name],
-    }) as FormGroup<{ segment_id: FormControl<null>, person_id: FormControl<any>, company_id: FormControl<any>, segment: FormControl<null> }>
-    this.addSegment(formArray)
-
+    this.addSegment(
+      this.#fb.group(
+        {
+          person_id: [this.form.get('person.person_id').value],
+          company_id: [segment.company_id],
+          segment_id: [segment.segment_id],
+          segment: [segment.name],
+        }))
     const idx = (this.segments.value as Array<any>).findIndex(el => el.segment_id === null);
     (this.form.get('segments') as FormArray).removeAt(idx)
   }
@@ -226,9 +226,16 @@ export class CustomersFormComponent implements OnDestroy {
   }
 
   addContact() {
-    this.contacts.updateValueAndValidity()
-    const formArray = this.#fb.group({ contact_id: [null], person_id: [this.form.get('person.person_id').value ?? null], company_id: [this.form.get('person.company_id').value ?? null], contact: [null], phone_number: [null] })
-    return this.contacts.push(formArray)
+    return this.contacts.push(
+      this.#fb.group(
+        {
+          contact_id: [null],
+          person_id: [this.form.get('person.person_id').value ?? null],
+          company_id: [this.form.get('person.company_id').value ?? null],
+          contact: [null],
+          phone_number: [null]
+        })
+    )
   }
 
   async removeContact(idx: number) {
@@ -248,10 +255,6 @@ export class CustomersFormComponent implements OnDestroy {
           return ((this.form as any).get('contacts') as FormArray).removeAt(idx)
         })
     } else { ((this.form as any).get('contacts') as FormArray).removeAt(idx) }
-  }
-
-  segmentSearch(value: string) {
-    console.log(value)
   }
 
   get contacts() {
