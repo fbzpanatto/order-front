@@ -8,7 +8,8 @@ export interface SuccessGET {
 export interface SuccessGETbyId {
   status: number,
   message: string,
-  data: {}
+  data: {},
+  meta: { extra: any }
 }
 
 export interface SuccessPOST {

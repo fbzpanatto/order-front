@@ -76,14 +76,14 @@ export class CustomersFormComponent implements OnDestroy {
     await this.getCompanies()
 
     if (this.idIsTrue) {
-      this.customer = (await this.getByPersonId({ company_id: parseInt(this.company_id as string), person_id: parseInt(this.person_id as string), custom_fields: true }))
-      return this.customer != undefined ? this.updateFormValues(this.customer) : null
+      const response = (await this.getByPersonId({ company_id: parseInt(this.company_id as string), person_id: parseInt(this.person_id as string), custom_fields: true }))
+      this.customFields = response.meta.extra
+      return this.customer != undefined ? this.updateFormValues(response.data) : null
     }
-
     this.#formService.originalValues = this.form.value;
   }
 
-  async getByPersonId(queryParams: { [key: string]: any }) { return (await this.#customersHttp.getById(queryParams) as SuccessGETbyId).data }
+  async getByPersonId(queryParams: { [key: string]: any }) { return (await this.#customersHttp.getById(queryParams) as SuccessGETbyId) }
 
   async getCompanies() {
     const response = (await this.#companiesHttp.getAll({ custom_fields: true }) as SuccessGET)
