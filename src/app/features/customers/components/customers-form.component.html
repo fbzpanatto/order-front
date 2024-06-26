@@ -26,79 +26,78 @@
           </div>
         </fieldset>
         @switch (customerType) {
-        @case('legal') {
-        <fieldset [formGroup]="form.controls.customer">
-          <label class="medium-text fieldset-label">Identificação do novo cliente</label>
-          <div class="input-container">
-            <label class="light-text" for="corporate_name">Razão social</label>
-            <span><i class="fa-solid fa-pen-to-square"></i></span>
-            <input maxlength="=100" formControlName="corporate_name" class="medium-text" id="corporate_name"
-              name="corporate_name" type="text" placeholder="razão social">
-          </div>
-          <div class="input-container">
-            <label class="light-text" for="social_name">Nome Fantasia</label>
-            <span><i class="fa-solid fa-pen-to-square"></i></span>
-            <input maxlength="=100" formControlName="social_name" class="medium-text" id="social_name"
-              name="social_name" type="text" placeholder="nome fantasia">
-          </div>
-          <div class="input-container">
-            <label class="light-text" for="cnpj">Cnpj</label>
-            <span><i class="fa-solid fa-id-card"></i></span>
-            <input maxlength="14" formControlName="cnpj" class="medium-text" id="cnpj" name="cnpj" type="text"
-              placeholder="cnpj">
-          </div>
-          <div class="input-container">
-            <label class="light-text" for="state_registration">Inscrição Estadual</label>
-            <span><i class="fa-solid fa-id-card"></i></span>
-            <input maxlength="9" formControlName="state_registration" class="medium-text" id="state_registration"
-              name="state_registration" type="text" placeholder="inscrição estadual">
-          </div>
-        </fieldset>
+          @case('legal') {
+          <fieldset [formGroup]="form.controls.customer">
+            <label class="medium-text fieldset-label">Identificação do novo cliente</label>
+            <div class="input-container">
+              <label class="light-text" for="corporate_name">Razão social</label>
+              <span><i class="fa-solid fa-pen-to-square"></i></span>
+              <input maxlength="=100" formControlName="corporate_name" class="medium-text" id="corporate_name"
+                name="corporate_name" type="text" placeholder="razão social">
+            </div>
+            <div class="input-container">
+              <label class="light-text" for="social_name">Nome Fantasia</label>
+              <span><i class="fa-solid fa-pen-to-square"></i></span>
+              <input maxlength="=100" formControlName="social_name" class="medium-text" id="social_name"
+                name="social_name" type="text" placeholder="nome fantasia">
+            </div>
+            <div class="input-container">
+              <label class="light-text" for="cnpj">Cnpj</label>
+              <span><i class="fa-solid fa-id-card"></i></span>
+              <input maxlength="14" formControlName="cnpj" class="medium-text" id="cnpj" name="cnpj" type="text"
+                placeholder="cnpj">
+            </div>
+            <div class="input-container">
+              <label class="light-text" for="state_registration">Inscrição Estadual</label>
+              <span><i class="fa-solid fa-id-card"></i></span>
+              <input maxlength="9" formControlName="state_registration" class="medium-text" id="state_registration"
+                name="state_registration" type="text" placeholder="inscrição estadual">
+            </div>
+          </fieldset>
+          }
+          @case('normal') {
+          <fieldset [formGroup]="form.controls.customer">
+            <label class="medium-text fieldset-label">Identificação</label>
+            <div class="input-container">
+              <label class="light-text" for="first_name">Primeiro Nome</label>
+              <span><i class="fa-solid fa-pen-to-square"></i></span>
+              <input maxlength="60" formControlName="first_name" class="medium-text" id="first_name" name="first_name"
+                type="text" placeholder="primeiro nome">
+            </div>
+            <div class="input-container">
+              <label class="light-text" for="middle_name">Nome do Meio</label>
+              <span><i class="fa-solid fa-pen-to-square"></i></span>
+              <input maxlength="60" formControlName="middle_name" class="medium-text" id="middle_name" name="middle_name"
+                type="text" placeholder="nome do meio">
+            </div>
+            <div class="input-container">
+              <label class="light-text" for="last_name">Último Nome</label>
+              <span><i class="fa-solid fa-pen-to-square"></i></span>
+              <input maxlength="60" formControlName="last_name" class="medium-text" id="last_name" name="last_name"
+                type="text" placeholder="último nome">
+            </div>
+            <div class="input-container">
+              <label class="light-text" for="cpf">Cpf</label>
+              <span><i class="fa-solid fa-id-card"></i></span>
+              <input maxlength="11" formControlName="cpf" class="medium-text" id="cpf" name="cpf" type="text"
+                placeholder="cpf">
+            </div>
+          </fieldset>
+          }
         }
-        @case('normal') {
-        <fieldset [formGroup]="form.controls.customer">
-          <label class="medium-text fieldset-label">Identificação</label>
-          <div class="input-container">
-            <label class="light-text" for="first_name">Primeiro Nome</label>
-            <span><i class="fa-solid fa-pen-to-square"></i></span>
-            <input maxlength="60" formControlName="first_name" class="medium-text" id="first_name" name="first_name"
-              type="text" placeholder="primeiro nome">
-          </div>
-          <div class="input-container">
-            <label class="light-text" for="middle_name">Nome do Meio</label>
-            <span><i class="fa-solid fa-pen-to-square"></i></span>
-            <input maxlength="60" formControlName="middle_name" class="medium-text" id="middle_name" name="middle_name"
-              type="text" placeholder="nome do meio">
-          </div>
-          <div class="input-container">
-            <label class="light-text" for="last_name">Último Nome</label>
-            <span><i class="fa-solid fa-pen-to-square"></i></span>
-            <input maxlength="60" formControlName="last_name" class="medium-text" id="last_name" name="last_name"
-              type="text" placeholder="último nome">
-          </div>
-          <div class="input-container">
-            <label class="light-text" for="cpf">Cpf</label>
-            <span><i class="fa-solid fa-id-card"></i></span>
-            <input maxlength="11" formControlName="cpf" class="medium-text" id="cpf" name="cpf" type="text"
-              placeholder="cpf">
-          </div>
-        </fieldset>
-        }
-        }
-
         <fieldset formArrayName="segments" class="formArray">
           <label class="medium-text fieldset-label">Segmentos</label>
           @for(segment of segments.controls; track segment; let seg_idx = $index) {
-          <div [formGroupName]="seg_idx" class="formGroup">
-            <div class="input-container">
-              <label class="light-text">Segmentos</label>
-              <span><i class="fa-solid fa-pen-to-square"></i></span>
-              <input maxlength="20" class="medium-text" formControlName="segment" placeholder="segmento" />
+            <div [formGroupName]="seg_idx" class="formGroup">
+              <div class="input-container">
+                <label class="light-text">Segmentos</label>
+                <span><i class="fa-solid fa-pen-to-square"></i></span>
+                <input maxlength="20" class="medium-text" formControlName="segment" placeholder="segmento" />
+              </div>
+              <button class="del-btn" type="button" (click)="removeSegment(seg_idx)">
+                <span><i class="fa-solid fa-minus"></i></span>
+              </button>
             </div>
-            <button class="del-btn" type="button" (click)="removeSegment(seg_idx)">
-              <span><i class="fa-solid fa-minus"></i></span>
-            </button>
-          </div>
           }
           <div class="add-btn-container">
             <div class="input-container">
@@ -112,7 +111,6 @@
             </button>
           </div>
         </fieldset>
-
         <fieldset [formGroup]="form.controls.address">
           <label class="medium-text fieldset-label">Endereço</label>
           <div class="input-container">
@@ -155,33 +153,33 @@
         <fieldset [formGroup]="form.controls.person">
           <label class="medium-text fieldset-label">Dados complementares</label>
           @if(customFields){
-          @for(field of customFields; track field.id) {
-          <div class="input-container">
-            <label class="light-text" [for]="field.field">{{ field.label }}</label>
-            <span><i class="fa-solid fa-pen-to-square"></i></span>
-            <input maxlength="45" [formControlName]="field.field" class="medium-text" [id]="field.field"
-              [name]="field.field" type="text" [placeholder]="field.label.toLocaleLowerCase()">
-          </div>
-          }
+            @for(field of customFields; track field.id) {
+              <div class="input-container">
+                <label class="light-text" [for]="field.field">{{ field.label }}</label>
+                <span><i class="fa-solid fa-pen-to-square"></i></span>
+                <input maxlength="45" [formControlName]="field.field" class="medium-text" [id]="field.field"
+                  [name]="field.field" type="text" [placeholder]="field.label.toLocaleLowerCase()">
+              </div>
+            }
           } @else {
-          <div class="input-container">
-            <label class="light-text" for="first_field">Primeiro campo</label>
-            <span><i class="fa-solid fa-pen-to-square"></i></span>
-            <input maxlength="45" formControlName="first_field" class="medium-text" id="first_field" name="first_field"
-              type="text" placeholder="primeiro campo">
-          </div>
-          <div class="input-container">
-            <label class="light-text" for="second_field">Segundo campo</label>
-            <span><i class="fa-solid fa-pen-to-square"></i></span>
-            <input maxlength="45" formControlName="second_field" class="medium-text" id="second_field"
-              name="second_field" type="text" placeholder="segundo campo">
-          </div>
-          <div class="input-container">
-            <label class="light-text" for="third_field">Terceiro campo</label>
-            <span><i class="fa-solid fa-pen-to-square"></i></span>
-            <input maxlength="45" formControlName="third_field" class="medium-text" id="third_field" name="third_field"
-              type="text" placeholder="terceiro campo">
-          </div>
+            <div class="input-container">
+              <label class="light-text" for="first_field">Primeiro campo</label>
+              <span><i class="fa-solid fa-pen-to-square"></i></span>
+              <input maxlength="45" formControlName="first_field" class="medium-text" id="first_field" name="first_field"
+                type="text" placeholder="primeiro campo">
+            </div>
+            <div class="input-container">
+              <label class="light-text" for="second_field">Segundo campo</label>
+              <span><i class="fa-solid fa-pen-to-square"></i></span>
+              <input maxlength="45" formControlName="second_field" class="medium-text" id="second_field"
+                name="second_field" type="text" placeholder="segundo campo">
+            </div>
+            <div class="input-container">
+              <label class="light-text" for="third_field">Terceiro campo</label>
+              <span><i class="fa-solid fa-pen-to-square"></i></span>
+              <input maxlength="45" formControlName="third_field" class="medium-text" id="third_field" name="third_field"
+                type="text" placeholder="terceiro campo">
+            </div>
           }
           <div class="input-container">
             <label class="light-text" for="observation">Observação</label>
@@ -193,21 +191,21 @@
         <fieldset formArrayName="contacts" class="formArray">
           <label class="medium-text fieldset-label">Contatos</label>
           @for(register of contacts.controls; track register; let contact_idx = $index) {
-          <div [formGroupName]="contact_idx" class="formGroup">
-            <div class="input-container">
-              <label class="light-text">Contato</label>
-              <span><i class="fa-solid fa-person"></i></span>
-              <input maxlength="20" class="medium-text" formControlName="contact" placeholder="contato" />
+            <div [formGroupName]="contact_idx" class="formGroup">
+              <div class="input-container">
+                <label class="light-text">Contato</label>
+                <span><i class="fa-solid fa-person"></i></span>
+                <input maxlength="20" class="medium-text" formControlName="contact" placeholder="contato" />
+              </div>
+              <div class="input-container">
+                <label class="light-text">Número</label>
+                <span><i class="fa-solid fa-phone"></i></span>
+                <input maxlength="14" class="medium-text" formControlName="phone_number" placeholder="número" />
+              </div>
+              <button class="del-btn" type="button" (click)="removeContact(contact_idx)">
+                <span><i class="fa-solid fa-minus"></i></span>
+              </button>
             </div>
-            <div class="input-container">
-              <label class="light-text">Número</label>
-              <span><i class="fa-solid fa-phone"></i></span>
-              <input maxlength="14" class="medium-text" formControlName="phone_number" placeholder="número" />
-            </div>
-            <button class="del-btn" type="button" (click)="removeContact(contact_idx)">
-              <span><i class="fa-solid fa-minus"></i></span>
-            </button>
-          </div>
           }
           <div class="add-btn-container">
             <div class="input-container">

@@ -76,7 +76,7 @@ export class CustomersFormComponent implements OnDestroy {
     await this.getCompanies()
 
     if (this.idIsTrue) {
-      this.customer = (await this.getByPersonId({ company_id: parseInt(this.company_id as string), person_id: parseInt(this.person_id as string) }))
+      this.customer = (await this.getByPersonId({ company_id: parseInt(this.company_id as string), person_id: parseInt(this.person_id as string), custom_fields: true }))
       return this.customer != undefined ? this.updateFormValues(this.customer) : null
     }
 
@@ -109,7 +109,6 @@ export class CustomersFormComponent implements OnDestroy {
         phone_number: new FormControl(contact.phone_number, { validators: [Validators.required, Validators.minLength(10), Validators.maxLength(14), Validators.pattern(/^\d+$/)] })
       })
       this.contacts.push(formArray)
-      this.contacts.updateValueAndValidity()
     }
 
     for (let segment of body.segments) {
@@ -120,7 +119,6 @@ export class CustomersFormComponent implements OnDestroy {
         segment: new FormControl(segment.name),
       })
       this.segments.push(formArray)
-      this.segments.updateValueAndValidity()
     }
 
     this.#formService.originalValues = this.form.value;
