@@ -76,8 +76,8 @@ export class CustomersFormComponent implements OnDestroy {
     await this.getCompanies()
 
     if (this.idIsTrue) {
-      const response = (await this.getByPersonId({ company_id: parseInt(this.company_id as string), person_id: parseInt(this.person_id as string), custom_fields: true }))
-      this.customFields = response.meta.extra
+      const response = (await this.getByPersonId({ company_id: parseInt(this.company_id as string), person_id: parseInt(this.person_id as string), custom_fields: true, segments: true }))
+      this.customFields = response.meta.extra.custom_fields
       return this.customer != undefined ? this.updateFormValues(response.data) : null
     }
     this.#formService.originalValues = this.form.value;
@@ -86,7 +86,7 @@ export class CustomersFormComponent implements OnDestroy {
   async getByPersonId(queryParams: { [key: string]: any }) { return (await this.#customersHttp.getById(queryParams) as SuccessGETbyId) }
 
   async getCompanies() {
-    const response = (await this.#companiesHttp.getAll({ custom_fields: true }) as SuccessGET)
+    const response = (await this.#companiesHttp.getAll({ custom_fields: true, segments: true }) as SuccessGET)
     this.#arrayOfCompanies = response.data as Company[]
     this.companies = ((response.data) as Company[]).map((company) => { return { id: company.company_id, label: company.corporate_name, value: company.company_id } })
     this.customFields = response.meta.extra
@@ -130,7 +130,7 @@ export class CustomersFormComponent implements OnDestroy {
 
       const response = ((await this.getCustomFields(e.value) as SuccessGET).data) as CustomFields[]
 
-      if (response) { this.customFields = response }
+      (response && response.length) ? this.customFields = response : this.customFields = undefined
 
       for (let contact of this.contacts.value) { contact.company_id = e.value }
 
