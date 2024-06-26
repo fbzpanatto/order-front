@@ -92,7 +92,7 @@
               <div class="input-container">
                 <label class="light-text">Segmentos</label>
                 <span><i class="fa-solid fa-pen-to-square"></i></span>
-                <input maxlength="20" class="medium-text" formControlName="segment" placeholder="segmento" />
+                <input [readOnly]="segment.value.person_id && segment.value.company_id && segment.value.segment_id && segment.value.segment_id != null" maxlength="20" class="medium-text" formControlName="segment" placeholder="segmento" />
               </div>
               <button class="del-btn" type="button" (click)="removeSegment(seg_idx)">
                 <span><i class="fa-solid fa-minus"></i></span>
