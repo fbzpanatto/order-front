@@ -88,79 +88,38 @@ export class CustomersFormComponent implements OnDestroy {
     await this.getCompanies();
 
     if (this.idIsTrue) {
-      const response = await this.getByPersonId({
-        company_id: parseInt(this.company_id as string),
-        person_id: parseInt(this.person_id as string),
-        custom_fields: true,
-        segments: true,
-      });
+      const response = await this.getByPersonId({ company_id: parseInt(this.company_id as string), person_id: parseInt(this.person_id as string), custom_fields: true, segments: true });
       this.arrOfSeg = response.meta.extra.segments;
       this.arrOfSegFront = this.arrOfSeg;
       this.customFields = response.meta.extra.custom_fields;
-      return this.customer != undefined
-        ? this.updateFormValues(response.data)
-        : null;
+      return this.customer != undefined ? this.updateFormValues(response.data) : null;
     }
     this.#formService.originalValues = this.form.value;
   }
 
-  async getByPersonId(queryParams: { [key: string]: any }) {
-    return (await this.#custHttp.getById(queryParams)) as SuccessGETbyId;
-  }
+  ngOnDestroy(): void { this.#formService.originalValues = {} }
+
+  async getByPersonId(queryParams: { [key: string]: any }) { return (await this.#custHttp.getById(queryParams)) as SuccessGETbyId }
 
   async getCompanies() {
     const response = (await this.#compHttp.getAll({})) as SuccessGET;
     this.#arrayOfCompanies = response.data as Company[];
-    this.companies = (response.data as Company[]).map((company) => {
-      return {
-        id: company.company_id,
-        label: company.corporate_name,
-        value: company.company_id,
-      };
-    });
-  }
-
-  ngOnDestroy(): void {
-    this.#formService.originalValues = {};
+    this.companies = (response.data as Company[]).map((company) => { return { id: company.company_id, label: company.corporate_name, value: company.company_id } })
   }
 
   updateFormValues(body: any) {
     this.form.patchValue(body);
-    this.currentCompany = this.companies.find(
-      (c) => c.id === body.person.company_id
-    );
-
+    this.currentCompany = this.companies.find((c) => c.id === body.person.company_id);
     for (let contact of body.contacts) {
       const formArray = this.#fb.group({
-        person_id: [contact.person_id],
-        company_id: [contact.company_id],
-        contact_id: [contact.contact_id],
-        contact: new FormControl(contact.contact, {
-          validators: [
-            Validators.required,
-            Validators.minLength(3),
-            Validators.maxLength(20),
-          ],
-        }),
-        phone_number: new FormControl(contact.phone_number, {
-          validators: [
-            Validators.required,
-            Validators.minLength(10),
-            Validators.maxLength(14),
-            Validators.pattern(/^\d+$/),
-          ],
-        }),
+        person_id: [contact.person_id], company_id: [contact.company_id], contact_id: [contact.contact_id],
+        contact: new FormControl(contact.contact, { validators: [Validators.required, Validators.minLength(3), Validators.maxLength(20)] }),
+        phone_number: new FormControl(contact.phone_number, { validators: [Validators.required, Validators.minLength(10), Validators.maxLength(14), Validators.pattern(/^\d+$/)] }),
       });
       this.contacts.push(formArray);
     }
-
     for (let segment of body.segments) {
-      const formArray = this.#fb.group({
-        person_id: [segment.person_id],
-        company_id: [segment.company_id],
-        segment_id: [segment.segment_id],
-        segment: new FormControl(segment.name),
-      });
+      const formArray = this.#fb.group({ person_id: [segment.person_id], company_id: [segment.company_id], segment_id: [segment.segment_id], segment: new FormControl(segment.name) });
       this.segments.push(formArray);
     }
     this.#formService.originalValues = this.form.value;
@@ -168,39 +127,20 @@ export class CustomersFormComponent implements OnDestroy {
   }
 
   async setCurrentOption(e: Option, control: string) {
-    if (
-      control === "person.company_id" &&
-      this.form.get(control).value != e.value
-    ) {
+    if (control === "person.company_id" && this.form.get(control).value != e.value) {
       const response = (await this.getCustomFields(e.value)) as SuccessGET;
-
       this.arrOfSeg = response.meta.extra.segments;
       this.arrOfSegFront = this.arrOfSeg;
-
-      const custom_fields = response.meta.extra
-        .custom_fields as Array<CustomFields>;
-
-      custom_fields && custom_fields.length
-        ? (this.customFields = custom_fields)
-        : (this.customFields = undefined);
-
-      for (let contact of this.contacts.value) {
-        contact.company_id = e.value;
-      }
-
-      const company = this.#arrayOfCompanies.find(
-        (c) => c.company_id === e.value
-      );
-
+      const custom_fields = response.meta.extra.custom_fields as Array<CustomFields>;
+      custom_fields && custom_fields.length ? (this.customFields = custom_fields) : (this.customFields = undefined);
+      for (let contact of this.contacts.value) { contact.company_id = e.value }
+      const company = this.#arrayOfCompanies.find((c) => c.company_id === e.value);
       this.form.get("customer.company_id").patchValue(company?.company_id);
       this.form.get("address.company_id").patchValue(company?.company_id);
-
       this.form.get(control).patchValue(company?.company_id);
       this.form.get("company.cnpj").patchValue(company?.cnpj);
       this.form.get("company.social_name").patchValue(company?.social_name);
-      this.form
-        .get("company.corporate_name")
-        .patchValue(company?.corporate_name);
+      this.form.get("company.corporate_name").patchValue(company?.corporate_name);
     }
   }
 
@@ -261,25 +201,14 @@ export class CustomersFormComponent implements OnDestroy {
 
   addContact() {
     (this.form as FormGroup).markAsDirty()
-    return this.contacts.push(
-      this.#fb.group({
-        contact_id: [null],
-        person_id: [this.form.get("person.person_id").value ?? null],
-        company_id: [this.form.get("person.company_id").value ?? null],
-        contact: [null],
-        phone_number: [null],
-      })
-    );
+    return this.contacts.push(this.#fb.group({ contact_id: [null], person_id: [this.form.get("person.person_id").value ?? null], company_id: [this.form.get("person.company_id").value ?? null], contact: [null], phone_number: [null] }));
   }
 
   async delContact(idx: number) {
-
     const contact = ((this.form as any).get('contacts') as FormArray).at(idx).value
-
     if (contact.contact_id != null) {
       this.#dialogService.message = `Deseja remover ${contact.contact} ${contact.phone_number} da lista de contatos?`
       this.#dialogService.showDialog = true
-
       this.#dialogService.subject
         .pipe(takeUntilDestroyed(this.destroyRef))
         .subscribe(async value => {
