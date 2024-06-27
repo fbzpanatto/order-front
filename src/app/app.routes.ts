@@ -98,18 +98,12 @@ export const routes: Routes = [
         path: '',
         loadComponent: () => import('./features/companies/components/companies-list.component').then((m) => m.CompaniesListComponent),
         // canActivate: [authGuard],
-        data: {
-          menu: 'settings',
-          filter: true,
-        },
+        data: { menu: 'settings', filter: true },
       },
       {
         path: ':command',
         loadComponent: () => import('./features/companies/components/companies-form.component').then((m) => m.CompaniesFormComponent),
-        data: {
-          menu: 'settings',
-          filter: false,
-        },
+        data: { menu: 'settings', filter: false },
       },
     ],
   },
@@ -127,8 +121,18 @@ export const routes: Routes = [
       {
         path: 'segments',
         title: 'Segmentos',
-        loadComponent: () => import('./features/parameters/components/segments/segments.component').then((m) => m.SegmentsComponent),
-        data: { menu: 'settings', filter: false }
+        children: [
+          {
+            path: '',
+            loadComponent: () => import('./features/parameters/components/segments/segments-list.component').then((m) => m.SegmentsListComponent),
+            data: { menu: 'settings', filter: false }
+          },
+          {
+            path: 'form',
+            loadComponent: () => import('./features/parameters/components/segments/segments-form.component').then((m) => m.SegmentsFormComponent),
+            data: { menu: 'settings', filter: false },
+          },
+        ]
       },
       {
         path: 'fields',
@@ -186,13 +190,7 @@ export const routes: Routes = [
   },
   {
     path: '**',
-    loadComponent: () =>
-      import('./features/home/components/home.component').then(
-        (m) => m.HomeComponent
-      ),
-    data: {
-      menu: 'default',
-      filter: false,
-    },
+    loadComponent: () => import('./features/home/components/home.component').then((m) => m.HomeComponent),
+    data: { menu: 'default', filter: false },
   },
 ];

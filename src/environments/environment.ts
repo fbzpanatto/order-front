@@ -7,6 +7,7 @@ export const environment = {
   FIELDS: 'fields',
   DEFAULT: 'default',
   SETTINGS: 'settings',
+  SEGMENTS: 'segments',
   CUSTOMERS: 'persons',
   RESOURCES: 'resources',
   COMPANIES: 'companies',
