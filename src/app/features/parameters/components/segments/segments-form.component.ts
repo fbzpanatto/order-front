@@ -1,16 +1,19 @@
 import { Component, inject } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { environment } from '../../../../../environments/environment';
 import { FormService } from '../../../../shared/services/form.service';
 import { ToolbarMenuService } from '../../../../shared/services/toolbarMenu.service';
 import { SuccessGETbyId, SuccessPOST, SuccessPATCH } from '../../../../shared/interfaces/response/response';
 import { FetchSegmentsService } from '../../../../shared/services/fetch-segments.service';
+import { CommonModule } from '@angular/common';
+import { SelectComponent } from '../../../../shared/components/select.component';
+import { Option } from '../../../../shared/components/select.component';
 
 @Component({
   selector: 'app-segments-form',
   standalone: true,
-  imports: [],
+  imports: [ReactiveFormsModule, CommonModule, SelectComponent],
   templateUrl: './segments-form.component.html',
   styleUrls: ['../../../../styles/form.scss', '../../../../styles/title-bar.scss'],
 })
@@ -28,10 +31,9 @@ export class SegmentsFormComponent {
   #toolbarMenuService = inject(ToolbarMenuService)
 
   form = this.#fb.group({
-    table_id: ['', { validators: [Validators.required] }],
-    field_id: ['', { validators: [Validators.required] }],
-    company_id: [1, {}],
-    label: ['', { validators: [Validators.required, Validators.minLength(3)] }]
+    company_id: [null, { validators: [Validators.required] }],
+    segment_id: [null, {}],
+    name: [null, { validators: [Validators.required, Validators.minLength(3), Validators.maxLength(20)] }]
   })
 
   async ngOnInit() {
@@ -63,6 +65,8 @@ export class SegmentsFormComponent {
     this.#formService.originalValues = this.form.value;
     this.form.patchValue(field)
   }
+
+  setCurrentOption(e: Option, control: string) { this.form.get(control)?.patchValue(e.value) }
 
   async onSubmit() {
     if (!this.idIsTrue) {
