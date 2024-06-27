@@ -85,28 +85,22 @@
 
         <fieldset formArrayName="segments" class="formArray">
           <label class="medium-text fieldset-label">Segmentos</label>
-          @for(segment of segments.controls; track segment; let seg_idx =
-          $index) {
+          @for(segment of segments.controls; track seg_idx; let seg_idx = $index) {
           <div [formGroupName]="seg_idx" class="formGroup">
             <div class="input-container">
               <label class="light-text">Segmento</label>
               <span><i class="fa-solid fa-pen-to-square"></i></span>
-              @if(segment.value.person_id && segment.value.company_id &&
-              segment.value.segment_id && segment.value.segment_id != null){
-              <input id="seg{{seg_idx}}" readonly maxlength="20" class="medium-text" formControlName="segment"
-                placeholder="segmento" />
-              } @else {
-              <input id="seg{{seg_idx}}" [formControl]="segmentControl" class="medium-text" maxlength="20"
-                placeholder="segmento" />
-              @if(arrOfSegFront?.length){
-              <div class="menu-container">
-                <ul>
-                  @for(segment of arrOfSegFront; track $index) {
-                  <li (click)="includeSegment(segment)">{{ segment.name }}</li>
-                  }
-                </ul>
-              </div>
-              } }
+              @if(segment.value.person_id && segment.value.company_id && segment.value.segment_id && segment.value.segment_id != null){
+                <input id="seg{{seg_idx}}" readonly maxlength="20" class="medium-text" formControlName="segment" placeholder="segmento" />
+              }
+              @else {
+                <input id="seg{{seg_idx}}" [formControl]="segmentControl" class="medium-text" maxlength="20" placeholder="segmento" />
+                @if(arrOfSegFront?.length){
+                  <div class="menu-container">
+                  <ul> @for(segment of arrOfSegFront; track $index) { <li (click)="includeSegment(segment)">{{ segment.name }}</li> } </ul>
+                  </div>
+                }
+              }
             </div>
             <button class="del-btn" type="button" (click)="removeSegment(seg_idx)">
               <span><i class="fa-solid fa-minus"></i></span>
@@ -253,9 +247,9 @@
   </form>
 </div>
 
-<!-- <div style="display: flex; flex-direction: column">
+<div style="display: flex; flex-direction: column">
   <pre>
-    <h2>formDiff</h2>
-    {{ formDiff | json }}
+    <h2>currentValues</h2>
+    {{ form.value | json }}
   </pre>
-</div> -->
+</div>
