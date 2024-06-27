@@ -96,10 +96,10 @@
               <input readonly maxlength="20" class="medium-text" formControlName="segment" placeholder="segmento" />
               } @else {
               <input [formControl]="segmentControl" class="medium-text" maxlength="20" placeholder="segmento" />
-              @if(arrOfSegmentsToFront?.length){
+              @if(arrOfSegFront?.length){
               <div class="menu-container">
                 <ul>
-                  @for(segment of arrOfSegmentsToFront; track $index) {
+                  @for(segment of arrOfSegFront; track $index) {
                   <li (click)="includeSegment(segment)">{{ segment.name }}</li>
                   }
                 </ul>
@@ -218,7 +218,7 @@
               <span><i class="fa-solid fa-phone"></i></span>
               <input maxlength="14" class="medium-text" formControlName="phone_number" placeholder="número" />
             </div>
-            <button class="del-btn" type="button" (click)="removeContact(contact_idx)">
+            <button class="del-btn" type="button" (click)="delContact(contact_idx)">
               <span><i class="fa-solid fa-minus"></i></span>
             </button>
           </div>

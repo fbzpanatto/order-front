@@ -37,8 +37,8 @@ export class CustomersFormComponent implements OnDestroy {
   #companies: Option[] = [];
   #arrayOfCompanies: Company[] = [];
 
-  arrOfSegments?: { segment_id: number; company_id: number; name: string }[];
-  arrOfSegmentsToFront = this.arrOfSegments;
+  arrOfSeg?: { segment_id: number; company_id: number; name: string }[];
+  arrOfSegFront = this.arrOfSeg;
 
   #router = inject(Router);
   #fb = inject(FormBuilder);
@@ -46,10 +46,10 @@ export class CustomersFormComponent implements OnDestroy {
   #formService = inject(FormService);
   #asideService = inject(AsideService);
   #dialogService = inject(DialogService);
-  #fieldsHttp = inject(FetchFieldService);
-  #customersHttp = inject(FetchCustomerService);
-  #companiesHttp = inject(FetchCompaniesService);
-  #toolbarMenuService = inject(ToolbarMenuService);
+  #fieldHttp = inject(FetchFieldService);
+  #custHttp = inject(FetchCustomerService);
+  #compHttp = inject(FetchCompaniesService);
+  #menuServ = inject(ToolbarMenuService);
 
   normalForm = this.#fb.group({
     customer: this.#fb.group({ ...this.normalCustomer }),
@@ -73,7 +73,7 @@ export class CustomersFormComponent implements OnDestroy {
     this.segmentControl.valueChanges
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((search) => {
-        this.arrOfSegmentsToFront = this.arrOfSegments?.filter((el) => el.name.toLowerCase().includes(search?.toLowerCase() ?? ""));
+        this.arrOfSegFront = this.arrOfSeg?.filter((el) => el.name.toLowerCase().includes(search?.toLowerCase() ?? ""));
         ((this.form.get("segments") as FormArray).value as Array<any>).find((el) => el.segment_id === null).segment = search;
       });
   }
@@ -94,8 +94,8 @@ export class CustomersFormComponent implements OnDestroy {
         custom_fields: true,
         segments: true,
       });
-      this.arrOfSegments = response.meta.extra.segments;
-      this.arrOfSegmentsToFront = this.arrOfSegments;
+      this.arrOfSeg = response.meta.extra.segments;
+      this.arrOfSegFront = this.arrOfSeg;
       this.customFields = response.meta.extra.custom_fields;
       return this.customer != undefined
         ? this.updateFormValues(response.data)
@@ -105,11 +105,11 @@ export class CustomersFormComponent implements OnDestroy {
   }
 
   async getByPersonId(queryParams: { [key: string]: any }) {
-    return (await this.#customersHttp.getById(queryParams)) as SuccessGETbyId;
+    return (await this.#custHttp.getById(queryParams)) as SuccessGETbyId;
   }
 
   async getCompanies() {
-    const response = (await this.#companiesHttp.getAll({})) as SuccessGET;
+    const response = (await this.#compHttp.getAll({})) as SuccessGET;
     this.#arrayOfCompanies = response.data as Company[];
     this.companies = (response.data as Company[]).map((company) => {
       return {
@@ -174,8 +174,8 @@ export class CustomersFormComponent implements OnDestroy {
     ) {
       const response = (await this.getCustomFields(e.value)) as SuccessGET;
 
-      this.arrOfSegments = response.meta.extra.segments;
-      this.arrOfSegmentsToFront = this.arrOfSegments;
+      this.arrOfSeg = response.meta.extra.segments;
+      this.arrOfSegFront = this.arrOfSeg;
 
       const custom_fields = response.meta.extra
         .custom_fields as Array<CustomFields>;
@@ -204,13 +204,13 @@ export class CustomersFormComponent implements OnDestroy {
     }
   }
 
-  async getCustomFields(company_id: number) { return this.#fieldsHttp.getAll({ custom_fields: true, company_id, segments: true }) }
+  async getCustomFields(company_id: number) { return this.#fieldHttp.getAll({ custom_fields: true, company_id, segments: true }) }
 
   canProced() { return !((this.customerType && this.customerType === "normal") || (this.customerType && this.customerType === "legal")) ? this.redirect() : null; }
 
   menuSettings() {
-    this.#toolbarMenuService.menuName = this.menuName;
-    this.#toolbarMenuService.hasFilter = this.hasFilter;
+    this.#menuServ.menuName = this.menuName;
+    this.#menuServ.hasFilter = this.hasFilter;
   }
 
   titleSettings() {
@@ -220,11 +220,11 @@ export class CustomersFormComponent implements OnDestroy {
 
   async onSubmit() {
     if (!this.idIsTrue) {
-      const response = await this.#customersHttp.saveData(this.formDiff);
+      const response = await this.#custHttp.saveData(this.formDiff);
       if (!(response as SuccessPOST).affectedRows) { return }
       return this.redirect();
     }
-    const response = await this.#customersHttp.updateData({ company_id: parseInt(this.company_id as string), person_id: parseInt(this.person_id as string) }, this.formDiff);
+    const response = await this.#custHttp.updateData({ company_id: parseInt(this.company_id as string), person_id: parseInt(this.person_id as string) }, this.formDiff);
     if (!(response as SuccessPATCH).affectedRows) { return }
     return this.redirect();
   }
@@ -253,7 +253,7 @@ export class CustomersFormComponent implements OnDestroy {
         .pipe(takeUntilDestroyed(this.destroyRef))
         .subscribe(async (value) => {
           if (!value) { return }
-          await this.#customersHttp.delete({ company_id: this.company_id, person_id: this.person_id, segment_id: segment.segment_id });
+          await this.#custHttp.delete({ company_id: this.company_id, person_id: this.person_id, segment_id: segment.segment_id });
           return ((this.form as any).get("segments") as FormArray).removeAt(idx);
         });
     } else { ((this.form as any).get("segments") as FormArray).removeAt(idx) }
@@ -272,7 +272,7 @@ export class CustomersFormComponent implements OnDestroy {
     );
   }
 
-  async removeContact(idx: number) {
+  async delContact(idx: number) {
 
     const contact = ((this.form as any).get('contacts') as FormArray).at(idx).value
 
@@ -284,7 +284,7 @@ export class CustomersFormComponent implements OnDestroy {
         .pipe(takeUntilDestroyed(this.destroyRef))
         .subscribe(async value => {
           if (!value) { return }
-          const response = await this.#customersHttp.delete({ company_id: this.company_id, person_id: this.person_id, contact_id: contact.contact_id })
+          const response = await this.#custHttp.delete({ company_id: this.company_id, person_id: this.person_id, contact_id: contact.contact_id })
           if (!(response as SuccessDELETE).affectedRows) { return }
           return ((this.form as any).get('contacts') as FormArray).removeAt(idx)
         })
@@ -301,45 +301,39 @@ export class CustomersFormComponent implements OnDestroy {
     return (this.form as any).get("segments") as FormArray;
   }
 
-  get formDiff() {
-    return this.#formService.getChangedValues();
-  }
-  get originalValues() {
-    return this.#formService.originalValues;
-  }
-  get currentValues() {
-    return this.#formService.currentForm.value;
-  }
+  get formDiff() { return this.#formService.getChangedValues() }
+  get originalValues() { return this.#formService.originalValues }
+  get currentValues() { return this.#formService.currentForm.value }
 
-  get companies() {
-    return this.#companies;
-  }
-  set companies(value: Option[]) {
-    this.#companies = value;
-  }
+  get companies() { return this.#companies }
+  set companies(value: Option[]) { this.#companies = value }
 
-  get currentCompany() {
-    return this.#currentCompany;
-  }
-  set currentCompany(value: Option | undefined) {
-    this.#currentCompany = value;
-  }
+  get currentCompany() { return this.#currentCompany }
+  set currentCompany(value: Option | undefined) { this.#currentCompany = value }
 
   get customFields() { return this.#customFields }
   set customFields(value: CustomFields[] | undefined) { this.#customFields = value }
+
   get customer() { return this.#customer }
   set customer(value: any) { this.#customer = value }
+
   get title() { return this.#title }
   set title(value: string | undefined) { this.#title = value }
+
   get customerType() { return this.#asideService.customerType() }
   get customerQueryType() { return this.#route.snapshot.queryParamMap.get("type") }
+
   get form() { return this.customerType === "legal" ? (this.legalForm as any) : (this.normalForm as any) }
+
   get hasFilter() { return this.#route.snapshot.data[environment.FILTER] as boolean; }
   get menuName() { return this.#route.snapshot.data[environment.MENU] as string; }
+
   get company_id() { return this.#route.snapshot.queryParamMap.get("company_id"); }
   get person_id() { return this.#route.snapshot.queryParamMap.get("person_id"); }
+
   get action() { return this.#route.snapshot.queryParamMap.get("action"); }
   get idIsTrue() { return ((this.action != environment.NEW || this.action === null) && !isNaN(parseInt(this.person_id as string)) && !isNaN(parseInt(this.company_id as string))); }
+
   get company() {
     return {
       corporate_name: [null],
@@ -453,13 +447,7 @@ export class CustomersFormComponent implements OnDestroy {
 
   get address() {
     return {
-      person_id: [null],
-      company_id: [
-        null,
-        {
-          Validators: [Validators.required],
-        },
-      ],
+      person_id: [null], company_id: [null, { Validators: [Validators.required] }],
       add_street: [
         null,
         {
@@ -523,36 +511,11 @@ export class CustomersFormComponent implements OnDestroy {
   get person() {
     return {
       person_id: [null],
-      company_id: [
-        null,
-        {
-          Validators: [Validators.required],
-        },
-      ],
-      observation: [
-        null,
-        {
-          validators: [Validators.minLength(3), Validators.maxLength(45)],
-        },
-      ],
-      first_field: [
-        null,
-        {
-          validators: [Validators.minLength(3), Validators.maxLength(100)],
-        },
-      ],
-      second_field: [
-        null,
-        {
-          validators: [Validators.minLength(3), Validators.maxLength(100)],
-        },
-      ],
-      third_field: [
-        null,
-        {
-          validators: [Validators.minLength(3), Validators.maxLength(100)],
-        },
-      ],
+      company_id: [null, { Validators: [Validators.required] }],
+      observation: [null, { validators: [Validators.minLength(3), Validators.maxLength(45)] }],
+      first_field: [null, { validators: [Validators.minLength(3), Validators.maxLength(100)] }],
+      second_field: [null, { validators: [Validators.minLength(3), Validators.maxLength(100)] }],
+      third_field: [null, { validators: [Validators.minLength(3), Validators.maxLength(100)] }],
     };
   }
 }
