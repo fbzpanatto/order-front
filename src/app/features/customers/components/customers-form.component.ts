@@ -2,7 +2,7 @@ import { Component, DestroyRef, OnDestroy, inject } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { ToolbarMenuService } from "../../../shared/services/toolbarMenu.service";
 import { environment } from "../../../../environments/environment";
-import { FormArray, FormBuilder, FormControl, ReactiveFormsModule, Validators } from "@angular/forms";
+import { FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
 import { AsideService } from "../../../shared/services/aside.service";
 import { CommonModule } from "@angular/common";
 import { FetchCustomerService } from "../../../shared/services/fetchCustomers.service";
@@ -234,6 +234,7 @@ export class CustomersFormComponent implements OnDestroy {
   addSegment(formArray?: any) {
     const newFormArray = this.#fb.group({ segment_id: [null], person_id: [this.form.get("person.person_id").value ?? null], company_id: [this.form.get("person.company_id").value ?? null], segment: [null] });
     this.segments.push(formArray ?? newFormArray);
+    (this.form as FormGroup).markAsDirty()
   }
 
   includeSegment(segment: { segment_id: number, company_id: number, name: string }) {
@@ -259,6 +260,7 @@ export class CustomersFormComponent implements OnDestroy {
   }
 
   addContact() {
+    (this.form as FormGroup).markAsDirty()
     return this.contacts.push(
       this.#fb.group({
         contact_id: [null],
@@ -323,40 +325,15 @@ export class CustomersFormComponent implements OnDestroy {
     this.#currentCompany = value;
   }
 
-  get customFields() {
-    return this.#customFields;
-  }
-  set customFields(value: CustomFields[] | undefined) {
-    this.#customFields = value;
-  }
-
-  get customer() {
-    return this.#customer;
-  }
-  set customer(value: any) {
-    this.#customer = value;
-  }
-
-  get title() {
-    return this.#title;
-  }
-  set title(value: string | undefined) {
-    this.#title = value;
-  }
-
-  get customerType() {
-    return this.#asideService.customerType();
-  }
-  get customerQueryType() {
-    return this.#route.snapshot.queryParamMap.get("type");
-  }
-
-  get form() {
-    return this.customerType === "legal"
-      ? (this.legalForm as any)
-      : (this.normalForm as any);
-  }
-
+  get customFields() { return this.#customFields }
+  set customFields(value: CustomFields[] | undefined) { this.#customFields = value }
+  get customer() { return this.#customer }
+  set customer(value: any) { this.#customer = value }
+  get title() { return this.#title }
+  set title(value: string | undefined) { this.#title = value }
+  get customerType() { return this.#asideService.customerType() }
+  get customerQueryType() { return this.#route.snapshot.queryParamMap.get("type") }
+  get form() { return this.customerType === "legal" ? (this.legalForm as any) : (this.normalForm as any) }
   get hasFilter() { return this.#route.snapshot.data[environment.FILTER] as boolean; }
   get menuName() { return this.#route.snapshot.data[environment.MENU] as string; }
   get company_id() { return this.#route.snapshot.queryParamMap.get("company_id"); }
