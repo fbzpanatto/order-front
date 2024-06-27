@@ -126,10 +126,10 @@ export class SegmentsFormComponent {
   get currentValues() { return this.#formService.currentForm.value }
 
   get action() { return this.#route.snapshot.queryParamMap.get('action') }
-  get company_id() { return parseInt(this.#route.snapshot.queryParamMap.get('company_id') as string) }
-  get segment_id() { return parseInt(this.#route.snapshot.queryParamMap.get('segment_id') as string) }
+  get company_id() { return this.#route.snapshot.queryParamMap.get('company_id') }
+  get segment_id() { return this.#route.snapshot.queryParamMap.get('segment_id') }
 
   get queryParams() { return { company_id: this.company_id, segment_id: this.segment_id } }
 
-  get idIsTrue() { return (this.action != environment.NEW || this.action === null) && (!isNaN(this.segment_id) && !isNaN(this.company_id)) }
+  get idIsTrue() { return (this.action != environment.NEW || this.action === null) && (!isNaN(parseInt(this.segment_id as string)) && !isNaN(parseInt(this.company_id as string))) }
 }

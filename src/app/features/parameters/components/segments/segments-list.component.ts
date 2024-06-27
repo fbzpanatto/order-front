@@ -1,17 +1,18 @@
 import { Component, inject } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { AsideService, paths } from '../../../../shared/services/aside.service';
 import { ToolbarMenuService } from '../../../../shared/services/toolbarMenu.service';
 import { environment } from '../../../../../environments/environment';
 import { SuccessGET } from '../../../../shared/interfaces/response/response';
 import { FetchSegmentsService } from '../../../../shared/services/fetch-segments.service';
+import { CommonModule } from '@angular/common';
 
 interface Segment { company_id: number, segment_id: number, name: string, corporate_name: string, created_at: string, updated_at: string }
 
 @Component({
   selector: 'app-segments',
   standalone: true,
-  imports: [],
+  imports: [CommonModule, RouterLink],
   templateUrl: './segments-list.component.html',
   styleUrls: ['../../../../styles/title-bar.scss', '../../../../styles/table.scss']
 })
@@ -32,10 +33,7 @@ export class SegmentsListComponent {
     await this.getAll()
   }
 
-  async getAll() {
-    const response = (await this.#http.getSegments({ company_id: 1 }) as SuccessGET).data as Segment[]
-    this.segments = response
-  }
+  async getAll() { this.segments = ((await this.#http.getSegments({ company_id: 1 }) as SuccessGET).data) as Segment[] }
 
   asideFilters() { this.#asideService.getResourceFilters(this.path) }
 
