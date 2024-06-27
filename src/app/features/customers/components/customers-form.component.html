@@ -93,9 +93,11 @@
               <span><i class="fa-solid fa-pen-to-square"></i></span>
               @if(segment.value.person_id && segment.value.company_id &&
               segment.value.segment_id && segment.value.segment_id != null){
-              <input readonly maxlength="20" class="medium-text" formControlName="segment" placeholder="segmento" />
+              <input id="seg{{seg_idx}}" readonly maxlength="20" class="medium-text" formControlName="segment"
+                placeholder="segmento" />
               } @else {
-              <input [formControl]="segmentControl" class="medium-text" maxlength="20" placeholder="segmento" />
+              <input id="seg{{seg_idx}}" [formControl]="segmentControl" class="medium-text" maxlength="20"
+                placeholder="segmento" />
               @if(arrOfSegFront?.length){
               <div class="menu-container">
                 <ul>
@@ -113,10 +115,10 @@
           }
           <div class="add-btn-container" style="gap: 0">
             <div class="input-container">
-              <input readonly style="display: none" />
+              <input id="segFirstField" readonly style="display: none" />
             </div>
             <div class="input-container">
-              <input readonly style="display: none" />
+              <input id="segSecondField" readonly style="display: none" />
             </div>
             <button class="add-btn" type="button" (click)="addSegment()">
               <span><i class="fa-solid fa-plus"></i></span>
