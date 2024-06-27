@@ -22,6 +22,8 @@ export class SegmentsFormComponent {
   #title?: string
 
   #segment = {}
+  #currentCompany?: Option
+  #companies: Option[] = []
 
   #router = inject(Router)
   #fb = inject(FormBuilder)
@@ -33,7 +35,9 @@ export class SegmentsFormComponent {
   form = this.#fb.group({
     company_id: [null, { validators: [Validators.required] }],
     segment_id: [null, {}],
-    name: [null, { validators: [Validators.required, Validators.minLength(3), Validators.maxLength(20)] }]
+    name: [null, { validators: [Validators.required, Validators.minLength(3), Validators.maxLength(20)] }],
+    social_name: [null],
+    cnpj: [null]
   })
 
   async ngOnInit() {
@@ -45,12 +49,14 @@ export class SegmentsFormComponent {
     this.#formService.currentForm = this.form;
 
     if (this.idIsTrue) {
-      this.segment = (await this.getBySegmentId(this.queryParams))
+      const response = await this.getBySegmentId(this.queryParams)
+      this.segment = response.data
+      this.companies = response.meta.extra.companies!.map((el: any) => { return { id: el.company_id, label: el.corporate_name, value: el.company_id } })
       return this.segment != undefined ? this.updateFormValues(this.segment) : null
     }
   }
 
-  async getBySegmentId(queryParams: { [key: string]: any }) { return (await this.#http.getById(queryParams) as SuccessGETbyId).data }
+  async getBySegmentId(queryParams: { [key: string]: any }) { return (await this.#http.getById(queryParams) as SuccessGETbyId) }
 
   redirect() { this.#router.navigate(['/parameters/segments']) }
 
@@ -61,23 +67,33 @@ export class SegmentsFormComponent {
     this.#toolbarMenuService.hasFilter = this.hasFilter
   }
 
-  updateFormValues(field: any) {
+  updateFormValues(segment: any) {
+    this.currentCompany = this.companies.find(el => el.id === segment.company_id)
     this.#formService.originalValues = this.form.value;
-    this.form.patchValue(field)
+    this.form.patchValue(segment)
   }
 
   setCurrentOption(e: Option, control: string) { this.form.get(control)?.patchValue(e.value) }
 
   async onSubmit() {
+
+    const values = this.form.value
+
     if (!this.idIsTrue) {
-      const response = await this.#http.saveData(this.currentValues)
+      const response = await this.#http.saveData({ company_id: values.company_id, segment_id: values.segment_id, name: values.name })
       if (!(response as SuccessPOST).affectedRows) { return }
       return this.redirect()
     }
-    const response = await this.#http.updateData(this.queryParams, this.currentValues)
+    const response = await this.#http.updateData(this.queryParams, { company_id: values.company_id, segment_id: values.segment_id, name: values.name })
     if (!(response as SuccessPATCH).affectedRows) { return }
     return this.redirect()
   }
+
+  get currentCompany() { return this.#currentCompany }
+  set currentCompany(value: Option | undefined) { this.#currentCompany = value }
+
+  get companies() { return this.#companies }
+  set companies(value: Option[]) { this.#companies = value }
 
   get segment() { return this.#segment }
   set segment(value: any) { this.#segment = value }

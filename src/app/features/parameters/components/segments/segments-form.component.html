@@ -5,20 +5,22 @@
   <div class="inputs-container visible">
     <div class="fieldsets-container visible">
       <fieldset>
-        <label class="medium-text fieldset-label">Empresa</label>
-        <!-- <div class="input-container">
-          <app-select [disabled]="idIsTrue ? true: false" [currOption]="currentTable" [options]="tableOptions"
-            (emitCurrentOption)="setCurrentOption($event, 'table_id', 'field_id')" [label]="'Tabela'"></app-select>
-        </div> -->
+        <label class="medium-text fieldset-label">Cliente da empresa</label>
         <div class="input-container">
-          <label class="light-text" for="name">Empresa</label>
-          <span><i class="fa-solid fa-pen-to-square"></i></span>
-          <input readonly class="medium-text" id="company" name="company" type="text" placeholder="empresa">
+          <app-select [disabled]="idIsTrue ? true : false" [currOption]="currentCompany" (emitCurrentOption)="
+              setCurrentOption($event, 'person.company_id')
+            " [label]="'Selecione uma empresa'" [options]="companies"></app-select>
         </div>
         <div class="input-container">
-          <label class="light-text" for="name">Cnpj</label>
+          <label class="light-text" for="company_social_name">Nome Fantasia</label>
           <span><i class="fa-solid fa-pen-to-square"></i></span>
-          <input readonly class="medium-text" id="company_cnpj" name="company_cnpj" type="text" placeholder="cnpj">
+          <input formControlName="social_name" readonly class="medium-text" id="social_name" name="social_name"
+            type="text" placeholder="nome fantasia" />
+        </div>
+        <div class="input-container">
+          <label class="light-text" for="company_cnpj">Cnpj</label>
+          <span><i class="fa-solid fa-id-card"></i></span>
+          <input formControlName="cnpj" readonly class="medium-text" id="cnpj" name="cnpj" type="text" placeholder="cnpj" />
         </div>
       </fieldset>
       <fieldset>
