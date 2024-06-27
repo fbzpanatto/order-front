@@ -7,21 +7,10 @@
       <fieldset>
         <label class="medium-text fieldset-label">Cliente da empresa</label>
         <div class="input-container">
-          <app-select [disabled]="idIsTrue ? true : false" [currOption]="currentCompany" (emitCurrentOption)="
-              setCurrentOption($event, 'company_id')
-            " [label]="'Selecione uma empresa'" [options]="companies"></app-select>
-        </div>
-        <div class="input-container">
-          <label class="light-text" for="company_social_name">Nome Fantasia</label>
-          <span><i class="fa-solid fa-pen-to-square"></i></span>
-          <input formControlName="social_name" readonly class="medium-text" id="social_name" name="social_name"
-            type="text" placeholder="nome fantasia" />
-        </div>
-        <div class="input-container">
-          <label class="light-text" for="company_cnpj">Cnpj</label>
-          <span><i class="fa-solid fa-id-card"></i></span>
-          <input formControlName="cnpj" readonly class="medium-text" id="cnpj" name="cnpj" type="text"
-            placeholder="cnpj" />
+          <app-select [disabled]="idIsTrue ? true : false" [currOption]="currentCompany"
+            (emitCurrentOption)="setCurrentOption($event, 'company_id')" [label]="'Selecione uma empresa'"
+            [options]="companies">
+          </app-select>
         </div>
       </fieldset>
       <fieldset>
@@ -29,8 +18,8 @@
         <div class="input-container">
           <label class="light-text" for="name">Segmento</label>
           <span><i class="fa-solid fa-pen-to-square"></i></span>
-          <input minlength="3" maxlength="20" class="medium-text" id="name" formControlName="name" name="name"
-            type="text" placeholder="segmento">
+          <input autocomplete="false" minlength="3" maxlength="20" class="medium-text" id="name" formControlName="name"
+            name="name" type="text" placeholder="segmento">
         </div>
       </fieldset>
     </div>

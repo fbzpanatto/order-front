@@ -25,7 +25,6 @@ export class SegmentsFormComponent {
   #segment = {}
   #currentCompany?: Option
   #companies: Option[] = []
-  #arrOfCompanies: any[] = []
 
   #router = inject(Router)
   #fb = inject(FormBuilder)
@@ -38,9 +37,7 @@ export class SegmentsFormComponent {
   form = this.#fb.group({
     company_id: [null, { validators: [Validators.required] }],
     segment_id: [null, {}],
-    name: [null, { validators: [Validators.required, Validators.minLength(3), Validators.maxLength(20)] }],
-    social_name: [null],
-    cnpj: [null]
+    name: [null, { validators: [Validators.required, Validators.minLength(3), Validators.maxLength(20)] }]
   })
 
   async ngOnInit() {
@@ -61,9 +58,8 @@ export class SegmentsFormComponent {
   }
 
   async getCompanies() {
-    const response = (await this.#compHttp.getAll({})) as SuccessGET;
-    this.#arrOfCompanies = response.data as []
-    this.companies = response.data.map((el: any) => { return { id: el.company_id, label: el.corporate_name, value: el.company_id } })
+    const response = await this.#compHttp.getAll({})
+    this.companies = (response as SuccessGET).data.map((el: any) => { return { id: el.company_id, label: el.corporate_name, value: el.company_id } })
   }
 
   async getBySegmentId(queryParams: { [key: string]: any }) { return (await this.#http.getSegments(queryParams) as SuccessGETbyId) }
@@ -83,14 +79,7 @@ export class SegmentsFormComponent {
     this.form.patchValue(segment)
   }
 
-  setCurrentOption(e: Option, control: string) {
-    this.form.get(control)?.patchValue(e.value)
-    if (control === 'company_id') {
-      const company = this.#arrOfCompanies.find((c: any) => c.company_id === e.id)
-      this.form.get('social_name')?.patchValue(company.social_name)
-      this.form.get('cnpj')?.patchValue(company.cnpj)
-    }
-  }
+  setCurrentOption(e: Option, control: string) { this.form.get(control)?.patchValue(e.value) }
 
   async onSubmit() {
 
