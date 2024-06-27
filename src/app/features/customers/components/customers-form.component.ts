@@ -70,12 +70,12 @@ export class CustomersFormComponent implements OnDestroy {
   });
 
   constructor() {
-    this.segmentControl.valueChanges
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((search) => {
-        this.arrOfSegFront = this.arrOfSeg?.filter((el) => el.name.toLowerCase().includes(search?.toLowerCase() ?? ""));
-        ((this.form.get("segments") as FormArray).value as Array<any>).find((el) => el.segment_id === null).segment = search;
-      });
+    this.segmentControl.valueChanges.subscribe(search => {
+      this.arrOfSegFront = this.arrOfSeg?.filter(el => el.name.toLowerCase().includes(search?.toLowerCase() ?? ''));
+
+      const item = ((this.form.get('segments') as FormArray).value as Array<any>).find(el => el.segment_id === null)
+      item ? item.segment = search : null
+    })
   }
 
   async ngOnInit() {
@@ -160,11 +160,11 @@ export class CustomersFormComponent implements OnDestroy {
 
   async onSubmit() {
     if (!this.idIsTrue) {
-      const response = await this.#custHttp.saveData(this.formDiff);
+      const response = await this.#custHttp.saveData(this.form.value);
       if (!(response as SuccessPOST).affectedRows) { return }
       return this.redirect();
     }
-    const response = await this.#custHttp.updateData({ company_id: parseInt(this.company_id as string), person_id: parseInt(this.person_id as string) }, this.formDiff);
+    const response = await this.#custHttp.updateData({ company_id: parseInt(this.company_id as string), person_id: parseInt(this.person_id as string) }, this.form.value);
     if (!(response as SuccessPATCH).affectedRows) { return }
     return this.redirect();
   }
@@ -172,15 +172,21 @@ export class CustomersFormComponent implements OnDestroy {
   redirect() { this.#router.navigate(["/customers"]) }
 
   addSegment(formArray?: any) {
-    const newFormArray = this.#fb.group({ segment_id: [null], person_id: [this.form.get("person.person_id").value ?? null], company_id: [this.form.get("person.company_id").value ?? null], segment: [null] });
-    this.segments.push(formArray ?? newFormArray);
-    (this.form as FormGroup).markAsDirty()
+    this.contacts.updateValueAndValidity()
+    const newFormArray = this.#fb.group({ segment_id: [null], person_id: [this.form.get('person.person_id').value ?? null], company_id: [this.form.get('person.company_id').value ?? null], segment: [null] })
+
+    this.segments.push(formArray ?? newFormArray)
   }
 
   includeSegment(segment: { segment_id: number, company_id: number, name: string }) {
-    this.addSegment(this.#fb.group({ person_id: [this.form.get("person.person_id").value], company_id: [segment.company_id], segment_id: [segment.segment_id], segment: [segment.name], }));
-    const idx = (this.segments.value as Array<any>).findIndex((el) => el.segment_id === null);
-    (this.form.get("segments") as FormArray).removeAt(idx)
+    const formArray = this.#fb.group({
+      person_id: [this.form.get('person.person_id').value], company_id: [segment.company_id], segment_id: [segment.segment_id],
+      segment: [segment.name],
+    }) as FormGroup<{ segment_id: FormControl<null>, person_id: FormControl<any>, company_id: FormControl<any>, segment: FormControl<null> }>
+    this.addSegment(formArray)
+
+    const idx = (this.segments.value as Array<any>).findIndex(el => el.segment_id === null);
+    (this.form.get('segments') as FormArray).removeAt(idx)
   }
 
   async removeSegment(idx: number) {
@@ -265,23 +271,23 @@ export class CustomersFormComponent implements OnDestroy {
 
   get company() {
     return {
-      corporate_name: [null],
-      social_name: [null],
-      cnpj: [null, { validators: [Validators.pattern(/^\d+$/)] }],
+      corporate_name: [''],
+      social_name: [''],
+      cnpj: ['', { validators: [Validators.pattern(/^\d+$/)] }],
     };
   }
 
   get legalCustomer() {
     return {
-      person_id: [null],
+      person_id: [''],
       company_id: [
-        null,
+        '',
         {
           Validators: [Validators.required],
         },
       ],
       cnpj: [
-        null,
+        '',
         {
           validators: [
             Validators.required,
@@ -292,7 +298,7 @@ export class CustomersFormComponent implements OnDestroy {
         },
       ],
       corporate_name: [
-        null,
+        '',
         {
           validators: [
             Validators.required,
@@ -302,7 +308,7 @@ export class CustomersFormComponent implements OnDestroy {
         },
       ],
       social_name: [
-        null,
+        '',
         {
           validators: [
             Validators.required,
@@ -312,7 +318,7 @@ export class CustomersFormComponent implements OnDestroy {
         },
       ],
       state_registration: [
-        null,
+        '',
         {
           validators: [
             Validators.required,
@@ -376,9 +382,9 @@ export class CustomersFormComponent implements OnDestroy {
 
   get address() {
     return {
-      person_id: [null], company_id: [null, { Validators: [Validators.required] }],
+      person_id: [''], company_id: ['', { Validators: [Validators.required] }],
       add_street: [
-        null,
+        '',
         {
           validators: [
             Validators.required,
@@ -388,13 +394,13 @@ export class CustomersFormComponent implements OnDestroy {
         },
       ],
       add_number: [
-        null,
+        '',
         {
           validators: [Validators.maxLength(10)],
         },
       ],
       add_zipcode: [
-        null,
+        '',
         {
           validators: [
             Validators.required,
@@ -405,7 +411,7 @@ export class CustomersFormComponent implements OnDestroy {
         },
       ],
       add_city: [
-        null,
+        '',
         {
           validators: [
             Validators.required,
@@ -415,7 +421,7 @@ export class CustomersFormComponent implements OnDestroy {
         },
       ],
       add_uf: [
-        null,
+        '',
         {
           validators: [
             Validators.required,
@@ -425,7 +431,7 @@ export class CustomersFormComponent implements OnDestroy {
         },
       ],
       add_neighborhood: [
-        null,
+        '',
         {
           validators: [
             Validators.required,
@@ -439,12 +445,12 @@ export class CustomersFormComponent implements OnDestroy {
 
   get person() {
     return {
-      person_id: [null],
-      company_id: [null, { Validators: [Validators.required] }],
-      observation: [null, { validators: [Validators.minLength(3), Validators.maxLength(45)] }],
-      first_field: [null, { validators: [Validators.minLength(3), Validators.maxLength(100)] }],
-      second_field: [null, { validators: [Validators.minLength(3), Validators.maxLength(100)] }],
-      third_field: [null, { validators: [Validators.minLength(3), Validators.maxLength(100)] }],
+      person_id: [''],
+      company_id: ['', { Validators: [Validators.required] }],
+      observation: ['', { validators: [Validators.minLength(3), Validators.maxLength(45)] }],
+      first_field: ['', { validators: [Validators.minLength(3), Validators.maxLength(100)] }],
+      second_field: ['', { validators: [Validators.minLength(3), Validators.maxLength(100)] }],
+      third_field: ['', { validators: [Validators.minLength(3), Validators.maxLength(100)] }],
     };
   }
 }
