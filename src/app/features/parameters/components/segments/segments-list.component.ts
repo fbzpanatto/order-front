@@ -33,7 +33,7 @@ export class SegmentsListComponent {
   }
 
   async getAll() {
-    const response = (await this.#http.getAll({ company_id: 1 }) as SuccessGET).data as Segment[]
+    const response = (await this.#http.getSegments({ company_id: 1 }) as SuccessGET).data as Segment[]
     this.segments = response
   }
 

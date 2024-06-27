@@ -1,14 +1,15 @@
+import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { environment } from '../../../../../environments/environment';
 import { FormService } from '../../../../shared/services/form.service';
-import { ToolbarMenuService } from '../../../../shared/services/toolbarMenu.service';
-import { SuccessGETbyId, SuccessPOST, SuccessPATCH } from '../../../../shared/interfaces/response/response';
-import { FetchSegmentsService } from '../../../../shared/services/fetch-segments.service';
-import { CommonModule } from '@angular/common';
-import { SelectComponent } from '../../../../shared/components/select.component';
 import { Option } from '../../../../shared/components/select.component';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { SelectComponent } from '../../../../shared/components/select.component';
+import { ToolbarMenuService } from '../../../../shared/services/toolbarMenu.service';
+import { FetchSegmentsService } from '../../../../shared/services/fetch-segments.service';
+import { FetchCompaniesService } from '../../../../shared/services/fetchCompanies.service';
+import { SuccessGETbyId, SuccessPOST, SuccessPATCH, SuccessGET } from '../../../../shared/interfaces/response/response';
 
 @Component({
   selector: 'app-segments-form',
@@ -24,12 +25,14 @@ export class SegmentsFormComponent {
   #segment = {}
   #currentCompany?: Option
   #companies: Option[] = []
+  #arrOfCompanies: any[] = []
 
   #router = inject(Router)
   #fb = inject(FormBuilder)
   #route = inject(ActivatedRoute)
   #formService = inject(FormService)
   #http = inject(FetchSegmentsService)
+  #compHttp = inject(FetchCompaniesService);
   #toolbarMenuService = inject(ToolbarMenuService)
 
   form = this.#fb.group({
@@ -54,9 +57,16 @@ export class SegmentsFormComponent {
       this.companies = response.meta.extra.companies!.map((el: any) => { return { id: el.company_id, label: el.corporate_name, value: el.company_id } })
       return this.segment != undefined ? this.updateFormValues(this.segment) : null
     }
+    await this.getCompanies()
   }
 
-  async getBySegmentId(queryParams: { [key: string]: any }) { return (await this.#http.getById(queryParams) as SuccessGETbyId) }
+  async getCompanies() {
+    const response = (await this.#compHttp.getAll({})) as SuccessGET;
+    this.#arrOfCompanies = response.data as []
+    this.companies = response.data.map((el: any) => { return { id: el.company_id, label: el.corporate_name, value: el.company_id } })
+  }
+
+  async getBySegmentId(queryParams: { [key: string]: any }) { return (await this.#http.getSegments(queryParams) as SuccessGETbyId) }
 
   redirect() { this.#router.navigate(['/parameters/segments']) }
 
@@ -73,7 +83,14 @@ export class SegmentsFormComponent {
     this.form.patchValue(segment)
   }
 
-  setCurrentOption(e: Option, control: string) { this.form.get(control)?.patchValue(e.value) }
+  setCurrentOption(e: Option, control: string) {
+    this.form.get(control)?.patchValue(e.value)
+    if (control === 'company_id') {
+      const company = this.#arrOfCompanies.find((c: any) => c.company_id === e.id)
+      this.form.get('social_name')?.patchValue(company.social_name)
+      this.form.get('cnpj')?.patchValue(company.cnpj)
+    }
+  }
 
   async onSubmit() {
 

@@ -1,8 +1,8 @@
+import { ApiError } from './../interfaces/response/response';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { firstValueFrom, catchError, of } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { ApiError } from '../interfaces/response/response';
 
 @Injectable({
   providedIn: 'root'
@@ -11,13 +11,7 @@ export class FetchSegmentsService {
 
   #http = inject(HttpClient)
 
-  async getAll(queryParams: { [key: string]: any }) {
-    return await firstValueFrom(
-      this.#http.get(this.fullResource + `?${this.createQueryString(queryParams)}`)
-        .pipe(catchError((apiError) => this.errorHandler(apiError.error as ApiError))))
-  }
-
-  async getById(queryParams: { [key: string]: any }) {
+  async getSegments(queryParams: { [key: string]: any }) {
     return await firstValueFrom(
       this.#http.get(this.fullResource + `?${this.createQueryString(queryParams)}`)
         .pipe(catchError((apiError) => this.errorHandler(apiError.error as ApiError))))
@@ -42,7 +36,7 @@ export class FetchSegmentsService {
   }
 
   errorHandler(apiError: ApiError) {
-    // TODO: open a dialog with error message
+    console.log(apiError)
     return of(apiError)
   }
 
