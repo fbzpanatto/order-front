@@ -1,7 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AsideService, paths } from '../../../../shared/services/aside.service';
-import { FetchFieldService } from '../../../../shared/services/fetchField.service';
 import { ToolbarMenuService } from '../../../../shared/services/toolbarMenu.service';
 import { environment } from '../../../../../environments/environment';
 import { SuccessGET } from '../../../../shared/interfaces/response/response';
