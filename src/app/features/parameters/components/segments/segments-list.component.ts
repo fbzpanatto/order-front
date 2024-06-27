@@ -32,7 +32,10 @@ export class SegmentsListComponent {
     await this.getAll()
   }
 
-  async getAll() { this.segments = ((await this.#http.getAll({}) as SuccessGET).data) as Segment[] }
+  async getAll() {
+    const response = (await this.#http.getAll({ company_id: 1 }) as SuccessGET).data as Segment[]
+    this.segments = response
+  }
 
   asideFilters() { this.#asideService.getResourceFilters(this.path) }
 
