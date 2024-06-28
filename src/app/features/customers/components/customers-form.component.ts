@@ -1,7 +1,7 @@
-import { Component, DestroyRef, OnDestroy, inject } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { ToolbarMenuService } from '../../../shared/services/toolbarMenu.service';
-import { environment } from '../../../../environments/environment';
+import { Component, DestroyRef, OnDestroy, inject } from "@angular/core";
+import { ActivatedRoute, Router } from "@angular/router";
+import { ToolbarMenuService } from "../../../shared/services/toolbarMenu.service";
+import { environment } from "../../../../environments/environment";
 import {
   FormArray,
   FormBuilder,
@@ -9,25 +9,26 @@ import {
   FormGroup,
   ReactiveFormsModule,
   Validators,
-} from '@angular/forms';
-import { AsideService } from '../../../shared/services/aside.service';
-import { CommonModule } from '@angular/common';
-import { FetchCustomerService } from '../../../shared/services/fetchCustomers.service';
+} from "@angular/forms";
+import { AsideService } from "../../../shared/services/aside.service";
+import { CommonModule } from "@angular/common";
+import { FetchCustomerService } from "../../../shared/services/fetchCustomers.service";
 import {
   SuccessDELETE,
   SuccessGET,
   SuccessGETbyId,
   SuccessPATCH,
   SuccessPOST,
-} from '../../../shared/interfaces/response/response';
-import { FormService } from '../../../shared/services/form.service';
-import { DialogService } from '../../../shared/services/dialog.service';
-import { Company } from '../../companies/components/companies-list.component';
-import { FetchCompaniesService } from '../../../shared/services/fetchCompanies.service';
-import { SelectComponent } from '../../../shared/components/select.component';
-import { Option } from '../../../shared/components/select.component';
-import { FetchFieldService } from '../../../shared/services/fetchField.service';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+} from "../../../shared/interfaces/response/response";
+import { FormService } from "../../../shared/services/form.service";
+import { DialogService } from "../../../shared/services/dialog.service";
+import { Company } from "../../companies/components/companies-list.component";
+import { FetchCompaniesService } from "../../../shared/services/fetchCompanies.service";
+import { SelectComponent } from "../../../shared/components/select.component";
+import { Option } from "../../../shared/components/select.component";
+import { FetchFieldService } from "../../../shared/services/fetchField.service";
+import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
+import { OutsideElementDirective } from "../../../shared/directives/outsideElement.directive";
 
 interface CustomFields {
   id: number;
@@ -37,20 +38,25 @@ interface CustomFields {
 }
 
 @Component({
-  selector: 'app-customers-form',
+  selector: "app-customers-form",
   standalone: true,
-  templateUrl: './customers-form.component.html',
+  templateUrl: "./customers-form.component.html",
   styleUrls: [
-    '../../../styles/resource.scss',
-    '../../../styles/form.scss',
-    '../../../styles/title-bar.scss',
+    "../../../styles/resource.scss",
+    "../../../styles/form.scss",
+    "../../../styles/title-bar.scss",
   ],
-  imports: [ReactiveFormsModule, CommonModule, SelectComponent],
+  imports: [
+    ReactiveFormsModule,
+    CommonModule,
+    SelectComponent,
+    OutsideElementDirective,
+  ],
 })
 export class CustomersFormComponent implements OnDestroy {
   destroyRef = inject(DestroyRef);
 
-  segmentControl = new FormControl('', {});
+  segmentControl = new FormControl("", {});
 
   #customer = {};
   #title?: string;
@@ -96,12 +102,12 @@ export class CustomersFormComponent implements OnDestroy {
   constructor() {
     this.segmentControl.valueChanges.subscribe((search) => {
       this.arrOfSegFront = this.arrOfSeg?.filter((el) =>
-        el.name.toLowerCase().includes(search?.toLowerCase() ?? '')
+        el.name.toLowerCase().includes(search?.toLowerCase() ?? "")
       );
 
       const item = (
-        (this.form.get('segments') as FormArray).value as Array<any>
-      ).find((el) => el.segment_id === '');
+        (this.form.get("segments") as FormArray).value as Array<any>
+      ).find((el) => el.segment_id === "");
       item ? (item.segment = search) : null;
     });
   }
@@ -195,7 +201,7 @@ export class CustomersFormComponent implements OnDestroy {
 
   async setCurrentOption(e: Option, control: string) {
     if (
-      control === 'person.company_id' &&
+      control === "person.company_id" &&
       this.form.get(control).value != e.value
     ) {
       const response = (await this.getCustomFields(e.value)) as SuccessGET;
@@ -212,13 +218,13 @@ export class CustomersFormComponent implements OnDestroy {
       const company = this.#arrayOfCompanies.find(
         (c) => c.company_id === e.value
       );
-      this.form.get('customer.company_id').patchValue(company?.company_id);
-      this.form.get('address.company_id').patchValue(company?.company_id);
+      this.form.get("customer.company_id").patchValue(company?.company_id);
+      this.form.get("address.company_id").patchValue(company?.company_id);
       this.form.get(control).patchValue(company?.company_id);
-      this.form.get('company.cnpj').patchValue(company?.cnpj);
-      this.form.get('company.social_name').patchValue(company?.social_name);
+      this.form.get("company.cnpj").patchValue(company?.cnpj);
+      this.form.get("company.social_name").patchValue(company?.social_name);
       this.form
-        .get('company.corporate_name')
+        .get("company.corporate_name")
         .patchValue(company?.corporate_name);
     }
   }
@@ -233,8 +239,8 @@ export class CustomersFormComponent implements OnDestroy {
 
   canProced() {
     return !(
-      (this.customerType && this.customerType === 'normal') ||
-      (this.customerType && this.customerType === 'legal')
+      (this.customerType && this.customerType === "normal") ||
+      (this.customerType && this.customerType === "legal")
     )
       ? this.redirect()
       : null;
@@ -246,13 +252,13 @@ export class CustomersFormComponent implements OnDestroy {
   }
 
   titleSettings() {
-    if (this.action !== 'new') {
-      this.title = 'Editando';
+    if (this.action !== "new") {
+      this.title = "Editando";
     } else {
       this.title =
-        this.customerType === 'legal'
-          ? 'Novo cliente Jurídico'
-          : 'Novo cliente Físico';
+        this.customerType === "legal"
+          ? "Novo cliente Jurídico"
+          : "Novo cliente Físico";
     }
   }
 
@@ -278,24 +284,23 @@ export class CustomersFormComponent implements OnDestroy {
   }
 
   redirect() {
-    this.#router.navigate(['/customers']);
+    this.#router.navigate(["/customers"]);
   }
 
   addSegment(formArray?: any) {
+    this.segmentControl.reset();
+
     this.state = true;
 
     const newFormArray = this.#fb.group({
-      person_id: [this.form.get('person.person_id').value ?? ''],
-      company_id: [this.form.get('person.company_id').value ?? ''],
-      segment_id: [''],
-      segment: [''],
+      person_id: [this.form.get("person.person_id").value ?? ""],
+      company_id: [this.form.get("person.company_id").value ?? ""],
+      segment_id: [""],
+      segment: [""],
     });
 
     if (formArray) {
-      console.log(this.segments);
-      this.segments.push(formArray);
-      console.log(this.segments);
-      return;
+      return this.segments.push(formArray);
     }
     this.segments.push(newFormArray);
   }
@@ -305,10 +310,8 @@ export class CustomersFormComponent implements OnDestroy {
     company_id: number;
     name: string;
   }) {
-    console.log(segment);
-
     const formArray = this.#fb.group({
-      person_id: [this.form.get('person.person_id').value ?? ''],
+      person_id: [this.form.get("person.person_id").value ?? ""],
       company_id: [segment.company_id],
       segment_id: [segment.segment_id],
       segment: [segment.name],
@@ -317,9 +320,9 @@ export class CustomersFormComponent implements OnDestroy {
     this.addSegment(formArray);
 
     const idx = (this.segments.value as Array<any>).findIndex(
-      (el) => el.segment_id === '' || el.segment === ''
+      (el) => el.segment_id === "" || el.segment === ""
     );
-    (this.form.get('segments') as FormArray).removeAt(idx);
+    (this.form.get("segments") as FormArray).removeAt(idx);
 
     this.state = false;
 
@@ -328,7 +331,7 @@ export class CustomersFormComponent implements OnDestroy {
 
   async removeSegment(idx: number) {
     this.segmentControl.reset();
-    const segment = ((this.form as any).get('segments') as FormArray).at(
+    const segment = ((this.form as any).get("segments") as FormArray).at(
       idx
     ).value;
     if (segment.segment_id != null) {
@@ -345,12 +348,12 @@ export class CustomersFormComponent implements OnDestroy {
             person_id: this.person_id,
             segment_id: segment.segment_id,
           });
-          return ((this.form as any).get('segments') as FormArray).removeAt(
+          return ((this.form as any).get("segments") as FormArray).removeAt(
             idx
           );
         });
     } else {
-      ((this.form as any).get('segments') as FormArray).removeAt(idx);
+      ((this.form as any).get("segments") as FormArray).removeAt(idx);
     }
   }
 
@@ -359,8 +362,8 @@ export class CustomersFormComponent implements OnDestroy {
     return this.contacts.push(
       this.#fb.group({
         contact_id: [null],
-        person_id: [this.form.get('person.person_id').value ?? null],
-        company_id: [this.form.get('person.company_id').value ?? null],
+        person_id: [this.form.get("person.person_id").value ?? null],
+        company_id: [this.form.get("person.company_id").value ?? null],
         contact: [null],
         phone_number: [null],
       })
@@ -368,7 +371,7 @@ export class CustomersFormComponent implements OnDestroy {
   }
 
   async delContact(idx: number) {
-    const contact = ((this.form as any).get('contacts') as FormArray).at(
+    const contact = ((this.form as any).get("contacts") as FormArray).at(
       idx
     ).value;
     if (contact.contact_id != null) {
@@ -388,27 +391,35 @@ export class CustomersFormComponent implements OnDestroy {
           if (!(response as SuccessDELETE).affectedRows) {
             return;
           }
-          return ((this.form as any).get('contacts') as FormArray).removeAt(
+          return ((this.form as any).get("contacts") as FormArray).removeAt(
             idx
           );
         });
     } else {
-      ((this.form as any).get('contacts') as FormArray).removeAt(idx);
+      ((this.form as any).get("contacts") as FormArray).removeAt(idx);
     }
+  }
+
+  handleOutsideClick() {
+    this.state = false;
+    const idx = (this.segments.value as Array<any>).findIndex(
+      (el) => el.segment_id === "" || el.segment === ""
+    );
+    (this.form.get("segments") as FormArray).removeAt(idx);
   }
 
   get contacts() {
-    if (!(this.form as any).get('contacts')) {
+    if (!(this.form as any).get("contacts")) {
       return new FormArray([]) as unknown as FormArray;
     }
-    return (this.form as any).get('contacts') as FormArray;
+    return (this.form as any).get("contacts") as FormArray;
   }
 
   get segments() {
-    if (!(this.form as any).get('segments')) {
+    if (!(this.form as any).get("segments")) {
       return new FormArray([]) as unknown as FormArray;
     }
-    return (this.form as any).get('segments') as FormArray;
+    return (this.form as any).get("segments") as FormArray;
   }
 
   get formDiff() {
@@ -460,11 +471,11 @@ export class CustomersFormComponent implements OnDestroy {
     return this.#asideService.customerType();
   }
   get customerQueryType() {
-    return this.#route.snapshot.queryParamMap.get('type');
+    return this.#route.snapshot.queryParamMap.get("type");
   }
 
   get form() {
-    return this.customerType === 'legal'
+    return this.customerType === "legal"
       ? (this.legalForm as any)
       : (this.normalForm as any);
   }
@@ -477,14 +488,14 @@ export class CustomersFormComponent implements OnDestroy {
   }
 
   get company_id() {
-    return this.#route.snapshot.queryParamMap.get('company_id');
+    return this.#route.snapshot.queryParamMap.get("company_id");
   }
   get person_id() {
-    return this.#route.snapshot.queryParamMap.get('person_id');
+    return this.#route.snapshot.queryParamMap.get("person_id");
   }
 
   get action() {
-    return this.#route.snapshot.queryParamMap.get('action');
+    return this.#route.snapshot.queryParamMap.get("action");
   }
   get idIsTrue() {
     return (
@@ -496,23 +507,23 @@ export class CustomersFormComponent implements OnDestroy {
 
   get company() {
     return {
-      corporate_name: [''],
-      social_name: [''],
-      cnpj: ['', { validators: [Validators.pattern(/^\d+$/)] }],
+      corporate_name: [""],
+      social_name: [""],
+      cnpj: ["", { validators: [Validators.pattern(/^\d+$/)] }],
     };
   }
 
   get legalCustomer() {
     return {
-      person_id: [''],
+      person_id: [""],
       company_id: [
-        '',
+        "",
         {
           Validators: [Validators.required],
         },
       ],
       cnpj: [
-        '',
+        "",
         {
           validators: [
             Validators.required,
@@ -523,7 +534,7 @@ export class CustomersFormComponent implements OnDestroy {
         },
       ],
       corporate_name: [
-        '',
+        "",
         {
           validators: [
             Validators.required,
@@ -533,7 +544,7 @@ export class CustomersFormComponent implements OnDestroy {
         },
       ],
       social_name: [
-        '',
+        "",
         {
           validators: [
             Validators.required,
@@ -543,7 +554,7 @@ export class CustomersFormComponent implements OnDestroy {
         },
       ],
       state_registration: [
-        '',
+        "",
         {
           validators: [
             Validators.required,
@@ -607,10 +618,10 @@ export class CustomersFormComponent implements OnDestroy {
 
   get address() {
     return {
-      person_id: [''],
-      company_id: ['', { Validators: [Validators.required] }],
+      person_id: [""],
+      company_id: ["", { Validators: [Validators.required] }],
       add_street: [
-        '',
+        "",
         {
           validators: [
             Validators.required,
@@ -620,13 +631,13 @@ export class CustomersFormComponent implements OnDestroy {
         },
       ],
       add_number: [
-        '',
+        "",
         {
           validators: [Validators.maxLength(10)],
         },
       ],
       add_zipcode: [
-        '',
+        "",
         {
           validators: [
             Validators.required,
@@ -637,7 +648,7 @@ export class CustomersFormComponent implements OnDestroy {
         },
       ],
       add_city: [
-        '',
+        "",
         {
           validators: [
             Validators.required,
@@ -647,7 +658,7 @@ export class CustomersFormComponent implements OnDestroy {
         },
       ],
       add_uf: [
-        '',
+        "",
         {
           validators: [
             Validators.required,
@@ -657,7 +668,7 @@ export class CustomersFormComponent implements OnDestroy {
         },
       ],
       add_neighborhood: [
-        '',
+        "",
         {
           validators: [
             Validators.required,
@@ -671,22 +682,22 @@ export class CustomersFormComponent implements OnDestroy {
 
   get person() {
     return {
-      person_id: [''],
-      company_id: ['', { Validators: [Validators.required] }],
+      person_id: [""],
+      company_id: ["", { Validators: [Validators.required] }],
       observation: [
-        '',
+        "",
         { validators: [Validators.minLength(3), Validators.maxLength(45)] },
       ],
       first_field: [
-        '',
+        "",
         { validators: [Validators.minLength(3), Validators.maxLength(100)] },
       ],
       second_field: [
-        '',
+        "",
         { validators: [Validators.minLength(3), Validators.maxLength(100)] },
       ],
       third_field: [
-        '',
+        "",
         { validators: [Validators.minLength(3), Validators.maxLength(100)] },
       ],
     };
