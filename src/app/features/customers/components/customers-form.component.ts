@@ -601,86 +601,25 @@ export class CustomersFormComponent implements OnDestroy {
     return {
       person_id: [""],
       company_id: ["", { Validators: [Validators.required] }],
-      add_street: [
-        "",
-        {
-          validators: [
-            Validators.required,
-            Validators.minLength(3),
-            Validators.maxLength(100),
-          ],
-        },
-      ],
-      add_number: [
-        "",
-        {
-          validators: [Validators.maxLength(10)],
-        },
-      ],
-      add_zipcode: [
-        "",
-        {
-          validators: [
-            Validators.required,
-            Validators.minLength(8),
-            Validators.maxLength(8),
-            Validators.pattern(/^\d+$/),
-          ],
-        },
-      ],
-      add_city: [
-        "",
-        {
-          validators: [
-            Validators.required,
-            Validators.minLength(3),
-            Validators.maxLength(60),
-          ],
-        },
-      ],
-      add_uf: [
-        "",
-        {
-          validators: [
-            Validators.required,
-            Validators.minLength(2),
-            Validators.maxLength(2),
-          ],
-        },
-      ],
-      add_neighborhood: [
-        "",
-        {
-          validators: [
-            Validators.required,
-            Validators.minLength(3),
-            Validators.maxLength(60),
-          ],
-        },
-      ],
-    };
+      add_street: ["", {validators: [Validators.required, Validators.minLength(3), Validators.maxLength(100)]}],
+      add_number: ["", {validators: [Validators.maxLength(10)]}],
+      add_zipcode: ["", {validators: [Validators.required, Validators.minLength(8), Validators.maxLength(8), Validators.pattern(/^\d+$/)]}],
+      add_city: ["", {validators: [Validators.required, Validators.minLength(3), Validators.maxLength(60)]}],
+      add_uf: ["", {validators: [Validators.required, Validators.minLength(2), Validators.maxLength(2)]}],
+      add_neighborhood: ["", {validators: [Validators.required, Validators.minLength(3), Validators.maxLength(60)]},
+      ]
+    }
   }
 
   get person() {
     return {
       person_id: [""],
       company_id: ["", { Validators: [Validators.required] }],
-      observation: [
-        "",
-        { validators: [Validators.minLength(3), Validators.maxLength(45)] },
-      ],
-      first_field: [
-        "",
-        { validators: [Validators.minLength(3), Validators.maxLength(100)] },
-      ],
-      second_field: [
-        "",
-        { validators: [Validators.minLength(3), Validators.maxLength(100)] },
-      ],
-      third_field: [
-        "",
-        { validators: [Validators.minLength(3), Validators.maxLength(100)] },
-      ],
-    };
+      observation: ["", { validators: [Validators.minLength(3), Validators.maxLength(45)] }],
+      first_field: ["", { validators: [Validators.minLength(3), Validators.maxLength(100)]}],
+      second_field: ["", { validators: [Validators.minLength(3), Validators.maxLength(100)]}],
+      third_field: ["", { validators: [Validators.minLength(3), Validators.maxLength(100)]},
+      ]
+    }
   }
 }
