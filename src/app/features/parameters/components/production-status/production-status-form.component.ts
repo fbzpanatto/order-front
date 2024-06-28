@@ -10,6 +10,7 @@ import { environment } from "../../../../../environments/environment";
 import { FetchProductionStatusService } from "../../../../shared/services/fetch-production-status.service";
 import { CommonModule } from "@angular/common";
 
+interface CompanyStatus { company_id: number, corporate_name: string, productStatus: { company_id: number, status_id: number, name: string }[] }
 
 @Component({
   selector: 'app-production-status-form',
@@ -22,9 +23,16 @@ export class ProductionStatusFormComponent {
 
   #title?: string
 
-  #status = {}
-  #currentCompany?: Option
-  #companies: Option[] = []
+  status = {}
+
+  currentCompany?: Option
+  currentStatus?: Option
+
+  companiesOptions: Option[] = []
+  statusOptions: Option[] = []
+
+  statusComOptions: Option[] = []
+  companies: CompanyStatus[] = []
 
   #router = inject(Router)
   #fb = inject(FormBuilder)
@@ -37,6 +45,7 @@ export class ProductionStatusFormComponent {
   form = this.#fb.group({
     company_id: [null, { validators: [Validators.required] }],
     status_id: [null, {}],
+    next_status_id: [null, {}],
     name: [null, { validators: [Validators.required, Validators.minLength(3), Validators.maxLength(20)] }]
   })
 
@@ -48,21 +57,23 @@ export class ProductionStatusFormComponent {
     this.#formService.originalValues = this.form.value;
     this.#formService.currentForm = this.form;
 
+    await this.getCompanies()
+
     if (this.has_id) {
       const response = await this.getById(this.queryParams)
       this.status = response.data
 
-      this.companies = response.meta.extra.companies!
+      this.companiesOptions = response.meta.extra.companies!
         .map((el: any) => { return { id: el.company_id, label: el.corporate_name, value: el.company_id } })
 
       return this.status != undefined ? this.updateFormValues(this.status) : null
     }
-    await this.getCompanies()
   }
 
   async getCompanies() {
-    const response = await this.#compHttp.getAll({ status: true })
-    this.companies = (response as SuccessGET).data
+    const response = (await this.#compHttp.getAll({ status: true }) as SuccessGET).data
+    this.companies = response as CompanyStatus[]
+    this.companiesOptions = response
       .map((el: any) => { return { id: el.company_id, label: el.corporate_name, value: el.company_id } })
   }
 
@@ -79,39 +90,51 @@ export class ProductionStatusFormComponent {
     this.#toolbarMenuService.hasFilter = this.hasFilter
   }
 
-  updateFormValues(segment: any) {
-    this.currentCompany = this.companies.find(el => el.id === segment.company_id)
+  updateFormValues(body: any) {
+    this.currentCompany = this.companiesOptions.find(el => el.id === body.company_id)
+    const company = this.companies.find(c => c.company_id === body.company_id)
+    this.statusOptions = company?.productStatus.map(s => { return { id: s.status_id, label: s.name, value: s.status_id } }) as Option[]
+    this.currentStatus = this.statusOptions.find(el => el.id === body.next_status_id)
+
     this.#formService.originalValues = this.form.value;
-    this.form.patchValue(segment)
+    this.form.patchValue(body)
   }
 
-  setCurrentOption(e: Option, control: string) { this.form.get(control)?.patchValue(e.value) }
+  setCurrentOption(e: Option, control: string, formControlChildName?: string) {
+    this.form.get(control)?.patchValue(e.value)
+    if (formControlChildName === 'next_status_id') {
+
+      const value = this.form.get('company_id')?.value
+      const company = this.companies.find(c => c.company_id === value!)
+
+      if(this.has_id) {
+        this.statusOptions = company?.productStatus
+          .map(s => { return { id: s.status_id, label: s.name, value: s.status_id } })
+          .filter(o => { return o.id !== parseInt(this.form.get('status_id')?.value as unknown as string) }) as Option[]
+        return this.form.markAsDirty()
+      }
+
+      this.statusOptions = company?.productStatus.map(s => { return { id: s.status_id, label: s.name, value: s.status_id } }) as Option[]
+      this.form.markAsDirty()
+    }
+  }
 
   async onSubmit() {
     const values = this.form.value
     if (!this.has_id) {
 
       const response = await this.#http
-        .saveData({ company_id: values.company_id, status_id: values.status_id, name: values.name })
+        .saveData(values)
 
       if (!(response as SuccessPOST).affectedRows) { return }
       return this.redirect()
     }
     const response = await this.#http
-      .updateData(this.queryParams, { company_id: values.company_id, status_id: values.status_id, name: values.name })
+      .updateData(this.queryParams, values)
 
     if (!(response as SuccessPATCH).affectedRows) { return }
     return this.redirect()
   }
-
-  get currentCompany() { return this.#currentCompany }
-  set currentCompany(value: Option | undefined) { this.#currentCompany = value }
-
-  get companies() { return this.#companies }
-  set companies(value: Option[]) { this.#companies = value }
-
-  get status() { return this.#status }
-  set status(value: any) { this.#status = value }
 
   get title() { return this.#title }
   set title(value: string | undefined) { this.#title = value }

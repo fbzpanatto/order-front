@@ -7,12 +7,12 @@
       <fieldset>
         <label class="medium-text fieldset-label">Campo & Máscara</label>
         <div class="input-container">
-          <app-select [disabled]="idIsTrue ? true: false" [currOption]="currentTable" [options]="tableOptions"
-            (emitCurrentOption)="setCurrentOption($event, 'table_id', 'field_id')" [label]="'Tabela'"></app-select>
+          <app-select [disabled]="idIsTrue" [currOption]="currentTable" [options]="tableOptions"
+                      (emitCurrentOption)="setCurrentOption($event, 'table_id', 'field_id')" [label]="'Tabela'"></app-select>
         </div>
         <div class="input-container">
-          <app-select [disabled]="idIsTrue ? true: false" [currOption]="currentField" [options]="fieldOptions"
-            (emitCurrentOption)="setCurrentOption($event, 'field_id')" [label]="'Campo'"></app-select>
+          <app-select [disabled]="idIsTrue" [currOption]="currentField" [options]="fieldOptions"
+                      (emitCurrentOption)="setCurrentOption($event, 'field_id')" [label]="'Campo'"></app-select>
         </div>
         <div class="input-container">
           <label class="light-text" for="corporate_name">Máscara</label>

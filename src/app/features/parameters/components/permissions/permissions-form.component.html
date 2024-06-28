@@ -7,9 +7,9 @@
       <fieldset>
         <label class="medium-text fieldset-label" formGroupName="company">Empresa e Papel</label>
         <div class="input-container">
-          <app-select [disabled]="idIsTrue ? true: false" [currOption]="currentCompany"
-            (emitCurrentOption)="setCurrentOption($event, 'company.company_id')" [label]="'Selecione uma empresa'"
-            [options]="companies"></app-select>
+          <app-select [disabled]="idIsTrue" [currOption]="currentCompany"
+                      (emitCurrentOption)="setCurrentOption($event, 'company.company_id')" [label]="'Selecione uma empresa'"
+                      [options]="companies"></app-select>
         </div>
         <div class="input-container" formGroupName="role">
           <label class="light-text" for="role_name">Nome do papel</label>

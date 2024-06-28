@@ -8,7 +8,7 @@ export interface SuccessGET {
 export interface SuccessGETbyId {
   status: number,
   message: string,
-  data: {},
+  data: { company?: { company_id?: number, corporate_name?: string, productStatus?: [] } },
   meta: { extra: { custom_fields?: [], segments?: [], companies?: [] } }
 }
 

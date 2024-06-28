@@ -23,6 +23,7 @@ export class SelectComponent {
   isCustomer = input<boolean>(false)
   label = input<string | undefined>('')
   placeholder = input<string | undefined>('')
+  inputIdName = input<string | undefined>('genericInput')
 
   #state = signal<boolean | undefined>(false)
   #currentOption = signal<Option | undefined>(undefined)

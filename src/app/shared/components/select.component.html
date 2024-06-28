@@ -1,6 +1,6 @@
-<label class="light-text" for="inputId">{{ label() }}</label>
+<label class="light-text" [for]="inputIdName()">{{ label() }}</label>
 <span><i [class]="currentState() && !disabled()? 'fa-solid fa-chevron-up': 'fa-solid fa-chevron-down'"></i></span>
-<input id="inputId" name="inputId" readonly class="medium-text" (click)="openOrClose()" [placeholder]="placeholder()" [value]="currentOption()?.label" />
+<input [id]="inputIdName()" [name]="inputIdName()" readonly class="medium-text" (click)="openOrClose()" [placeholder]="placeholder()" [value]="currentOption()?.label" />
 @if(currentState() && !disabled()){
 <div class="menu-container" [@conditionalTrigger]="currentState() ? 'shown' : 'notshown'" [appOutSideClick]="currentState()" (outSideClick)="openOrClose(false)">
   <ul>@for(option of options(); track option.id) { <li (click)="setOption(option)" (click)="openOrClose(false)">{{ option.label }}</li>}</ul>

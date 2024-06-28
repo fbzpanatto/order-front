@@ -6,9 +6,10 @@
         <label class="medium-text fieldset-label">Empresa</label>
         <div class="input-container">
           <app-select
+            [inputIdName]="'companySelect'"
             [disabled]="has_id" [currOption]="currentCompany"
-            (emitCurrentOption)="setCurrentOption($event, 'company_id')" [label]="'Selecione uma empresa'"
-            [options]="companies">
+            (emitCurrentOption)="setCurrentOption($event, 'company_id', 'next_status_id')" [label]="'Selecione uma empresa'"
+            [options]="companiesOptions">
           </app-select>
         </div>
       </fieldset>
@@ -19,6 +20,14 @@
           <span><i class="fa-solid fa-pen-to-square"></i></span>
           <input autocomplete="false" minlength="3" maxlength="20" class="medium-text" id="name" formControlName="name"
                  name="name" type="text" placeholder="status">
+        </div>
+        <div class="input-container">
+          <app-select
+            [inputIdName]="'statusSelect'"
+            [currOption]="currentStatus"
+            (emitCurrentOption)="setCurrentOption($event, 'next_status_id')" [label]="'Pŕoximo Status'"
+            [options]="statusOptions">
+          </app-select>
         </div>
       </fieldset>
     </div>
