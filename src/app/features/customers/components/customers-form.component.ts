@@ -101,13 +101,8 @@ export class CustomersFormComponent implements OnDestroy {
 
   constructor() {
     this.segmentControl.valueChanges.subscribe((search) => {
-      this.arrOfSegFront = this.arrOfSeg?.filter((el) =>
-        el.name.toLowerCase().includes(search?.toLowerCase() ?? "")
-      );
-
-      const item = (
-        (this.form.get("segments") as FormArray).value as Array<any>
-      ).find((el) => el.segment_id === "");
+      this.arrOfSegFront = this.arrOfSeg?.filter((el) => el.name.toLowerCase().includes(search?.toLowerCase() ?? ""));
+      const item = ((this.form.get("segments") as FormArray).value as Array<any>).find((el) => el.segment_id === "");
       item ? (item.segment = search) : null;
     });
   }
@@ -474,29 +469,15 @@ export class CustomersFormComponent implements OnDestroy {
     return this.#route.snapshot.queryParamMap.get("type");
   }
 
-  get form() {
-    return this.customerType === "legal"
-      ? (this.legalForm as any)
-      : (this.normalForm as any);
-  }
+  get form() { return this.customerType === "legal" ? (this.legalForm as any) : (this.normalForm as any) }
 
-  get hasFilter() {
-    return this.#route.snapshot.data[environment.FILTER] as boolean;
-  }
-  get menuName() {
-    return this.#route.snapshot.data[environment.MENU] as string;
-  }
+  get hasFilter() { return this.#route.snapshot.data[environment.FILTER] as boolean }
+  get menuName() { return this.#route.snapshot.data[environment.MENU] as string }
 
-  get company_id() {
-    return this.#route.snapshot.queryParamMap.get("company_id");
-  }
-  get person_id() {
-    return this.#route.snapshot.queryParamMap.get("person_id");
-  }
+  get company_id() { return this.#route.snapshot.queryParamMap.get("company_id")}
+  get person_id() { return this.#route.snapshot.queryParamMap.get("person_id")}
 
-  get action() {
-    return this.#route.snapshot.queryParamMap.get("action");
-  }
+  get action() { return this.#route.snapshot.queryParamMap.get("action")}
   get idIsTrue() {
     return (
       (this.action != environment.NEW || this.action === null) &&
