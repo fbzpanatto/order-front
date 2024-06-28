@@ -5,6 +5,7 @@
   <form [formGroup]="form" (submit)="onSubmit()">
     <div class="inputs-container fullheight">
       <div class="fieldsets-container">
+
         <fieldset [formGroup]="form.controls.company">
           <label class="medium-text fieldset-label">Cliente da empresa</label>
           <div class="input-container">
@@ -21,6 +22,7 @@
             <input readonly formControlName="cnpj" class="medium-text" id="company_cnpj" name="company_cnpj" type="text" placeholder="cnpj" />
           </div>
         </fieldset>
+
         @switch (customerType) {
           @case('legal') {
             <fieldset [formGroup]="form.controls.customer">
@@ -73,6 +75,7 @@
             </fieldset>
           }
         }
+
         <fieldset formArrayName="segments" class="formArray">
           <label class="medium-text fieldset-label">Segmentos</label>
           @for(segment of segments.controls; track seg_idx; let seg_idx = $index) {
@@ -82,7 +85,8 @@
               <span><i class="fa-solid fa-pen-to-square"></i></span>
               @if(segment.value.company_id && segment.value.segment_id && segment.value.segment_id != "" && segment.value.segment != ""){
                 <input id="seg{{ seg_idx }}" readonly maxlength="20" class="medium-text" formControlName="segment" placeholder="segmento" />
-              } @else {
+              }
+              @else {
                 <input id="seg{{ seg_idx }}" [formControl]="segmentControl" class="medium-text" maxlength="20" placeholder="segmento" />
                 @if((segment.value.segment === "" || arrOfSegFront?.length) && state) {
                   <div class="menu-container" appOutsideElement (clickedOutside)="handleOutsideClick()">
@@ -195,6 +199,7 @@
             </button>
           </div>
         </fieldset>
+
       </div>
     </div>
     <div class="form-actions">
