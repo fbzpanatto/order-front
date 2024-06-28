@@ -584,17 +584,8 @@ export class CustomersFormComponent implements OnDestroy {
           validators: [Validators.minLength(2), Validators.maxLength(60)],
         },
       ],
-      last_name: [
-        null,
-        {
-          validators: [
-            Validators.required,
-            Validators.minLength(3),
-            Validators.maxLength(60),
-          ],
-        },
-      ],
-    };
+      last_name: [null, {validators: [Validators.required, Validators.minLength(3), Validators.maxLength(60)]}],
+    }
   }
 
   get address() {
