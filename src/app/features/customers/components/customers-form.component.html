@@ -9,11 +9,9 @@
           <label class="medium-text fieldset-label">Cliente da empresa</label>
           <div class="input-container">
             <app-select
-              [disabled]="idIsTrue ? true : false"
+              [disabled]="idIsTrue"
               [currOption]="currentCompany"
-              (emitCurrentOption)="
-                setCurrentOption($event, 'person.company_id')
-              "
+              (emitCurrentOption)="setCurrentOption($event, 'person.company_id')"
               [label]="'Selecione uma empresa'"
               [options]="companies"></app-select>
           </div>
@@ -286,6 +284,7 @@
 
         <fieldset [formGroup]="form.controls.person">
           <label class="medium-text fieldset-label">Dados complementares</label>
+<!--          TODO: FAZER A DIFERNÇA ENTRE OS CAMPOS-->
           @if(customFields){ @for(field of customFields; track field.id) {
           <div class="input-container">
             <label class="light-text" [for]="field.field">{{

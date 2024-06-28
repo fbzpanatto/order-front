@@ -216,6 +216,7 @@ export class CustomersFormComponent implements OnDestroy {
   redirect() { this.#router.navigate(["/customers"]) }
 
   addSegment(formArray?: any) {
+    (this.form as FormGroup).markAsDirty();
     this.segmentControl.reset();
     this.state = true;
     const newFormArray = this.#fb.group({
