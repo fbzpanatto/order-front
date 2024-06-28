@@ -2,24 +2,11 @@ import { Component, DestroyRef, OnDestroy, inject } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { ToolbarMenuService } from "../../../shared/services/toolbarMenu.service";
 import { environment } from "../../../../environments/environment";
-import {
-  FormArray,
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from "@angular/forms";
+import { FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators,} from "@angular/forms";
 import { AsideService } from "../../../shared/services/aside.service";
 import { CommonModule } from "@angular/common";
 import { FetchCustomerService } from "../../../shared/services/fetchCustomers.service";
-import {
-  SuccessDELETE,
-  SuccessGET,
-  SuccessGETbyId,
-  SuccessPATCH,
-  SuccessPOST,
-} from "../../../shared/interfaces/response/response";
+import { SuccessDELETE, SuccessGET, SuccessGETbyId, SuccessPATCH, SuccessPOST } from "../../../shared/interfaces/response/response";
 import { FormService } from "../../../shared/services/form.service";
 import { DialogService } from "../../../shared/services/dialog.service";
 import { Company } from "../../companies/components/companies-list.component";
@@ -30,28 +17,14 @@ import { FetchFieldService } from "../../../shared/services/fetchField.service";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 import { OutsideElementDirective } from "../../../shared/directives/outsideElement.directive";
 
-interface CustomFields {
-  id: number;
-  table: string;
-  field: string;
-  label: string;
-}
+interface CustomFields { id: number; table: string; field: string; label: string }
 
 @Component({
   selector: "app-customers-form",
   standalone: true,
   templateUrl: "./customers-form.component.html",
-  styleUrls: [
-    "../../../styles/resource.scss",
-    "../../../styles/form.scss",
-    "../../../styles/title-bar.scss",
-  ],
-  imports: [
-    ReactiveFormsModule,
-    CommonModule,
-    SelectComponent,
-    OutsideElementDirective,
-  ],
+  styleUrls: [ "../../../styles/resource.scss", "../../../styles/form.scss", "../../../styles/title-bar.scss" ],
+  imports: [ ReactiveFormsModule, CommonModule, SelectComponent, OutsideElementDirective ],
 })
 export class CustomersFormComponent implements OnDestroy {
   destroyRef = inject(DestroyRef);
@@ -126,16 +99,12 @@ export class CustomersFormComponent implements OnDestroy {
       this.arrOfSeg = response.meta.extra.segments;
       this.arrOfSegFront = this.arrOfSeg;
       this.customFields = response.meta.extra.custom_fields;
-      return this.customer != undefined
-        ? this.updateFormValues(response.data)
-        : null;
+      return this.customer != undefined ? this.updateFormValues(response.data) : null;
     }
     this.#formService.originalValues = this.form.value;
   }
 
-  ngOnDestroy(): void {
-    this.#formService.originalValues = {};
-  }
+  ngOnDestroy(): void { this.#formService.originalValues = {} }
 
   async getByPersonId(queryParams: { [key: string]: any }) {
     return (await this.#custHttp.getById(queryParams)) as SuccessGETbyId;
@@ -155,9 +124,7 @@ export class CustomersFormComponent implements OnDestroy {
 
   updateFormValues(body: any) {
     this.form.patchValue(body);
-    this.currentCompany = this.companies.find(
-      (c) => c.id === body.person.company_id
-    );
+    this.currentCompany = this.companies.find((c) => c.id === body.person.company_id);
     for (let contact of body.contacts) {
       const formArray = this.#fb.group({
         person_id: [contact.person_id],
@@ -195,24 +162,18 @@ export class CustomersFormComponent implements OnDestroy {
   }
 
   async setCurrentOption(e: Option, control: string) {
-    if (
-      control === "person.company_id" &&
-      this.form.get(control).value != e.value
-    ) {
+    if ( control === "person.company_id" && this.form.get(control).value != e.value) {
       const response = (await this.getCustomFields(e.value)) as SuccessGET;
       this.arrOfSeg = response.meta.extra.segments;
       this.arrOfSegFront = this.arrOfSeg;
-      const custom_fields = response.meta.extra
-        .custom_fields as Array<CustomFields>;
+      const custom_fields = response.meta.extra.custom_fields as Array<CustomFields>;
       custom_fields && custom_fields.length
         ? (this.customFields = custom_fields)
         : (this.customFields = undefined);
       for (let contact of this.contacts.value) {
         contact.company_id = e.value;
       }
-      const company = this.#arrayOfCompanies.find(
-        (c) => c.company_id === e.value
-      );
+      const company = this.#arrayOfCompanies.find((c) => c.company_id === e.value);
       this.form.get("customer.company_id").patchValue(company?.company_id);
       this.form.get("address.company_id").patchValue(company?.company_id);
       this.form.get(control).patchValue(company?.company_id);
@@ -224,22 +185,9 @@ export class CustomersFormComponent implements OnDestroy {
     }
   }
 
-  async getCustomFields(company_id: number) {
-    return this.#fieldHttp.getAll({
-      custom_fields: true,
-      company_id,
-      segments: true,
-    });
-  }
+  async getCustomFields(company_id: number) { return this.#fieldHttp.getAll({custom_fields: true, company_id, segments: true}) }
 
-  canProced() {
-    return !(
-      (this.customerType && this.customerType === "normal") ||
-      (this.customerType && this.customerType === "legal")
-    )
-      ? this.redirect()
-      : null;
-  }
+  canProced() {return !((this.customerType && this.customerType === "normal") || (this.customerType && this.customerType === "legal")) ? this.redirect() : null}
 
   menuSettings() {
     this.#menuServ.menuName = this.menuName;
@@ -247,109 +195,71 @@ export class CustomersFormComponent implements OnDestroy {
   }
 
   titleSettings() {
-    if (this.action !== "new") {
-      this.title = "Editando";
-    } else {
-      this.title =
-        this.customerType === "legal"
-          ? "Novo cliente Jurídico"
-          : "Novo cliente Físico";
-    }
+    if (this.action !== "new") { this.title = "Editando" }
+    else { this.title = this.customerType === "legal" ? "Novo cliente Jurídico" : "Novo cliente Físico" }
   }
 
   async onSubmit() {
     if (!this.idIsTrue) {
       const response = await this.#custHttp.saveData(this.form.value);
-      if (!(response as SuccessPOST).affectedRows) {
-        return;
-      }
+      if (!(response as SuccessPOST).affectedRows) { return }
       return this.redirect();
     }
     const response = await this.#custHttp.updateData(
-      {
-        company_id: parseInt(this.company_id as string),
-        person_id: parseInt(this.person_id as string),
-      },
+      { company_id: parseInt(this.company_id as string), person_id: parseInt(this.person_id as string)},
       this.form.value
     );
-    if (!(response as SuccessPATCH).affectedRows) {
-      return;
-    }
+    if (!(response as SuccessPATCH).affectedRows) { return }
     return this.redirect();
   }
 
-  redirect() {
-    this.#router.navigate(["/customers"]);
-  }
+  redirect() { this.#router.navigate(["/customers"]) }
 
   addSegment(formArray?: any) {
     this.segmentControl.reset();
-
     this.state = true;
-
     const newFormArray = this.#fb.group({
       person_id: [this.form.get("person.person_id").value ?? ""],
       company_id: [this.form.get("person.company_id").value ?? ""],
       segment_id: [""],
       segment: [""],
     });
-
-    if (formArray) {
-      return this.segments.push(formArray);
-    }
+    if (formArray) { return this.segments.push(formArray) }
     this.segments.push(newFormArray);
   }
 
-  includeSegment(segment: {
-    segment_id: number;
-    company_id: number;
-    name: string;
-  }) {
+  includeSegment(segment: { segment_id: number; company_id: number; name: string; }) {
     const formArray = this.#fb.group({
       person_id: [this.form.get("person.person_id").value ?? ""],
       company_id: [segment.company_id],
       segment_id: [segment.segment_id],
       segment: [segment.name],
     });
-
     this.addSegment(formArray);
-
-    const idx = (this.segments.value as Array<any>).findIndex(
-      (el) => el.segment_id === "" || el.segment === ""
-    );
+    const idx = (this.segments.value as Array<any>).findIndex((el) => el.segment_id === "" || el.segment === "");
     (this.form.get("segments") as FormArray).removeAt(idx);
-
     this.state = false;
-
     this.segments.updateValueAndValidity();
   }
 
   async removeSegment(idx: number) {
     this.segmentControl.reset();
-    const segment = ((this.form as any).get("segments") as FormArray).at(
-      idx
-    ).value;
+    const segment = ((this.form as any).get("segments") as FormArray).at(idx).value;
     if (segment.segment_id != null) {
       this.#dialogService.message = `Deseja remover o segmento ${segment.segment} do cliente?`;
       this.#dialogService.showDialog = true;
       this.#dialogService.subject
         .pipe(takeUntilDestroyed(this.destroyRef))
         .subscribe(async (value) => {
-          if (!value) {
-            return;
-          }
+          if (!value) { return }
           await this.#custHttp.delete({
             company_id: this.company_id,
             person_id: this.person_id,
             segment_id: segment.segment_id,
           });
-          return ((this.form as any).get("segments") as FormArray).removeAt(
-            idx
-          );
-        });
-    } else {
-      ((this.form as any).get("segments") as FormArray).removeAt(idx);
-    }
+          return ((this.form as any).get("segments") as FormArray).removeAt(idx);
+        })
+    } else { ((this.form as any).get("segments") as FormArray).removeAt(idx) }
   }
 
   addContact() {
@@ -366,108 +276,58 @@ export class CustomersFormComponent implements OnDestroy {
   }
 
   async delContact(idx: number) {
-    const contact = ((this.form as any).get("contacts") as FormArray).at(
-      idx
-    ).value;
+    const contact = ((this.form as any).get("contacts") as FormArray).at(idx).value;
     if (contact.contact_id != null) {
       this.#dialogService.message = `Deseja remover ${contact.contact} ${contact.phone_number} da lista de contatos?`;
       this.#dialogService.showDialog = true;
       this.#dialogService.subject
         .pipe(takeUntilDestroyed(this.destroyRef))
         .subscribe(async (value) => {
-          if (!value) {
-            return;
-          }
+          if (!value) { return }
           const response = await this.#custHttp.delete({
             company_id: this.company_id,
             person_id: this.person_id,
             contact_id: contact.contact_id,
           });
-          if (!(response as SuccessDELETE).affectedRows) {
-            return;
-          }
-          return ((this.form as any).get("contacts") as FormArray).removeAt(
-            idx
-          );
+          if (!(response as SuccessDELETE).affectedRows) { return }
+          return ((this.form as any).get("contacts") as FormArray).removeAt(idx)
         });
-    } else {
-      ((this.form as any).get("contacts") as FormArray).removeAt(idx);
-    }
+    } else { ((this.form as any).get("contacts") as FormArray).removeAt(idx) }
   }
 
   handleOutsideClick() {
     this.state = false;
-    const idx = (this.segments.value as Array<any>).findIndex(
-      (el) => el.segment_id === "" || el.segment === ""
-    );
+    const idx = (this.segments.value as Array<any>).findIndex((el) => el.segment_id === "" || el.segment === "");
     (this.form.get("segments") as FormArray).removeAt(idx);
   }
 
   get contacts() {
-    if (!(this.form as any).get("contacts")) {
-      return new FormArray([]) as unknown as FormArray;
-    }
+    if (!(this.form as any).get("contacts")) { return new FormArray([]) as unknown as FormArray }
     return (this.form as any).get("contacts") as FormArray;
   }
 
   get segments() {
-    if (!(this.form as any).get("segments")) {
-      return new FormArray([]) as unknown as FormArray;
-    }
+    if (!(this.form as any).get("segments")) { return new FormArray([]) as unknown as FormArray }
     return (this.form as any).get("segments") as FormArray;
   }
 
-  get formDiff() {
-    return this.#formService.getChangedValues();
-  }
-  get originalValues() {
-    return this.#formService.originalValues;
-  }
-  get currentValues() {
-    return this.#formService.currentForm.value;
-  }
+  get companies() {return this.#companies;}
+  set companies(value: Option[]) {this.#companies = value}
 
-  get companies() {
-    return this.#companies;
-  }
-  set companies(value: Option[]) {
-    this.#companies = value;
-  }
+  get currentCompany() {return this.#currentCompany;}
+  set currentCompany(value: Option | undefined) {this.#currentCompany = value}
 
-  get currentCompany() {
-    return this.#currentCompany;
-  }
-  set currentCompany(value: Option | undefined) {
-    this.#currentCompany = value;
-  }
+  get customFields() {return this.#customFields;}
+  set customFields(value: CustomFields[] | undefined) {this.#customFields = value}
 
-  get customFields() {
-    return this.#customFields;
-  }
-  set customFields(value: CustomFields[] | undefined) {
-    this.#customFields = value;
-  }
+  get customer() { return this.#customer }
+  set customer(value: any) { this.#customer = value }
 
-  get customer() {
-    return this.#customer;
-  }
-  set customer(value: any) {
-    this.#customer = value;
-  }
+  get title() { return this.#title }
+  set title(value: string | undefined) { this.#title = value }
 
-  get title() {
-    return this.#title;
-  }
-  set title(value: string | undefined) {
-    this.#title = value;
-  }
-
-  get customerType() {
-    return this.#asideService.customerType();
-  }
-  get customerQueryType() {
-    return this.#route.snapshot.queryParamMap.get("type");
-  }
+  get customerType() { return this.#asideService.customerType() }
+  get customerQueryType() { return this.#route.snapshot.queryParamMap.get("type") }
 
   get form() { return this.customerType === "legal" ? (this.legalForm as any) : (this.normalForm as any) }
 
@@ -478,112 +338,34 @@ export class CustomersFormComponent implements OnDestroy {
   get person_id() { return this.#route.snapshot.queryParamMap.get("person_id")}
 
   get action() { return this.#route.snapshot.queryParamMap.get("action")}
-  get idIsTrue() {
-    return (
-      (this.action != environment.NEW || this.action === null) &&
-      !isNaN(parseInt(this.person_id as string)) &&
-      !isNaN(parseInt(this.company_id as string))
-    );
-  }
+  get idIsTrue() { return ((this.action != environment.NEW || this.action === null) && !isNaN(parseInt(this.person_id as string)) && !isNaN(parseInt(this.company_id as string)))}
 
   get company() {
     return {
       corporate_name: [""],
       social_name: [""],
       cnpj: ["", { validators: [Validators.pattern(/^\d+$/)] }],
-    };
+    }
   }
 
   get legalCustomer() {
     return {
       person_id: [""],
-      company_id: [
-        "",
-        {
-          Validators: [Validators.required],
-        },
-      ],
-      cnpj: [
-        "",
-        {
-          validators: [
-            Validators.required,
-            Validators.minLength(14),
-            Validators.maxLength(14),
-            Validators.pattern(/^\d+$/),
-          ],
-        },
-      ],
-      corporate_name: [
-        "",
-        {
-          validators: [
-            Validators.required,
-            Validators.minLength(3),
-            Validators.maxLength(100),
-          ],
-        },
-      ],
-      social_name: [
-        "",
-        {
-          validators: [
-            Validators.required,
-            Validators.minLength(3),
-            Validators.maxLength(100),
-          ],
-        },
-      ],
-      state_registration: [
-        "",
-        {
-          validators: [
-            Validators.required,
-            Validators.minLength(3),
-            Validators.maxLength(9),
-            Validators.pattern(/^\d+$/),
-          ],
-        },
-      ],
-    };
+      company_id: ["", {Validators: [Validators.required]}],
+      cnpj: ["", {validators: [Validators.required, Validators.minLength(14), Validators.maxLength(14), Validators.pattern(/^\d+$/)]}],
+      corporate_name: ["", {validators: [Validators.required, Validators.minLength(3), Validators.maxLength(100)]}],
+      social_name: ["", {validators: [Validators.required, Validators.minLength(3), Validators.maxLength(100)]}],
+      state_registration: ["", {validators: [Validators.required, Validators.minLength(3), Validators.maxLength(9), Validators.pattern(/^\d+$/),],},],
+    }
   }
 
   get normalCustomer() {
     return {
       person_id: [null],
-      company_id: [
-        null,
-        {
-          Validators: [Validators.required],
-        },
-      ],
-      cpf: [
-        null,
-        {
-          validators: [
-            Validators.required,
-            Validators.minLength(11),
-            Validators.maxLength(11),
-            Validators.pattern(/^\d+$/),
-          ],
-        },
-      ],
-      first_name: [
-        null,
-        {
-          validators: [
-            Validators.required,
-            Validators.minLength(3),
-            Validators.maxLength(60),
-          ],
-        },
-      ],
-      middle_name: [
-        null,
-        {
-          validators: [Validators.minLength(2), Validators.maxLength(60)],
-        },
-      ],
+      company_id: [null, {Validators: [Validators.required]}],
+      cpf: [null, {validators: [Validators.required, Validators.minLength(11), Validators.maxLength(11), Validators.pattern(/^\d+$/)]}],
+      first_name: [null, {validators: [Validators.required, Validators.minLength(3), Validators.maxLength(60)]}],
+      middle_name: [null, {validators: [Validators.minLength(2), Validators.maxLength(60)]}],
       last_name: [null, {validators: [Validators.required, Validators.minLength(3), Validators.maxLength(60)]}],
     }
   }
