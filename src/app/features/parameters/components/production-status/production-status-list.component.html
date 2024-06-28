@@ -1,0 +1,29 @@
+<div class="title-bar">
+  <h1>Status do Produto</h1>
+  <button class="menu-item medium-text" (click)="navigateTo({ action: 'new' })">
+    <span><i class="fa-solid fa-plus"></i></span>
+    <span>Novo</span>
+  </button>
+</div>
+<div class="table-container parameters">
+  <table>
+    <thead>
+    <tr>
+      <th>Empresa</th>
+      <th>Status</th>
+      <th>Criado em</th>
+      <th>Atualizado em</th>
+    </tr>
+    </thead>
+    <tbody>
+      @for (item of productionStatus; track $index) {
+        <tr (click)="navigateTo({ company_id: item.company_id, segment_id: item.segment_id})">
+          <td class="medium-text">{{ item.corporate_name }}</td>
+          <td class="medium-text">{{ item.name }}</td>
+          <td class="medium-text">{{ item.created_at }}</td>
+          <td class="medium-text">{{ item.updated_at }}</td>
+        </tr>
+      } @empty { <tr> <td class="medium-text" [colSpan]="4">Sem dados a exibir</td> </tr> }
+    </tbody>
+  </table>
+</div>

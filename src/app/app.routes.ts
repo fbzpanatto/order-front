@@ -169,11 +169,18 @@ export const routes: Routes = [
       {
         path: 'production-status',
         title: 'Status de Produção',
-        loadComponent: () => import('./features/parameters/components/production-status/production-status.component').then((m) => m.ProductionStatusComponent),
-        data: {
-          menu: 'settings',
-          filter: false,
-        },
+        children: [
+          {
+            path: '',
+            loadComponent: () => import('./features/parameters/components/production-status/production-status-list.component').then((m) => m.ProductionStatusListComponent),
+            data: { menu: 'settings', filter: false },
+          },
+          {
+            path: 'form',
+            loadComponent:() => import('./features/parameters/components/production-status/production-status-form.component').then((m) => m.ProductionStatusFormComponent),
+            data: { menu: 'settings', filter: false },
+          }
+        ]
       },
     ],
   },
