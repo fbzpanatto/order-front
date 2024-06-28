@@ -30,7 +30,7 @@ export class ProductionStatusListComponent {
     await this.getAll()
   }
 
-  async getAll() { this.productionStatus = ((await this.#http.getSegments({ company_id: 1 }) as SuccessGET).data) as any[] }
+  async getAll() { this.productionStatus = ((await this.#http.getStatus({ company_id: 1 }) as SuccessGET).data) as any[] }
 
   asideFilters() { this.#asideService.getResourceFilters(this.path) }
 

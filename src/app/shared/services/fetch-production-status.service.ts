@@ -11,7 +11,7 @@ export class FetchProductionStatusService {
 
   #http = inject(HttpClient)
 
-  async getSegments(queryParams: { [key: string]: any }) {
+  async getStatus(queryParams: { [key: string]: any }) {
     return await firstValueFrom(
       this.#http.get(this.fullResource + `?${this.createQueryString(queryParams)}`)
         .pipe(catchError((apiError) => this.errorHandler(apiError.error as ApiError))))

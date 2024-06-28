@@ -3,12 +3,12 @@ import { Option, SelectComponent} from "../../../../shared/components/select.com
 import { ActivatedRoute, Router } from "@angular/router";
 import { FormBuilder, ReactiveFormsModule, Validators} from "@angular/forms";
 import { FormService } from "../../../../shared/services/form.service";
-import { FetchSegmentsService } from "../../../../shared/services/fetch-segments.service";
 import { FetchCompaniesService } from "../../../../shared/services/fetchCompanies.service";
 import { ToolbarMenuService } from "../../../../shared/services/toolbarMenu.service";
 import { SuccessGET, SuccessGETbyId, SuccessPATCH, SuccessPOST } from "../../../../shared/interfaces/response/response";
 import { environment } from "../../../../../environments/environment";
 import { CommonModule } from "@angular/common";
+import { FetchProductionStatusService } from "../../../../shared/services/fetch-production-status.service";
 
 @Component({
   selector: 'app-production-status-form',
@@ -29,7 +29,7 @@ export class ProductionStatusFormComponent {
   #fb = inject(FormBuilder)
   #route = inject(ActivatedRoute)
   #formService = inject(FormService)
-  #http = inject(FetchSegmentsService)
+  #http = inject(FetchProductionStatusService)
   #compHttp = inject(FetchCompaniesService);
   #toolbarMenuService = inject(ToolbarMenuService)
 
@@ -66,7 +66,7 @@ export class ProductionStatusFormComponent {
   }
 
   async getById(queryParams: { [key: string]: any }) {
-    return await this.#http.getSegments(queryParams) as SuccessGETbyId
+    return await this.#http.getStatus(queryParams) as SuccessGETbyId
   }
 
   redirect() { this.#router.navigate(['/parameters/production-status']) }
@@ -122,7 +122,7 @@ export class ProductionStatusFormComponent {
   get company_id() { return this.#route.snapshot.queryParamMap.get('company_id') }
   get status_id() { return this.#route.snapshot.queryParamMap.get('status_id') }
 
-  get queryParams() { return { company_id: this.company_id, segment_id: this.status_id } }
+  get queryParams() { return { company_id: this.company_id, status_id: this.status_id } }
 
   get has_id() {
     const actionCondition = this.action != environment.NEW || this.action === null
