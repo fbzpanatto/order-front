@@ -51,6 +51,8 @@ export class CustomersFormComponent implements OnDestroy {
   #compHttp = inject(FetchCompaniesService);
   #menuServ = inject(ToolbarMenuService);
 
+  state: boolean = false
+
   normalForm = this.#fb.group({
     customer: this.#fb.group({ ...this.normalCustomer }),
     person: this.#fb.group({ ...this.person }),
@@ -73,7 +75,7 @@ export class CustomersFormComponent implements OnDestroy {
     this.segmentControl.valueChanges.subscribe(search => {
       this.arrOfSegFront = this.arrOfSeg?.filter(el => el.name.toLowerCase().includes(search?.toLowerCase() ?? ''));
 
-      const item = ((this.form.get('segments') as FormArray).value as Array<any>).find(el => el.segment_id === null)
+      const item = ((this.form.get('segments') as FormArray).value as Array<any>).find(el => el.segment_id === "")
       item ? item.segment = search : null
     })
   }
@@ -172,21 +174,44 @@ export class CustomersFormComponent implements OnDestroy {
   redirect() { this.#router.navigate(["/customers"]) }
 
   addSegment(formArray?: any) {
-    this.contacts.updateValueAndValidity()
-    const newFormArray = this.#fb.group({ segment_id: [null], person_id: [this.form.get('person.person_id').value ?? null], company_id: [this.form.get('person.company_id').value ?? null], segment: [null] })
 
-    this.segments.push(formArray ?? newFormArray)
+    this.state = true
+
+    const newFormArray = this.#fb.group({
+      person_id: [this.form.get('person.person_id').value ?? ''],
+      company_id: [this.form.get('person.company_id').value ?? ''],
+      segment_id: [''],
+      segment: ['']
+    })
+
+    if (formArray) {
+      console.log(this.segments)
+      this.segments.push(formArray)
+      console.log(this.segments)
+      return
+    }
+    this.segments.push(newFormArray)
   }
 
   includeSegment(segment: { segment_id: number, company_id: number, name: string }) {
+
+    console.log(segment)
+
     const formArray = this.#fb.group({
-      person_id: [this.form.get('person.person_id').value], company_id: [segment.company_id], segment_id: [segment.segment_id],
+      person_id: [this.form.get('person.person_id').value ?? ''],
+      company_id: [segment.company_id],
+      segment_id: [segment.segment_id],
       segment: [segment.name],
-    }) as FormGroup<{ segment_id: FormControl<null>, person_id: FormControl<any>, company_id: FormControl<any>, segment: FormControl<null> }>
+    })
+
     this.addSegment(formArray)
 
-    const idx = (this.segments.value as Array<any>).findIndex(el => el.segment_id === null);
+    const idx = (this.segments.value as Array<any>).findIndex(el => el.segment_id === "" || el.segment === "");
     (this.form.get('segments') as FormArray).removeAt(idx)
+
+    this.state = false
+
+    this.segments.updateValueAndValidity()
   }
 
   async removeSegment(idx: number) {

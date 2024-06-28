@@ -90,15 +90,15 @@
             <div class="input-container">
               <label class="light-text">Segmento</label>
               <span><i class="fa-solid fa-pen-to-square"></i></span>
-              @if(segment.value.person_id && segment.value.company_id && segment.value.segment_id &&
-              segment.value.segment_id != null){
+              @if(segment.value.company_id && segment.value.segment_id &&
+              segment.value.segment_id != "" && segment.value.segment != ""){
               <input id="seg{{seg_idx}}" readonly maxlength="20" class="medium-text" formControlName="segment"
                 placeholder="segmento" />
               }
               @else {
               <input id="seg{{seg_idx}}" [formControl]="segmentControl" class="medium-text" maxlength="20"
                 placeholder="segmento" />
-              @if(arrOfSegFront?.length){
+              @if(arrOfSegFront?.length && segment.value.segment === "" && state){
               <div class="menu-container">
                 <ul> @for(segment of arrOfSegFront; track opt; let opt = $index) { <li
                     (click)="includeSegment(segment)">{{ segment.name }}</li> } </ul>
