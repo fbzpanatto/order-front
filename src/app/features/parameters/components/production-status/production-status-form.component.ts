@@ -61,7 +61,7 @@ export class ProductionStatusFormComponent {
   }
 
   async getCompanies() {
-    const response = await this.#compHttp.getAll({})
+    const response = await this.#compHttp.getAll({ status: true })
     this.companies = (response as SuccessGET).data
       .map((el: any) => { return { id: el.company_id, label: el.corporate_name, value: el.company_id } })
   }
