@@ -15,6 +15,6 @@ export const environment = {
   COMPANIES: 'companies',
   PRODUCTSTATUS: 'product-status',
   PERMISSIONS: 'permissions',
-  NEW: 'new',
+  NEW: 'newL',
   SLASH: '/'
 }
