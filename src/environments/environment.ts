@@ -1,5 +1,7 @@
 export const environment = {
-  API_URL: 'http://localhost:3000/',
+  API_URL: 'http://100.26.145.202/',
+  API_URL_BACKUP: 'http://localhost:3000/',
+  AWS_BASE_URL: 'http://100.26.145.202/',
   COMMAND: 'command',
   MENU: 'menu',
   USERS: 'users',
