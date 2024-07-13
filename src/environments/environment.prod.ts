@@ -1,7 +1,5 @@
 export const environment = {
-  API_URL: 'http://100.26.145.202/',
-  API_URL_BACKUP: 'http://localhost:3000/',
-  AWS_BASE_URL: 'http://100.26.145.202/',
+  API_URL: 'https://fabriziopanato.com.br',
   COMMAND: 'command',
   MENU: 'menu',
   USERS: 'users',
