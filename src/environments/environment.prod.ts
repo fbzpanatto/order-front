@@ -1,5 +1,5 @@
 export const environment = {
-  API_URL: 'https://fabriziopanato.com.br',
+  API_URL: 'https://fabriziopanato.com.br/',
   COMMAND: 'command',
   MENU: 'menu',
   USERS: 'users',
